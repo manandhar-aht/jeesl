@@ -30,7 +30,7 @@ public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A
 	@Override public String getLoginPassword() {return loginPassword;}
 	public void setLoginPassword(String loginPassword) {this.loginPassword = loginPassword;}
 	
-	private Map<String,Boolean> mapUsecases,mapRoles,mapActions;
+	private final Map<String,Boolean> mapUsecases,mapRoles,mapActions;
 	
 	private Map<String,Boolean> mapSystemViews; //Only systems views, domain views not included
 	private Map<String,Boolean> mapViews;
@@ -80,6 +80,7 @@ public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A
 		return false;
 	}
 	
+	public boolean hasRole(R r) {return hasRole(r.getCode());}
 	public boolean hasRole(String code)
 	{
 		if(mapRoles.containsKey(code))
@@ -104,10 +105,9 @@ public abstract class AbstractIdentity < R extends JeeslSecurityRole<?,?,?,V,U,A
 	public int sizeAllowedRoles() {return mapRoles.size();}
 	public int sizeAllowedActions() {return mapActions.size();}
 	
-	public Map<String, Boolean> getMapUsecases() {return mapUsecases;}
-	
-	public Map<String, Boolean> getMapRoles() {return mapRoles;}
-	public Map<String, Boolean> getMapActions() {return mapActions;}
+	public Map<String,Boolean> getMapUsecases() {return mapUsecases;}
+	public Map<String,Boolean> getMapRoles() {return mapRoles;}
+	public Map<String,Boolean> getMapActions() {return mapActions;}
 	
 	public Map<String, Boolean> getMapViews() {return mapViews;}
 	public Map<String, Boolean> getMapSystemViews() {return mapSystemViews;}

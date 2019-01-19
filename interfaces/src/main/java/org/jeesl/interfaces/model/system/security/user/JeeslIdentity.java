@@ -26,6 +26,7 @@ public interface JeeslIdentity <R extends JeeslSecurityRole<?,?,?,V,U,A,USER>,
 	boolean hasUsecase(String usecaseCode);
 	boolean hasView(String code);
 	boolean hasView(V view);
+	boolean hasRole(R role);
 	boolean hasRole(String code);
 	boolean hasAction(String code);
 	

@@ -111,14 +111,22 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 		 sb.append(": ").append(t.toString());
 		 return sb.toString();
 	 }
-	 
+	
+	public static <T extends EjbWithId> String deleteEntities(Class<?> c, List<T> list)
+	{
+		 StringBuilder sb = new StringBuilder();
+		 sb.append("Deleting ");
+		 sb.append(list.size());
+		 sb.append(" ").append(c.getClass().getSimpleName());
+		 return sb.toString();
+	}
 	public static <T extends EjbWithId> String rmEntity(T t)
 	{
 		 return rmEntity(null,t);
 	}
 	public static <USER extends JeeslUser<?>, T extends EjbWithId> String rmEntity(USER user, T t)
 	{
-		 StringBuffer sb = new StringBuffer();
+		 StringBuilder sb = new StringBuilder();
 		 sb.append("Removing ").append(t.getClass().getSimpleName());
 		 if(user!=null){sb.append(" {").append(user.toString()).append("}");}
 		 sb.append(": ").append(t.toString());
@@ -149,7 +157,7 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	 public static <T extends EjbWithId> String selectEntities(Class<?> c, List<T> list)
 	 {
         StringBuffer sb = new StringBuffer();
-        sb.append("Selecting ").append(c.getClass().getSimpleName());
+        sb.append("Selecting ").append(c.getSimpleName());
         sb.append(": ").append(list.size());
         return sb.toString();
 	 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jeesl.controller.processor.finance.AmountRounder;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.json.db.tuple.JsonTupleFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.model.json.db.tuple.JsonTuple;
@@ -18,6 +19,7 @@ import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
@@ -28,8 +30,9 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 
 	final static Logger logger = LoggerFactory.getLogger(JsonTuple2Handler.class);
 
-	private JeeslComparatorProvider<B> jppB; public void setComparatorProviderB(JeeslComparatorProvider<B> jppB) {this.jppB = jppB;}
+	private JeeslComparatorProvider<B> jcpB; public void setComparatorProviderB(JeeslComparatorProvider<B> jppB) {this.jcpB = jppB;}
 	
+
 	private final Class<B> cB;
 	protected final Set<B> setB;
 	
@@ -38,9 +41,9 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 	private final Map<A,Map<B,Json2Tuple<A,B>>> map; public Map<A,Map<B,Json2Tuple<A,B>>> getMap() {return map;}
 	private final List<Json2Tuple<A,B>> tuples2; public List<Json2Tuple<A,B>> getTuples2() {return tuples2;}
 	
-	public JsonTuple2Handler(Class<A> cX, Class<B> cB)
+	public JsonTuple2Handler(Class<A> cA, Class<B> cB)
 	{
-		super(cX);
+		super(cA);
 		this.cB=cB;
 		
 		setB = new HashSet<B>();
@@ -59,6 +62,50 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 		listB.clear();
 	}
 
+	public void init(Json2Tuples<A,B> tuples, UtilsFacade fUtils, boolean loadA, boolean loadB)
+	{
+		clear();
+		Set<Long> setIdA = new HashSet<>();
+		Set<Long> setIdB = new HashSet<>();
+		
+		for(Json2Tuple<A,B> t : tuples.getTuples())
+		{
+			setIdA.add(t.getId1());
+			setIdB.add(t.getId2());
+		}
+		
+		Map<Long,A> mapA = null;
+		Map<Long,B> mapB = null; 
+		
+		if(loadA) {mapA = EjbIdFactory.toIdMap(fUtils.find(cA, setIdA));}
+		if(loadB) {mapB = EjbIdFactory.toIdMap(fUtils.find(cB, setIdB));}
+		
+		for(Json2Tuple<A,B> t : tuples.getTuples())
+		{
+			try
+			{
+				if(loadA){t.setEjb1(mapA.get(t.getId1()));}
+				else
+				{
+					A a = cA.newInstance();
+					a.setId(t.getId1());
+					t.setEjb1(a);
+				}
+				
+				if(loadB){t.setEjb2(mapB.get(t.getId2()));}
+				else
+				{
+					B b = cB.newInstance();
+					b.setId(t.getId2());
+					t.setEjb2(b);
+				}
+			}
+			catch (InstantiationException e) {e.printStackTrace();}
+			catch (IllegalAccessException e) {e.printStackTrace();}
+		}
+		init(tuples);
+		
+	}
 	public void init(Json2Tuples<A,B> tuples)
 	{
 		clear();
@@ -83,7 +130,7 @@ public class JsonTuple2Handler <A extends EjbWithId, B extends EjbWithId>
 	{
 		listB.addAll(setB);
 		sizeB = listB.size();
-		if(jppB!=null && jppB.provides(cB)){Collections.sort(listB, jppB.provide(cB));}
+		if(jcpB!=null && jcpB.provides(cB)){Collections.sort(listB, jcpB.provide(cB));}
 	}
 	
 	public boolean contains(A a, B b) {return map.containsKey(a) && map.get(a).containsKey(b);}

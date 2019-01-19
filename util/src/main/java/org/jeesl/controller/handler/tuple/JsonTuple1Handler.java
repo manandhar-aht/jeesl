@@ -28,7 +28,7 @@ public class JsonTuple1Handler <A extends EjbWithId> extends JsonTupleHandler im
 	
 	private JeeslComparatorProvider<A> jcpA; public void setComparatorProviderA(JeeslComparatorProvider<A> jcpA) {this.jcpA = jcpA;}
 	
-	private final Class<A> cA;
+	protected final Class<A> cA;
 	protected final Set<A> setA;
 	private int sizeA; public int getSizeA() {return sizeA;}
 	private final List<A> listA; public List<A> getListA() {return listA;}

@@ -18,7 +18,6 @@ public interface JeeslSurveyData<L extends UtilsLang, D extends UtilsDescription
 			extends Serializable,EjbWithId,EjbWithRecord
 {
 	public enum Attributes{correlation,survey}
-	public enum Status{empty,partial,fully}
 	
 	SURVEY getSurvey();
 	void setSurvey(SURVEY survey);

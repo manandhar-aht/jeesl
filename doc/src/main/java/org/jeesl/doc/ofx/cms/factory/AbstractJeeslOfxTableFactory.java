@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.interfaces.model.system.locale.JeeslLocaleProvider;
 import org.jeesl.model.json.system.translation.JsonTranslation;
+import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.table.Cell;
 import org.openfuxml.content.table.Head;
 import org.openfuxml.content.table.Row;
@@ -17,9 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Translations;
+import net.sf.exlp.util.xml.JaxbUtil;
 
-public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJeeslOfxFactory<L>
+public class AbstractJeeslOfxTableFactory<L extends UtilsLang, LOC extends UtilsStatus<LOC,L,?>>
+													extends AbstractJeeslOfxFactory<L>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxTableFactory.class);
 	
@@ -50,14 +55,14 @@ public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJ
 		json.setCode(code.toString());
 		tableHeaders.add(json);
 	}
-	protected void addHeaderMulti(Map<String,L> multiLang)
+	protected void addHeaderMulti(JeeslLocaleProvider<LOC> lp, Map<String,L> multiLang)
 	{
 		JsonTranslation json = new JsonTranslation();
 		
 		Map<String,String> map = new HashMap<String,String>();
 		for(String key : multiLang.keySet())
 		{
-			if(tp.hasLocale(key))
+			if(lp.hasLocale(key))
 			{
 				map.put(key,multiLang.get(key).getLang());
 			}
@@ -94,18 +99,21 @@ public class AbstractJeeslOfxTableFactory<L extends UtilsLang> extends AbstractJ
 		return OfxHeadFactory.build(row);
 	}
 	
-	protected Head buildTableHeader()
+	protected Head buildTableHeader(JeeslLocaleProvider<LOC> lp)
 	{
 		Row row = new Row();
-		logger.info("Building Head with keys:"+tableHeaderKeys.size()+" locales:"+tp.getLocaleCodes().size());
+		logger.info("Building Head with headers:"+tableHeaders.size()+" locales:"+tp.getLocaleCodes().size());
 		for(JsonTranslation json : tableHeaders)
 		{
 			Cell cell = OfxCellFactory.build();
 			if(json.getEntity()!=null)
 			{
-				for(String localeCode : tp.getLocaleCodes())
+				logger.info("Building via TP "+json.getEntity()+" "+json.getCode());
+				for(String localeCode : lp.getLocaleCodes())
 				{
-					cell.getContent().add(XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode,json.getEntity(),json.getCode())));
+					Paragraph p = XmlParagraphFactory.build(localeCode,tp.toTranslation(localeCode,json.getEntity(),json.getCode()));
+					JaxbUtil.info(p);
+					cell.getContent().add(p);
 				}
 			}
 			else if(json.getMultiLang()!=null)

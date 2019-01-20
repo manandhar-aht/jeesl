@@ -33,6 +33,7 @@ import net.sf.ahtutils.xml.xpath.StatusXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
+@Deprecated // Better use OfxMultiLocaleFactory
 public class OfxMultiLangFactory<L extends UtilsLang>
 {	
 	final static Logger logger = LoggerFactory.getLogger(OfxMultiLangFactory.class);

@@ -42,10 +42,10 @@ public class GenericTranslationProvider <L extends UtilsLang,D extends UtilsDesc
 		sdfTime = new SimpleDateFormat("hh:mm");
 	}
 	
-	public void setLanguages(List<LOC> languages)
+	public void setLanguages(List<LOC> locales)
 	{
 		localeCodes.clear();
-		localeCodes.addAll(TxtStatusFactory.toCodes(languages));
+		localeCodes.addAll(TxtStatusFactory.toCodes(locales));
 		setLocaleCodes.addAll(localeCodes);
 	}
 	

@@ -1,11 +1,13 @@
 package org.jeesl.web.mbean.prototype.system.io.cms;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.jeesl.api.bean.JeeslCmsCacheBean;
 import org.jeesl.api.facade.io.JeeslIoCmsFacade;
+import org.jeesl.controller.provider.GenericLocaleProvider;
 import org.jeesl.factory.builder.io.IoCmsFactoryBuilder;
 import org.jeesl.interfaces.controller.JeeslCmsRenderer;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
@@ -19,6 +21,7 @@ import org.openfuxml.exception.OfxAuthoringException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -82,11 +85,18 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 			Section ofxSection = null;
 			try
 			{
-				ofxSection = ofx.build(localeCode,section);
+				LOC locale = fCms.fByCode(fbCms.getClassLocale(), localeCode);
+				GenericLocaleProvider<L,D,LOC> lp = new GenericLocaleProvider<L,D,LOC>();
+				lp.setLocales(Arrays.asList(locale));
+				
+				ofxSection = ofx.build(lp,localeCode,section);
 				mapSection.get(section).put(localeCode, ofxSection);
 			}
 			catch (OfxAuthoringException e)
 			{
+				e.printStackTrace();
+			} catch (UtilsNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ofxSection;

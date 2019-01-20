@@ -268,6 +268,14 @@
 			<s:lang key="fr" translation="Survey Status"/>
 		</s:langs>
 	</s:translation>
+		<s:translation key="SurveyDataEntryStatus">
+		<s:langs>
+			<s:lang key="de" translation="Umfrage Eingabe Status"/>
+			<s:lang key="en" translation="Survey Entry Status"/>
+			<s:lang key="fr" translation="Survey Entry Status"/>
+		</s:langs>
+	</s:translation>
+	
 	<s:translation key="SurveyDataStatus">
 		<s:langs>
 			<s:lang key="de" translation="Data Status"/>

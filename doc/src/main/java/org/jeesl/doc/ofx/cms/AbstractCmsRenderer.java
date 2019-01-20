@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.interfaces.model.system.locale.JeeslLocaleProvider;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.content.ofx.Sections;
 import org.openfuxml.exception.OfxAuthoringException;
@@ -61,7 +62,7 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 		ofImage = new JeeslCmsImageFactory<E,C,FS,FC,FM>(frh);
 	}
 	
-	public Sections build(String localeCode, CMS cms) throws OfxAuthoringException
+	public Sections build(JeeslLocaleProvider<LOC> lp, String localeCode, CMS cms) throws OfxAuthoringException
 	{
 		logger.info("Rendering "+cms.toString());
 		S root = fCms.load(cms.getRoot(),true);
@@ -71,19 +72,19 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 		{
 			if(section.isVisible())
 			{
-				xml.getContent().add(buildSection(localeCode, section));
+				xml.getContent().add(buildSection(lp,localeCode, section));
 			}
 		}
 		return xml;
 	}
 	
-	public Section build(String localeCode, S section) throws OfxAuthoringException
+	public Section build(JeeslLocaleProvider<LOC> lp, String localeCode, S section) throws OfxAuthoringException
 	{
 		S root = fCms.load(section,true);
-		return buildSection(localeCode, root);
+		return buildSection(lp,localeCode, root);
 	}
  
-	private Section buildSection(String localeCode, S section) throws OfxAuthoringException
+	private Section buildSection(JeeslLocaleProvider<LOC> lp, String localeCode, S section) throws OfxAuthoringException
 	{
 		Section xml = XmlSectionFactory.build();
 		xml.getContent().add(XmlTitleFactory.build(section.getName().get(localeCode).getLang()));
@@ -91,7 +92,7 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 		List<E> elements = fCms.fCmsElements(section);
 		for(E e : elements)
 		{
-			build(localeCode,xml.getContent(),e);
+			build(lp, localeCode,xml.getContent(),e);
 //			xml.getContent().add(build(e));
 		}
 		
@@ -99,14 +100,14 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 		{
 			if(child.isVisible())
 			{
-				xml.getContent().add(this.build(localeCode,child));
+				xml.getContent().add(this.build(lp,localeCode,child));
 			}
 		}
 		
 		return xml;
 	}
 	
-	protected abstract void build(String localeCode, List<Serializable> list, E element) throws OfxAuthoringException;
+	protected abstract void build(JeeslLocaleProvider<LOC> lp, String localeCode, List<Serializable> list, E element) throws OfxAuthoringException;
 	
 	//Here we are handling all types which are available as generic renderer in JEESL 
 	protected void buildJeesl(String localeCode, List<Serializable> list, E element) throws OfxAuthoringException

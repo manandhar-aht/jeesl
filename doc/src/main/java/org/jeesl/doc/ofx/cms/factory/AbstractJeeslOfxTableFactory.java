@@ -24,7 +24,7 @@ import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractJeeslOfxTableFactory<L extends UtilsLang, LOC extends UtilsStatus<LOC,L,?>>
-													extends AbstractJeeslOfxFactory<L>
+													extends AbstractJeeslOfxFactory<L,LOC>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslOfxTableFactory.class);
 	

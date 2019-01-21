@@ -9,7 +9,6 @@ import org.openfuxml.content.list.Item;
 import org.openfuxml.content.ofx.Paragraph;
 import org.openfuxml.content.ofx.Title;
 import org.openfuxml.content.table.Cell;
-import org.openfuxml.content.table.Row;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
 import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;

@@ -30,7 +30,6 @@ public interface JeeslIoSsiFacade <L extends UtilsLang,D extends UtilsDescriptio
 	List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links);
 	<A extends EjbWithId, B extends EjbWithId> List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links, A a, B b);
 	
-	
 	Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping);
 	<A extends EjbWithId, B extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a, B b) ;
 }

@@ -14,6 +14,7 @@ import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnFactory;
 import org.jeesl.factory.ejb.system.io.report.EjbIoReportColumnGroupFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
 import org.jeesl.factory.xls.system.io.report.XlsFactory;
+import org.jeesl.interfaces.controller.handler.JeeslProgressHandler;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.interfaces.controller.report.JeeslReport;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
@@ -107,7 +108,9 @@ public abstract class AbstractJeeslReport<L extends UtilsLang,D extends UtilsDes
 	protected XlsFactory<L,D,CATEGORY,REPORT,IMPLEMENTATION,WORKBOOK,SHEET,GROUP,COLUMN,ROW,TEMPLATE,CELL,STYLE,CDT,CW,RT,RCAT,ENTITY,ATTRIBUTE,TL,TLS,FILLING,TRANSFORMATION> xlsFactory;
 	
 	protected JeeslComparatorProvider<EjbWithId> cProvider;
+	
 	protected final JobCodeProcessor jobCodeProcessor;
+    protected JeeslProgressHandler progressHandler;
 	
 	protected PivotSettings pivotSettings; public PivotSettings getPivotSettings() {return pivotSettings;}
 

@@ -36,7 +36,7 @@ import org.jeesl.model.xml.module.ts.Data;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.jeesl.util.comparator.xml.ts.TsDataComparator;
 import org.joda.time.DateTime;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.primefaces.event.FileUploadEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +95,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
-	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
+	private Ds chartDs; public Ds getChartDs(){return chartDs;}
 	
 	protected UtilsXlsDefinitionResolver xlsResolver;
 	protected File importRoot;
@@ -246,7 +246,7 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
 		entities = new ArrayList<EjbWithId>();
 		mapLabels = new HashMap<EjbWithId,String>();
 		
-		chartDs = McDataSetFactory.build(timeSeries);
+		chartDs = McDataSetFactory.build2(timeSeries);
 		try
 		{
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);

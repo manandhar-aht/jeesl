@@ -22,7 +22,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,15 +144,9 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 		List<DATA> list = fTs.fData(sbhWorkspace.getSelected().get(0), tsh.getOpList().get(0));
 		
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
-		ds=f.build(list);
+		ds=f.build2(list);
 		JaxbUtil.info(ds);
 	}
 	
-	DataSet ds;
-	public DataSet getDs() {
-		return ds;
-	}
-	public void setDs(DataSet ds) {
-		this.ds = ds;
-	}
+	Ds ds; public Ds getDs() {return ds;} public void setDs(Ds ds) {this.ds = ds;}
 }

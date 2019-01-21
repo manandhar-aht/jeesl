@@ -16,6 +16,8 @@ import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jxpath.JXPathContext;
+import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
+import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.mc.ts.McDataSetFactory;
@@ -34,7 +36,7 @@ import org.jeesl.model.xml.module.ts.Data;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.jeesl.util.comparator.xml.ts.TsDataComparator;
 import org.joda.time.DateTime;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.primefaces.event.FileUploadEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +51,6 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.report.revert.excel.importers.ExcelSimpleSerializableImporter;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
-
-import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
-import org.jeesl.api.controller.ImportStrategy;
 
 public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends UtilsDescription,
 											CAT extends UtilsStatus<CAT,L,D>,
@@ -96,7 +95,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
-	private DataSet chartDs; public DataSet getChartDs(){return chartDs;}
+	private Ds chartDs; public Ds getChartDs(){return chartDs;}
 	
 	protected UtilsXlsDefinitionResolver xlsResolver;
 	protected File importRoot;
@@ -235,7 +234,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		entities = new ArrayList<EjbWithId>();
 		mapLabels = new HashMap<EjbWithId,String>();
 		
-		chartDs = McDataSetFactory.build(timeSeries);
+		chartDs = McDataSetFactory.build2(timeSeries);
 		try
 		{
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);

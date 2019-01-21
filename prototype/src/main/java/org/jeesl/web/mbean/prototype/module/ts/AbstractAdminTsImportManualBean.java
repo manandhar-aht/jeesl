@@ -27,7 +27,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
 import org.jeesl.model.xml.module.ts.Data;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.jeesl.util.comparator.xml.ts.TsDataComparator;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +90,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
 
-	private DataSet ds; public DataSet getDs() {return ds;} public void setDs(DataSet ds) {this.ds = ds;}
+	private Ds ds; public Ds getDs() {return ds;} public void setDs(Ds ds) {this.ds = ds;}
 
 	protected UtilsXlsDefinitionResolver xlsResolver;
 
@@ -215,7 +215,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		datas = fTs.fData(workspace, ts);
 
 		McTsViewerFactory<TS,DATA> f = new McTsViewerFactory<TS,DATA>();
-		ds=f.build(datas);
+		ds=f.build2(datas);
 		JaxbUtil.info(ds);
 	}
 

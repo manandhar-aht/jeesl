@@ -94,6 +94,23 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		}
 		return ds;	
 	}
+	public static Ds build2(TimeSeries timeSeries)
+	{
+		Ds ds = new Ds();
+		
+		for(org.jeesl.model.xml.module.ts.Data tsD: timeSeries.getData())
+		{
+			if (tsD.isSetValue())
+			{
+				Data cd = new Data();
+				cd.setRecord(tsD.getRecord());
+
+				cd.setY(tsD.getValue());
+				ds.getData().add(cd);
+			}
+		}
+		return ds;	
+	}
 	
 	public <T extends EjbWithId> Ds multiPoint(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
 	{

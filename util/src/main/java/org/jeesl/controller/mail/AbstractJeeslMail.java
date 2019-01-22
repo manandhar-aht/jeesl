@@ -40,18 +40,23 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	protected final JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate;
 	protected final JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail;
 	
+
 //	protected final FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
 	
+	protected TEMPLATE template;
 	protected MAILCAT category;
 	protected EmailAddress mailFrom;
 	
 	protected final Mails mails;
+	
+	protected String subjectPreifx;
 	
 	public AbstractJeeslMail(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate, JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail)
 	{
 		this.fTemplate=fTemplate;
 		this.fMail=fMail;
 		
+		subjectPreifx = "";
 		mails = XmlMailsFactory.build();
 	}
 	
@@ -77,6 +82,4 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 			catch (UtilsConstraintViolationException | UtilsNotFoundException e) {e.printStackTrace();}
 		}
 	}
-
-	
 }

@@ -44,7 +44,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 //	protected final FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
 	
 	protected TEMPLATE template;
-	protected MAILCAT category;
+	protected MAILCAT categoryMail;
 	protected EmailAddress mailFrom;
 	
 	protected final Mails mails;
@@ -62,7 +62,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	
 	protected void spool(Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
-		fMail.queueMail(category,null,mail);
+		fMail.queueMail(categoryMail,null,mail);
 		logger.info("Spooled");
 	}
 	
@@ -78,7 +78,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	{
 		for(Mail mail : mails.getMail())
 		{
-			try {fMail.queueMail(category,null,mail);}
+			try {fMail.queueMail(categoryMail,null,mail);}
 			catch (UtilsConstraintViolationException | UtilsNotFoundException e) {e.printStackTrace();}
 		}
 	}

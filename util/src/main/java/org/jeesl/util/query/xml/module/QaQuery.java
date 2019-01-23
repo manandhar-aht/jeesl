@@ -9,7 +9,7 @@ import org.jeesl.factory.xml.dev.qa.XmlGroupsFactory;
 import org.jeesl.factory.xml.dev.qa.XmlResultFactory;
 import org.jeesl.factory.xml.system.lang.XmlDescriptionFactory;
 import org.jeesl.factory.xml.system.status.XmlStatusFactory;
-import org.jeesl.util.query.xml.SecurityQuery;
+import org.jeesl.util.query.xml.system.SecurityQuery;
 
 import net.sf.ahtutils.factory.xml.status.XmlStatementFactory;
 import net.sf.ahtutils.xml.aht.Query;

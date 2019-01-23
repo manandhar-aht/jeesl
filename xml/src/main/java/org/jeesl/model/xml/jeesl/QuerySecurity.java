@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.security.Staff;
+import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.ahtutils.xml.security.User;
 
 
@@ -25,6 +26,7 @@ import net.sf.ahtutils.xml.security.User;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}user"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}staffs"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}role"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="localeCode" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -39,6 +41,7 @@ import net.sf.ahtutils.xml.security.User;
 @XmlType(name = "", propOrder = {
     "user",
     "staff",
+    "staffs",
     "role"
 })
 @XmlRootElement(name = "querySecurity")
@@ -51,6 +54,8 @@ public class QuerySecurity
     protected User user;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Staff staff;
+    @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
+    protected Staffs staffs;
     @XmlElement(namespace = "http://ahtutils.aht-group.com/security", required = true)
     protected Role role;
     @XmlAttribute(name = "localeCode")
@@ -110,6 +115,34 @@ public class QuerySecurity
 
     public boolean isSetStaff() {
         return (this.staff!= null);
+    }
+
+    /**
+     * Gets the value of the staffs property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Staffs }
+     *     
+     */
+    public Staffs getStaffs() {
+        return staffs;
+    }
+
+    /**
+     * Sets the value of the staffs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Staffs }
+     *     
+     */
+    public void setStaffs(Staffs value) {
+        this.staffs = value;
+    }
+
+    public boolean isSetStaffs() {
+        return (this.staffs!= null);
     }
 
     /**

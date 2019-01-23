@@ -1,4 +1,4 @@
-package org.jeesl.util.query.xml;
+package org.jeesl.util.query.xml.system;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -14,19 +14,21 @@ import org.jeesl.factory.xml.system.security.XmlViewFactory;
 import org.jeesl.factory.xml.system.security.XmlViewsFactory;
 import org.jeesl.model.xml.jeesl.QuerySecurity;
 import org.jeesl.model.xml.system.navigation.Navigation;
+import org.jeesl.util.query.xml.XmlStatusQuery;
 
 import net.sf.ahtutils.xml.access.View;
 import net.sf.ahtutils.xml.aht.Query;
 import net.sf.ahtutils.xml.security.Category;
 import net.sf.ahtutils.xml.security.Role;
 import net.sf.ahtutils.xml.security.Staff;
+import net.sf.ahtutils.xml.security.Staffs;
 import net.sf.ahtutils.xml.security.Usecase;
 import net.sf.ahtutils.xml.security.User;
 import net.sf.ahtutils.xml.status.Domain;
 
 public class SecurityQuery
 {
-	public static enum Key {role,roleLabel,exStaff,categoryLabel,staff,user}
+	public static enum Key {role,roleLabel,exStaff,categoryLabel,staff,staffUser,user,staffsRole}
 	
 	private static Map<Key,Query> mQueries;
 	private static Map<Key,QuerySecurity> map;
@@ -58,7 +60,9 @@ public class SecurityQuery
 			switch(key)
 			{
 				case staff: q.setStaff(staffUserRole());
+				case staffUser: q.setStaff(staffUser());
 				case user: q.setUser(user());
+				case staffsRole: q.setStaffs(staffsRole());
 				default: break;
 			}
 			map.put(key, q);
@@ -84,6 +88,17 @@ public class SecurityQuery
 		xml.setId(0);
 		xml.setCode("");
 		xml.setLabel("");
+		return xml;
+	}
+	
+	private static Staffs staffsRole()
+	{
+		Role role = new Role();
+		role.setCode("");
+		role.setLabel("");
+		
+		Staffs xml = new Staffs();
+		xml.setRole(role);
 		return xml;
 	}
 	
@@ -114,6 +129,13 @@ public class SecurityQuery
 		xml.setUser(user);
 		xml.setDomain(domain);
 		
+		return xml;
+	}
+	
+	public static Staff staffUser()
+	{
+		Staff xml = new Staff();
+		xml.setUser(user());
 		return xml;
 	}
 	

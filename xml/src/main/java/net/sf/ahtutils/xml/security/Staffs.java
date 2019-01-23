@@ -23,7 +23,9 @@ import net.sf.ahtutils.xml.status.Domain;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}domain"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}role"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/security}staff" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/security}staffs" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,7 +37,9 @@ import net.sf.ahtutils.xml.status.Domain;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "domain",
-    "staff"
+    "role",
+    "staff",
+    "staffs"
 })
 @XmlRootElement(name = "staffs")
 public class Staffs
@@ -46,7 +50,11 @@ public class Staffs
     @XmlElement(namespace = "http://ahtutils.aht-group.com/status", required = true)
     protected Domain domain;
     @XmlElement(required = true)
+    protected Role role;
+    @XmlElement(required = true)
     protected List<Staff> staff;
+    @XmlElement(required = true)
+    protected List<Staffs> staffs;
 
     /**
      * Gets the value of the domain property.
@@ -74,6 +82,34 @@ public class Staffs
 
     public boolean isSetDomain() {
         return (this.domain!= null);
+    }
+
+    /**
+     * Gets the value of the role property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Role }
+     *     
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Sets the value of the role property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Role }
+     *     
+     */
+    public void setRole(Role value) {
+        this.role = value;
+    }
+
+    public boolean isSetRole() {
+        return (this.role!= null);
     }
 
     /**
@@ -111,6 +147,43 @@ public class Staffs
 
     public void unsetStaff() {
         this.staff = null;
+    }
+
+    /**
+     * Gets the value of the staffs property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the staffs property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getStaffs().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Staffs }
+     * 
+     * 
+     */
+    public List<Staffs> getStaffs() {
+        if (staffs == null) {
+            staffs = new ArrayList<Staffs>();
+        }
+        return this.staffs;
+    }
+
+    public boolean isSetStaffs() {
+        return ((this.staffs!= null)&&(!this.staffs.isEmpty()));
+    }
+
+    public void unsetStaffs() {
+        this.staffs = null;
     }
 
 }

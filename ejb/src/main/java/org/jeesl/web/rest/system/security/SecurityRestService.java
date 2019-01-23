@@ -30,7 +30,7 @@ import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
-import org.jeesl.util.query.xml.SecurityQuery;
+import org.jeesl.util.query.xml.system.SecurityQuery;
 import org.jeesl.web.rest.system.security.updater.SecurityViewUpdater;
 import org.jeesl.web.rest.system.security.updater.SecurityTemplateUpdater;
 import org.jeesl.web.rest.system.security.updater.SecurityUsecaseUpdater;

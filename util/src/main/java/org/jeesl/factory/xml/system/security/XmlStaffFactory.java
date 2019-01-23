@@ -1,17 +1,19 @@
 package org.jeesl.factory.xml.system.security;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
-import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.interfaces.model.system.security.util.JeeslStaff;
+import org.jeesl.model.xml.jeesl.QuerySecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,11 @@ public class XmlStaffFactory<L extends UtilsLang, D extends UtilsDescription,
 	private XmlRoleFactory<L,D,C,R,V,U,A,AT,USER> xfRole;
 	private XmlUserFactory<USER> xfUser;
 	
+	
+	public XmlStaffFactory(QuerySecurity query)
+	{
+		this(query.getLocaleCode(),query.getStaff());
+	}
 	public XmlStaffFactory(Staff q){this(null,q);}
 	public XmlStaffFactory(String localeCode, Staff q)
 	{
@@ -53,6 +60,13 @@ public class XmlStaffFactory<L extends UtilsLang, D extends UtilsDescription,
 		Staff xml = new Staff();
 
 		return xml;
+	}
+	
+	public List<Staff> build(List<STAFF> list)
+	{
+		List<Staff> xList = new ArrayList<Staff>();
+		for(STAFF staff : list) {xList.add(build(staff));}
+		return xList;
 	}
 	
 	public Staff build(STAFF staff)

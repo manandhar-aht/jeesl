@@ -57,6 +57,7 @@
 			<xsd:sequence>
 				<xsd:element ref="sec:user" maxOccurs="1"/>
 				<xsd:element ref="sec:staff" maxOccurs="1"/>
+				<xsd:element ref="sec:staffs" maxOccurs="1"/>
 				<xsd:element ref="sec:role" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="localeCode" type="xsd:string"/>

@@ -80,6 +80,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	public void update(V view)
 	{
 		if(debugOnInfo) {logger.info("Updating "+view.getCode());}
+		view = fSecurity.load(fbSecurity.getClassView(), view);
 		mapUrlPattern.put(view.getViewPattern(),view);
 		mapUrlMapping.put(view.getUrlMapping(),view);
 		mapCodeView.put(view.getCode(),view);

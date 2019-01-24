@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.system.io.db.Db;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.openfuxml.interfaces.configuration.ConfigurationProvider;
@@ -18,7 +19,6 @@ import net.sf.ahtutils.doc.ofx.status.OfxStatusTableFactory;
 import net.sf.ahtutils.doc.ofx.status.OfxStatusTableFactory.Code;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.xml.aht.Aht;
-import net.sf.ahtutils.xml.dbseed.Db;
 import net.sf.ahtutils.xml.status.Translations;
 import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;

@@ -7,9 +7,9 @@ import java.util.List;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.db.UtilsDbXmlInit.Priority;
-import net.sf.ahtutils.xml.dbseed.Db;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.model.xml.system.io.db.Db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

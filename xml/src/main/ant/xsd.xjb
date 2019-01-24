@@ -67,7 +67,7 @@
     
     <jxb:bindings schemaLocation="../xsd/aht/dbseed.xsd" node="/xsd:schema">
         <jxb:schemaBindings>
-            <jxb:package name="net.sf.ahtutils.xml.dbseed"/>
+            <jxb:package name="org.jeesl.model.xml.system.io.db"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     

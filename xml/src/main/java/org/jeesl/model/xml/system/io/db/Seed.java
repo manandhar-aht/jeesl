@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.xml.dbseed;
+package org.jeesl.model.xml.system.io.db;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;

@@ -6,6 +6,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="db:seed" maxOccurs="unbounded"/>
+                <xsd:element ref="db:query" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="pathIde" type="xsd:string"/>
             <xsd:attribute name="pathIdeSvg" type="xsd:string"/>
@@ -17,6 +18,17 @@
             <xsd:attribute name="code" type="xsd:string"/>
             <xsd:attribute name="template" type="xsd:string"/>
             <xsd:attribute name="content" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="query">
+        <xsd:complexType>
+            <xsd:sequence>
+                
+            </xsd:sequence>
+            <xsd:attribute name="pid" type="xsd:long"/>
+            <xsd:attribute name="state" type="xsd:string"/>
+            <xsd:attribute name="statement" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

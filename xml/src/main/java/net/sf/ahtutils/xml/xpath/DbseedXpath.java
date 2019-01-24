@@ -2,12 +2,12 @@ package net.sf.ahtutils.xml.xpath;
 
 import java.util.List;
 
-import net.sf.ahtutils.xml.dbseed.Db;
-import net.sf.ahtutils.xml.dbseed.Seed;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;
 import net.sf.exlp.exception.ExlpXpathNotUniqueException;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.jeesl.model.xml.system.io.db.Db;
+import org.jeesl.model.xml.system.io.db.Seed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

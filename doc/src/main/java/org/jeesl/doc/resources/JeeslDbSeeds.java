@@ -8,10 +8,9 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportLayout;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportRowType;
 import org.jeesl.interfaces.model.system.io.report.type.JeeslReportSetting;
+import org.jeesl.model.xml.system.io.db.Db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.dbseed.Db;
 
 public class JeeslDbSeeds
 {	

@@ -3,8 +3,8 @@ package net.sf.ahtutils.db.xml;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.xml.dbseed.Db;
 
+import org.jeesl.model.xml.system.io.db.Db;
 import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

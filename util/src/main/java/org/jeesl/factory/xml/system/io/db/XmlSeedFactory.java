@@ -1,9 +1,8 @@
 package org.jeesl.factory.xml.system.io.db;
 
+import org.jeesl.model.xml.system.io.db.Seed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.xml.dbseed.Seed;
 
 public class XmlSeedFactory
 {

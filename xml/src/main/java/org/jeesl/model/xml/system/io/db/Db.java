@@ -1,5 +1,5 @@
 
-package net.sf.ahtutils.xml.dbseed;
+package org.jeesl.model.xml.system.io.db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/dbseed}seed" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://ahtutils.aht-group.com/dbseed}query" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="pathIde" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="pathIdeSvg" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -36,7 +37,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "seed"
+    "seed",
+    "query"
 })
 @XmlRootElement(name = "db")
 public class Db
@@ -46,6 +48,8 @@ public class Db
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
     protected List<Seed> seed;
+    @XmlElement(required = true)
+    protected List<Query> query;
     @XmlAttribute(name = "pathIde")
     protected String pathIde;
     @XmlAttribute(name = "pathIdeSvg")
@@ -88,6 +92,43 @@ public class Db
 
     public void unsetSeed() {
         this.seed = null;
+    }
+
+    /**
+     * Gets the value of the query property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the query property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getQuery().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Query }
+     * 
+     * 
+     */
+    public List<Query> getQuery() {
+        if (query == null) {
+            query = new ArrayList<Query>();
+        }
+        return this.query;
+    }
+
+    public boolean isSetQuery() {
+        return ((this.query!= null)&&(!this.query.isEmpty()));
+    }
+
+    public void unsetQuery() {
+        this.query = null;
     }
 
     /**

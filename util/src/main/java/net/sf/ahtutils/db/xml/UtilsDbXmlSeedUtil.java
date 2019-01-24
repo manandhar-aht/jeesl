@@ -10,12 +10,12 @@ import java.util.NoSuchElementException;
 import org.apache.commons.configuration.Configuration;
 import org.apache.poi.util.IOUtils;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.model.xml.system.io.db.Db;
+import org.jeesl.model.xml.system.io.db.Seed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
-import net.sf.ahtutils.xml.dbseed.Db;
-import net.sf.ahtutils.xml.dbseed.Seed;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.ahtutils.xml.xpath.DbseedXpath;
 import net.sf.exlp.exception.ExlpXpathNotFoundException;

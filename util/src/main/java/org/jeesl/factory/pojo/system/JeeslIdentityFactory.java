@@ -1,8 +1,7 @@
 package org.jeesl.factory.pojo.system;
 
-import java.util.List;
-
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.controller.monitor.ProcessingTimeTracker;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -22,8 +21,6 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 {
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslIdentityFactory.class);
-
-	public static boolean debugOnInfo = true;
 	
 	private final SecurityFactoryBuilder<?,?,?,R,V,U,A,?,?,USER> fbSecurity;
 	final Class<I>  cIdentity;
@@ -45,7 +42,8 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 		return new JeeslIdentityFactory<I,R,V,U,A,USER>(fbSecurity,cIdentity);
 	}
 
-	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,?,USER> fSecurity, USER user)
+	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,?,USER> fSecurity, USER user) {return create(fSecurity,user,null);}
+	public I create(JeeslSecurityFacade<?,?,?,R,V,U,A,?,?,USER> fSecurity, USER user, ProcessingTimeTracker ptt)
 	{		
 		I identity = null;
 		
@@ -55,10 +53,13 @@ public class JeeslIdentityFactory <I extends JeeslIdentity<R,V,U,A,USER>,
 			identity.setUser(user);
 			
 			for(A a : fSecurity.allActionsForUser(user)){identity.allowAction(a);}
+			if(ptt!=null) {ptt.tick(JeeslIdentityFactory.class.getSimpleName()+".allActionsForUser()");}
 			
-			if(debugOnInfo) {logger.info("Adding roles for user "+user.toString());}
 			for(R r : fSecurity.allRolesForUser(user)){identity.allowRole(r);}
+			if(ptt!=null) {ptt.tick(JeeslIdentityFactory.class.getSimpleName()+".allRolesForUser()");}
+			
 			for(V v : fSecurity.allViewsForUser(user)){identity.allowView(v);}
+			if(ptt!=null) {ptt.tick(JeeslIdentityFactory.class.getSimpleName()+".allViewsForUser()");}
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -53,4 +53,20 @@ public class ObjectFactory {
         return new Query();
     }
 
+    /**
+     * Create an instance of {@link Times }
+     * 
+     */
+    public Times createTimes() {
+        return new Times();
+    }
+
+    /**
+     * Create an instance of {@link Time }
+     * 
+     */
+    public Time createTime() {
+        return new Time();
+    }
+
 }

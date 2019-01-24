@@ -11,8 +11,8 @@ import javax.persistence.Query;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
-import org.jeesl.factory.json.system.io.db.JsonDbPgStatConnectionFactory;
 import org.jeesl.factory.json.system.io.db.JsonDbPgStatQueryFactory;
+import org.jeesl.factory.json.system.io.db.JsonDbPgStatConnectionFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbPgStatFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;

@@ -4,8 +4,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.jeesl.model.json.JsonFlatFigure;
+import org.jeesl.model.xml.system.io.db.Query;
 
-public class JsonDbPgStatConnectionFactory
+public class JsonDbPgStatConnectionFactory 
 {
 	public static JsonFlatFigure build(int number, Object[] array)
 	{
@@ -19,7 +20,6 @@ public class JsonDbPgStatConnectionFactory
 		if(array[0]!=null){tsTransaction = (Timestamp)array[0];}
 		if(array[1]!=null){tsQuery = (Timestamp)array[1];}
 		if(array[2]!=null){tsState = (Timestamp)array[2];}
-//		if(array[3]!=null){waiting = (Boolean)array[3];}
 		if(array[3]!=null){state = (String)array[3];}
 		if(array[4]!=null){query = (String)array[4];}
         

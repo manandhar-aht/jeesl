@@ -1,6 +1,7 @@
 package net.sf.ahtutils.jsf.handler.security;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
+import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
@@ -40,9 +42,9 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;
 
-//	private SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity;
+	private SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity;
-	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
+	protected JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity;
 	
 	protected I identity;
 	
@@ -63,8 +65,11 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
-	public AbstractJsfSecurityHandler(I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity, String pageCode, Class<V> cV)
+	public AbstractJsfSecurityHandler(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity,
+									I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity,
+									String pageCode, Class<V> cV)
 	{
+		this.fbSecurity=fbSecurity;
 		this.identity=identity;
 		this.fSecurity=fSecurity;
 		this.pageCode=pageCode;
@@ -95,11 +100,13 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
-	public AbstractJsfSecurityHandler(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity,
+	public AbstractJsfSecurityHandler(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity,
+										JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity,
 										JeeslSecurityBean<L,D,C,R,V,U,A,AT,?,USER> bSecurity,
 										I identity,
 										String viewCode)
 	{
+		this.fbSecurity=fbSecurity;
 		this.identity=identity;
 		this.fSecurity=fSecurity;
 		this.bSecurity=bSecurity;
@@ -167,20 +174,36 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	public boolean hasRole(R role) {return mapHasRole.containsKey(role) && mapHasRole.get(role);}
 	
-	protected boolean hasDomainRole(Class<R> cRole, Class<U> cUsecase, A action, List<R> staffRoles)
+	protected boolean hasDomainRole(A action, Collection<R> staffRoles)
 	{
 		boolean allowDomain = false;
-
 		for(R r : staffRoles)
 		{
-			r = fSecurity.load(cRole, r);
-			if(r.getActions().contains(action)){allowDomain=true;}
+			List<A> lA1 = new ArrayList<>();
+			if(bSecurity==null)
+			{
+				r = fSecurity.load(fbSecurity.getClassRole(), r);
+				lA1.addAll(r.getActions());
+			}
+			else {lA1.addAll(bSecurity.fActions(r));}
+			
+			if(lA1.contains(action)){allowDomain=true;}
 			else
 			{
+				List<U> usecases = new ArrayList<>();
+				if(bSecurity==null) {usecases.addAll(r.getUsecases());}
+				else {usecases.addAll(bSecurity.fUsecases(r));}
 				for(U uc : r.getUsecases())
 				{
-					uc = fSecurity.load(cUsecase, uc);
-					if(uc.getActions().contains(action)){allowDomain=true;}
+					List<A> lA2 = new ArrayList<>();
+					if(bSecurity==null)
+					{
+						uc = fSecurity.load(fbSecurity.getClassUsecase(), uc);
+						lA2.addAll(uc.getActions());
+					}
+					else {lA2.addAll(bSecurity.fActions(uc));}
+					
+					if(lA2.contains(action)){allowDomain=true;}
 				}
 			}
 		}

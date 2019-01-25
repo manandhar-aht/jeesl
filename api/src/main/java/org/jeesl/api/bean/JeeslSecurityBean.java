@@ -33,4 +33,13 @@ public interface JeeslSecurityBean<L extends UtilsLang,D extends UtilsDescriptio
 	V findViewByHttpPattern(String pattern);
 	V findViewByUrlMapping(String pattern);
 	List<R> fRoles(V view);
+	
+	List<V> fViews(R role);
+	List<V> fViews(U usecase);
+	
+	List<U> fUsecases(R role);
+	
+	List<A> fActions(V view);
+	List<A> fActions(R role);
+	List<A> fActions(U usecase);
 }

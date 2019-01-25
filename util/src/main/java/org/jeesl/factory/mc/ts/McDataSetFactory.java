@@ -124,12 +124,11 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		
 		for(MP mp : mapMp.keySet())
 		{
-			
 			List<POINT> l = mapMp.get(mp);
-			logger.info(mp.toString() + " "+l.size());
+//			logger.info(mp.toString() + " "+l.size());
 		}
 		
-		logger.info("Data: "+datas.size()+" Points: "+points.size());
+//		logger.info("Data: "+datas.size()+" Points: "+points.size());
 		
 		Ds xml = new Ds();
 		for(MP mp : multiPoints)
@@ -137,7 +136,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 			if(mp.getVisible() && mapMp.containsKey(mp))
 			{
 				Map<DATA,POINT> mapData = efPoint.toMapDataUnique(mapMp.get(mp));
-				logger.info("MAP-data: "+mapData.size());
+//				logger.info("MAP-data: "+mapData.size());
 				Ds ds = new Ds();
 				ds.setLabel(mp.getName().get(localeCode).getLang());
 				for(DATA data : datas)
@@ -145,7 +144,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 					Data d = new Data();
 					d.setRecord(DateUtil.toXmlGc(data.getRecord()));
 					POINT p = mapData.get(data);
-					logger.info("P: "+(p!=null) + " "+mapData.containsKey(data));
+//					logger.info("P: "+(p!=null) + " "+mapData.containsKey(data));
 					
 					if(p!=null) {d.setY(p.getValue());}
 					ds.getData().add(d);
@@ -153,7 +152,6 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 				xml.getDs().add(ds);
 			}
 		}
-		
 		
 		return xml;	
 	}

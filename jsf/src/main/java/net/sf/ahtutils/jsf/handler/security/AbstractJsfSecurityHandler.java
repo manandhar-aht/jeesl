@@ -193,7 +193,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 				List<U> usecases = new ArrayList<>();
 				if(bSecurity==null) {usecases.addAll(r.getUsecases());}
 				else {usecases.addAll(bSecurity.fUsecases(r));}
-				for(U uc : r.getUsecases())
+				for(U uc : usecases)
 				{
 					List<A> lA2 = new ArrayList<>();
 					if(bSecurity==null)

@@ -16,7 +16,6 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.model.xml.module.ts.TimeSeries;
 import org.metachart.xml.chart.Data;
-import org.metachart.xml.chart.DataSet;
 import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,10 +61,10 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 	public <E extends Enum<E>> void initInterval(E interval) throws UtilsNotFoundException {this.interval = fTs.fByCode(fbTs.getClassInterval(), interval);}
 	public <E extends Enum<E>> void initWorkspace(E workspace) throws UtilsNotFoundException {this.workspace = fTs.fByCode(fbTs.getClassWorkspace(), workspace);}
 
-	
-	public DataSet build(List<DATA> datas)
+		
+	public Ds build2(List<DATA> datas)
 	{
-		DataSet ds = new DataSet();
+		Ds ds = new Ds();
 		
 		for(DATA data: datas)
 		{
@@ -77,23 +76,6 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		return ds;	
 	}
 	
-	public static DataSet build(TimeSeries timeSeries)
-	{
-		DataSet ds = new DataSet();
-		
-		for(org.jeesl.model.xml.module.ts.Data tsD: timeSeries.getData())
-		{
-			if (tsD.isSetValue())
-			{
-				Data cd = new Data();
-				cd.setRecord(tsD.getRecord());
-
-				cd.setY(tsD.getValue());
-				ds.getData().add(cd);
-			}
-		}
-		return ds;	
-	}
 	public static Ds build2(TimeSeries timeSeries)
 	{
 		Ds ds = new Ds();

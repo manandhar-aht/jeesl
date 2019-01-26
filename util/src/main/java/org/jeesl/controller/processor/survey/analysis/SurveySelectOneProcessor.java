@@ -1,12 +1,8 @@
 package org.jeesl.controller.processor.survey.analysis;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.controller.handler.module.SurveyAnalysisCacheHandler;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
-import org.jeesl.factory.json.module.survey.JsonSurveyValueFactory;
 import org.jeesl.factory.mc.survey.McOptionDataSetFactory;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
@@ -35,11 +31,6 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.job.JeeslJobCache;
 import org.jeesl.interfaces.model.system.job.JeeslJobTemplate;
-import org.jeesl.model.json.JsonFlatFigure;
-import org.jeesl.model.json.JsonFlatFigures;
-import org.jeesl.model.json.module.survey.JsonSurveyValue;
-import org.jeesl.model.pojo.map.generic.Nested2Map;
-import org.metachart.xml.chart.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

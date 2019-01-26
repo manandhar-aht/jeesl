@@ -8,7 +8,7 @@ import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;
 import org.jeesl.model.json.JsonFlatFigure;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.metachart.factory.xml.chart.XmlDataFactory;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,10 +25,10 @@ public class McOptionDataSetFactory <OPTION extends EjbWithId>
 		this.tfName=tfName;
 	}
 	
-	public DataSet build(JsonFlatFigures figures, List<OPTION> list)
+	public Ds build(JsonFlatFigures figures, List<OPTION> list)
 	{
-		DataSet dsOption = new DataSet();
-		DataSet dsValue = new DataSet();
+		Ds dsOption = new Ds();
+		Ds dsValue = new Ds();
 		Map<Long,OPTION> map = EjbIdFactory.toIdMap(list);
 		
         for(JsonFlatFigure f : figures.getFigures())
@@ -37,11 +37,10 @@ public class McOptionDataSetFactory <OPTION extends EjbWithId>
             dsValue.getData().add(XmlDataFactory.build(f.getL3()));
         }
         
-        DataSet ds = new DataSet();
-        ds.getDataSet().add(dsOption);
-        ds.getDataSet().add(dsValue);
+        Ds ds = new Ds();
+        ds.getDs().add(dsOption);
+        ds.getDs().add(dsValue);
 
 		return ds;
 	}
-	
 }

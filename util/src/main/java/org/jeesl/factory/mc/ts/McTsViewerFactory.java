@@ -6,7 +6,6 @@ import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
 import org.metachart.factory.xml.chart.XmlDataFactory;
 import org.metachart.factory.xml.chart.XmlDataSetFactory;
-import org.metachart.xml.chart.DataSet;
 import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +20,9 @@ public class McTsViewerFactory <TS extends JeeslTimeSeries<?,?,?>,
 
 	}
 	
-	public DataSet build(List<DATA> list)
+	public Ds build2(List<DATA> list)
 	{
-		DataSet dsValue = XmlDataSetFactory.build();
+		Ds dsValue = XmlDataSetFactory.build();
 		for(DATA d : list)
 		{
 			if(d.getValue() != null && d.getRecord() != null)
@@ -33,19 +32,5 @@ public class McTsViewerFactory <TS extends JeeslTimeSeries<?,?,?>,
 
 		}
 		return XmlDataSetFactory.build(dsValue);
-	}
-	
-	public Ds build2(List<DATA> list)
-	{
-		Ds dsValue = XmlDataSetFactory.build2();
-		for(DATA d : list)
-		{
-			if(d.getValue() != null && d.getRecord() != null)
-			{
-				dsValue.getData().add(XmlDataFactory.build(d.getValue(), d.getRecord()));
-			}
-
-		}
-		return XmlDataSetFactory.build2(dsValue);
 	}
 }

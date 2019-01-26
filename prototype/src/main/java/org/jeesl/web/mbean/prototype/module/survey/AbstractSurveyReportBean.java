@@ -61,7 +61,7 @@ import org.jeesl.model.json.JsonFlatFigures;
 import org.jeesl.model.json.module.survey.JsonSurveyValue;
 import org.jeesl.model.json.module.survey.JsonSurveyValues;
 import org.jeesl.model.pojo.map.generic.Nested2Map;
-import org.metachart.xml.chart.DataSet;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +116,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 	private McOptionDataSetFactory<OPTION> mfOption;	
 	private final EjbSurveyDomainQueryFactory<L,D,DOMAIN,QUERY,PATH> efDomainQuery;
 	
-	private final Map<QUESTION,DataSet> mapDsOption; public Map<QUESTION, DataSet> getMapDsOption() {return mapDsOption;}
+	private final Map<QUESTION,Ds> mapDsOption; public Map<QUESTION,Ds> getMapDsOption() {return mapDsOption;}
 	private final Map<QUESTION,List<TOOL>> mapTool; public Map<QUESTION,List<TOOL>> getMapTool() {return mapTool;}
 	private final Map<SECTION,List<QUESTION>> mapQuestion; public Map<SECTION,List<QUESTION>> getMapQuestion() {return mapQuestion;}
 	
@@ -147,7 +147,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 		
 		mapQuestion = new HashMap<SECTION,List<QUESTION>>();
 		mapTool = new HashMap<QUESTION,List<TOOL>>();
-		mapDsOption = new HashMap<QUESTION,DataSet>();
+		mapDsOption = new HashMap<QUESTION,Ds>();
 		
 		mapToolAttributeXpath = new HashMap<TOOL,String>();
 		mapToolPathAttribute = new HashMap<TOOL,DATTRIBUTE>();
@@ -271,7 +271,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 								
 								if(!efTool.withDomainQuery(tool))
 								{
-									DataSet ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
+									Ds ds2 = mfOption.build(ff,bSurvey.getMapOption().get(q));
 									mapDsOption.put(q,ds2);
 								}
 								else

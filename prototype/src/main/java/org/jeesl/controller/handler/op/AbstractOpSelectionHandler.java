@@ -57,7 +57,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
     
 	@Override public void selectTb() {}
 	
-	@Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException
+	@Override public void addEntity(T item) throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
     {
     	op = item;
     	addEntity();
@@ -75,7 +75,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 
-    @Override public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException
+    @Override public void addEntity() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
     {
         if(op!=null && !tbList.contains(op))
         {
@@ -85,7 +85,7 @@ public abstract class AbstractOpSelectionHandler <T extends EjbWithId> implement
         reset(false,true,true);
     }
 
-    @Override public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException
+    @Override public void removeEntity() throws UtilsLockingException, UtilsConstraintViolationException, UtilsNotFoundException
     {
         if(tbList.contains(tb))
         {

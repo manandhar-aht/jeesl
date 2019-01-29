@@ -54,7 +54,10 @@
 							<h:outputText value="#{cc.attrs.bean.algorithm.position}"/>
 							
 							<p:outputLabel value="#{msg.jeeslSurveyValidationAlgorithmCode}"/>
-							<h:outputText value="#{cc.attrs.bean.algorithm.code}"/>
+							<p:inputText value="#{cc.attrs.bean.algorithm.code}"/>
+							
+							<p:outputLabel value="#{msg.jeeslSurveyValidationAlgorithmConfig}"/>
+							<p:inputText value="#{cc.attrs.bean.algorithm.config}"/>
 						</p:panelGrid>
 						<aht:tabTranslationEditor value="#{cc.attrs.bean.algorithm}" withDescription="true" keys="#{cc.attrs.localeKeys}" />
 					</p:panel>

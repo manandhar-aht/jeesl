@@ -18,4 +18,6 @@ public interface JeeslSurveyValidationAlgorithm<L extends UtilsLang, D extends U
 {
 	public enum Attributes{validation}
 
+	String getConfig();
+	void setConfig(String config);
 }

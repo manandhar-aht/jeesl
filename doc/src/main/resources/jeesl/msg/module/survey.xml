@@ -526,12 +526,19 @@
 	    	</s:langs>
     </s:translation>
 	<s:translation key="jeeslSurveyValidationAlgorithmCode">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Code"/>
-	    		<s:lang key="en" translation="Code"/>
-	    		<s:lang key="fr" translation="Code"/>
-	    	</s:langs>
+    	<s:langs>
+    		<s:lang key="de" translation="Code"/>
+    		<s:lang key="en" translation="Code"/>
+    		<s:lang key="fr" translation="Code"/>
+    	</s:langs>
     </s:translation>
+	<s:translation key="jeeslSurveyValidationAlgorithmConfig">
+    	<s:langs>
+    		<s:lang key="de" translation="Konfiguration"/>
+    		<s:lang key="en" translation="Config"/>
+    		<s:lang key="fr" translation="Config"/>
+    	</s:langs>
+    </s:translation>    
 	<s:translation key="jeeslSurveyRecords">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Einträge"/>

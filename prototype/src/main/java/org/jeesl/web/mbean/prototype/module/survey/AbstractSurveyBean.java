@@ -132,7 +132,6 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final SbSingleHandler<SURVEY> sbhSurvey; public SbSingleHandler<SURVEY> getSbhSurvey() {return sbhSurvey;}
 	protected final SbSingleHandler<LOC> sbhLocale; public SbSingleHandler<LOC> getSbhLocale() {return sbhLocale;}
 	
-	//???
 	protected final Comparator<DENTITY> cpDomainEntity;
 	
 	protected List<VERSION> versions; public List<VERSION> getVersions(){return versions;}
@@ -182,8 +181,8 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-//		super.initJeeslAdmin(bTranslation, bMessage);
-		super.initAdmin(localeCodes.toArray(new String[localeCodes.size()]),cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation, bMessage);
+//		super.initAdmin(localeCodes.toArray(new String[localeCodes.size()]),cL,cD,bMessage);
 
 		this.fTemplate = fTemplate;
 		this.fCore = fCore;

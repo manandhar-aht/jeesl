@@ -140,6 +140,7 @@ public abstract class AbstractAdminSurveyValidationBean <L extends UtilsLang, D 
 		logger.info(AbstractLogMessage.addEntity(fbAnalysis.getClassAnalysis()));
 		algorithm = efValidationAlgorithm.build(algorithms);
 		algorithm.setName(efLang.createEmpty(localeCodes));
+		algorithm.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void saveAlgorithm() throws UtilsConstraintViolationException, UtilsLockingException

@@ -48,7 +48,7 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 	
 	public Image build(String localeCode, E element)
 	{
-		logger.info("Building Image ");
+		logger.trace("Building Image ");
 		Image xml = XmlImageFactory.centerPercent(element.getId(), 80);
 		
 		if(element.getContent().containsKey(localeCode))
@@ -59,19 +59,18 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 				Section section = ofxMarkup.build(content.getMarkup().getCode(),content.getLang());
 				Paragraph p = SectionXpath.getFirstParagraph(section);
 				String s = p.getContent().get(0).toString();
-				logger.info(s);
+				logger.trace(s);
 				xml.setTitle(XmlTitleFactory.build(s));
 			}
 			catch (ExlpXpathNotFoundException e) {e.printStackTrace();}
 		}
-		xml.setMedia(XmlMediaFactory.build(element.getId()+".png",element.getId()+".png"));
-		
 		try
 		{
 			frh.init(element,false);
 			List<FM> metas = frh.getMetas();
 			for(FM m : metas)
 			{
+				xml.setMedia(XmlMediaFactory.build(element.getId()+".png",element.getId()+".png"));
 				try
 				{
 					logger.info(m.toString()+" "+m.getType().getCode());
@@ -83,13 +82,11 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 				catch (IOException e) {e.printStackTrace();}
 				catch (UtilsNotFoundException e) {e.printStackTrace();}
 			}
-			
 		}
 		catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 		catch (UtilsLockingException e) {e.printStackTrace();}
 		
 		JaxbUtil.info(xml);
-		
 		return xml;
 	}
 }

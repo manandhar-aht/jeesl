@@ -42,4 +42,10 @@ public class GenericLocaleProvider <L extends UtilsLang,D extends UtilsDescripti
 	}
 
 	@Override public boolean hasLocale(String localeCode){return mapLocales.containsKey(localeCode);}
+
+	@Override public String getPrimaryLocaleCode()
+	{
+		if(!localeCodes.isEmpty()) {return localeCodes.get(0);}
+		return null;
+	}
 }

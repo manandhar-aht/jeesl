@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.jeesl.interfaces.model.system.locale.JeeslLocaleProvider;
 import org.openfuxml.content.ofx.Paragraph;
+import org.openfuxml.content.ofx.Title;
 import org.openfuxml.content.table.Cell;
 import org.openfuxml.factory.xml.ofx.content.structure.XmlParagraphFactory;
+import org.openfuxml.factory.xml.ofx.content.text.XmlTitleFactory;
 import org.openfuxml.factory.xml.table.OfxCellFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,5 +47,15 @@ public class OfxMultiLocaleFactory<L extends UtilsLang, LOC extends UtilsStatus<
 			
 		}
 		return paragraphs;
+	}
+	
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(JeeslLocaleProvider<LOC> lp, UtilsStatus<S,L,D> status) {return title(lp,status,null);}
+	public <S extends UtilsStatus<S,L,D>, D extends UtilsDescription> Title title(JeeslLocaleProvider<LOC> lp, UtilsStatus<S,L,D> status, String suffix)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(status.getName().get(lp.getPrimaryLocaleCode()).getLang());
+		if(suffix!=null) {sb.append(" ").append(suffix);}
+		
+		return XmlTitleFactory.build(lp.getPrimaryLocaleCode(), sb.toString());
 	}
 }

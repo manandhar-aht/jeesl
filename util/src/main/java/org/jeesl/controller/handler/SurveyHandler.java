@@ -93,7 +93,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} //public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public static boolean debug = false;
+	public static boolean debug = true;
 	public static int debugDelay = 1000;
 	
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
@@ -200,8 +200,12 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		{
 			for(SECTION s : bSurvey.getMapSection().get(template))
 			{
-				if(processSection(s))
-				{
+				boolean isProcessSection = processSection(s);
+				boolean hasQuestions = (bSurvey.getMapQuestion()!=null) && (bSurvey.getMapQuestion().containsKey(s));
+				if(SurveyHandler.debug){logger.warn("Processing Section "+s.toString()+" process:"+isProcessSection+" hasQuestions:"+hasQuestions);}
+				
+				if(isProcessSection && hasQuestions)
+				{		
 					for(QUESTION q : bSurvey.getMapQuestion().get(s))
 					{	
 						if(q.isVisible())

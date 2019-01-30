@@ -553,6 +553,13 @@
     		<s:lang key="fr" translation="Validations"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslSurveyValidation">
+    	<s:langs>
+    		<s:lang key="de" translation="Validierung"/>
+    		<s:lang key="en" translation="Validation"/>
+    		<s:lang key="fr" translation="Validation"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslSurveyRecords">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Einträge"/>

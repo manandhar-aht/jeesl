@@ -18,5 +18,9 @@ public interface JeeslSurveyValidation<QUESTION extends JeeslSurveyQuestion<?,?,
 	QUESTION getQuestion();
 	void setQuestion(QUESTION question);
 	
+	VALGORITHM getAlgorithm();
+	void setAlgorithm(VALGORITHM algorithm);
 	
+	String getConfig();
+	void setConfig(String config);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
+import org.jeesl.interfaces.model.module.survey.simple.JeeslSurveySimpleAnswer;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
@@ -17,7 +18,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 									MATRIX extends JeeslSurveyMatrix<L,D,?,OPTION>,
 									DATA extends JeeslSurveyData<L,D,?,?,?>,
 									OPTION extends JeeslSurveyOption<L,D>>
-			extends Serializable,EjbWithId,EjbSaveable
+			extends Serializable,EjbWithId,EjbSaveable,JeeslSurveySimpleAnswer
 {
 	public enum Attributes{data,question,option,valueBoolean}
 	
@@ -32,12 +33,7 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 	
 	Date getValueDate();
 	void setValueDate(Date getValueDate);
-	
-	Double getValueDouble();
-	void setValueDouble(Double valueDouble);
-	
-	Integer getValueNumber();
-	void setValueNumber(Integer valueNumber);
+
 	
 	String getValueText();
 	void setValueText(String valueText);

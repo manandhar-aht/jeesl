@@ -626,6 +626,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		reloadValidations();
 	}
 	
+	public void selectValidation()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(validation));}
+		validation = fTemplate.find(fbTemplate.getClassValidation(), validation);
+	}
+	
 	public void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
 	public void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
 	public void reorderConditions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, conditions);}

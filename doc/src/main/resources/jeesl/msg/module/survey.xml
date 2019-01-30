@@ -546,6 +546,13 @@
     		<s:lang key="fr" translation="Config"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslSurveyValidationConfig">
+    	<s:langs>
+    		<s:lang key="de" translation="Konfiguration"/>
+    		<s:lang key="en" translation="Config"/>
+    		<s:lang key="fr" translation="Config"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslSurveyValidations">
     	<s:langs>
     		<s:lang key="de" translation="Validierungen"/>

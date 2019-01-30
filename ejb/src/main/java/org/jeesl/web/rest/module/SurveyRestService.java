@@ -173,7 +173,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 	
 		String localeCode = "en";
 		jfContainer = new JsonContainerFactory(localeCode,JsonStatusQueryProvider.statusExport());
-		jfAnswer = fbCore.jsonAnswer(JsonSurveyQueryProvider.answers());
+		jfAnswer = fbCore.jsonAnswer(localeCode,JsonSurveyQueryProvider.answers());
 		
 		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		

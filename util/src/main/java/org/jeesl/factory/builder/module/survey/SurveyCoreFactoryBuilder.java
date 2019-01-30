@@ -177,8 +177,8 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 		return new JsonSurveyFactory<L,D,SURVEY,SS>(localeCode,q);
 	}
 	
-	public JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jsonAnswer(org.jeesl.model.json.survey.Answer q)
+	public JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jsonAnswer(String localeCode, org.jeesl.model.json.survey.Answer q)
 	{
-		return new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q);
+		return new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q);
 	}
 }

@@ -107,6 +107,7 @@ public class JsonSurveyQueryProvider
 		json.setValueDouble(2d);
 		json.setValueNumber(1);
 		json.setValueText("");
+		json.setRemark("");
 		json.setMatrix(matrix());
 		json.setOption(JsonSurveyOptionFactory.id(0));
 		return json;

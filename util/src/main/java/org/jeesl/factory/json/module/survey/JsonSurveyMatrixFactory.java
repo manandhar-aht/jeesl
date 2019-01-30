@@ -42,12 +42,12 @@ public class JsonSurveyMatrixFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	private JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfAnswer;
 
-	public JsonSurveyMatrixFactory(Matrix q)
+	public JsonSurveyMatrixFactory(String localeCode, Matrix q)
 	{
 		this.q=q;
 		if(q.getCells()!=null && !q.getCells().isEmpty() && q.getCells().get(0).getAnswer()!=null)
 		{
-			jfAnswer = new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getCells().get(0).getAnswer());
+			jfAnswer = new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getCells().get(0).getAnswer());
 		}
 		
 	}

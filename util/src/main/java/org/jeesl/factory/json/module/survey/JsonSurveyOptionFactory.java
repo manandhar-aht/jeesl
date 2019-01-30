@@ -22,8 +22,8 @@ public class JsonSurveyOptionFactory<OPTION extends JeeslSurveyOption<?,?>>
 	{
 		Option json = build();
 		
-		json.setId(ejb.getId());
-		json.setPosition(ejb.getPosition());
+		if(q.getId()!=null) {json.setId(ejb.getId());}
+		if(q.getPosition()!=null) {json.setPosition(ejb.getPosition());}
 		if(q.isSetCode()){json.setCode(ejb.getCode());}
 		if(q.isSetLabel()) {json.setLabel(ejb.getName().get(localeCode).getLang());}
 		if(q.isSetDescription()) {json.setDescription(ejb.getDescription().get(localeCode).getLang());}

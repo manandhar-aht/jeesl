@@ -39,12 +39,14 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
 	private JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfMatrix;
+	private JsonSurveyOptionFactory<OPTION> jfOption;
 	
-	public JsonSurveyAnswerFactory(Answer q)
+	public JsonSurveyAnswerFactory(String localeCode, Answer q)
 	{
 		this.q=q;
 		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
-		if(q.getMatrix()!=null) {jfMatrix = new JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getMatrix());}
+		if(q.getMatrix()!=null) {jfMatrix = new JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getMatrix());}
+		if(q.getOption()!=null) {jfOption = new JsonSurveyOptionFactory<OPTION>(localeCode,q.getOption());}
 	}
 	
 	public Answer build(ANSWER answer)
@@ -58,10 +60,12 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 		if(q.getValueNumber()!=null && answer.getValueNumber()!=null) {json.setValueNumber(answer.getValueNumber());}
 		if(q.getValueDouble()!=null && answer.getValueDouble()!=null) {json.setValueDouble(answer.getValueDouble());}
 		
+		if(q.getRemark()!=null && answer.getRemark()!=null) {json.setRemark(answer.getRemark());}
+		if(q.getOption()!=null && answer.getOption()!=null) {json.setOption(jfOption.build(answer.getOption()));}
+		
 		if(q.getMatrix()!=null && answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
 		{
 			json.setMatrix(jfMatrix.build(answer.getMatrix()));
-			
 		}
 		return json;
 	}
@@ -74,6 +78,8 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 		if(q.getValueBoolean()!=null && matrix.getValueBoolean()!=null) {json.setValueBoolean(matrix.getValueBoolean());}
 		if(q.getValueNumber()!=null && matrix.getValueNumber()!=null) {json.setValueNumber(matrix.getValueNumber());}
 		if(q.getValueDouble()!=null && matrix.getValueDouble()!=null) {json.setValueDouble(matrix.getValueDouble());}
+		
+		if(q.getOption()!=null && matrix.getOption()!=null) {json.setOption(jfOption.build(matrix.getOption()));}
 		
 		return json;
 	}

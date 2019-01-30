@@ -1,11 +1,9 @@
 package org.jeesl.model.json.survey;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyAnswer;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;

@@ -61,6 +61,11 @@ public class Answer implements Serializable,JeeslSimpleSurveyAnswer
 	public Option getOption() {return option;}
 	public void setOption(Option option) {this.option = option;}
 	
+	@JsonProperty("matrix")
+	private Matrix matrix;
+	public Matrix getMatrix() {return matrix;}
+	public void setMatrix(Matrix matrix) {this.matrix = matrix;}
+	
 	@Override public String toString()
 	{
 		StringBuffer sb = new StringBuffer();	

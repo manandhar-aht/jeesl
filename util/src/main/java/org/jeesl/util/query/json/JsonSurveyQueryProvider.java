@@ -8,7 +8,9 @@ import org.jeesl.factory.json.module.survey.JsonSurveyOptionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyQuestionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveySectionFactory;
 import org.jeesl.model.json.survey.Answer;
+import org.jeesl.model.json.survey.Cell;
 import org.jeesl.model.json.survey.Condition;
+import org.jeesl.model.json.survey.Matrix;
 import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
 import org.jeesl.model.json.survey.Section;
@@ -105,7 +107,28 @@ public class JsonSurveyQueryProvider
 		json.setValueDouble(2d);
 		json.setValueNumber(1);
 		json.setValueText("");
+		json.setMatrix(matrix());
+		json.setOption(JsonSurveyOptionFactory.id(0));
+		return json;
+	}
+	
+	private static Matrix matrix()
+	{
+		Answer answer = new Answer();
+		answer.setValueBoolean(true);
+		answer.setValueDouble(2d);
+		answer.setValueNumber(1);
+		answer.setValueText("");
+		answer.setOption(JsonSurveyOptionFactory.id(0));
 		
+		Cell cell = new Cell();
+		cell.setColumn(0l);
+		cell.setRow(0l);
+		cell.setAnswer(answer);
+		
+		Matrix json = new Matrix();
+		json.setCells(new ArrayList<Cell>());
+		json.getCells().add(cell);
 		return json;
 	}
 }

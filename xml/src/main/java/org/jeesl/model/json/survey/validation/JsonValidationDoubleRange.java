@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonRootName(value="intRage")
-public class JsonValidationIntRange implements Serializable
+public class JsonValidationDoubleRange implements Serializable
 {
 	public static final long serialVersionUID=1;
 

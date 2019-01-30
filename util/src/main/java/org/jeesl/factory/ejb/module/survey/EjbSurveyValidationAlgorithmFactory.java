@@ -23,6 +23,7 @@ public class EjbSurveyValidationAlgorithmFactory<VALGORITHM extends JeeslSurveyV
 		try
 		{
 			ejb = cValgorithm.newInstance();
+			ejb.setVisible(false);
 			if(list==null) {ejb.setPosition(1);}
 			else {ejb.setPosition(list.size()+1);}
 		}

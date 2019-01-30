@@ -1,7 +1,9 @@
 package org.jeesl.web.rest.module;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyTemplateFacade;
@@ -15,6 +17,7 @@ import org.jeesl.factory.builder.module.survey.SurveyTemplateFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyMatrixFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyQuestionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
@@ -147,6 +150,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 	private EjbSurveyFactory<L,D,SURVEY,SS,TEMPLATE> efSurvey;
 	private EjbSurveyDataFactory<SURVEY,DATA,CORRELATION> efData;
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,MATRIX,DATA,OPTION> efAnswer;
+	private EjbSurveyMatrixFactory<ANSWER,MATRIX,OPTION> efMatrix;
 	
 	private final JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfAnswer;
 	
@@ -193,6 +197,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		efSurvey = fbCore.survey();
 		efData = fbCore.data();
 		efAnswer = fbCore.answer();
+		efMatrix = fbCore.ejbMatrix();
 	}
 	
 	public static <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
@@ -471,10 +476,12 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 	public org.jeesl.model.json.survey.Data jsonAnswers(DATA data)
 	{
 		org.jeesl.model.json.survey.Data result = new org.jeesl.model.json.survey.Data();
-		List<DATA> list = new ArrayList<DATA>();
-		list.add(data);
-		for(ANSWER a : fSurvey.fAnswers(list))
+		List<ANSWER> answers = fSurvey.fAnswers(Arrays.asList(data));
+		Map<ANSWER,List<MATRIX>> map = efMatrix.toMapAnswer(fSurvey.fCells(answers));
+		
+		for(ANSWER a : answers)
 		{
+			if(map.containsKey(a)) {a.setMatrix(map.get(a));}
 			result.getAnswers().add(jfAnswer.build(a));
 		}
 

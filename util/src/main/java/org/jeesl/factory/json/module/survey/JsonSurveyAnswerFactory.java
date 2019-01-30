@@ -38,11 +38,13 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 	private final Answer q;
 	
 	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
+	private JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfMatrix;
 	
 	public JsonSurveyAnswerFactory(Answer q)
 	{
 		this.q=q;
 		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
+		if(q.getMatrix()!=null) {jfMatrix = new JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getMatrix());}
 	}
 	
 	public Answer build(ANSWER answer)
@@ -52,12 +54,32 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 		if(q.getQuestion()!=null) {json.setQuestion(jfQuestion.build(answer.getQuestion()));}
 		
 		if(q.getValueText()!=null && answer.getValueText()!=null) {json.setValueText(answer.getValueText());}
+		if(q.getValueBoolean()!=null && answer.getValueBoolean()!=null) {json.setValueBoolean(answer.getValueBoolean());}
+		if(q.getValueNumber()!=null && answer.getValueNumber()!=null) {json.setValueNumber(answer.getValueNumber());}
+		if(q.getValueDouble()!=null && answer.getValueDouble()!=null) {json.setValueDouble(answer.getValueDouble());}
+		
+		if(q.getMatrix()!=null && answer.getQuestion().getShowMatrix()!=null && answer.getQuestion().getShowMatrix())
+		{
+			json.setMatrix(jfMatrix.build(answer.getMatrix()));
+			
+		}
+		return json;
+	}
+	
+	public Answer build(MATRIX matrix)
+	{
+		Answer json = build();
+		
+		if(q.getValueText()!=null && matrix.getValueText()!=null) {json.setValueText(matrix.getValueText());}
+		if(q.getValueBoolean()!=null && matrix.getValueBoolean()!=null) {json.setValueBoolean(matrix.getValueBoolean());}
+		if(q.getValueNumber()!=null && matrix.getValueNumber()!=null) {json.setValueNumber(matrix.getValueNumber());}
+		if(q.getValueDouble()!=null && matrix.getValueDouble()!=null) {json.setValueDouble(matrix.getValueDouble());}
+		
 		return json;
 	}
 	
 	public static Answer build(){return new Answer();}
 	public static Answer build(Question question){Answer json = build();json.setQuestion(question);return json;}
-	
 	
 	public static Answer build(long id)
 	{

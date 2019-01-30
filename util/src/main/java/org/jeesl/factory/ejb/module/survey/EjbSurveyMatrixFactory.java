@@ -1,6 +1,9 @@
 package org.jeesl.factory.ejb.module.survey;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyMatrix;
@@ -46,5 +49,18 @@ public class EjbSurveyMatrixFactory<ANSWER extends JeeslSurveyAnswer<?,?,?,MATRI
 			map.put(m.getRow(), m.getColumn(), m);
 		}
 		return map;
+	}
+	
+	public Map<ANSWER,List<MATRIX>> toMapAnswer(List<MATRIX> cells)
+	{
+		 Map<ANSWER,List<MATRIX>> map = new HashMap<ANSWER,List<MATRIX>>();
+		 
+		 for(MATRIX cell : cells)
+		 {
+			 if(!map.containsKey(cell.getAnswer())) {map.put(cell.getAnswer(),new ArrayList<MATRIX>());}
+			 map.get(cell.getAnswer()).add(cell);
+		 }
+		 
+		 return map;
 	}
 }

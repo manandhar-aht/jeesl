@@ -32,7 +32,8 @@
 						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAlgorithms()}" update="@form"/>
 						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAlgorithm()}" update=":#{cc.id}:grid"/>
 						<p:column>
-                     		<h:outputText value="#{algorithm.position}" />
+							<h:graphicImage rendered="#{not algorithm.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+							<h:outputText rendered="#{algorithm.visible}" value="#{algorithm.position}" />
 						</p:column>
 						<p:column headerText="#{msg.jeeslSurveyValidationAlgorithm}">
 							<h:outputText value="#{algorithm.name[localeCode].lang}" />
@@ -52,6 +53,9 @@
 							
 							<p:outputLabel value="#{msg.aupSurveyQuestionPosition}"/>
 							<h:outputText value="#{cc.attrs.bean.algorithm.position}"/>
+							
+							<p:outputLabel value="#{msg.jeeslVisible}"/>
+							<p:selectBooleanCheckbox value="#{cc.attrs.bean.algorithm.visible}" />
 							
 							<p:outputLabel value="#{msg.jeeslSurveyValidationAlgorithmCode}"/>
 							<p:inputText value="#{cc.attrs.bean.algorithm.code}"/>

@@ -136,7 +136,6 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	public List<Option> getOptions() {return options;}
 	public void setOptions(List<Option> options) {this.options = options;}
 
-	
 	@JsonProperty("condition")
 	private String condition;
 	public String getCondition() {return condition;}

@@ -20,4 +20,7 @@ public interface JeeslSurveyValidationAlgorithm<L extends UtilsLang, D extends U
 
 	String getConfig();
 	void setConfig(String config);
+	
+	Boolean getVisible();
+	void setVisible(Boolean visible);
 }

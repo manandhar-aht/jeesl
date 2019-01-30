@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
@@ -71,7 +72,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-						VALIDATION extends JeeslSurveyValidation<QUESTION>,
+						VALIDATION extends JeeslSurveyValidation<QUESTION,VALGORITHM>,
 						QE extends UtilsStatus<QE,L,D>,
 						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
@@ -101,11 +102,13 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected List<VERSION> nestedVersions; public List<VERSION> getNestedVersions(){return nestedVersions;}
 	protected List<OPTIONS> optionSets; public List<OPTIONS> getOptionSets(){return optionSets;}
 	private final List<CONDITION> conditions; public List<CONDITION> getConditions() {return conditions;}
+	private final List<VALIDATION> validations; public List<VALIDATION> getValidations() {return validations;}
 	private final List<QUESTION> triggerQuestions; public List<QUESTION> getTriggerQuestions() {return triggerQuestions;}
 	private final  List<OPTION> triggerOptions; public List<OPTION> getTriggerOptions(){return triggerOptions;}
 	protected List<OPTION> options; public List<OPTION> getOptions(){return options;}
 	protected List<SCHEME> schemes; public List<SCHEME> getSchemes() {return schemes;}
 	protected List<SCORE> scores; public List<SCORE> getScores() {return scores;}
+	private final List<VALGORITHM> algorithms; public List<VALGORITHM> getAlgorithms() {return algorithms;}
 	
 	protected VERSION version; public VERSION getVersion() {return version;}public void setVersion(VERSION version) {this.version = version;}
 	protected VERSION nestedVersion; public VERSION getNestedVersion() {return nestedVersion;} public void setNestedVersion(VERSION nestedVersion) {this.nestedVersion = nestedVersion;}
@@ -114,6 +117,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	protected SECTION section; public SECTION getSection(){return section;} public void setSection(SECTION section){this.section = section;}
 	protected QUESTION question; public QUESTION getQuestion(){return question;} public void setQuestion(QUESTION question){this.question = question;}
 	private CONDITION condition; public CONDITION getCondition() {return condition;} public void setCondition(CONDITION condition) {this.condition = condition;}
+	private VALIDATION validation; public VALIDATION getValidation() {return validation;}public void setValidation(VALIDATION validation) {this.validation = validation;}
+	
 	protected OPTIONS optionSet; public OPTIONS getOptionSet() {return optionSet;} public void setOptionSet(OPTIONS optionSet) {this.optionSet = optionSet;}
 	private SCORE score; public SCORE getScore() {return score;} public void setScore(SCORE score) {this.score = score;}
 	protected OPTION option; public OPTION getOption(){return option;} public void setOption(OPTION option){this.option = option;}
@@ -133,14 +138,16 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		options = new ArrayList<OPTION>();
 
 		conditions = new ArrayList<CONDITION>();
+		validations = new ArrayList<VALIDATION>();
 		triggerQuestions = new ArrayList<QUESTION>();
 		triggerOptions = new ArrayList<OPTION>();
-		
+		algorithms = new ArrayList<VALGORITHM>();
 		
 		uiHelper = new UiHelperSurvey<VERSION,SECTION>();
 	}
 	
-	protected void initSuperTemplate(String userLocale, String[] localeCodes, JeeslFacesMessageBean bMessage,
+	protected void postConstructTemplate(String userLocale, String[] localeCodes,
+			JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
 			JeeslSurveyTemplateFacade<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fCore,
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,AT,ATT> fAnalysis,
@@ -150,6 +157,8 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		initPageSettings();
 		super.initLocales(userLocale);
 
+		algorithms.addAll(fTemplate.allOrderedPosition(fbTemplate.getClassValidationAlgorithm()));
+		
 		versions = new ArrayList<VERSION>();
 		sbhCategory.silentCallback();
 	}
@@ -169,11 +178,12 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 	}
 	
-	protected void cancelAll() {clear(true,true,true,true,true,true,true,true,true);}
-	public void cancelScheme(){clear(false,false,false,false,false,true,false,true,true);}
-	public void calcelScore(){clear(false,false,false,false,false,false,true,true,true);}
-	public void cancelCondition() {clear(false,false,false,false,false,false,true,true,true);}
-	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme, boolean rScore, boolean rSet, boolean rCondition)
+	protected void cancelAll() {clear(true,true,true,true,true,true,true,true,true,true);}
+	public void cancelScheme(){clear(false,false,false,false,false,true,false,true,true,true);}
+	public void calcelScore(){clear(false,false,false,false,false,false,true,true,true,true);}
+	public void cancelCondition() {clear(false,false,false,false,false,false,true,true,true,true);}
+	protected void clear(boolean cTemplate, boolean cVersion, boolean cSection, boolean cQuestion, boolean cOption, boolean rScheme, boolean rScore, boolean rSet,
+						boolean rCondition, boolean rValidation)
 	{
 		if(cTemplate){template = null;}
 		if(cVersion){version = null;}
@@ -184,6 +194,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(rScore){score = null;}
 		if(rSet){optionSet = null;}
 		if(rCondition) {condition=null;}
+		if(rValidation) {validation=null;}
 	}
 	
 	protected void clearSelection()
@@ -299,7 +310,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		logger.info(AbstractLogMessage.rmEntity(version));
 		fCore.rmVersion(version);
-		clear(true,true,true,true,true,true,true,true,true);
+		clear(true,true,true,true,true,true,true,true,true,true);
 		reloadVersions();
 	}
 	
@@ -355,7 +366,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void addSet()
 	{
 		logger.info(AbstractLogMessage.addEntity(fbTemplate.getOptionSetClass()));
-		clear(false,false,true,true,true,true,true,false,true);
+		clear(false,false,true,true,true,true,true,false,true,true);
 		optionSet = efOptionSet.build(template,optionSets);
 		optionSet.setName(efLang.createEmpty(sbhLocale.getList()));
 	}
@@ -371,7 +382,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void selectSet()
 	{
 		logger.info(AbstractLogMessage.selectEntity(optionSet));
-		clear(false,false,true,true,true,true,true,false,true);
+		clear(false,false,true,true,true,true,true,false,true,true);
 		optionSet = efLang.persistMissingLangs(fCore, sbhLocale.getList(), optionSet);
 		reloadOptionSet(false);
 	}
@@ -417,7 +428,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		}
 		
 		reloadQuestion();
-		clear(false,false,false,false,true,true,true,true,true);
+		clear(false,false,false,false,true,true,true,true,true,true);
 	}
 
 	private void reloadQuestion()
@@ -428,6 +439,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		Collections.sort(question.getOptions(),cmpOption);
 		options.clear(); options.addAll(question.getOptions());
 		reloadConditions();
+		reloadValidations();
 		bSurvey.updateQuestion(question);
 	}
 	
@@ -446,7 +458,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(question));}
 		fCore.rm(question);
-		clear(false,false,false,true,true,true,true,true,true);
+		clear(false,false,false,true,true,true,true,true,true,true);
 		loadSection();
 	}
 	
@@ -502,7 +514,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.rmEntity(option));}
 		fCore.rmOption(optionSet,option);
-		clear(false,false,true,true,true,true,true,false,true);
+		clear(false,false,true,true,true,true,true,false,true,true);
 		reloadOptionSet(true);
 		bMessage.growlSuccessRemoved();
 	}
@@ -544,12 +556,13 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	
 	private void reloadConditions()
 	{
-		conditions.clear(); conditions.addAll(fTemplate.allForParent(fbTemplate.getClassCondition(), question));
+		conditions.clear();
+		conditions.addAll(fTemplate.allForParent(fbTemplate.getClassCondition(), question));
 	}
 	
 	public void addCondition()
 	{
-		clear(false,false,false,false,true,true,true,true,false);
+		clear(false,false,false,false,true,true,true,true,false,true);
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassCondition()));}
 		QUESTION triggerQuestion = null; if(!triggerQuestions.isEmpty()) {triggerQuestion = triggerQuestions.get(0);}
 		QE element = null; if(!bSurvey.getElements().isEmpty()){element = bSurvey.getElements().get(0);}
@@ -586,18 +599,33 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	public void deleteCondition() throws UtilsConstraintViolationException
 	{
 		fTemplate.rm(condition);
-		clear(false,false,false,false,true,true,true,true,true);
+		clear(false,false,false,false,true,true,true,true,true,true);
 		reloadConditions();
+	}
+	
+	
+	private void reloadValidations()
+	{
+		validations.clear();
+		validations.addAll(fTemplate.allForParent(fbTemplate.getClassValidation(), question));
+	}
+	
+	public void addValidation()
+	{
+		clear(false,false,false,false,true,true,true,true,true,true);
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassValidation()));}
+
+		validation = efValidation.build(question,validations);
 	}
 	
 	public void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}
 	public void reorderQuestions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, questions);}
 	public void reorderConditions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, conditions);}
+	public void reorderValidations() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, validations);}
 	public void reorderOptions() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		PositionListReorderer.reorder(fCore, options);
 		if(questions!=null) {reloadQuestion();}
 		if(optionSet!=null) {reloadOptionSet(true);}
 	}
-	
 }

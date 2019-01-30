@@ -27,6 +27,7 @@
 		<composite:attribute name="withMatrix" required="false" default="false"/>
 		<composite:attribute name="withOptionSets" required="false" default="false"/>
 		<composite:attribute name="withCondition" required="false" default="false"/>
+		<composite:attribute name="withValidation" required="false" default="false"/>
 	</composite:interface>
 	
 <composite:implementation>
@@ -572,6 +573,31 @@
 							
 						</p:panelGrid>
 					</p:panel>
+				</h:form>
+				
+				<h:form id="fValidations" rendered="#{cc.attrs.withValidation and (not empty cc.attrs.bean.question) and (cc.attrs.bean.question.id gt 0)}">
+					<p:dataTable var="validation" value="#{cc.attrs.bean.validations}" rowKey="#{validation.id}"
+								 selection="#{cc.attrs.bean.condition}" selectionMode="single" draggableRows="true">
+						<f:facet name="header">
+							<aht:pfDataTableHeader title="#{msg.jeeslSurveyValidations}">
+								<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addValidation()}" update=":#{cc.id}:fValidations :#{cc.id}:fValidation"/>
+							</aht:pfDataTableHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectValidation()}" update=":#{cc.id}:fValidations :#{cc.id}:fValidation"/>
+						<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderValidations()}" update="@form"/>
+						<p:column>
+							<h:outputText value="#{validation.position}"/>
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{msg.jeeslSurveyValidationAlgorithmS}</f:facet>
+							<h:outputText value="#{validation.id}"/>
+						</p:column>
+						
+						
+					</p:dataTable>
+				</h:form>
+				<h:form id="fValidation" >
+				
 				</h:form>
 			</aht:slot>
 		</aht:row>

@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyAnalysisFacade;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
@@ -27,6 +26,7 @@ import org.jeesl.factory.ejb.module.survey.EjbSurveyScoreFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveySectionFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyTemplateVersionFactory;
+import org.jeesl.factory.ejb.module.survey.EjbSurveyValidationFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysis;
 import org.jeesl.interfaces.model.module.survey.analysis.JeeslSurveyAnalysisQuestion;
@@ -76,7 +76,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-						VALIDATION extends JeeslSurveyValidation<QUESTION>,
+						VALIDATION extends JeeslSurveyValidation<QUESTION,VALGORITHM>,
 						QE extends UtilsStatus<QE,L,D>,
 						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 						UNIT extends UtilsStatus<UNIT,L,D>,
@@ -121,6 +121,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 	protected final EjbSurveySectionFactory<L,D,TEMPLATE,SECTION> efSection;
 	protected final EjbSurveyQuestionFactory<L,D,SECTION,QUESTION,QE,UNIT,OPTIONS,OPTION> efQuestion;
 	protected final EjbSurveyConditionFactory<QUESTION,CONDITION,QE> efCondition;
+	protected final EjbSurveyValidationFactory<QUESTION,VALIDATION> efValidation;
 	protected final EjbSurveyOptionSetFactory<TEMPLATE,OPTIONS> efOptionSet;
 	protected final EjbSurveyOptionFactory<QUESTION,OPTION> efOption;
 	protected final EjbSurveySchemeFactory<SCHEME,TEMPLATE> efScheme;
@@ -157,6 +158,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 		efVersion = fbTemplate.version();
 		efQuestion = fbTemplate.question();
 		efCondition = fbTemplate.ejbCondition();
+		efValidation = fbTemplate.ejbValidation();
 		efScore = fbTemplate.score();
 		efOptionSet = fbCore.optionSet();
 		efOption = fbCore.option();
@@ -181,8 +183,8 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 			JeeslSurveyAnalysisFacade<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,ANALYSIS,AQ,TOOL,ATT> fAnalysis,
 			final JeeslSurveyBean<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION,ATT> bSurvey)
 	{
-		super.initJeeslAdmin(bTranslation, bMessage);
-//		super.initAdmin(localeCodes.toArray(new String[localeCodes.size()]),cL,cD,bMessage);
+//		super.initJeeslAdmin(bTranslation, bMessage);
+		super.initAdmin(localeCodes.toArray(new String[localeCodes.size()]),cL,cD,bMessage);
 
 		this.fTemplate = fTemplate;
 		this.fCore = fCore;

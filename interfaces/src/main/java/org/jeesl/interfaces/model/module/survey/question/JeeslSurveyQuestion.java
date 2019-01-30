@@ -24,7 +24,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescription,
 										SECTION extends JeeslSurveySection<L,D,?,SECTION,?>,
 										CONDITION extends JeeslSurveyCondition<?,QE,OPTION>,
-										VALIDATION extends JeeslSurveyValidation<?>,
+										VALIDATION extends JeeslSurveyValidation<?,?>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,?,?>,
 										UNIT extends UtilsStatus<UNIT,L,D>,

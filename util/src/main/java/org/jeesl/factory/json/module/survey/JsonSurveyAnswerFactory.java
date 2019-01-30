@@ -23,7 +23,7 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 									SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-									VALIDATION extends JeeslSurveyValidation<QUESTION>,
+									VALIDATION extends JeeslSurveyValidation<QUESTION,?>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 									UNIT extends UtilsStatus<UNIT,L,D>,

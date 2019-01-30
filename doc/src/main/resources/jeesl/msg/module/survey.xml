@@ -525,6 +525,13 @@
 	    		<s:lang key="fr" translation="Validation Algorithm"/>
 	    	</s:langs>
     </s:translation>
+    <s:translation key="jeeslSurveyValidationAlgorithmS">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Algorithmus"/>
+	    		<s:lang key="en" translation="Algorithm"/>
+	    		<s:lang key="fr" translation="Algorithm"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslSurveyValidationAlgorithmCode">
     	<s:langs>
     		<s:lang key="de" translation="Code"/>
@@ -538,7 +545,14 @@
     		<s:lang key="en" translation="Config"/>
     		<s:lang key="fr" translation="Config"/>
     	</s:langs>
-    </s:translation>    
+    </s:translation>
+	<s:translation key="jeeslSurveyValidations">
+    	<s:langs>
+    		<s:lang key="de" translation="Validierungen"/>
+    		<s:lang key="en" translation="Validations"/>
+    		<s:lang key="fr" translation="Validations"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslSurveyRecords">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Einträge"/>

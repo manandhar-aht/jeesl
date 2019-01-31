@@ -35,7 +35,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 					QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 					CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-					VALIDATION extends JeeslSurveyValidation<QUESTION,?>, //TODO tk
+					VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>, //TODO tk  add VALG
 					QE extends UtilsStatus<QE,L,D>,
 					SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 					UNIT extends UtilsStatus<UNIT,L,D>,

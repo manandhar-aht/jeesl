@@ -67,7 +67,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 									SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-									VALIDATION extends JeeslSurveyValidation<QUESTION,VALGORITHM>,
+									VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 									UNIT extends UtilsStatus<UNIT,L,D>,

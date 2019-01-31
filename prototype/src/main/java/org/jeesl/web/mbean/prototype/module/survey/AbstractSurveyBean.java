@@ -76,7 +76,7 @@ public abstract class AbstractSurveyBean <L extends UtilsLang, D extends UtilsDe
 						SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 						QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,AQ>,
 						CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-						VALIDATION extends JeeslSurveyValidation<QUESTION,VALGORITHM>,
+						VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 						QE extends UtilsStatus<QE,L,D>,
 						SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,
 						UNIT extends UtilsStatus<UNIT,L,D>,

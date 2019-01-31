@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbSurveyValidationFactory<QUESTION extends JeeslSurveyQuestion<?,?,?,?,?,?,?,?,?,?,?>,
-										VALIDATION extends JeeslSurveyValidation<QUESTION,?>>
+										VALIDATION extends JeeslSurveyValidation<?,?,QUESTION,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyValidationFactory.class);
 

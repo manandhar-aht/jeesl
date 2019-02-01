@@ -55,6 +55,10 @@ public class JsonTuple1Handler <A extends EjbWithId> extends JsonTupleHandler im
 	public void init(Json1Tuples<A> tuples)
 	{
 		clear();
+		add(tuples);
+	}
+	private void add(Json1Tuples<A> tuples)
+	{
 		for(Json1Tuple<A> t : tuples.getTuples())
 		{
 			if(t.getSum()!=null) {t.setSum(AmountRounder.two(t.getSum()/sumDivider));}

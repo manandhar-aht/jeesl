@@ -18,6 +18,10 @@ public class XmlCounterFactory
 		return xml;
 	}
 	
+	public static <E extends Enum<E>> Counter build(E code, double counter)
+	{
+		return create(code.toString(),Double.valueOf(counter).intValue());
+	}
 	public static <E extends Enum<E>> Counter build(E code, int counter)
 	{
 		return create(code.toString(),counter);

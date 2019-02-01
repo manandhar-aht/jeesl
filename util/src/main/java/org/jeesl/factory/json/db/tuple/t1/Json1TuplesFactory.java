@@ -67,7 +67,6 @@ public class Json1TuplesFactory <A extends EjbWithId>
 	}
 	
 	// Deprecated?
-	
 	public List<Json1Tuple<A>> add(List<Json1Tuple<A>> list)
 	{
 		for(Json1Tuple<A> t : list)

@@ -88,7 +88,7 @@ public class SurveyHelperScriptlet extends JRDefaultScriptlet {
 				Element option = (Element)optionNodes.item(i);
 				
 				// Since the report is configured to render HTML as markup, make the options code bold printed for better readablility
-				String optionString = "<b>" +option.getAttribute("code").toString() +"</b> " +option.getAttribute("label").toString();
+				String optionString = "[&nbsp;]&nbsp;<b>" +option.getAttribute("code").toString().replace(" ", "&nbsp;") +"</b>&nbsp;" +option.getAttribute("label").toString().replace(" ", "&nbsp;");
 				options.add(optionString);
 				if (logger.isTraceEnabled()) {logger.debug("ADDED " +optionString);}
 			}

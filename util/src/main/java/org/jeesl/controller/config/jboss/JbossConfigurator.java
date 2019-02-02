@@ -139,12 +139,14 @@ public class JbossConfigurator
 	{
 		String cfgDbDs = "db."+context+".ds";
 		String cfgDbHost = "db."+context+".host";
+		String cfgDbPort = "db."+context+".port";
 		String cfgDbName = "db."+context+".db";
 		String cfgDbUser = "db."+context+".user";
 		String cfgDbPwd = "db."+context+".pwd";
 		
 		String pDbDs = config.getString(cfgDbDs);
 		String pDbHost = config.getString(cfgDbHost);
+		String pDbPort = config.getString(cfgDbPort,"5432");
 		String pDbName = config.getString(cfgDbName);
 		String pDbUser = config.getString(cfgDbUser);
 		String pDbPwd = config.getString(cfgDbPwd);
@@ -157,7 +159,7 @@ public class JbossConfigurator
 		
 		if(!this.dsExists(cfgDbDs))
 		{
-			createPostgresDatasource(pDbDs,pDbHost,pDbName,null,pDbUser,pDbPwd);
+			createPostgresDatasource(pDbDs,pDbHost,pDbPort,pDbName,null,pDbUser,pDbPwd);
 			StringBuilder sb = new StringBuilder();
 			sb.append(pDbDs);
 			return sb.toString();
@@ -186,14 +188,12 @@ public class JbossConfigurator
 		client.execute(new OperationBuilder(request).build());
 	}
 	
-	public void createPostgresDatasource(String name, String host, String db, String jdbcParamter, String username, String password) throws IOException
+	public void createPostgresDatasource(String name, String host, String port, String db, String jdbcParamter, String username, String password) throws IOException
 	{		
 		ModelNode request = new ModelNode();
 		request.get(ClientConstants.OP).set(ClientConstants.ADD);
 		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
 		request.get(ClientConstants.OP_ADDR).add("data-source",name);
-		
-		String port = "5432";
 		
 		datasource(request,name);
 		connection(request,"postgresql",host,port,db,jdbcParamter);

@@ -48,7 +48,8 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	org.apache.log4j.Logger.getRootLogger().setLevel(Level.toLevel(log));
 
     	Configuration config = config();
-		try {
+		try
+		{
 			dbRestore(config);
 		} catch (ExlpUnsupportedOsException e) {throw new MojoExecutionException(e.getMessage());}
 		configureEap(config);
@@ -196,6 +197,5 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         	}
         	if(ds!=null) {getLog().info("DS: "+ds);}
     	}
-    	
     }
 }

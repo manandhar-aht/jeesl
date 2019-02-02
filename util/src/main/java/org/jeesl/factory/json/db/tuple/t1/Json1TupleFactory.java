@@ -1,12 +1,11 @@
 package org.jeesl.factory.json.db.tuple.t1;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Tuple;
 
+import org.jeesl.model.json.db.tuple.JsonTuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -46,6 +45,26 @@ public class Json1TupleFactory<A extends EjbWithId>
 	{
 		Json1Tuple<A> json = build(tuple);
 		json.setCount((Long)tuple.get(1));
+    	return json;
+	}
+	
+	public Json1Tuple<A> build(Tuple tuple, JsonTuple.Field... fields)
+	{
+		Json1Tuple<A> json = build(tuple);
+		
+		int index=1;
+		for(JsonTuple.Field field : fields)
+		{
+			if(index==1)
+			{
+				if(field.equals(JsonTuple.Field.sum)) {json.setSum1((Double)tuple.get(index));}
+			}
+			if(index==2)
+			{
+				if(field.equals(JsonTuple.Field.sum)) {json.setSum2((Double)tuple.get(index));}
+			}
+			index++;
+		}
     	return json;
 	}
 }

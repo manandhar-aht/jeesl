@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.Tuple;
 
 import org.jeesl.factory.ejb.util.EjbIdFactory;
+import org.jeesl.model.json.db.tuple.JsonTuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 
@@ -126,6 +127,20 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		for(Tuple t : tuples)
         {
 			Json1Tuple<A> j = jtf.buildCount(t);
+			setId.add(j.getId());
+        	json.getTuples().add(j);
+        }
+		fillEjbs(json);
+		return json;
+	}
+	
+	public Json1Tuples<A> build(List<Tuple> tuples, JsonTuple.Field... fields)
+	{
+		Json1Tuples<A> json = new Json1Tuples<A>();
+		
+		for(Tuple t : tuples)
+        {
+			Json1Tuple<A> j = jtf.build(t,fields);
 			setId.add(j.getId());
         	json.getTuples().add(j);
         }

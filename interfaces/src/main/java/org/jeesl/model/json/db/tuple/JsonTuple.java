@@ -8,6 +8,8 @@ public class JsonTuple extends AbstractJsonTuple implements Serializable
 {
 	public static final long serialVersionUID=1;
 	
+	public enum Field{sum,count}
+	
 	@JsonProperty("id1")
 	private Long id1;
 	public Long getId1() {return id1;}

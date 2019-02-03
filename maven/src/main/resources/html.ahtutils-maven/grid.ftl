@@ -95,6 +95,19 @@ body {min-width: ${width}px;}
 .auContainer .auGrid_11 {width: ${slot11}px;}
 .auContainer .auGrid_12 {width: ${slot12}px;}
 
+.jeeslDialog_1  {max-width: ${slot1}px; min-width: ${slot1}px;}
+.jeeslDialog_2  {max-width: ${slot2}px; min-width: ${slot2}px;}
+.jeeslDialog_3  {max-width: ${slot3}px; min-width: ${slot3}px;}
+.jeeslDialog_4  {max-width: ${slot4}px; min-width: ${slot4}px;}
+.jeeslDialog_5  {max-width: ${slot5}px; min-width: ${slot5}px;}
+.jeeslDialog_6  {max-width: ${slot6}px; min-width: ${slot6}px;}
+.jeeslDialog_7  {max-width: ${slot7}px; min-width: ${slot7}px;}
+.jeeslDialog_8  {max-width: ${slot8}px; min-width: ${slot8}px;}
+.jeeslDialog_9  {max-width: ${slot9}px; min-width: ${slot9}px;}
+.jeeslDialog_10 {max-width: ${slot10}px; min-width: ${slot10}px;}
+.jeeslDialog_11 {max-width: ${slot11}px; min-width: ${slot11}px;}
+.jeeslDialog_12 {max-width: ${slot12}px; min-width: ${slot12}px;}
+
 /* Grid >> Pull & Push
 ----------------------------------------------------------------------------------------------------*/
 .push_1, .pull_1,

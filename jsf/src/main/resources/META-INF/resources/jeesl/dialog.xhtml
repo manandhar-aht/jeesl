@@ -17,7 +17,7 @@
         
  	<composite:implementation>
   
-		<p:dialog id="dJeesl" widgetVar="wvJeesl" modal="true" styleClass="jeeslPanel #{cc.styleClass(cc.attrs.size)}"
+		<p:dialog id="dJeesl" widgetVar="#{cc.id}Widget" modal="true" styleClass="jeeslPanel #{cc.styleClass(cc.attrs.size)}"
 					closable="false" resizable="false">
 			<f:facet name="header">
 				<h:outputText value="#{cc.attrs.header}"/>

@@ -95,6 +95,19 @@ body {min-width: 960px;}
 .auContainer .auGrid_11 {width: 870px;}
 .auContainer .auGrid_12 {width: 950px;}
 
+.jeeslDialog_1  {max-width: 70px; min-width: 70px;}
+.jeeslDialog_2  {max-width: 150px; min-width: 150px;}
+.jeeslDialog_3  {max-width: 230px; min-width: 230px;}
+.jeeslDialog_4  {max-width: 310px; min-width: 310px;}
+.jeeslDialog_5  {max-width: 390px; min-width: 390px;}
+.jeeslDialog_6  {max-width: 470px; min-width: 470px;}
+.jeeslDialog_7  {max-width: 550px; min-width: 550px;}
+.jeeslDialog_8  {max-width: 630px; min-width: 630px;}
+.jeeslDialog_9  {max-width: 710px; min-width: 710px;}
+.jeeslDialog_10 {max-width: 790px; min-width: 790px;}
+.jeeslDialog_11 {max-width: 870px; min-width: 870px;}
+.jeeslDialog_12 {max-width: 950px; min-width: 950px;}
+
 /* Grid >> Pull & Push
 ----------------------------------------------------------------------------------------------------*/
 .push_1, .pull_1,

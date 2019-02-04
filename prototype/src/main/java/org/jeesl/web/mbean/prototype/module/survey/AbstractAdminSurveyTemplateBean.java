@@ -616,6 +616,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassValidation()));}
 
 		validation = efValidation.build(question,validations);
+		validation.setDescription(efDescription.createEmpty(sbhLocale.getList()));
 	}
 	
 	public void saveValidation() throws UtilsConstraintViolationException, UtilsLockingException
@@ -630,6 +631,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(validation));}
 		validation = fTemplate.find(fbTemplate.getClassValidation(), validation);
+		validation = efDescription.persistMissingLangs(fTemplate,sbhLocale.getList(), validation);
 	}
 	
 	public void reorderSections() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fCore, sections);}

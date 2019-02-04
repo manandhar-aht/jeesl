@@ -122,6 +122,7 @@ public class JeeslSurveyCoreFacadeBean <L extends UtilsLang, D extends UtilsDesc
 		question.getScores().size();
 		question.getOptions().size();
 		question.getConditions().size();
+		question.getValidations().size();
 		return question;
 	}
 	

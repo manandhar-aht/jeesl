@@ -34,10 +34,10 @@ public class JeeslSurveyCacheLoader <TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	private final JeeslSurveyTemplateFacade<?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,?,OPTION> fTemplate;
 	
 //	private final SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore;
-	private final SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,?,OPTION> fbTemplate;
+	private final SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,?,OPTION> fbTemplate;
 	
 	public JeeslSurveyCacheLoader(
-			SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,?,OPTION> fbTemplate,
+			SurveyTemplateFactoryBuilder<?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,?,OPTION> fbTemplate,
 //			SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
 			JeeslSurveyTemplateFacade<?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,?,OPTION> fTemplate,
 			JeeslSurveyCoreFacade<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,?,?,ANSWER,?,?,?,OPTION,?> fCore)
@@ -62,12 +62,17 @@ public class JeeslSurveyCacheLoader <TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		return fTemplate.allForParent(fbTemplate.getClassCondition(), question);
 //		return null;
 	}
+	
+	@Override
+	public List<VALIDATION> getValidations(QUESTION question)
+	{
+		return fTemplate.allForParent(fbTemplate.getClassValidation(), question);
+//		return null;
+	}
 
 	@Override
 	public List<QUESTION> getQuestions(SECTION section)
 	{
 		return fTemplate.allForParent(fbTemplate.getClassQuestion(), section);
 	}
-
-
 }

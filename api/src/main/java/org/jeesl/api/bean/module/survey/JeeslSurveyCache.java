@@ -15,7 +15,8 @@ public interface JeeslSurveyCache<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEM
 					VALIDATION  extends JeeslSurveyValidation<?,?,QUESTION,?>
 >
 {	
-	public List<SECTION> getSections(TEMPLATE template);
-	public List<QUESTION> getQuestions(SECTION section);
-	public List<CONDITION> getConditions(QUESTION question);
+	List<SECTION> getSections(TEMPLATE template);
+	List<QUESTION> getQuestions(SECTION section);
+	List<CONDITION> getConditions(QUESTION question);
+	List<VALIDATION> getValidations(QUESTION question);
 }

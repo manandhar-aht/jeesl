@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +16,6 @@ import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
-import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
@@ -46,7 +44,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	private final List<QUESTION> questions;
 	private final Map<QUESTION,ANSWER> answers;
 	private final Map<QUESTION,Boolean> rendered; public Map<QUESTION, Boolean> getRendered() {return rendered;}
-	private final Map<QUESTION,List<VALIDATION>> conditions; public Map<QUESTION,List<VALIDATION>> getConditions() {return conditions;}
+	private final Map<QUESTION,List<VALIDATION>> validations; public Map<QUESTION,List<VALIDATION>> getValidations() {return validations;}
 	private final Map<QUESTION,Set<QUESTION>> triggers; public Map<QUESTION,Set<QUESTION>> getTriggers() {return triggers;}
 	
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,OPTION> efAnswer;
@@ -60,7 +58,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		questions = new ArrayList<QUESTION>();
 		answers = new HashMap<QUESTION,ANSWER>();
 		rendered = new HashMap<QUESTION,Boolean>();
-		conditions  = new HashMap<QUESTION,List<VALIDATION>>();
+		validations  = new HashMap<QUESTION,List<VALIDATION>>();
 		triggers = new HashMap<QUESTION,Set<QUESTION>>();
 		
 		evaluator = new ConditionEvaluator();
@@ -74,7 +72,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		answers.clear();
 		questions.clear();
 		rendered.clear();
-		conditions.clear();
+		validations.clear();
 		triggers.clear();
 	}
 	
@@ -96,13 +94,14 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	{
 		questions.add(question);
 		rendered.put(question,true);
-		List<VALIDATION> list = null;//cache.getConditions(question);
+		List<VALIDATION> list = cache.getValidations(question);
 		if(list==null) {logger.warn("THe condition List is null ...");}
 		else
 		{
-			conditions.put(question,list);
+			validations.put(question,list);
 			for(VALIDATION c : list)
 			{
+//				logger.info(c.toString());
 //				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
 //				triggers.get(c.getTriggerQuestion()).add(question);
 			}
@@ -120,11 +119,11 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		this.answers.putAll(answers);
 		for(QUESTION q : questions)
 		{
-			if(q.getRenderCondition()==null || q.getRenderCondition().trim().isEmpty()) {rendered.put(q,true);}
-			else
+			if(validations.containsKey(q))
 			{
-				rendered.put(q,evaluate(q));
+				validate(q);
 			}
+			
 		}
 	}
 	
@@ -146,35 +145,21 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		{
 			for(QUESTION q : triggers.get(answer.getQuestion()))
 			{
-				rendered.put(q,evaluate(q));
+				rendered.put(q,validate(q));
 			}
 		}	
 	}
 
-	private boolean evaluate(QUESTION question)
+	private boolean validate(QUESTION question)
 	{
-		if(debug) {logger.info("Evaluation Question: "+question.toString());}
+		if(debug) {logger.info("Validating Question: "+question.toString());}
 		List<Boolean> booleans = new ArrayList<Boolean>();
-		for(VALIDATION c : conditions.get(question))
+		for(VALIDATION c : validations.get(question))
 		{
 			
 		}
 		
-		boolean result = evaluator.evaluate(question.getRenderCondition(), booleans);
-		
-		if(debug)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.append("Evaluating: ");
-			sb.append(question.toString());
-			sb.append(" code:").append(question.getCode());
-			sb.append(" expression: ["+question.getRenderCondition()).append("]");
-			sb.append(" values: ").append(booleans);
-			sb.append(" Result: ").append(result);
-			logger.info("Evaluating: "+sb.toString());
-		}
-		
-		return result;
+		return false;
 	}
 	
 	public void debug()

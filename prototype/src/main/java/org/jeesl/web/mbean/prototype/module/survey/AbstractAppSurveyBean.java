@@ -84,6 +84,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	protected Map<Long,OPTION> mapOptionId; @Override public Map<Long,OPTION> getMapOptionId(){return mapOptionId;}
 	protected Map<QUESTION,List<OPTION>> mapOption; @Override public Map<QUESTION,List<OPTION>> getMapOption() {return mapOption;}
 	protected final Map<QUESTION,List<CONDITION>> mapCondition;
+	protected final Map<QUESTION,List<VALIDATION>> mapValidation;
 	protected Map<OPTIONS,List<OPTION>> mapOptionSet;
 
 	protected Map<QUESTION,List<OPTION>> matrixRows; @Override public Map<QUESTION,List<OPTION>> getMatrixRows() {return matrixRows;}
@@ -108,6 +109,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		mapOptionId = new HashMap<Long,OPTION>();
 		mapOption = new HashMap<QUESTION,List<OPTION>>();
 		mapCondition = new HashMap<QUESTION,List<CONDITION>>();
+		mapValidation = new HashMap<QUESTION,List<VALIDATION>>();
 		mapOptionSet = new HashMap<OPTIONS,List<OPTION>>();
 		matrixRows = new HashMap<QUESTION,List<OPTION>>();
 		
@@ -213,6 +215,7 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	{
 		updateQuestionOptions(question);
 		updateQuestionCondition(question);
+		updateQuestionValidation(question);
 	}
 	
 	private void updateQuestionOptions(QUESTION question)
@@ -242,6 +245,13 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 		if(!mapCondition.containsKey(question)){mapCondition.put(question,new ArrayList<CONDITION>());}
 		mapCondition.get(question).clear();
 		mapCondition.get(question).addAll(question.getConditions());
+	}
+	
+	private void updateQuestionValidation(QUESTION question)
+	{
+		if(!mapValidation.containsKey(question)){mapValidation.put(question,new ArrayList<VALIDATION>());}
+		mapValidation.get(question).clear();
+		mapValidation.get(question).addAll(question.getValidations());
 	}
 	
 	@Override public void updateOptions(OPTIONS set)
@@ -283,5 +293,11 @@ public abstract class AbstractAppSurveyBean <L extends UtilsLang, D extends Util
 	{
 		if(mapCondition.containsKey(question)) {return mapCondition.get(question);}
 		return new ArrayList<CONDITION>();
+	}
+	
+	@Override public List<VALIDATION> getValidations(QUESTION question)
+	{
+		if(mapValidation.containsKey(question)) {return mapValidation.get(question);}
+		return new ArrayList<VALIDATION>();
 	}
 }

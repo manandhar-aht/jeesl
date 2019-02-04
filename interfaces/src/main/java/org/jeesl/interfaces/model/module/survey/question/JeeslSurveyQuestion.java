@@ -118,4 +118,7 @@ public interface JeeslSurveyQuestion<L extends UtilsLang, D extends UtilsDescrip
 	
 	Boolean getShowEmptyOption();
 	void setShowEmptyOption(Boolean showEmptyOption);
+	
+	List<VALIDATION> getValidations();
+	void setValidations(List<VALIDATION> validations);
 }

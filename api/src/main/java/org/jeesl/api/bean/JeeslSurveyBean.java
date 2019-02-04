@@ -46,7 +46,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					OPTION extends JeeslSurveyOption<L,D>,
 					CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
 					ATT extends UtilsStatus<ATT,L,D>>
-				extends JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION>
+				extends JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,VALIDATION>
 {	
 	List<ATT> getToolTypes();
 	List<QE> getElements();

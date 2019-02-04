@@ -21,45 +21,46 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 import org.jeesl.util.comparator.ejb.module.survey.SurveyQuestionComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.exlp.util.io.StringUtil;
 
-public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
+public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,OPTION,?>,
-							CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
+							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,?,VALIDATION,?,?,?,?,OPTION,?>,
+							VALIDATION extends JeeslSurveyValidation<?,?,QUESTION,?>,
 							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,OPTION>,
 							OPTION extends JeeslSurveyOption<?,?>>
 	implements Serializable
 {
-	final static Logger logger = LoggerFactory.getLogger(SurveyConditionalHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(SurveyValidationHandler.class);
 	private static final long serialVersionUID = 1L;
 	private static final boolean debug = true;
 	
-	private JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,?> cache;
+	private JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,?,VALIDATION> cache;
 	private final Comparator<QUESTION> cpQuestion;
 	
 	private final List<QUESTION> questions;
 	private final Map<QUESTION,ANSWER> answers;
 	private final Map<QUESTION,Boolean> rendered; public Map<QUESTION, Boolean> getRendered() {return rendered;}
-	private final Map<QUESTION,List<CONDITION>> conditions; public Map<QUESTION,List<CONDITION>> getConditions() {return conditions;}
+	private final Map<QUESTION,List<VALIDATION>> conditions; public Map<QUESTION,List<VALIDATION>> getConditions() {return conditions;}
 	private final Map<QUESTION,Set<QUESTION>> triggers; public Map<QUESTION,Set<QUESTION>> getTriggers() {return triggers;}
 	
 	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,OPTION> efAnswer;
 	private final ConditionEvaluator evaluator;
 	
-	public SurveyConditionalHandler(SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,CONDITION,?,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
-									JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,?> cache
+	public SurveyValidationHandler(SurveyCoreFactoryBuilder<?,?,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,VALIDATION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
+									JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,?,VALIDATION> cache
 									)
 	{
 		this.cache=cache;
 		questions = new ArrayList<QUESTION>();
 		answers = new HashMap<QUESTION,ANSWER>();
 		rendered = new HashMap<QUESTION,Boolean>();
-		conditions  = new HashMap<QUESTION,List<CONDITION>>();
+		conditions  = new HashMap<QUESTION,List<VALIDATION>>();
 		triggers = new HashMap<QUESTION,Set<QUESTION>>();
 		
 		evaluator = new ConditionEvaluator();
@@ -81,10 +82,10 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 	{
 		for(SECTION section : cache.getSections(template))
 		{
-//			logger.info(section.toString());
+			logger.info(section.toString());
 			for(QUESTION question : cache.getQuestions(section))
 			{
-//				logger.info("\t"+question.toString());
+				logger.info("\t"+question.toString());
 				addQuestion(question);
 			}
 		}
@@ -95,15 +96,15 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 	{
 		questions.add(question);
 		rendered.put(question,true);
-		List<CONDITION> list = cache.getConditions(question);
+		List<VALIDATION> list = null;//cache.getConditions(question);
 		if(list==null) {logger.warn("THe condition List is null ...");}
 		else
 		{
 			conditions.put(question,list);
-			for(CONDITION c : list)
+			for(VALIDATION c : list)
 			{
-				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
-				triggers.get(c.getTriggerQuestion()).add(question);
+//				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
+//				triggers.get(c.getTriggerQuestion()).add(question);
 			}
 		}
 	}
@@ -154,22 +155,9 @@ public class SurveyConditionalHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?
 	{
 		if(debug) {logger.info("Evaluation Question: "+question.toString());}
 		List<Boolean> booleans = new ArrayList<Boolean>();
-		for(CONDITION c : conditions.get(question))
+		for(VALIDATION c : conditions.get(question))
 		{
-			boolean x = false;
-			if(answers.containsKey(c.getTriggerQuestion()))
-			{
-				ANSWER a = answers.get(c.getTriggerQuestion());
-				if(debug)
-				{
-					logger.info("Answer: "+a.toString());
-					logger.info("O==null?"+(a.getOption()!=null));
-				}
-				
-				x = a!=null && a.getOption()!=null && a.getOption().equals(c.getOption());
-			}
 			
-			booleans.add(x);
 		}
 		
 		boolean result = evaluator.evaluate(question.getRenderCondition(), booleans);

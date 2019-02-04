@@ -13,19 +13,20 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JeeslSurveyCacheLoader <TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 									
 									SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,OPTION,?>,
+									QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,VALIDATION,?,?,?,?,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
-									
+									VALIDATION extends JeeslSurveyValidation<?,?,QUESTION,?>,
 									ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,?,?,OPTION>,
 									
 									OPTION extends JeeslSurveyOption<?,?>>
-			implements JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION>
+			implements JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,VALIDATION>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslSurveyCacheLoader.class);
 	

@@ -48,10 +48,8 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     	org.apache.log4j.Logger.getRootLogger().setLevel(Level.toLevel(log));
 
     	Configuration config = config();
-		try
-		{
-			dbRestore(config);
-		} catch (ExlpUnsupportedOsException e) {throw new MojoExecutionException(e.getMessage());}
+//		try{dbRestore(config);}
+//		catch (ExlpUnsupportedOsException e) {throw new MojoExecutionException(e.getMessage());}
 		configureEap(config);
     }
     
@@ -95,7 +93,8 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	    catch (IOException e) {throw new MojoExecutionException(e.getMessage());}
     }
     
-    private void dbRestore(Configuration config) throws ExlpUnsupportedOsException
+    @SuppressWarnings("unused")
+	private void dbRestore(Configuration config) throws ExlpUnsupportedOsException
     {
 	    String[] keys = config.getString("db.restores").split("-");
 	    for(String key : keys)

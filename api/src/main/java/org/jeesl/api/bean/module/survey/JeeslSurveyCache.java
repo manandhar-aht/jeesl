@@ -6,11 +6,13 @@ import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyCondition;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
 
 public interface JeeslSurveyCache<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
 					SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-					QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,?,?,?,?,?,?,?>,
-					CONDITION extends JeeslSurveyCondition<QUESTION,?,?>
+					QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,VALIDATION,?,?,?,?,?,?>,
+					CONDITION extends JeeslSurveyCondition<QUESTION,?,?>,
+					VALIDATION  extends JeeslSurveyValidation<?,?,QUESTION,?>
 >
 {	
 	public List<SECTION> getSections(TEMPLATE template);

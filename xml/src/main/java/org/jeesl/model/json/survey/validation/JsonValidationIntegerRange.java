@@ -1,6 +1,6 @@
 package org.jeesl.model.json.survey.validation;
 
-import java.io.Serializable;
+import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonRootName(value="intRage")
-public class JsonValidationIntegerRange implements Serializable
+public class JsonValidationIntegerRange implements SurveyValidatorConfiguration
 {
 	public static final long serialVersionUID=1;
 

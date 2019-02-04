@@ -1,5 +1,6 @@
 package org.jeesl.controller.handler.module.survey;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,8 @@ import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
 import org.jeesl.controller.handler.module.survey.antlr.ConditionEvaluator;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.interfaces.controller.processor.SurveyValidator;
+import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
 import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
@@ -24,6 +27,7 @@ import org.jeesl.util.comparator.ejb.module.survey.SurveyQuestionComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.exlp.util.io.JsonUtil;
 import net.sf.exlp.util.io.StringUtil;
 
 public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,?,SECTION,?,?>,
@@ -43,7 +47,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	
 	private final List<QUESTION> questions;
 	private final Map<QUESTION,ANSWER> answers;
-	private final Map<QUESTION,Boolean> rendered; public Map<QUESTION, Boolean> getRendered() {return rendered;}
+	private final Map<VALIDATION,SurveyValidator<ANSWER>> validators; public Map<VALIDATION,SurveyValidator<ANSWER>> getValidators() {return validators;}
 	private final Map<QUESTION,List<VALIDATION>> validations; public Map<QUESTION,List<VALIDATION>> getValidations() {return validations;}
 	private final Map<QUESTION,Set<QUESTION>> triggers; public Map<QUESTION,Set<QUESTION>> getTriggers() {return triggers;}
 	
@@ -57,7 +61,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		this.cache=cache;
 		questions = new ArrayList<QUESTION>();
 		answers = new HashMap<QUESTION,ANSWER>();
-		rendered = new HashMap<QUESTION,Boolean>();
+		validators = new HashMap<VALIDATION,SurveyValidator<ANSWER>>();
 		validations  = new HashMap<QUESTION,List<VALIDATION>>();
 		triggers = new HashMap<QUESTION,Set<QUESTION>>();
 		
@@ -71,7 +75,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	{
 		answers.clear();
 		questions.clear();
-		rendered.clear();
+		validations.clear();
 		validations.clear();
 		triggers.clear();
 	}
@@ -84,23 +88,43 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 			for(QUESTION question : cache.getQuestions(section))
 			{
 				logger.info("\t"+question.toString());
-				addQuestion(question);
+				initQuestion(question);
 			}
 		}
 		Collections.sort(questions,cpQuestion);
 	}
 	
-	public void addQuestion(QUESTION question)
+	public void initQuestion(QUESTION question)
 	{
 		questions.add(question);
-		rendered.put(question,true);
 		List<VALIDATION> list = cache.getValidations(question);
 		if(list==null) {logger.warn("THe condition List is null ...");}
 		else
 		{
 			validations.put(question,list);
-			for(VALIDATION c : list)
+			for(VALIDATION v : list)
 			{
+				try
+				{
+					Class<?> cAlgorithm = Class.forName(v.getAlgorithm().getCode()).asSubclass(SurveyValidator.class);
+					Class<?> cConfig = Class.forName(v.getAlgorithm().getConfig()).asSubclass(SurveyValidatorConfiguration.class);
+					
+					if(debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName()+" "+cConfig.getSimpleName());}
+					if(debug) {logger.info("Config: "+v.getConfig());}
+					
+					SurveyValidator<ANSWER> validator = (SurveyValidator<ANSWER>) cAlgorithm.newInstance();
+					SurveyValidatorConfiguration config = (SurveyValidatorConfiguration)JsonUtil.read(v.getConfig(),cConfig);
+					JsonUtil.info(config);
+					validator.init(config);
+					validators.put(v,validator);
+					
+				}
+				catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 //				logger.info(c.toString());
 //				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
 //				triggers.get(c.getTriggerQuestion()).add(question);
@@ -119,11 +143,10 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		this.answers.putAll(answers);
 		for(QUESTION q : questions)
 		{
-			if(validations.containsKey(q))
+			if(validations.containsKey(q) && !validations.get(q).isEmpty())
 			{
 				validate(q);
 			}
-			
 		}
 	}
 	
@@ -145,7 +168,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		{
 			for(QUESTION q : triggers.get(answer.getQuestion()))
 			{
-				rendered.put(q,validate(q));
+				
 			}
 		}	
 	}
@@ -154,9 +177,12 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 	{
 		if(debug) {logger.info("Validating Question: "+question.toString());}
 		List<Boolean> booleans = new ArrayList<Boolean>();
-		for(VALIDATION c : validations.get(question))
+		for(VALIDATION v : validations.get(question))
 		{
-			
+			SurveyValidator<ANSWER> validator = validators.get(v);
+			boolean validationResult = validator.validate(answers.get(question));
+			logger.info(v.getPosition()+" Valid Entry: "+validationResult);
+			;
 		}
 		
 		return false;
@@ -169,7 +195,7 @@ public class SurveyValidationHandler<TEMPLATE extends JeeslSurveyTemplate<?,?,?,
 		for(QUESTION q : questions)
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.append("Q: "+q.getCode()+" "+rendered.get(q));
+			sb.append("Q: "+q.getCode());
 			if(triggers.containsKey(q))
 			{
 				sb.append(" Triggers: "+triggers.size());

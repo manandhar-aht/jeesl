@@ -67,7 +67,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey;
 	
 	private final SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION> condition; public SurveyConditionalHandler<TEMPLATE, SECTION, QUESTION, CONDITION, ANSWER, OPTION> getCondition() {return condition;}
-	private final SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> validation; //public SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> getValidation() {return validation;}
+	private final SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> validation; public SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> getValidation() {return validation;}
 
 	private final Class<SECTION> cSection;
 
@@ -98,7 +98,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} //public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public static boolean debug = true;
+	public static boolean debug = false;
 	public static int debugDelay = 1000;
 	
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
@@ -118,7 +118,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		allowAssessment = true;
 
 		condition = new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(fBSurvey,bSurvey);
-		validation = new SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION>(fBSurvey,bSurvey);
+		validation = new SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION>(bSurvey);
 		
 		answers = new HashMap<QUESTION,ANSWER>();
 		matrix = new Nested3IdMap<MATRIX>();
@@ -158,6 +158,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate();
 		condition.init(template);
+		validation.init(template);
 		if(bSurvey.getMapSection().containsKey(template)){activeSections.addAll(bSurvey.getMapSection().get(template));}
 		if(SurveyHandler.debug){logger.warn("Preparing Survey for correlation:"+correlation.toString()+" and data:"+surveyData.toString());}
 	}
@@ -283,8 +284,6 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		if(SurveyHandler.debug){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		logger.info("Saving "+correlation.toString()+ " "+answers.size()+" answers  CORR.saved: "+EjbIdFactory.isSaved(correlation));
 		
-		
-		
 		surveyData.setCorrelation(correlation);
 		surveyData = fSurvey.saveData(surveyData);
 		
@@ -299,6 +298,14 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 			}
 			
 		}
+		
+		validation.evaluateList(answersToSave);
+		if(validation.isHasErrors())
+		{
+			if(SurveyHandler.debug){logger.warn("Has Errors "+validation.getErrors().size());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
+			return ;
+		}
+		
 		if(SurveyHandler.debug){logger.warn("Starting to save "+answersToSave.size()+" "+JeeslSurveyAnswer.class.getSimpleName());try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		fSurvey.save(answersToSave);
 		

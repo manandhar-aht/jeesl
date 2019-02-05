@@ -48,6 +48,8 @@
 }
 .jeeslDialog {background-color: #f1f1f1;}
 
+.jeeslRed {color: red;}
+
 /***********************************************************************************/
 /********************** Primefaces Panel               *****************************/
 /* Removes borders from cells of PanelGrid */

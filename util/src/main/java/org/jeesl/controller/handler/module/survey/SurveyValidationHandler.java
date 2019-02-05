@@ -12,9 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.jeesl.api.bean.module.survey.JeeslSurveyCache;
-import org.jeesl.controller.handler.module.survey.antlr.ConditionEvaluator;
-import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
-import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
+import org.jeesl.controller.handler.SurveyHandler;
 import org.jeesl.interfaces.controller.processor.SurveyValidator;
 import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
 import org.jeesl.interfaces.model.module.survey.core.JeeslSurveyTemplate;
@@ -43,39 +41,34 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyValidationHandler.class);
 	private static final long serialVersionUID = 1L;
-	private static final boolean debug = true;
 	
 	private JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,?,VALIDATION> cache;
 	private final Comparator<QUESTION> cpQuestion;
 	
 	private final List<QUESTION> questions;
-	private final Map<QUESTION,ANSWER> answers;
+//	private final Map<QUESTION,ANSWER> answers;
 	private final Map<QUESTION,List<D>> errors; public Map<QUESTION, List<D>> getErrors() {return errors;}
 	private final Map<VALIDATION,SurveyValidator<ANSWER>> validators; public Map<VALIDATION,SurveyValidator<ANSWER>> getValidators() {return validators;}
 	private final Map<QUESTION,List<VALIDATION>> validations; public Map<QUESTION,List<VALIDATION>> getValidations() {return validations;}
 	private final Map<QUESTION,Set<QUESTION>> triggers; public Map<QUESTION,Set<QUESTION>> getTriggers() {return triggers;}
 	
-	private EjbSurveyAnswerFactory<SECTION,QUESTION,ANSWER,?,?,OPTION> efAnswer;
-	
-	public SurveyValidationHandler(SurveyCoreFactoryBuilder<L,D,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,VALIDATION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
+	public SurveyValidationHandler(
+//			SurveyCoreFactoryBuilder<L,D,?,?,?,?,TEMPLATE,?,?,?,SECTION,QUESTION,?,VALIDATION,?,?,?,ANSWER,?,?,?,OPTION,?,?> fbCore,
 									JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,?,VALIDATION> cache
 									)
 	{
 		this.cache=cache;
 		questions = new ArrayList<QUESTION>();
-		answers = new HashMap<QUESTION,ANSWER>();
 		validators = new HashMap<VALIDATION,SurveyValidator<ANSWER>>();
 		validations  = new HashMap<QUESTION,List<VALIDATION>>();
 		errors  = new HashMap<QUESTION,List<D>>();
 		triggers = new HashMap<QUESTION,Set<QUESTION>>();
 		
-		efAnswer = fbCore.answer();
 		cpQuestion = new SurveyQuestionComparator<QUESTION>().factory(SurveyQuestionComparator.Type.position);
 	}
 	
 	public void clear()
 	{
-		answers.clear();
 		questions.clear();
 		validations.clear();
 		validations.clear();
@@ -97,6 +90,7 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 		Collections.sort(questions,cpQuestion);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void initQuestion(QUESTION question)
 	{
 		questions.add(question);
@@ -112,8 +106,8 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 					Class<?> cAlgorithm = Class.forName(v.getAlgorithm().getCode()).asSubclass(SurveyValidator.class);
 					Class<?> cConfig = Class.forName(v.getAlgorithm().getConfig()).asSubclass(SurveyValidatorConfiguration.class);
 					
-					if(debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName()+" "+cConfig.getSimpleName());}
-					if(debug) {logger.info("Config: "+v.getConfig());}
+					if(SurveyHandler.debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName()+" "+cConfig.getSimpleName());}
+					if(SurveyHandler.debug) {logger.info("Config: "+v.getConfig());}
 					
 					SurveyValidator<ANSWER> validator = (SurveyValidator<ANSWER>) cAlgorithm.newInstance();
 					SurveyValidatorConfiguration config = (SurveyValidatorConfiguration)JsonUtil.read(v.getConfig(),cConfig);
@@ -137,21 +131,15 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 	
 	public void evaluateList(List<ANSWER> answers) 
 	{
-		this.evaluteMap(efAnswer.toMapQuestion(answers));
-	}
-	
-	public void evaluteMap(Map<QUESTION,ANSWER> answers)
-	{
-		this.answers.clear();
-		this.answers.putAll(answers);
 		errors.clear();
-		for(QUESTION q : questions)
+		for(ANSWER a : answers)
 		{
-			if(validations.containsKey(q) && !validations.get(q).isEmpty())
+			if(validations.containsKey(a.getQuestion()) && !validations.get(a.getQuestion()).isEmpty())
 			{
-				validate(q);
+				validate(a);
 			}
 		}
+		
 	}
 	
 //	public void update(ANSWER answer)
@@ -177,13 +165,14 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 //		}	
 //	}
 
-	private boolean validate(QUESTION question)
+	private boolean validate(ANSWER answer)
 	{
-		if(debug) {logger.info("Validating Question: "+question.toString());}
+		QUESTION question = answer.getQuestion();
+		if(SurveyHandler.debug) {logger.info("Validating Question: "+question.toString());}
 		for(VALIDATION v : validations.get(question))
 		{
 			SurveyValidator<ANSWER> validator = validators.get(v);
-			boolean validationResult = validator.validate(answers.get(question));
+			boolean validationResult = validator.validate(answer);
 			logger.info(v.getPosition()+" Valid Entry: "+validationResult);
 			if(!validationResult)
 			{
@@ -195,6 +184,9 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 		return false;
 	}
 	
+	boolean hasErrors;
+	public boolean isHasErrors() {return !errors.isEmpty();}
+
 	public void debug()
 	{
 		logger.info(StringUtil.stars());

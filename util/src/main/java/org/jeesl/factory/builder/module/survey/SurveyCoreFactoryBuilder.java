@@ -172,7 +172,7 @@ public class SurveyCoreFactoryBuilder<L extends UtilsLang, D extends UtilsDescri
 	}
 	public SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> validation(JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,VALIDATION> cache)
 	{
-		return new SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION>(this,cache);
+		return new SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION>(cache);
 	}
 	
 //	public JeeslSurveyCacheFacadeBean<L,D,LOC,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> cache();

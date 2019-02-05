@@ -33,6 +33,7 @@
 					<p:blockUI trigger="btSave:link" block="pQuestions" />
 				</f:facet>
 				<p:panelGrid columns="1" columnClasses="jeeslGrid100">
+					<h:outputText value="No data are saved because of validation errors. Please resolve the errors and save again!" styleClass="jeeslRed" rendered="#{cc.attrs.handler.validation.hasErrors}"/>
 					<h:outputText value="#{section.description[localeCode].lang}"/>
 				</p:panelGrid>
 				<p:messages redisplay="false" severity="warn,error" showSummary="true" showDetail="true" closable="true"/>
@@ -44,19 +45,25 @@
 					<p:panelGrid columns="2" columnClasses="#{section.columnClasses}" rendered="#{q.visible and cc.attrs.handler.condition.rendered[q]}">
 						<h:panelGroup>
 							<ui:fragment>
-									<h:outputText value="#{q.code}" styleClass="jeeslBold" rendered="#{section.showCode}"/>
-									<ui:fragment rendered="#{section.showCode and section.showTopic}"><h:outputText value=" "/></ui:fragment>
-									<h:outputText value="#{q.name[localeCode].lang}" styleClass="jeeslBold" rendered="#{section.showTopic}"/>
-									<ui:fragment rendered="#{section.showLineBreakQuestion}"><br/></ui:fragment>
-									<ui:fragment rendered="#{not section.showLineBreakQuestion}"><h:outputText value=" "/></ui:fragment>
-									<h:outputText value="#{q.text[localeCode].lang}" rendered="#{section.showQuestion}"/>
-									<ui:fragment rendered="#{section.showLineBreakRemark}"><br/></ui:fragment>
-									<ui:fragment rendered="#{not section.showLineBreakRemark}"><h:outputText value=" "/></ui:fragment>
-									<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic" rendered="#{section.showRemark}"/>
-								</ui:fragment>
+								<h:outputText value="#{q.code}" styleClass="jeeslBold" rendered="#{section.showCode}"/>
+								<ui:fragment rendered="#{section.showCode and section.showTopic}"><h:outputText value=" "/></ui:fragment>
+								<h:outputText value="#{q.name[localeCode].lang}" styleClass="jeeslBold" rendered="#{section.showTopic}"/>
+								<ui:fragment rendered="#{section.showLineBreakQuestion}"><br/></ui:fragment>
+								<ui:fragment rendered="#{not section.showLineBreakQuestion}"><h:outputText value=" "/></ui:fragment>
+								<h:outputText value="#{q.text[localeCode].lang}" rendered="#{section.showQuestion}"/>
+								<ui:fragment rendered="#{section.showLineBreakRemark}"><br/></ui:fragment>
+								<ui:fragment rendered="#{not section.showLineBreakRemark}"><h:outputText value=" "/></ui:fragment>
+								<h:outputText value="#{q.description[localeCode].lang}" styleClass="jeeslItalic" rendered="#{section.showRemark}"/>
+							</ui:fragment>
 						</h:panelGroup>
 						<h:panelGroup>
 							<jtp:surveyAnswer question="#{q}" surveyHandler="#{cc.attrs.handler}"/>
+							<h:panelGroup rendered="#{not empty cc.attrs.handler.validation.errors[q]}">
+								<br/>
+								<ui:repeat var="e" value="#{cc.attrs.handler.validation.errors[q]}" id="repeatErrors">
+									<h:outputText value="#{e.lang}" styleClass="jeeslRed"/>
+								</ui:repeat>
+							</h:panelGroup>
 						</h:panelGroup>
 					</p:panelGrid>
 				</ui:repeat>

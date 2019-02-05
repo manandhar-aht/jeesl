@@ -12,6 +12,7 @@ import org.jeesl.api.bean.JeeslSurveyBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.survey.JeeslSurveyCoreFacade;
 import org.jeesl.controller.handler.module.survey.SurveyConditionalHandler;
+import org.jeesl.controller.handler.module.survey.SurveyValidationHandler;
 import org.jeesl.factory.builder.module.survey.SurveyCoreFactoryBuilder;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnswerFactory;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyDataFactory;
@@ -40,20 +41,23 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
-							TEMPLATE extends JeeslSurveyTemplate<?,?,?,TEMPLATE,?,?,TC,SECTION,?,?>,
-							TC extends UtilsStatus<TC,?,?>,
-							SECTION extends JeeslSurveySection<?,?,TEMPLATE,SECTION,QUESTION>,
-							QUESTION extends JeeslSurveyQuestion<?,?,SECTION,CONDITION,VALIDATION,?,?,?,?,OPTION,?>,
+public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
+							SURVEY extends JeeslSurvey<L,D,?,TEMPLATE,DATA>,
+							TEMPLATE extends JeeslSurveyTemplate<L,D,?,TEMPLATE,?,?,TC,SECTION,?,?>,
+							TC extends UtilsStatus<TC,L,D>,
+							SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
+							QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,?,?,?,?,OPTION,?>,
 							CONDITION extends JeeslSurveyCondition<QUESTION,?,OPTION>,
-							VALIDATION extends JeeslSurveyValidation<?,?,QUESTION,?>,
-							ANSWER extends JeeslSurveyAnswer<?,?,QUESTION,MATRIX,DATA,OPTION>,
-							MATRIX extends JeeslSurveyMatrix<?,?,ANSWER,OPTION>,
-							DATA extends JeeslSurveyData<?,?,SURVEY,ANSWER,CORRELATION>,
-							OPTION extends JeeslSurveyOption<?,?>,
-							CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>>
+							VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>,
+							ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
+							MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
+							DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
+							OPTION extends JeeslSurveyOption<L,D>,
+							CORRELATION extends JeeslSurveyCorrelation<DATA>>
 	implements Serializable
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyHandler.class);
@@ -63,6 +67,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 	private final JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey;
 	
 	private final SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION> condition; public SurveyConditionalHandler<TEMPLATE, SECTION, QUESTION, CONDITION, ANSWER, OPTION> getCondition() {return condition;}
+	private final SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> validation; //public SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION> getValidation() {return validation;}
 
 	private final Class<SECTION> cSection;
 
@@ -100,7 +105,7 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 			final JeeslSurveyCoreFacade<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION> fSurvey,
 			JeeslSurveyBean<?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> bSurvey,
 			
-			final SurveyCoreFactoryBuilder<?,?,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> ffSurvey)
+			final SurveyCoreFactoryBuilder<L,D,?,SURVEY,?,?,TEMPLATE,?,?,TC,SECTION,QUESTION,CONDITION,VALIDATION,?,?,?,ANSWER,MATRIX,DATA,?,OPTION,CORRELATION,?> fBSurvey)
 	{
 		this.bMessage=bMessage;
 		this.fSurvey=fSurvey;
@@ -112,19 +117,20 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		showAssessment = false;
 		allowAssessment = true;
 
-		condition = new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(ffSurvey,bSurvey);
+		condition = new SurveyConditionalHandler<TEMPLATE,SECTION,QUESTION,CONDITION,ANSWER,OPTION>(fBSurvey,bSurvey);
+		validation = new SurveyValidationHandler<L,D,TEMPLATE,SECTION,QUESTION,VALIDATION,ANSWER,OPTION>(fBSurvey,bSurvey);
 		
 		answers = new HashMap<QUESTION,ANSWER>();
 		matrix = new Nested3IdMap<MATRIX>();
 		multiOptions = new HashMap<QUESTION,Object>();
 		
-		cSection = ffSurvey.getClassSection();
+		cSection = fBSurvey.getClassSection();
 		
-		efData = ffSurvey.data();
-		efAnswer = ffSurvey.answer();
-		efMatrix = ffSurvey.ejbMatrix();
-		tfSection = ffSurvey.txtSection();
-		tfAnswer = ffSurvey.txtAnswer();
+		efData = fBSurvey.data();
+		efAnswer = fBSurvey.answer();
+		efMatrix = fBSurvey.ejbMatrix();
+		tfSection = fBSurvey.txtSection();
+		tfAnswer = fBSurvey.txtAnswer();
 		
 		activeSections = new HashSet<SECTION>();
 	}
@@ -276,6 +282,8 @@ public class SurveyHandler<SURVEY extends JeeslSurvey<?,?,?,TEMPLATE,DATA>,
 		if(activeSection!=null) {activeSection=fSurvey.find(cSection,activeSection);}
 		if(SurveyHandler.debug){logger.warn("save");try {Thread.sleep(SurveyHandler.debugDelay);} catch (InterruptedException e) {e.printStackTrace();}}
 		logger.info("Saving "+correlation.toString()+ " "+answers.size()+" answers  CORR.saved: "+EjbIdFactory.isSaved(correlation));
+		
+		
 		
 		surveyData.setCorrelation(correlation);
 		surveyData = fSurvey.saveData(surveyData);

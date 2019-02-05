@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class EjbSurveyDataFactory<SURVEY extends JeeslSurvey<?,?,?,?,DATA>,
 				DATA extends JeeslSurveyData<?,?,SURVEY,?,CORRELATION>,
-				CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>>
+				CORRELATION extends JeeslSurveyCorrelation<DATA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyDataFactory.class);
 	

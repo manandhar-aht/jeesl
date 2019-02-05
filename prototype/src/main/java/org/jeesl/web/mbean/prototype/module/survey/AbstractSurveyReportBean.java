@@ -93,7 +93,7 @@ public abstract class AbstractSurveyReportBean <L extends UtilsLang, D extends U
 						DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
-						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
+						CORRELATION extends JeeslSurveyCorrelation<DATA>,
 						DOMAIN extends JeeslDomain<L,DENTITY>,
 						QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
 						PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,

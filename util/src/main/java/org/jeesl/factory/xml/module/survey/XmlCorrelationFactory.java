@@ -38,7 +38,7 @@ public class XmlCorrelationFactory<L extends UtilsLang,D extends UtilsDescriptio
 									MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
 									DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 									OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,OPTION extends JeeslSurveyOption<L,D>,
-									CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+									CORRELATION extends JeeslSurveyCorrelation<DATA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlCorrelationFactory.class);
 		

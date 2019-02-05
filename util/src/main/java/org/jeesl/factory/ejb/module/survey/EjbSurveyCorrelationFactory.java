@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class EjbSurveyCorrelationFactory<ANSWER extends JeeslSurveyAnswer<?,?,?,?,DATA,?>,
 											DATA extends JeeslSurveyData<?,?,?,ANSWER,CORRELATION>,
-											CORRELATION extends JeeslSurveyCorrelation<?,?,DATA>
+											CORRELATION extends JeeslSurveyCorrelation<DATA>
 											>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbSurveyCorrelationFactory.class);

@@ -43,7 +43,8 @@ public class JsonTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 				MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
 				DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 				OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-				OPTION extends JeeslSurveyOption<L,D>,CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>>
+				OPTION extends JeeslSurveyOption<L,D>,
+				CORRELATION extends JeeslSurveyCorrelation<DATA>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonTemplateFactory.class);
 	

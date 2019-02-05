@@ -72,7 +72,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 						DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 						OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 						OPTION extends JeeslSurveyOption<L,D>,
-						CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
+						CORRELATION extends JeeslSurveyCorrelation<DATA>,
 						DOMAIN extends JeeslDomain<L,DENTITY>,
 						QUERY extends JeeslDomainQuery<L,D,DOMAIN,PATH>,
 						PATH extends JeeslDomainPath<L,D,QUERY,DENTITY,DATTRIBUTE>,
@@ -90,7 +90,7 @@ public abstract class AbstractSurveyEntryBean <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSurveyEntryBean.class);
 
-	private SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,VALIDATION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler; public SurveyHandler<SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,VALIDATION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getHandler() {return handler;}
+	private SurveyHandler<L,D,SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,VALIDATION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> handler; public SurveyHandler<L,D,SURVEY,TEMPLATE,TC,SECTION,QUESTION,CONDITION,VALIDATION,ANSWER,MATRIX,DATA,OPTION,CORRELATION> getHandler() {return handler;}
 	
 	protected CORRELATION correlation;
 	

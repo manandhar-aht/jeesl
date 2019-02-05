@@ -44,7 +44,7 @@ public interface JeeslSurveyBean<L extends UtilsLang, D extends UtilsDescription
 					DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
 					OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
 					OPTION extends JeeslSurveyOption<L,D>,
-					CORRELATION extends JeeslSurveyCorrelation<L,D,DATA>,
+					CORRELATION extends JeeslSurveyCorrelation<DATA>,
 					ATT extends UtilsStatus<ATT,L,D>>
 				extends JeeslSurveyCache<TEMPLATE,SECTION,QUESTION,CONDITION,VALIDATION>
 {	

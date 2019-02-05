@@ -14,7 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 public interface JeeslSurveyData<L extends UtilsLang, D extends UtilsDescription,
 									SURVEY extends JeeslSurvey<L,D,?,?,?>,
 									ANSWER extends JeeslSurveyAnswer<L,D,?,?,?,?>,
-									CORRELATION extends JeeslSurveyCorrelation<L,D,?>>
+									CORRELATION extends JeeslSurveyCorrelation<?>>
 			extends Serializable,EjbWithId,EjbWithRecord
 {
 	public enum Attributes{correlation,survey}

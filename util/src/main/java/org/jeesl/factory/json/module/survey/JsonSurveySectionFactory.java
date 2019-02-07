@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.model.json.survey.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,13 @@ public class JsonSurveySectionFactory<L extends UtilsLang,D extends UtilsDescrip
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,
 				SS extends UtilsStatus<SS,L,D>,
 				SCHEME extends JeeslSurveyScheme<L,D,TEMPLATE,SCORE>,
+				VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 				TEMPLATE extends JeeslSurveyTemplate<L,D,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,OPTIONS,?>,
 				VERSION extends JeeslSurveyTemplateVersion<L,D,TEMPLATE>,TS extends UtilsStatus<TS,L,D>,TC extends UtilsStatus<TC,L,D>,
 				SECTION extends JeeslSurveySection<L,D,TEMPLATE,SECTION,QUESTION>,
 				QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 				CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-				VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>,
+				VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 				QE extends UtilsStatus<QE,L,D>,
 				SCORE extends JeeslSurveyScore<L,D,SCHEME,QUESTION>,UNIT extends UtilsStatus<UNIT,L,D>,
 				ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
@@ -48,7 +50,7 @@ public class JsonSurveySectionFactory<L extends UtilsLang,D extends UtilsDescrip
 	private final Section q;
 	
 	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
-	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
+	private JsonSurveyQuestionFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
 	
 	public JsonSurveySectionFactory(String localeCode, Section q){this(localeCode,q,null,null);}
 	public JsonSurveySectionFactory(String localeCode, Section q,
@@ -58,7 +60,7 @@ public class JsonSurveySectionFactory<L extends UtilsLang,D extends UtilsDescrip
 		this.localeCode=localeCode;
 		this.q=q;
 		this.fSurvey=fSurvey;
-		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getQuestions().get(0),fbTemplate,fSurvey);}
+		if(!q.getQuestions().isEmpty()){jfQuestion = new JsonSurveyQuestionFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getQuestions().get(0),fbTemplate,fSurvey);}
 	}
 	
 	public Section build(SECTION ejb)

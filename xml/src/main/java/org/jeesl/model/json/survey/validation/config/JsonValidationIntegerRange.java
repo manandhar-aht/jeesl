@@ -1,4 +1,4 @@
-package org.jeesl.model.json.survey.validation;
+package org.jeesl.model.json.survey.validation.config;
 
 import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
 

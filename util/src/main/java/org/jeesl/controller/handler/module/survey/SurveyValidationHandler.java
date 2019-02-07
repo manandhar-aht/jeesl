@@ -48,7 +48,7 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 	private final List<QUESTION> questions;
 //	private final Map<QUESTION,ANSWER> answers;
 	private final Map<QUESTION,List<D>> errors; public Map<QUESTION, List<D>> getErrors() {return errors;}
-	private final Map<VALIDATION,SurveyValidator<ANSWER>> validators; public Map<VALIDATION,SurveyValidator<ANSWER>> getValidators() {return validators;}
+	private final Map<VALIDATION,SurveyValidator> validators; public Map<VALIDATION,SurveyValidator> getValidators() {return validators;}
 	private final Map<QUESTION,List<VALIDATION>> validations; public Map<QUESTION,List<VALIDATION>> getValidations() {return validations;}
 	private final Map<QUESTION,Set<QUESTION>> triggers; public Map<QUESTION,Set<QUESTION>> getTriggers() {return triggers;}
 	
@@ -59,7 +59,7 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 	{
 		this.cache=cache;
 		questions = new ArrayList<QUESTION>();
-		validators = new HashMap<VALIDATION,SurveyValidator<ANSWER>>();
+		validators = new HashMap<VALIDATION,SurveyValidator>();
 		validations  = new HashMap<QUESTION,List<VALIDATION>>();
 		errors  = new HashMap<QUESTION,List<D>>();
 		triggers = new HashMap<QUESTION,Set<QUESTION>>();
@@ -90,7 +90,6 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 		Collections.sort(questions,cpQuestion);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void initQuestion(QUESTION question)
 	{
 		questions.add(question);
@@ -109,18 +108,14 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 					if(SurveyHandler.debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName()+" "+cConfig.getSimpleName());}
 					if(SurveyHandler.debug) {logger.info("Config: "+v.getConfig());}
 					
-					SurveyValidator<ANSWER> validator = (SurveyValidator<ANSWER>) cAlgorithm.newInstance();
+					SurveyValidator validator = (SurveyValidator)cAlgorithm.newInstance();
 					SurveyValidatorConfiguration config = (SurveyValidatorConfiguration)JsonUtil.read(v.getConfig(),cConfig);
 					JsonUtil.info(config);
 					validator.init(config);
 					validators.put(v,validator);
 					
 				}
-				catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException e) {e.printStackTrace();}
 				
 //				logger.info(c.toString());
 //				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
@@ -139,7 +134,6 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 				validate(a);
 			}
 		}
-		
 	}
 	
 //	public void update(ANSWER answer)
@@ -171,7 +165,7 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 		if(SurveyHandler.debug) {logger.info("Validating Question: "+question.toString());}
 		for(VALIDATION v : validations.get(question))
 		{
-			SurveyValidator<ANSWER> validator = validators.get(v);
+			SurveyValidator validator = validators.get(v);
 			boolean validationResult = validator.validate(answer);
 			logger.info(v.getPosition()+" Valid Entry: "+validationResult);
 			if(!validationResult)

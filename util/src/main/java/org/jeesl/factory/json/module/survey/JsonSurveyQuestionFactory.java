@@ -14,9 +14,11 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.model.json.survey.Condition;
 import org.jeesl.model.json.survey.Option;
 import org.jeesl.model.json.survey.Question;
+import org.jeesl.model.json.survey.validation.Validation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,10 +27,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
+										VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 										SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
 										QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 										CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-										VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>,
+										VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 										QE extends UtilsStatus<QE,L,D>,
 										SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 										UNIT extends UtilsStatus<UNIT,L,D>,
@@ -48,6 +51,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 	
 	private JsonSurveyOptionFactory<OPTION> jfOption;
 	private JsonSurveyConditionFactory<CONDITION,QE,OPTION> jfCondition;
+	private JsonSurveyValidationFactory<L,D,VALGORITHM,VALIDATION> jfValidation;
 	
 	public JsonSurveyQuestionFactory(Question q){this(null, q,null,null);}
 	public JsonSurveyQuestionFactory(String localeCode, Question q){this(localeCode, q,null,null);}
@@ -61,6 +65,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		this.fSurvey=fSurvey;
 		if(q.getOptions()!=null && !q.getOptions().isEmpty()) {jfOption = new JsonSurveyOptionFactory<OPTION>(localeCode,q.getOptions().get(0));}
 		if(q.getConditions()!=null && !q.getConditions().isEmpty()) {jfCondition = new JsonSurveyConditionFactory<CONDITION,QE,OPTION>(localeCode,q.getConditions().get(0));}
+		if(q.getValidations()!=null && !q.getValidations().isEmpty()) {jfValidation = new JsonSurveyValidationFactory<L,D,VALGORITHM,VALIDATION>(localeCode,q.getValidations().get(0));}
 	}
 	
 	public Question build(QUESTION ejb)
@@ -112,7 +117,16 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 			{
 				json.getConditions().add(jfCondition.build(condition));
 			}
-		}	
+		}
+		if(q.getValidations()!=null && !q.getValidations().isEmpty() && fSurvey!=null && fbTemplate!=null)
+		{
+			json.setValidations(new ArrayList<Validation>());
+			for(VALIDATION validation : fSurvey.allForParent(fbTemplate.getClassValidation(), ejb))
+			{
+				json.getValidations().add(jfValidation.build(validation));
+			}
+		}
+		
 		
 		return json;
 	}

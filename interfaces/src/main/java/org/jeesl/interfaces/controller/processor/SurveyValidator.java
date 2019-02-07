@@ -3,11 +3,11 @@ package org.jeesl.interfaces.controller.processor;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.simple.JeeslSurveySimpleAnswer;
 
-public interface SurveyValidator <ANSWER extends JeeslSurveyAnswer<?,?,?,?,?,?>> extends Serializable
+public interface SurveyValidator extends Serializable
 {
 	void init(SurveyValidatorConfiguration config);
 	
-	boolean validate(ANSWER answer);
+	boolean validate(JeeslSurveySimpleAnswer answer);
 }

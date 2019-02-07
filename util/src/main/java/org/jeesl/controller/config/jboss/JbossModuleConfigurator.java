@@ -100,11 +100,10 @@ public class JbossModuleConfigurator
 		}
 		else if(version.equals("7.1"))
 		{
-			File fMysql = MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.46");
 			File fMaria = MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5");
-			FileUtils.copyFileToDirectory(fMysql,dirMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.46"),dirMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:8.0.15"),dirMain);
 			FileUtils.copyFileToDirectory(fMaria,dirMain);
-			logger.debug("Copied "+fMysql.getName()+" to "+dirMain.getAbsolutePath());
 		}
 		else
 		{

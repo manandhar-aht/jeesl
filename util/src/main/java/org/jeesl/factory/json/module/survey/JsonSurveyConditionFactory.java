@@ -17,6 +17,7 @@ public class JsonSurveyConditionFactory<CONDITION extends JeeslSurveyCondition<?
 {
 	final static Logger logger = LoggerFactory.getLogger(JsonSurveyConditionFactory.class);
 	
+	@SuppressWarnings("unused")
 	private final String localeCode;
 	private final Condition q;
 	

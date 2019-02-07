@@ -7,6 +7,8 @@ import org.jeesl.factory.json.module.survey.JsonSurveyConditionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyOptionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveyQuestionFactory;
 import org.jeesl.factory.json.module.survey.JsonSurveySectionFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValidationAlgorithmFactory;
+import org.jeesl.factory.json.module.survey.JsonSurveyValidationFactory;
 import org.jeesl.model.json.survey.Answer;
 import org.jeesl.model.json.survey.Cell;
 import org.jeesl.model.json.survey.Condition;
@@ -16,6 +18,8 @@ import org.jeesl.model.json.survey.Question;
 import org.jeesl.model.json.survey.Section;
 import org.jeesl.model.json.survey.Survey;
 import org.jeesl.model.json.survey.Template;
+import org.jeesl.model.json.survey.validation.Validation;
+import org.jeesl.model.json.survey.validation.ValidationAlgorithm;
 import org.jeesl.model.json.system.status.JsonType;
 
 public class JsonSurveyQueryProvider
@@ -40,6 +44,17 @@ public class JsonSurveyQueryProvider
 		triggerOption.setId(0l);
 		
 		JsonType type = new JsonType();
+		
+		ValidationAlgorithm algorithm = JsonSurveyValidationAlgorithmFactory.build();
+		algorithm.setId(0l);
+		algorithm.setCode("");
+		algorithm.setConfig("");
+		
+		Validation validation = JsonSurveyValidationFactory.build();
+		validation.setId(0l);
+		validation.setAlgorithm(algorithm);
+		validation.setConfig("");
+		validation.setMessage("");
 		
 		Condition condition = JsonSurveyConditionFactory.build();
 		condition.setId(0l);
@@ -82,6 +97,8 @@ public class JsonSurveyQueryProvider
 		
 		question.setCondition("");
 		question.setConditions(new ArrayList<Condition>());question.getConditions().add(condition);
+		question.setValidations(new ArrayList<Validation>());question.getValidations().add(validation);
+		
 		question.setMandatory(true);
 		question.setShowEmptyOption(true);
 		

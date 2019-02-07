@@ -2,11 +2,11 @@ package org.jeesl.controller.processor.survey.validation;
 
 import org.jeesl.interfaces.controller.processor.SurveyValidator;
 import org.jeesl.interfaces.model.json.module.survey.SurveyValidatorConfiguration;
-import org.jeesl.interfaces.model.module.survey.data.JeeslSurveyAnswer;
+import org.jeesl.interfaces.model.module.survey.simple.JeeslSurveySimpleAnswer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SurveyDoubleRangeValidator <ANSWER extends JeeslSurveyAnswer<?,?,?,?,?,?>> implements SurveyValidator<ANSWER>
+public class SurveyDoubleRangeValidator implements SurveyValidator
 {
 	final static Logger logger = LoggerFactory.getLogger(SurveyDoubleRangeValidator.class);
 	public static final long serialVersionUID=1;
@@ -24,7 +24,8 @@ public class SurveyDoubleRangeValidator <ANSWER extends JeeslSurveyAnswer<?,?,?,
 	}
 
 	@Override
-	public boolean validate(ANSWER answer) {
+	public boolean validate(JeeslSurveySimpleAnswer answer)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}

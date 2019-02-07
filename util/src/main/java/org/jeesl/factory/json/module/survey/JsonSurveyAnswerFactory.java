@@ -10,6 +10,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.model.json.survey.Answer;
 import org.jeesl.model.json.survey.Question;
 import org.slf4j.Logger;
@@ -20,10 +21,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescription,
+									VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 									SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-									VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>,
+									VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
@@ -37,15 +39,15 @@ public class JsonSurveyAnswerFactory<L extends UtilsLang,D extends UtilsDescript
 	
 	private final Answer q;
 	
-	private JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
-	private JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfMatrix;
+	private JsonSurveyQuestionFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfQuestion;
+	private JsonSurveyMatrixFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfMatrix;
 	private JsonSurveyOptionFactory<OPTION> jfOption;
 	
 	public JsonSurveyAnswerFactory(String localeCode, Answer q)
 	{
 		this.q=q;
-		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
-		if(q.getMatrix()!=null) {jfMatrix = new JsonSurveyMatrixFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getMatrix());}
+		if(q.getQuestion()!=null) {jfQuestion = new JsonSurveyQuestionFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(q.getQuestion());}
+		if(q.getMatrix()!=null) {jfMatrix = new JsonSurveyMatrixFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getMatrix());}
 		if(q.getOption()!=null) {jfOption = new JsonSurveyOptionFactory<OPTION>(localeCode,q.getOption());}
 	}
 	

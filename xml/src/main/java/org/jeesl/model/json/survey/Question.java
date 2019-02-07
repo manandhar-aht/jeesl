@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.survey.JeeslSimpleSurveyQuestion;
+import org.jeesl.model.json.survey.validation.Validation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -145,6 +146,11 @@ public class Question implements Serializable,JeeslSimpleSurveyQuestion
 	private List<Condition> conditions;
 	public List<Condition> getConditions() {return conditions;}
 	public void setConditions(List<Condition> conditions) {this.conditions = conditions;}
+	
+	@JsonProperty("validations")
+	private List<Validation> validations;
+	public List<Validation> getValidations() {return validations;}
+	public void setValidations(List<Validation> validations) {this.validations = validations;}
 	
 	@JsonProperty("showEmptyOption")
 	private Boolean showEmptyOption;

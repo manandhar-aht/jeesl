@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOptionSet;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyQuestion;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveySection;
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidation;
+import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyValidationAlgorithm;
 import org.jeesl.model.json.survey.Cell;
 import org.jeesl.model.json.survey.Matrix;
 import org.slf4j.Logger;
@@ -23,10 +24,11 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JsonSurveyMatrixFactory<L extends UtilsLang,D extends UtilsDescription,
+									VALGORITHM extends JeeslSurveyValidationAlgorithm<L,D>,
 									SECTION extends JeeslSurveySection<L,D,?,SECTION,QUESTION>,
 									QUESTION extends JeeslSurveyQuestion<L,D,SECTION,CONDITION,VALIDATION,QE,SCORE,UNIT,OPTIONS,OPTION,?>,
 									CONDITION extends JeeslSurveyCondition<QUESTION,QE,OPTION>,
-									VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,?>,
+									VALIDATION extends JeeslSurveyValidation<L,D,QUESTION,VALGORITHM>,
 									QE extends UtilsStatus<QE,L,D>,
 									SCORE extends JeeslSurveyScore<L,D,?,QUESTION>,
 									UNIT extends UtilsStatus<UNIT,L,D>,
@@ -40,14 +42,14 @@ public class JsonSurveyMatrixFactory<L extends UtilsLang,D extends UtilsDescript
 
 	private final Matrix q;
 	
-	private JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfAnswer;
+	private JsonSurveyAnswerFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> jfAnswer;
 
 	public JsonSurveyMatrixFactory(String localeCode, Matrix q)
 	{
 		this.q=q;
 		if(q.getCells()!=null && !q.getCells().isEmpty() && q.getCells().get(0).getAnswer()!=null)
 		{
-			jfAnswer = new JsonSurveyAnswerFactory<L,D,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getCells().get(0).getAnswer());
+			jfAnswer = new JsonSurveyAnswerFactory<L,D,VALGORITHM,SECTION,QUESTION,CONDITION,VALIDATION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getCells().get(0).getAnswer());
 		}
 		
 	}

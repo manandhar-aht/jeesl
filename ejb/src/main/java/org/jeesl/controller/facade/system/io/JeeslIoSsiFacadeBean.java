@@ -55,7 +55,7 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override
-	public MAPPING fMapping(Class<?> ejb, Class<?> json) throws UtilsNotFoundException
+	public MAPPING fMapping(Class<?> json, Class<?> ejb) throws UtilsNotFoundException
 	{
 		ENTITY eEjb = this.fByCode(fbSsi.getClassEntity(), ejb.getName());
 		ENTITY eJson = this.fByCode(fbSsi.getClassEntity(), json.getName());

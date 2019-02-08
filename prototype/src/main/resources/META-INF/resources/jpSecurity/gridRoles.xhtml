@@ -36,13 +36,17 @@
 							</f:facet>
 							<p:ajax event="rowSelect"  listener="#{cc.attrs.bean.selectRole()}" update=":#{cc.id}:fRoles :#{cc.id}:sRole"/>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderRoles()}" update="@form"/>
-							<p:column>  
+							<p:column rendered="true">
+								<h:graphicImage rendered="#{not r.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+								<h:outputText rendered="#{r.visible}" value="#{r.position}"/>
+							</p:column>
+							<p:column rendered="false">  
 								<h:outputText value="#{r.position}" />  
 				            </p:column>
 				            <p:column headerText="#{msg.jeeslSecurityRole}">  
 								<h:outputText value="#{r.name[userBean.localeCode].lang}" />  
 				            </p:column>
-				            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}">  
+				            <p:column rendered="#{false and cc.attrs.bean.uiShowInvisible}">  
 								<h:graphicImage rendered="#{r.visible}" name="#{appIconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
 				                <h:graphicImage rendered="#{not r.visible}" name="#{appIconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
 				            </p:column>

@@ -157,7 +157,7 @@ public abstract class AbstractAdminSurveyTemplateBean <L extends UtilsLang, D ex
 		initPageSettings();
 		super.initLocales(userLocale);
 
-		algorithms.addAll(fTemplate.allOrderedPosition(fbTemplate.getClassValidationAlgorithm()));
+		algorithms.addAll(fTemplate.allOrderedPositionVisible(fbTemplate.getClassValidationAlgorithm()));
 		
 		versions = new ArrayList<VERSION>();
 		sbhCategory.silentCallback();

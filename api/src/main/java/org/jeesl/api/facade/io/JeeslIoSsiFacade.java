@@ -24,7 +24,7 @@ public interface JeeslIoSsiFacade <L extends UtilsLang,D extends UtilsDescriptio
 									>
 			extends UtilsFacade
 {	
-	MAPPING fMapping(Class<?> ejb, Class<?> json) throws UtilsNotFoundException;
+	MAPPING fMapping(Class<?> json, Class<?> ejb) throws UtilsNotFoundException;
 	DATA fIoSsiData(MAPPING mapping, String code) throws UtilsNotFoundException;
 	<T extends EjbWithId> DATA fIoSsiData(MAPPING mapping, T ejb) throws UtilsNotFoundException;
 	List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links);

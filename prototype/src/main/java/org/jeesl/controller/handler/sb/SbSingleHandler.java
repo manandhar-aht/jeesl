@@ -36,7 +36,6 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 	public SbSingleHandler(Class<T> c, SbSingleBean bean){this(c,new ArrayList<T>(),bean);}	
 	public SbSingleHandler(Class<T> c, List<T> list, SbSingleBean bean)
 	{
-		
 		this.c=c;
 		this.bean=bean;
 		debugOnInfo = false;

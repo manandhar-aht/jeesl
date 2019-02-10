@@ -49,6 +49,7 @@
 .jeeslDialog {background-color: #f1f1f1;}
 
 .jeeslRed {color: red;}
+.jeeslLightGray {color: lightgray;}
 
 /***********************************************************************************/
 /********************** Primefaces Panel               *****************************/
@@ -174,6 +175,14 @@ input[class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all ui-st
 .jeeslDtHighlightNone{background-color: rgb(255, 255, 255);}
 .jeeslDtHighlightLight{background-color: rgb(221, 226, 239);}
 .jeeslDtHighlightStrong{background-color: rgb(121, 126, 139);}
+
+.jeeslDtCellTable {}
+.jeeslDtCellTable td {border-top: 0; border-bottom: 0; border-right: 0;border-left: 0;}
+.jeeslDtCellTable tr:first-child td {border-top: 0; border-bottom: 0; border-right: 0; border-left: 0; padding: 0;}
+.jeeslDtCellTable tr td:first-child {border-top: 0; border-bottom: 0; border-right: 0; border-left: 0; padding: 0;}
+.jeeslDtCellTable tr:last-child td {border-top: 0; border-bottom: 0; border-right: 0; border-left: 0; padding: 0;}
+.jeeslDtCellTable tr td:last-child {border-right: 0; border-top: 0; border-bottom: 0; border-left: 0;padding: 0;}
+
 
 .jeeslPanel .ui-panelgrid .ui-panelgrid-cell {padding-right: 13px;}
 

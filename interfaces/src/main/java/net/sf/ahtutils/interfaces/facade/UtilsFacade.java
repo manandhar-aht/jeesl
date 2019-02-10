@@ -12,6 +12,8 @@ import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 
 import net.sf.ahtutils.controller.util.ParentPredicate;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -104,7 +106,9 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException;
 	
 	//Parent
-	<T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I parent);
+	<T extends EjbWithParentAttributeResolver, P extends EjbWithId> List<T> allForParent(Class<T> c, P parent);
+	<T extends JeeslWithParentAttributeStatus<STATUS>, P extends EjbWithId, STATUS extends UtilsStatus<STATUS,?,?>> List<T> allForParentStatus(Class<T> type, P parent, List<STATUS> status);
+	<T extends JeeslWithParentAttributeType<TYPE>, P extends EjbWithId, TYPE extends UtilsStatus<TYPE,?,?>> List<T> allForParentType(Class<T> c, P parent, List<TYPE> type);
 	<T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParents(Class<T> type, List<I> parents);
 	<T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1);
 	<T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1, int maxResults);

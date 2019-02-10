@@ -39,6 +39,7 @@ public class JsonDayFactory
 		
 		DateTime.Property pDoW = dt.dayOfWeek();
 		json.setName(pDoW.getAsText(locale));
+		json.setCode(pDoW.getAsShortText(locale));
 		
 		json.setToday(now.getDayOfMonth()==dt.getDayOfMonth() && now.getMonthOfYear()==dt.getMonthOfYear() && now.getYear()==dt.getYear());
 		

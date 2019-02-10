@@ -26,6 +26,8 @@ import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -702,6 +704,72 @@ public class UtilsFacadeBean implements UtilsFacade
 		return tQ.getResultList();
 	}
 	
+	@Override public <T extends JeeslWithParentAttributeStatus<STATUS>, P extends EjbWithId, STATUS extends UtilsStatus<STATUS, ?, ?>>
+			List<T> allForParentStatus(Class<T> c, P parent, List<STATUS> status)
+	{
+		T prototype = null;
+		try {prototype = c.newInstance();}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+	    CriteriaQuery<T> cQ = cB.createQuery(c);
+	    
+	    Root<T> root = cQ.from(c);
+	    Path<Object> p1Path = root.get(prototype.resolveParentAttribute());
+	    predicates.add(cB.equal(p1Path,parent));
+	    
+	    if(status!=null && !status.isEmpty())
+	    {
+	    	Join<T,STATUS> jStatus = root.join(JeeslWithStatus.attributeStatus);
+	    	predicates.add(jStatus.in(status));
+	    }
+	    
+	    CriteriaQuery<T> select = cQ.select(root);
+	    select.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+	    
+	    if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+	    
+		TypedQuery<T> q = em.createQuery(select);
+		try	{return q.getResultList();}
+		catch (NoResultException ex){return new ArrayList<T>();}
+	}
+	
+	@Override public <T extends JeeslWithParentAttributeType<TYPE>, P extends EjbWithId, TYPE extends UtilsStatus<TYPE,?,?>>
+				List<T> allForParentType(Class<T> c, P parent, List<TYPE> type)
+	{
+		T prototype = null;
+		try {prototype = c.newInstance();}
+		catch (InstantiationException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<T> cQ = cB.createQuery(c);
+		
+		Root<T> root = cQ.from(c);
+		Path<Object> p1Path = root.get(prototype.resolveParentAttribute());
+		predicates.add(cB.equal(p1Path,parent));
+		
+		if(type!=null && !type.isEmpty())
+		{
+			Join<T,TYPE> jType = root.join(JeeslWithType.attributeType);
+			predicates.add(jType.in(type));
+		}
+		
+		CriteriaQuery<T> select = cQ.select(root);
+		select.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		
+		if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+		else if(EjbWithRecord.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+		
+		TypedQuery<T> q = em.createQuery(select);
+		try	{return q.getResultList();}
+		catch (NoResultException ex){return new ArrayList<T>();}
+	}
+	
 	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> c, I parent)
 	{
 		T prototype = null;
@@ -1177,4 +1245,5 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult().getId();}
 		catch (NoResultException ex){return 0;}
 	}
+	
 }

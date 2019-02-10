@@ -21,6 +21,11 @@ public class Day implements Serializable
 	private String name;
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
+	
+	@JsonProperty("code")
+	private String code;
+	public String getCode() {return code;}
+	public void setCode(String code) {this.code = code;}
 
 	@JsonProperty("weekend")
 	private boolean weekend;

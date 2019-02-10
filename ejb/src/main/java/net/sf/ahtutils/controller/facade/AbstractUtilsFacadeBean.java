@@ -15,6 +15,8 @@ import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,7 +131,9 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	// Parent
 	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> T oneForParent(Class<T> type, I p1) throws UtilsNotFoundException{return fUtils.oneForParent(type, p1);}
-	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I p1){return fUtils.allForParent(type, p1);}
+	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParent(Class<T> type, I p1) {return fUtils.allForParent(type, p1);}
+	@Override public <T extends JeeslWithParentAttributeStatus<STATUS>, P extends EjbWithId, STATUS extends UtilsStatus<STATUS,?,?>> List<T> allForParentStatus(Class<T> c, P parent, List<STATUS> status) {return fUtils.allForParentStatus(c, parent, status);}
+	@Override public <T extends JeeslWithParentAttributeType<TYPE>, P extends EjbWithId, TYPE extends UtilsStatus<TYPE, ?, ?>> List<T> allForParentType(Class<T> c, P parent, List<TYPE> type) {return fUtils.allForParentType(c, parent, type);}
 	@Override public <T extends EjbWithParentAttributeResolver, I extends EjbWithId> List<T> allForParents(Class<T> c, List<I> parents) {{return fUtils.allForParents(c, parents);}}
 	@Override public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1){return fUtils.allForParent(type, p1Name, p1);}
 	@Override public <T extends EjbWithId, I extends EjbWithId> List<T> allForParent(Class<T> type, String p1Name, I p1, int maxResults) {return fUtils.allForParent(type, p1Name, p1,maxResults);}
@@ -166,7 +170,6 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	
 	//Year
 	public <T extends EjbWithYear, P extends EjbWithId> T fByYear(Class<T> type, String p1Name, P p, int year) throws UtilsNotFoundException {return fUtils.fByYear(type, p1Name, p, year);}
-	
 
 	//@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsSecurityCategory<L, D, C, R, V, U, A, USER>, R extends UtilsSecurityRole<L, D, C, R, V, U, A, USER>, V extends UtilsSecurityView<L, D, C, R, V, U, A, USER>, U extends UtilsSecurityUsecase<L, D, C, R, V, U, A, USER>, A extends UtilsSecurityAction<L, D, C, R, V, U, A, USER>, USER extends UtilsUser<L, D, C, R, V, U, A, USER>> List<USER> likeNameFirstLast(Class<USER> c, String query) {return fUtils.likeNameFirstLast(c,query);}
 }

@@ -12,6 +12,8 @@ import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
+import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +61,7 @@ public class AbstractDummyFacade implements UtilsFacade
 	
 	@Override
 	public <T extends EjbWithId> T find(Class<T> type, T t) {
-		
+		 
 		return null;
 	}
 
@@ -518,6 +520,20 @@ public class AbstractDummyFacade implements UtilsFacade
 	@Override
 	public <T extends EjbWithValidFromAndParent, P extends EjbWithId> T fFirstValidFrom(Class<T> c, P parent,
 			Date validFrom) throws UtilsNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends JeeslWithParentAttributeStatus<STATUS>, P extends EjbWithId, STATUS extends UtilsStatus<STATUS, ?, ?>> List<T> allForParentStatus(
+			Class<T> type, P parent, List<STATUS> status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends JeeslWithParentAttributeType<TYPE>, P extends EjbWithId, TYPE extends UtilsStatus<TYPE, ?, ?>> List<T> allForParentType(
+			Class<T> type, P parent, List<TYPE> type2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

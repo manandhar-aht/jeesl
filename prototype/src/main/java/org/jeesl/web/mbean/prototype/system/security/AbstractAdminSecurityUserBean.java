@@ -118,7 +118,9 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 		mapRoles.clear();
 		if(debugOnInfo){logger.info("Settings roles: "+user.getRoles().size());}
 		for(R r : user.getRoles()){mapRoles.put(r.getId(), true);}
+		postReload();
 	}
+	protected abstract void postReload();
 	
 	public void saveUser() throws UtilsLockingException
 	{

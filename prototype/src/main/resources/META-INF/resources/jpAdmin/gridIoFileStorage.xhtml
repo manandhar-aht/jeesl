@@ -61,6 +61,9 @@
 								<p:outputLabel value="#{msg.jeeslIoFileStorageLimit}" />
 								<p:inputText value="#{cc.attrs.bean.storage.fileSizeLimit}"/>
 								
+								<p:outputLabel value="#{msg.jeeslIoFileStorageKeep}" />
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.storage.keepRemoved}" />
+								
 								<p:outputLabel value="#{msg.jeeslJson}" />
 								<p:inputText value="#{cc.attrs.bean.storage.json}"/>
 								

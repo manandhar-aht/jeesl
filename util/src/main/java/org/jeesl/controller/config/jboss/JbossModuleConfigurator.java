@@ -127,7 +127,6 @@ public class JbossModuleConfigurator
 		if(version.equals("6.3"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.hibernate:hibernate-envers:4.2.0.Final"),moduleMain);
-			
 		}
 	}
 	

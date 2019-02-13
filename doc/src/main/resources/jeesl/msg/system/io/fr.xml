@@ -28,6 +28,13 @@
 	    		<s:lang key="fr" translation="Max. File Size"/>
 	    	</s:langs>
     </s:translation>
+    <s:translation key="jeeslIoFileStorageKeep">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Behalte gelöschte Datein"/>
+	    		<s:lang key="en" translation="Keep Removed Files"/>
+	    		<s:lang key="fr" translation="Keep Removed Files"/>
+	    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslIoFiles">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Dateien"/>

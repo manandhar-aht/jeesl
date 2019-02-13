@@ -27,6 +27,9 @@ public interface JeeslFileStorage<L extends UtilsLang,D extends UtilsDescription
 	String getJson();
 	void setJson(String json);
 	
+	Boolean getKeepRemoved();
+	void setKeepRemoved(Boolean keepRemoved);
+	
 	Long getFileSizeLimit();
 	void setFileSizeLimit(Long fileSizeLimit);
 }

@@ -87,6 +87,17 @@ public class JbossConfigurator
 		request.get("driver-xa-datasource-class-name").set("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
 		client.execute(new OperationBuilder(request).build());
 	}
+	public void createMariadbDriver() throws IOException
+	{			
+		ModelNode request = new ModelNode();
+		request.get(ClientConstants.OP).set(ClientConstants.ADD);
+		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
+		request.get(ClientConstants.OP_ADDR).add("jdbc-driver","mariadb");
+		request.get("driver-name").set("mariadb");
+		request.get("driver-module-name").set("org.mariadb");
+		request.get("driver-xa-datasource-class-name").set("org.mariadb.jdbc.MariaDbDataSource");
+		client.execute(new OperationBuilder(request).build());
+	}
 	
 	public void createPostgresDriver() throws IOException
 	{		
@@ -100,6 +111,39 @@ public class JbossConfigurator
 		client.execute(new OperationBuilder(request).build());
 	}
 	
+	public String createMariaDbDatasource(Configuration config, String context) throws IOException
+	{
+		String cfgDbDs = "db."+context+".ds";
+		String cfgDbHost = "db."+context+".host";
+		String cfgDbPort = "db."+context+".port";
+		String cfgDbName = "db."+context+".db";
+		String cfgDbUser = "db."+context+".user";
+		String cfgDbPwd = "db."+context+".pwd";
+		
+		String pDbDs = config.getString(cfgDbDs);
+		String pDbHost = config.getString(cfgDbHost);
+		String pDbPort = config.getString(cfgDbPort,"3306");
+		String pDbName = config.getString(cfgDbName);
+		String pDbUser = config.getString(cfgDbUser);
+		String pDbPwd = config.getString(cfgDbPwd);
+		
+		logger.debug(cfgDbPwd+"\t"+pDbDs);
+		logger.debug(cfgDbHost+"\t"+pDbHost);
+		logger.debug(cfgDbHost+"\t"+pDbHost);
+		logger.debug(cfgDbName+"\t"+pDbName);
+		logger.debug(cfgDbUser+"\t"+pDbUser);
+		logger.debug(cfgDbPwd+"\t"+pDbPwd);
+		
+		boolean dsExists = dsExists(cfgDbDs);
+		if(!dsExists)
+		{
+			createMariadbDatasource(pDbDs,pDbHost,pDbPort,pDbName,"?useSSL=false",pDbUser,pDbPwd);
+			StringBuilder sb = new StringBuilder();
+			sb.append(pDbDs);
+			return sb.toString();
+		}
+		return null;
+	}
 	
 	public String createMysqlDatasource(Configuration config, String context) throws IOException
 	{
@@ -165,6 +209,27 @@ public class JbossConfigurator
 			return sb.toString();
 		}
 		return null;
+	}
+	
+	public void createMariadbDatasource(String name, String host, String port, String db, String jdbcParamter, String username, String password) throws IOException
+	{		
+		ModelNode request = new ModelNode();
+		request.get(ClientConstants.OP).set(ClientConstants.ADD);
+		request.get(ClientConstants.OP_ADDR).add("subsystem","datasources");
+		request.get(ClientConstants.OP_ADDR).add("data-source",name);
+		
+		datasource(request,name);
+		connection(request,"mariadb",host,port,db,jdbcParamter);
+		request.get("driver-name").set("mariadb");
+		request.get("transaction-isolation").set("TRANSACTION_READ_COMMITTED");
+		 
+		pool(request);
+		security(request,username,password);
+		  
+		request.get("prepared-statements-cache-size").set(32);
+		request.get("share-prepared-statements").set(true);
+		  
+		client.execute(new OperationBuilder(request).build());
 	}
 	
 	public void createMysqlDatasource(String name, String host, String port, String db, String jdbcParamter, String username, String password) throws IOException

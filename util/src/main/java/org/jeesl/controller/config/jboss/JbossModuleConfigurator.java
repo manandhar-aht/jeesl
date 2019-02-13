@@ -100,10 +100,38 @@ public class JbossModuleConfigurator
 		}
 		else if(version.equals("7.1"))
 		{
-			File fMaria = MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5");
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:5.1.46"),dirMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("mysql:mysql-connector-java:8.0.15"),dirMain);
-			FileUtils.copyFileToDirectory(fMaria,dirMain);
+		}
+		else
+		{
+			logger.warn("NO MYSQL");
+		}
+	}
+	
+	public void mariaDB() throws IOException
+	{
+		File dirOrg = buildMobuleBase("org");
+		File dirMaria = new File(dirOrg,"mariadb");
+		File dirMain = new File(dirMaria,"main");
+		File moduleXml = new File(dirMain,"module.xml");
+		
+		logger.debug(moduleXml.getAbsolutePath());
+		
+		if(!dirOrg.exists()){dirOrg.mkdir();}
+		if(!dirMaria.exists()){dirMaria.mkdir();}
+		if(!dirMain.exists()){dirMain.mkdir();}
+		if(!moduleXml.exists())
+		{
+			String src = srcBaseDir+"/"+product+"/"+version+"/mariadb.xml";
+			logger.info("Available?"+mrl.isAvailable(src)+" "+src+" to "+moduleXml.getAbsolutePath());
+			InputStream input = mrl.searchIs(src);
+			FileUtils.copyInputStreamToFile(input, moduleXml);
+		}
+		
+		if(version.equals("7.1"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5"),dirMain);
 		}
 		else
 		{

@@ -34,7 +34,7 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 	@Parameter(defaultValue = "INFO")
     private String log;
 	
-	private enum DbType {mysql,postgres}
+	private enum DbType {mysql,mariadb,postgres}
 	private final Set<DbType> setFiles;
 	
 	public JeeslJbossEap71Configurator()
@@ -112,7 +112,6 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         					System.out.println(MySqlShellCommands.createDatabase("root",pDbRootPwd,pDbName));
         					System.out.println(MySqlShellCommands.grantDatabase("root",pDbRootPwd,pDbName,pDbUser,pDbPwd));
         					System.out.println(MySqlShellCommands.restoreDatabase("root",pDbRootPwd,pDbName,pDbDump));
-        					
         					break;
         		case postgres:	System.out.println(PostgreSqlShellCommands.createUser("postgres",pDbUser,pDbPwd));
         						System.out.println(PostgreSqlShellCommands.terminate("postgres",pDbName));
@@ -130,16 +129,24 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
     
     private void dbFiles(String[] keys, Configuration config, JbossModuleConfigurator jbossModule) throws IOException
     {
+    	List<String> log = new ArrayList<String>();
     	for(String key : keys)
     	{
     		String type = config.getString("db."+key+".type");
         	DbType dbType = DbType.valueOf(type);
         	switch(dbType)
         	{
+	        	case mariadb: if(!setFiles.contains(dbType))
+								{
+									jbossModule.mariaDB();
+									log.add(dbType.toString());
+									setFiles.add(dbType);
+								}
+								break;
         		case mysql: if(!setFiles.contains(dbType))
         					{
         						jbossModule.mysql();
-        						getLog().info("DB: MySQL ... files copied");
+        						log.add(dbType.toString());
         						setFiles.add(dbType);
         					}
         					break;
@@ -147,12 +154,13 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
 							{
 								jbossModule.postgres();
 								jbossModule.hibernate();
-								getLog().info("DB: PostGIS files copied");
+								log.add(dbType.toString());
 								setFiles.add(dbType);
 							}
 				break;
         	}
     	}
+    	getLog().info("DB Files: "+StringUtils.join(log, ", "));
     }
     
     private void dbDrivers(String[] keys, Configuration config, JbossConfigurator jbossConfig) throws IOException
@@ -164,6 +172,12 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         	DbType dbType = DbType.valueOf(type);
         	switch(dbType)
         	{
+        		case mariadb: if(!jbossConfig.driverExists("mariadb"))
+								{
+									jbossConfig.createMariadbDriver();
+									log.add("mariadb");
+								}
+								break;
         		case mysql: if(!jbossConfig.driverExists("mysql"))
         					{
         						jbossConfig.createMysqlDriver();
@@ -191,7 +205,8 @@ public class JeeslJbossEap71Configurator extends AbstractMojo
         	String ds=null;
         	switch(dbType)
         	{
-        		case mysql: ds = jbossConfig.createMysqlDatasource(config,key); break;						
+        		case mariadb: ds = jbossConfig.createMariaDbDatasource(config,key); break;
+        		case mysql: ds = jbossConfig.createMysqlDatasource(config,key); break;		
         		case postgres: ds = jbossConfig.createPostgresDatasource(config,key);break;
         	}
         	if(ds!=null) {getLog().info("DS: "+ds);}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="urn:jboss:module:1.0" name="org.mariadb.jdbc">
+<module xmlns="urn:jboss:module:1.0" name="org.mariadb">
 	<resources>
-		<resource-root path="mariadb-java-client-2.2.5"/>
+		<resource-root path="mariadb-java-client-2.2.5.jar"/>
 	</resources>
 	<dependencies>
         <module name="javax.api"/>

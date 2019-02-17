@@ -18,6 +18,7 @@ public class SbDateHandler implements Serializable
 	
 	private Date date1; public Date getDate1() {return date1;} 
 	private Date date2; public Date getDate2() {return date2;}
+	private Date date3; public Date getDate3() {return date3;}
 
 	public SbDateHandler(){this(null);}
 	
@@ -80,6 +81,16 @@ public class SbDateHandler implements Serializable
 			this.date2 = dt.withTimeAtStartOfDay().toDate();
 		}
 		else {this.date2 = date2;}
+	}
+	
+	public void setDate3(Date date3)
+	{
+		if(enforceStartOfDay)
+		{
+			DateTime dt = new DateTime(date3);
+			this.date3 = dt.withTimeAtStartOfDay().toDate();
+		}
+		else {this.date3 = date3;}
 	}
 	
 	public void dateChanged()

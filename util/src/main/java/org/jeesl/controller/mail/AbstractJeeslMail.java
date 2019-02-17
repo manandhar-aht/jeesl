@@ -40,7 +40,6 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	protected final JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate;
 	protected final JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail;
 	
-
 //	protected final FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
 	
 	protected TEMPLATE template;

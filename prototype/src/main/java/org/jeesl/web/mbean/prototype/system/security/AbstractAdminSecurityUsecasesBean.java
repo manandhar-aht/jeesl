@@ -59,7 +59,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 	
 	public void postConstructUsecase(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
-		super.postConstructSecurity(fSecurity,bTranslation,bMessage);		
+		super.postConstructSecurity(fSecurity,bTranslation,bMessage,bSecurity);		
 		opViews = fSecurity.all(fbSecurity.getClassView());
 		Collections.sort(opViews,comparatorView);
 		
@@ -144,6 +144,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		usecase = fSecurity.save(usecase);
 		reloadUsecase();
 		reloadUsecases();
+	
 	}
 	
 	//OverlayPanel

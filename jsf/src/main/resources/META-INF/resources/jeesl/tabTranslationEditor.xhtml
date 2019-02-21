@@ -36,10 +36,10 @@
 	  			<p:inputTextarea value="#{cc.attrs.value.name[l.code].lang}" maxlength="254" style="width:100%" autocomplete="off"/>
   			</c:if>
   			<c:if test="#{cc.attrs.withDescription}">
-  				<p:outputLabel value="#{cc.attrs.labelDescription}"/>
+  				<p:outputLabel value="#{cc.attrs.labelDescription}" rendered="#{not empty cc.attrs.labelDescription}"/>
   				<p:inputTextarea value="#{cc.attrs.value.description[l.code].lang}" style="width:100%" autocomplete="off"/>
   			</c:if>
   		</p:tab>  
-  	</p:tabView> 
+  	</p:tabView>
   </composite:implementation>
 </html>

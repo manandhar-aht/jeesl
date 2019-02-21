@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslSecurityBean;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSecurityFacade;
@@ -54,6 +55,8 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	protected JeeslSecurityCategory.Type categoryType;
+	
+	protected JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
 	
 	protected final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
 	
@@ -108,10 +111,11 @@ public class AbstractAdminSecurityBean <L extends UtilsLang,D extends UtilsDescr
 		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);
 	}
 	
-	public void postConstructSecurity(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
+	public void postConstructSecurity(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fSecurity=fSecurity;
+		this.bSecurity=bSecurity;
 		reloadCategories();
 	}
 	

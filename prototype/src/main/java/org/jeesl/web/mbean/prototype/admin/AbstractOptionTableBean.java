@@ -427,7 +427,6 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	
 	//JEESL REST
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{

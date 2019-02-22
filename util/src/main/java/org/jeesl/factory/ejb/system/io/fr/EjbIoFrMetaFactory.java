@@ -44,4 +44,15 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>,
 		
 		return ejb;
 	}
+	
+	public Date toLastDate(List<META> metas)
+	{
+		if(metas==null || metas.isEmpty()) {return null;}
+		Date last = new Date(0);
+		for(META meta : metas)
+		{
+			if(meta.getRecord().after(last)) {last = meta.getRecord();}
+		}
+		return last;
+	}
 }

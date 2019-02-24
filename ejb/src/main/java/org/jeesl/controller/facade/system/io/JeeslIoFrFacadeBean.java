@@ -12,6 +12,7 @@ import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryStore;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,12 +74,13 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 	@Override public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		meta = this.find(fbFile.getClassMeta(),meta);
-		if(!meta.getContainer().getStorage().getKeepRemoved())
+		boolean keep = BooleanComparator.active(meta.getContainer().getStorage().getKeepRemoved());
+		if(!keep)
 		{
 			build(meta.getContainer().getStorage()).delteFileFromRepository(meta);
 		}
 		
-		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
+		logger.info("Removing Meta "+meta.getContainer().getMetas().size()+" keep:"+keep+" "+meta.getCode());
 		meta.getContainer().getMetas().remove(meta);
 		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
 		this.rm(meta);

@@ -37,9 +37,6 @@
 							listener="#{cc.attrs.handler.addFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:opUpload" oncomplete="PF('wvUpload').show();"
 							rendered="#{cc.attrs.allowUpload}"/>
 						<j:downloadIcon type="reportZip" value="#{cc.attrs.handler.zipStream()}" tooltip="#{msg.reportZip}"/>
-						<j:icon type="jeeslDelete" listener="#{cc.attrs.handler.deleteFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload"
-								mayDisappear="true" tooltip="#{msg.ttJeeslIoFileDelete}"
-								rendered="#{(cc.attrs.allowDelete) and (not empty cc.attrs.handler.meta) and (cc.attrs.handler.meta.id gt 0)}" />
 					</j:dtHeader>
 				</f:facet>
 				<p:ajax event="rowSelect" listener="#{cc.attrs.handler.selectFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fDownload #{cc.attrs.componentPrefix}:#{cc.id}:fFiles" />
@@ -78,6 +75,9 @@
 							update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload" />
 					<j:icon id="iconJeeslFileSave" type="jeeslSave" listener="#{cc.attrs.handler.saveMeta()}"
 							update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload" />
+					<j:icon type="jeeslDelete" listener="#{cc.attrs.handler.deleteFile()}" update="#{cc.attrs.componentPrefix}:#{cc.id}:fFiles #{cc.attrs.componentPrefix}:#{cc.id}:fDownload"
+								mayDisappear="true" tooltip="#{msg.ttJeeslIoFileDelete}"
+								rendered="#{(cc.attrs.allowDelete) and (not empty cc.attrs.handler.meta) and (cc.attrs.handler.meta.id gt 0)}" />
 					<j:downloadIcon type="jeeslDownload" value="#{cc.attrs.handler.fileStream()}" />
 				</f:facet>
 				<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">

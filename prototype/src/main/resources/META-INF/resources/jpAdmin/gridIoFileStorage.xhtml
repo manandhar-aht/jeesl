@@ -48,7 +48,7 @@
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStorage()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.uiAllowSave}" tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteStorage()}" update=":#{cc.id}:grid" rendered="#{cc.attrs.bean.storage.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 							
 								<p:outputLabel value="#{msg.jeeslCode}" />
 								<p:inputText value="#{cc.attrs.bean.storage.code}"/>

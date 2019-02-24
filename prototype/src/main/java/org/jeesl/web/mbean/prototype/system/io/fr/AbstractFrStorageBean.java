@@ -52,7 +52,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 		efStorage = fbFr.ejbStorage();
 	}
 	
-	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
+	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fFr=fFr;
@@ -97,6 +97,9 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	
 	public void selectStorage()
 	{
+		storage = fFr.find(fbFr.getClassStorage(), storage);
+		storage = efLang.persistMissingLangs(fFr, localeCodes, storage);
+		storage = efDescription.persistMissingLangs(fFr, localeCodes, storage);
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(storage));}
 		reset(false);
 	}

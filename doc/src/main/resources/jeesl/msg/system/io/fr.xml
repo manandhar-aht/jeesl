@@ -42,6 +42,13 @@
 	    		<s:lang key="fr" translation="Files"/>
 	    	</s:langs>
     </s:translation>
+    <s:translation key="jeeslIoFile">
+	    	<s:langs>
+	    		<s:lang key="de" translation="Datei"/>
+	    		<s:lang key="en" translation="File"/>
+	    		<s:lang key="fr" translation="File"/>
+	    	</s:langs>
+    </s:translation>
     <s:translation key="jeeslIoFileName">
 	    	<s:langs>
 	    		<s:lang key="de" translation="Name"/>
@@ -50,11 +57,18 @@
 	    	</s:langs>
     </s:translation>
 	<s:translation key="jeeslIoFileSize">
-	    	<s:langs>
-	    		<s:lang key="de" translation="Größe"/>
-	    		<s:lang key="en" translation="Size"/>
-	    		<s:lang key="fr" translation="Size"/>
-	    	</s:langs>
+    	<s:langs>
+    		<s:lang key="de" translation="Größe"/>
+    		<s:lang key="en" translation="Size"/>
+    		<s:lang key="fr" translation="Size"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslIoFileType">
+    	<s:langs>
+    		<s:lang key="de" translation="Typ"/>
+    		<s:lang key="en" translation="Type"/>
+    		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
     </s:translation>
     	<s:translation key="jeeslIoFileRecord">
 	    	<s:langs>

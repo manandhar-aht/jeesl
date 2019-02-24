@@ -807,6 +807,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	    select.where(cB.equal(p1Path, p1.getId()));
 	    
 	    if(EjbWithPosition.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithValidFrom.class.isAssignableFrom(c)){select.orderBy(cB.asc(root.get(EjbWithValidFrom.Attributes.validFrom.toString())));}
 	    
 		TypedQuery<T> q = em.createQuery(select);
 		if(maxResults>0){q.setMaxResults(maxResults);}

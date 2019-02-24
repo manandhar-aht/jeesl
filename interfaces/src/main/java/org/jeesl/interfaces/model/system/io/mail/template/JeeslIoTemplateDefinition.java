@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.system.io.mail.template;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -24,4 +25,7 @@ public interface JeeslIoTemplateDefinition<D extends UtilsDescription,
 	
 	TYPE getType();
 	void setType(TYPE type);
+	
+	public Map<String,D> getHeader();
+	public void setHeader(Map<String,D> header);
 }

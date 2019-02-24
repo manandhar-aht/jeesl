@@ -259,6 +259,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTemplate.getClassDefinition()));}
 		definition = efDefinition.build(template,null);
 		definition.setDescription(efDescription.createEmpty(langs));
+		definition.setHeader(efDescription.createEmpty(langs));
 		preview = null;
 	}
 	
@@ -266,6 +267,8 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(definition));}
 		definition = fTemplate.find(fbTemplate.getClassDefinition(), definition);
+		definition = efDescription.persistMissingLangs(fTemplate,langs,definition);
+		efDescription.persistMissingLangs(fTemplate,langs,definition.getHeader());
 		renderPreview();
 	}
 	

@@ -162,4 +162,20 @@ public class EjbDescriptionFactory<D extends UtilsDescription>
 		}
 		return ejb;
 	}
+	
+	public void persistMissingLangs(UtilsFacade fUtils, String[] keys, Map<String,D> map)
+	{
+		for(String key : keys)
+		{
+			if(!map.containsKey(key))
+			{
+				try
+				{
+					D d = fUtils.persist(create(key, ""));
+					map.put(key, d);
+				}
+				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
+			}
+		}
+	}
 }

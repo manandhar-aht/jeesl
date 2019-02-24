@@ -70,11 +70,14 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		return build(meta.getContainer().getStorage()).loadFromFileRepository(meta);
 	}
 
-	@Override
-	public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public void delteFileFromRepository(META meta) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		meta = this.find(fbFile.getClassMeta(),meta);
-		build(meta.getContainer().getStorage()).delteFileFromRepository(meta);
+		if(!meta.getContainer().getStorage().getKeepRemoved())
+		{
+			build(meta.getContainer().getStorage()).delteFileFromRepository(meta);
+		}
+		
 		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
 		meta.getContainer().getMetas().remove(meta);
 		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());

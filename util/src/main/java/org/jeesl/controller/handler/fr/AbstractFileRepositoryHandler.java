@@ -224,9 +224,9 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		reload();
 	}
 	
-	public void deleteFile() throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public void deleteFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Delteing: "+meta.toString());
+		logger.info("DELETING: "+meta.toString());
 		fFr.delteFileFromRepository(meta);
 		reload();
 		reset(true);

@@ -40,7 +40,7 @@ public class JsonSurveyConditionFactory<CONDITION extends JeeslSurveyCondition<?
 		if(q.getTrigger()!=null)
 		{
 			Question trigger = new Question();
-			trigger.setId(ejb.getQuestion().getId());
+			trigger.setId(ejb.getTriggerQuestion().getId());
 			json.setTrigger(trigger);
 		}
 		if(q.getOption()!=null)

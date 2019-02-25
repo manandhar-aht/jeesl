@@ -1,4 +1,4 @@
-package net.sf.ahtutils.net.auth.ads.svn;
+package org.jeesl.factory.txt.system.io.vcs;
 
 import java.io.File;
 
@@ -40,9 +40,6 @@ public class SvnSync
 		writerInit.add("svnsync init --source-username "+svnUser+" file://"+repoPath+" "+repoUrl);
 		writerInit.add(" ");
 		
-		writerCron.add("svnsync sync --source-username "+svnUser+" file://"+repoPath);
-		
-	}
-	
-	
+		writerCron.add("svnsync sync --source-username "+svnUser+" file://"+repoPath);	
+	}	
 }

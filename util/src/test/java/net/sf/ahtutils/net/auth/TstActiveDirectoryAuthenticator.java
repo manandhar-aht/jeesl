@@ -1,10 +1,9 @@
 package net.sf.ahtutils.net.auth;
 
-import net.sf.ahtutils.net.auth.ads.ActiveDirectoryAuthenticator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.util.db.ActiveDirectoryAuthenticator;
 
 public class TstActiveDirectoryAuthenticator
 {

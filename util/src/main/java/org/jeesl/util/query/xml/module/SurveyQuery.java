@@ -39,7 +39,7 @@ import net.sf.exlp.util.DateUtil;
 
 public class SurveyQuery
 {
-	public static enum Key {exTemplate,exSurveys,exSurvey,surveyAnswers,rSection}
+	public static enum Key {exTemplate,rTemplate,exSurveys,exSurvey,surveyAnswers,rSection}
 	
 	private static Map<Key,Query> mQueries;
 	
@@ -53,6 +53,7 @@ public class SurveyQuery
 			switch(key)
 			{
 				case exTemplate: q.setTemplate(exTemplate());break;
+				case rTemplate: q.setTemplate(rTemplate());break;
 				case exSurvey: q.setSurvey(exSurvey());break;
 				case exSurveys: q.setSurveys(exSurveys());break;
 				case surveyAnswers: q.setAnswer(surveyAnswers());
@@ -78,6 +79,14 @@ public class SurveyQuery
 		return xml;
 	}
 	
+	public static Template rTemplate()
+	{		
+		Template xml = new Template();
+		xml.setCode("");
+		xml.getSection().add(rSection());
+		return xml;
+	}
+	
 	public static Section exSection()
 	{		
 		Section xml = rSection();
@@ -90,10 +99,9 @@ public class SurveyQuery
 		Section xml = new Section();
 		xml.setId(0);
 		xml.setCode("");
-		xml.setVisible(true);
-		xml.setPosition(0);
 		xml.setDescription(XmlDescriptionFactory.build(""));
 		xml.setRemark(XmlRemarkFactory.build(""));
+		xml.getQuestion().add(rQuestion());
 		return xml;
 	}
 	
@@ -123,6 +131,15 @@ public class SurveyQuery
 		
 		xml.setOptions(exOptions());
 		
+		return xml;
+	}
+	
+	public static Question rQuestion()
+	{		
+		Question xml = new Question();
+		xml.setId(0);
+		xml.setCode("");
+		xml.setTopic("");
 		return xml;
 	}
 	

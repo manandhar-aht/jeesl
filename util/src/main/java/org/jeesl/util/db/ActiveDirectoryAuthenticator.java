@@ -1,4 +1,4 @@
-package net.sf.ahtutils.net.auth.ads;
+package org.jeesl.util.db;
 
 import java.util.Hashtable;
 

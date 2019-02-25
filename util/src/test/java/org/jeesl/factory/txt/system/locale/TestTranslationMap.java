@@ -1,4 +1,4 @@
-package net.sf.ahtutils.msgbundle;
+package org.jeesl.factory.txt.system.locale;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.factory.txt.system.locale.TranslationMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

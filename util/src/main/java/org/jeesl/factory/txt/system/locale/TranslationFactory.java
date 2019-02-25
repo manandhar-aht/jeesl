@@ -1,4 +1,4 @@
-package net.sf.ahtutils.msgbundle;
+package org.jeesl.factory.txt.system.locale;
 
 import java.io.File;
 import java.io.FileNotFoundException;

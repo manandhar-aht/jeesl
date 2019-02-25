@@ -10,6 +10,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
+import org.jeesl.factory.txt.system.locale.TranslationFactory;
+import org.jeesl.factory.txt.system.locale.TranslationMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +19,6 @@ import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.msgbundle.TranslationFactory;
-import net.sf.ahtutils.msgbundle.TranslationMap;
 import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 

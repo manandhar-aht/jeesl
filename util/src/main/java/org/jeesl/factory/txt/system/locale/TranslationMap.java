@@ -1,4 +1,4 @@
-package net.sf.ahtutils.msgbundle;
+package org.jeesl.factory.txt.system.locale;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

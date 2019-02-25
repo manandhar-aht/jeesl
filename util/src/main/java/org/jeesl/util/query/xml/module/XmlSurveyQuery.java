@@ -37,7 +37,7 @@ import net.sf.ahtutils.xml.survey.Surveys;
 import net.sf.ahtutils.xml.survey.Template;
 import net.sf.exlp.util.DateUtil;
 
-public class SurveyQuery
+public class XmlSurveyQuery
 {
 	public static enum Key {exTemplate,rTemplate,exSurveys,exSurvey,surveyAnswers,rSection}
 	

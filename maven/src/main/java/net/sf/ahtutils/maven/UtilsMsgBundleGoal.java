@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.msgbundle.TranslationFactory;
 import net.sf.exlp.util.xml.JaxbUtil;
 import net.sf.exlp.xml.io.Dir;
 
@@ -16,6 +15,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.jeesl.factory.txt.system.locale.TranslationFactory;
 import org.jeesl.maven.goal.JeeslMsgGoal;
 
 @Mojo(name="msgBundle",defaultPhase=LifecyclePhase.INITIALIZE)

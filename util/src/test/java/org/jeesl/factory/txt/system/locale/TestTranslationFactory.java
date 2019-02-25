@@ -1,4 +1,4 @@
-package net.sf.ahtutils.msgbundle;
+package org.jeesl.factory.txt.system.locale;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +8,8 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 import org.apache.commons.io.FileUtils;
 import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.factory.txt.system.locale.TranslationFactory;
+import org.jeesl.factory.txt.system.locale.TranslationMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

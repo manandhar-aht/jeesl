@@ -62,7 +62,7 @@ import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.jeesl.util.query.json.JsonStatusQueryProvider;
 import org.jeesl.util.query.json.JsonSurveyQueryProvider;
 import org.jeesl.util.query.xml.XmlStatusQuery;
-import org.jeesl.util.query.xml.module.SurveyQuery;
+import org.jeesl.util.query.xml.module.XmlSurveyQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,15 +181,15 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		xfTemplateStatus = new XmlStatusFactory<TS,L,D>(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		xfStatus = new XmlStatusFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
 		
-		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exTemplate).getTemplate());
+		xfTemplate = new XmlTemplateFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,XmlSurveyQuery.get(XmlSurveyQuery.Key.exTemplate).getTemplate());
 		xfTemplate.lazyLoad(fTemplate,fSurvey);
 		
-		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
+		xfSurveys = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,XmlSurveyQuery.get(XmlSurveyQuery.Key.exSurveys).getSurveys().getSurvey().get(0));
 		
-		xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,SurveyQuery.get(SurveyQuery.Key.exSurvey).getSurvey());
+		xfSurvey = new XmlSurveyFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,XmlSurveyQuery.get(XmlSurveyQuery.Key.exSurvey).getSurvey());
 		xfSurvey.lazyLoad(fTemplate,fSurvey,fbCore.getClassSurvey(),cSection,fbCore.getClassData());
 		
-		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(SurveyQuery.get(SurveyQuery.Key.surveyAnswers));
+		xfAnswer = new XmlAnswerFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(XmlSurveyQuery.get(XmlSurveyQuery.Key.surveyAnswers));
 		
 		efTemlate = fbTemplate.template();
 		efSection = fbTemplate.section();

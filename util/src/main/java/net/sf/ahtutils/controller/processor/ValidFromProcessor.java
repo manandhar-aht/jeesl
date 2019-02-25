@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
-import net.sf.ahtutils.msgbundle.TranslationFactory;
 
+import org.jeesl.factory.txt.system.locale.TranslationFactory;
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
 import org.slf4j.Logger;

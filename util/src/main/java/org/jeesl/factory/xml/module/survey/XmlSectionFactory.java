@@ -39,14 +39,13 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 								UNIT extends UtilsStatus<UNIT,L,D>,
 								ANSWER extends JeeslSurveyAnswer<L,D,QUESTION,MATRIX,DATA,OPTION>,
 								MATRIX extends JeeslSurveyMatrix<L,D,ANSWER,OPTION>,
-								DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,CORRELATION>,
+								DATA extends JeeslSurveyData<L,D,SURVEY,ANSWER,?>,
 								OPTIONS extends JeeslSurveyOptionSet<L,D,TEMPLATE,OPTION>,
-								OPTION extends JeeslSurveyOption<L,D>,
-								CORRELATION extends JeeslSurveyCorrelation<DATA>>
+								OPTION extends JeeslSurveyOption<L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSectionFactory.class);
 		
-	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey;
+	private JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey;
 	
 	private final String localeCode;
 	private final Section q;
@@ -61,7 +60,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 		if(q.isSetQuestion()){xfQuestion = new XmlQuestionFactory<L,D,SCHEME,SECTION,QUESTION,QE,SCORE,UNIT,OPTIONS,OPTION>(localeCode,q.getQuestion().get(0));}
 	}
 	
-	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> fSurvey)
+	public void lazyLoad(JeeslSurveyCoreFacade<L,D,?,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,?> fSurvey)
 	{
 		this.fSurvey=fSurvey;
 		if(xfQuestion!=null) {xfQuestion.lazyLoad(fSurvey);}
@@ -89,7 +88,7 @@ public class XmlSectionFactory<L extends UtilsLang,D extends UtilsDescription,
 		
 		if(q.isSetSection())
 		{
-			XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION> f = new XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION,CORRELATION>(localeCode,q.getSection().get(0));
+			XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION> f = new XmlSectionFactory<L,D,SURVEY,SS,SCHEME,TEMPLATE,VERSION,TS,TC,SECTION,QUESTION,QE,SCORE,UNIT,ANSWER,MATRIX,DATA,OPTIONS,OPTION>(localeCode,q.getSection().get(0));
 			if(fSurvey!=null){f.lazyLoad(fSurvey);}
 			
 			for(SECTION section : ejb.getSections())

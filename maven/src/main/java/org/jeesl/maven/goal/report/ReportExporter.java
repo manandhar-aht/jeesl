@@ -1,4 +1,4 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal.report;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -8,6 +8,13 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.w3c.dom.Document;
 
 import net.sf.ahtutils.xml.report.Jr;
 import net.sf.ahtutils.xml.report.Media;
@@ -29,31 +36,13 @@ import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.w3c.dom.Document;
-
-/**
- * Goal which fills all reports with example data and exports them to output formats.
- *
- * @goal exportReports
- * 
- * @phase process-sources
- */
+@Mojo(name="exportReports",defaultPhase=LifecyclePhase.PROCESS_SOURCES)
 public class ReportExporter extends AbstractMojo
 {
-	/**
-     * Location of the file.
-     * @parameter expression="src/main/resources/reports/reports.xml"
-     * @required
-     */
+	@Parameter(defaultValue="src/main/resources/reports/reports.xml")
     private String configFile;
     
-    /**
-     * Location of the file.
-     * @parameter expression="src/main/resources/reports/resources.xml"
-     * @required
-     */
+	@Parameter(defaultValue="src/main/resources/reports/resources.xml")
     private String resourcesFile;
 	
     public void execute() throws MojoExecutionException

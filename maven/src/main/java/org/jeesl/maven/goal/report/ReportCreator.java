@@ -1,7 +1,13 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal.report;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import net.sf.ahtutils.report.ReportUtilTemplate;
 import net.sf.ahtutils.xml.report.Report;
@@ -11,45 +17,19 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-
-/**
- * Add a report to the report system.
- *
- * @goal addReport
- * 
- * @phase process-sources
- */
+@Mojo(name="addReport",defaultPhase=LifecyclePhase.PROCESS_SOURCES)
 public class ReportCreator extends AbstractMojo
 {
-	/**
-     * Location of the file.
-     * @parameter expression="src/main/resources/reports.${project.artifactId}/reports.xml"
-     * @required
-     */
+	@Parameter(defaultValue="src/main/resources/reports.${project.artifactId}/reports.xml")
     private String configFile;
     
-    /**
-     * Location of the file.
-     * @parameter expression="src/main/resources/reports/resources.xml"
-     * @required
-     */
+	@Parameter(defaultValue="src/main/resources/reports/resources.xml")
     private String resourcesFile;
-    
-    /**
-     * Id of the report
-     * @parameter expression="dummy"
-     * @required
-     */
+
+	@Parameter(defaultValue="dummy")
     private String reportId;
     
-    
-    /**
-     * Id of the report
-     * @parameter expression="${project.artifactId}"
-     * @required
-     */
+	@Parameter(defaultValue="${project.artifactId}")
     private String artifactId;
 	
 	public void execute() throws MojoExecutionException

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal.css;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,68 +11,34 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
-/**
- * Goal create Anootations for ViewIdentifier
- *
- * @goal createCssPrototype
- */
+@Mojo(name="createCssPrototype")
 public class CssPrototypeGoal extends AbstractMojo
 {
-    /**
-     * Logger Level
-     * @parameter expression="WARN"
-     * @required
-     */
+	@Parameter(defaultValue="WARN")
     private String log;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}")
     private String buildDir;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/aupCSS.${project.artifactId}"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/aupCSS.${project.artifactId}")
     private String targetDir;
 	
-	/**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/${project.build.finalName}/resources/css"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/${project.build.finalName}/resources/css")
     private String resourceDir;
     
-	/**
-     * Location of the file.
-     * @parameter expression="aupCustom.css"
-     * @required
-     */
+	@Parameter(defaultValue="aupCustom.css")
     private String cssName;
     
-    /**
-     * Location of the file.
-     * @parameter expression="#F00014"
-     * @required
-     */
+	@Parameter(defaultValue="#F00014")
     private String colorDark;
     
-    /**
-     * Location of the file.
-     * @parameter expression="#B91212"
-     * @required
-     */
+	@Parameter(defaultValue="#B91212")
     private String colorMedium;
     
-    /**
-     * Location of the file.
-     * @parameter expression="#B90000"
-     * @required
-     */
+	@Parameter(defaultValue="#B90000")
     private String colorLight;
     	
     public void execute() throws MojoExecutionException

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal.js;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,51 +11,30 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.mozilla.javascript.EvaluatorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Goal create Anootations for ViewIdentifier
- *
- * @goal createJs
- */
-public class JsBuilder extends AbstractMojo
+@Mojo(name="createJs")
+public class JsBuilderGoal extends AbstractMojo
 {
-	final static Logger logger = LoggerFactory.getLogger(JsBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(JsBuilderGoal.class);
 	
-    /**
-     * Logger Level
-     * @parameter expression="WARN"
-     * @required
-     */
+	@Parameter(defaultValue="WARN")
     private String log;
     
-	/**
-     * Location of the file.
-     * @parameter expression="${project.basedir}"
-     * @required
-     */
+	@Parameter(defaultValue="${project.basedir}")
     private String projectBaseDir;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/classes/META-INF/resources/ahtutilsCss"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/classes/META-INF/resources/ahtutilsCss")
     private String jsDir;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/noName.jsf"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/noName.jsf")
     private String targetFile;
     
-    /**
-     * Order of libraries.
-     * @parameter
-     */
+	@Parameter
     private String[] libOrder;
     
     

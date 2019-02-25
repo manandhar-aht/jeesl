@@ -1,4 +1,4 @@
-package net.sf.ahtutils.maven;
+package org.jeesl.maven.goal.css;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,40 +12,22 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
-/**
- * Goal create Anootations for ViewIdentifier
- *
- * @goal createCssGrid
- */
-public class CssGridFactory extends AbstractMojo
+@Mojo(name="createCssGrid")
+public class CssGridGoal extends AbstractMojo
 {
-    /**
-     * Logger Level
-     * @parameter expression="WARN"
-     * @required
-     */
+	@Parameter(defaultValue="WARN")
     private String log;
     
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/security.${project.artifactId}"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/security.${project.artifactId}")
     private String targetDir;
 	
-	/**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}/classes/META-INF/resources/ahtutilsCss"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/classes/META-INF/resources/ahtutilsCss")
     private String resourceDir;
     
-	/**
-     * Test-Grid
-     * @parameter expression="${project.build.directory}/classes/META-INF/resources/ahtutilsCss/testGrid.css"
-     * @required
-     */
+	@Parameter(defaultValue="${project.build.directory}/classes/META-INF/resources/ahtutilsCss/testGrid.css")
     private String vcsTest;
     	
     public void execute() throws MojoExecutionException

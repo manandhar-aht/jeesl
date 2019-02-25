@@ -1,4 +1,4 @@
-package org.jeesl.maven.goal;
+package org.jeesl.maven.goal.report;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;

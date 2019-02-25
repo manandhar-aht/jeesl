@@ -8,7 +8,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
-	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
+	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
@@ -18,16 +20,16 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid id="grid">
+		<jp:grid id="grid">
 			<aht:row>
 				<aht:slot id="sTemplates" width="8">
 					<h:form id="fTemplates">
 						<p:dataTable var="t" value="#{cc.attrs.bean.templates}" draggableRows="true"
 							selection="#{cc.attrs.bean.template}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslJobTemplates}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sTemplate" tooltip="#{msg.ttNew}"/>
-								</aht:pfDataTableHeader>
+								<j:dtHeader title="#{msg.jeeslJobTemplates}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addTemplate()}" update=":#{cc.id}:sTemplate"/>
+								</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTemplates()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sTemplate" listener="#{cc.attrs.bean.selectTemplate()}"/>
@@ -74,6 +76,6 @@
 					</h:form>
 				</aht:slot>
 			</aht:row>
-	    </aup:grid>
+	    </jp:grid>
 	</composite:implementation>
 </html>

@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.system.io.mail;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,6 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import freemarker.core.InvalidReferenceException;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -77,12 +80,18 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
 	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
 	
+	private Configuration templateConfig;
+	private Template templateHeader,templateBody;
+	
 	private Comparator<TEMPLATE> comparatorTemplate;
 	private Comparator<TOKEN> comparatorToken;
 	private Comparator<DEFINITION> comparatorDefinition;
 
+	private boolean editTemplate; public boolean isEditTemplate() {return editTemplate;}
 	private int tabIndex; public int getTabIndex() {return tabIndex;} public void setTabIndex(int tabIndex) {this.tabIndex = tabIndex;}
-	private String preview; public String getPreview() {return preview;}
+	
+	private String previewHeader; public String getPreviewHeader() {return previewHeader;}
+	private String previewBody; public String getPreviewBody() {return previewBody;}
 	
 	public AbstractSettingsIoTemplateBean(IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate)
 	{
@@ -91,6 +100,8 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		types = new ArrayList<TYPE>();
 		tokenTypes = new ArrayList<TOKENTYPE>();
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbTemplate.getClassCategory(),this);
+		editTemplate = false;
+		templateConfig = new Configuration(Configuration.getVersion());
 	}
 	
 	protected void postConstructTemplate(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate)
@@ -138,7 +149,18 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		cancelTemplate();
 	}
 	
+	private void reset(boolean rPreview)
+	{
+		if(rPreview) {previewHeader=null;previewBody=null;}
+	}
+	
 	//*************************************************************************************
+	
+	public void toggleTemplateEdit()
+	{
+		editTemplate=!editTemplate;
+	}
+	
 	private void reloadTemplates()
 	{
 		templates = fTemplate.fTemplates(sbhCategory.getSelected(), true);
@@ -154,7 +176,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		template.setName(efLang.createEmpty(langs));
 		template.setDescription(efDescription.createEmpty(langs));
 		definition=null;
-		preview=null;
+		reset(true);
 	}
 		
 	public void selectTemplate()
@@ -166,7 +188,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		reloadTemplate();
 		reset(false,true);
 		definition=null;
-		preview=null;
+		reset(true);
 	}
 	
 	private void reloadTemplate()
@@ -260,7 +282,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		definition = efDefinition.build(template,null);
 		definition.setDescription(efDescription.createEmpty(langs));
 		definition.setHeader(efDescription.createEmpty(langs));
-		preview = null;
+		reset(true);
 	}
 	
 	public void selectDefinition() throws UtilsNotFoundException
@@ -297,18 +319,26 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
     	logger.info("Preview of "+langs[tabIndex]);
     	try
     	{
-    		fmEngine.addTemplate(definition);
-    		
-    		String fmTemplate = fbTemplate.txtTemplate().buildCode(template, definition, langs[tabIndex]);
+    		reset(true);
     		Map<String,Object> model = fbTemplate.txtToken().buildModel(template);
     		
-    		preview = null;
-			preview = fmEngine.process(fmTemplate,model);
+    		templateHeader = new Template("name",definition.getHeader().get(langs[tabIndex]).getLang(),templateConfig);
+    		templateBody = new Template("name",definition.getDescription().get(langs[tabIndex]).getLang(),templateConfig);
+    		
+    		StringWriter swHeader = new StringWriter();
+    		templateHeader.process(model,swHeader);
+    		swHeader.flush();
+			previewHeader = swHeader.toString();
+			
+			StringWriter swBody = new StringWriter();
+    		templateBody.process(model, swBody);
+    		swBody.flush();
+			previewBody = swBody.toString();
 		}
-    	catch (InvalidReferenceException e) {preview = e.getMessage();}
-    	catch (IOException e) {preview = e.getMessage();}
-    	catch (TemplateException e) {preview = e.getMessage();}
-		catch (Exception e) {preview = "General Exception " +e.getMessage();}
+    	catch (InvalidReferenceException e) {previewHeader="Error"; previewBody = e.getMessage();}
+    	catch (IOException e) {previewHeader="Error"; previewBody = e.getMessage();}
+    	catch (TemplateException e) {previewHeader="Error"; previewBody = e.getMessage();}
+		catch (Exception e) {previewHeader="Error"; previewBody = "General Exception " +e.getMessage();}
     }
     
 	//*************************************************************************************

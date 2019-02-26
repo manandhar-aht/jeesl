@@ -134,6 +134,19 @@ public class Json1TuplesFactory <A extends EjbWithId>
 		return json;
 	}
 	
+	public Json1Tuples<A> buildCountNative(List<Object> list)
+	{
+		Json1Tuples<A> json = new Json1Tuples<A>();
+		for(Object o : list)
+		{
+			Json1Tuple<A> j = jtf.buildCountNative(o);
+			setId.add(j.getId());
+        	json.getTuples().add(j);
+		}
+		fillEjbs(json);
+		return json;
+	}
+	
 	public Json1Tuples<A> build(List<Tuple> tuples, JsonTuple.Field... fields)
 	{
 		Json1Tuples<A> json = new Json1Tuples<A>();

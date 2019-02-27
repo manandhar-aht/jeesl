@@ -1,17 +1,32 @@
 package org.jeesl.factory.sql.module;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.jeesl.interfaces.model.module.rating.JeeslRating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SqlWeightedRatingFactory
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
+import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
+public class SqlWeightedRatingFactory<L extends UtilsLang, D extends UtilsDescription,
+										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
+										DOMAIN extends EjbWithId,
+										RATING extends JeeslRating<L,D,CATEGORY,DOMAIN>
+									>
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlWeightedRatingFactory.class);
 
 
-	public static String build(String table, String category, String domain)
+	public String build(String table, String category, String domain, Collection<RATING> ratings)
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("WITH weights (id, weight) AS (").append(weightValues()).append(")").append(System.lineSeparator());
+		sb.append("WITH weights (id, weight) AS (").append(weightValues(ratings)).append(")").append(System.lineSeparator());
 		sb.append("SELECT ").append(domain).append("_id").append(System.lineSeparator());
 		sb.append("       ,SUM(rating*weight) as rate").append(System.lineSeparator());
 		sb.append("FROM ").append(table).append(System.lineSeparator());
@@ -23,10 +38,16 @@ public class SqlWeightedRatingFactory
 		return sb.toString();
 	}
 	
-	private static String weightValues()
+	private String weightValues(Collection<RATING> ratings)
 	{
+		List<String> pairs = new ArrayList<String>();
+		for(RATING rating : ratings)
+		{
+			pairs.add("("+rating.getCategory().getId()+","+rating.getRating()+")");
+		}
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("VALUES (601,5),(602,4)");
+		sb.append("VALUES ").append(StringUtils.join(pairs,","));
 		return sb.toString();
 	}
 }

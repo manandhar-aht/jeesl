@@ -46,11 +46,22 @@ public class SurveyHelperScriptlet extends JRDefaultScriptlet {
     }
 	
 	/**
-	 * For a survey question, create a list of all options
+	 * For a survey question, create a list of all options without tickable field
 	 * @return The list of options for the given question as comma separated list
 	 * @throws Exception
 	 */
 	public String getOptionsAsList() throws Exception 
+	{
+		return getOptionsAsList(false);
+	}
+	
+	/**
+	 * For a survey question, create a list of all options
+	 * @param addTickField also renders a [ ] to be ticked on paper
+	 * @return The list of options for the given question as comma separated list
+	 * @throws Exception
+	 */
+	public String getOptionsAsList(boolean addTickField) throws Exception 
 	{
 		// Use the XML data document passed as the reports data source for requesting information
     	JRXmlDataSource ds = (JRXmlDataSource)this.getParameterValue("REPORT_DATA_SOURCE");
@@ -88,9 +99,11 @@ public class SurveyHelperScriptlet extends JRDefaultScriptlet {
 				Element option = (Element)optionNodes.item(i);
 				
 				// Since the report is configured to render HTML as markup, make the options code bold printed for better readablility
-				String optionString = "[&nbsp;]&nbsp;<b>" +option.getAttribute("code").toString().replace(" ", "&nbsp;") +"</b>&nbsp;" +option.getAttribute("label").toString().replace(" ", "&nbsp;");
-				options.add(optionString);
-				if (logger.isTraceEnabled()) {logger.debug("ADDED " +optionString);}
+				StringBuilder optionStringBuilder = new StringBuilder();
+				if (addTickField) {optionStringBuilder.append("[&nbsp;]");}
+				optionStringBuilder.append("&nbsp;<b>" +option.getAttribute("code").toString().replace(" ", "&nbsp;") +"</b>&nbsp;" +option.getAttribute("label").toString().replace(" ", "&nbsp;"));
+				options.add(optionStringBuilder.toString());
+				if (logger.isTraceEnabled()) {logger.debug("ADDED " +optionStringBuilder.toString());}
 			}
 		} catch (Exception e) {
 			logger.error("An error occured while trying to prepare the list of options for a given question as comma separated list: " +e.getMessage());

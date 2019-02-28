@@ -27,6 +27,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.survey.Template;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class XmlTemplateFactory<L extends UtilsLang,D extends UtilsDescription,
 				SURVEY extends JeeslSurvey<L,D,SS,TEMPLATE,DATA>,

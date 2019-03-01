@@ -90,10 +90,11 @@ public class XmlQuestionFactory<L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
-	public static Question id()
+	public static Question id() {return id(0);}
+	public static Question id(long id)
 	{
 		Question xml = new Question();
-		xml.setId(0);
+		xml.setId(id);
 		return xml;
 	}
 }

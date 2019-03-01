@@ -75,7 +75,7 @@ public class XmlSurveyQuery
 		xml.setCategory(XmlCategoryFactory.create(""));
 		xml.setStatus(XmlStatusFactory.create(""));
 		xml.getSection().add(exSection());
-		xml.getSection().get(0).getSection().add(exSection());
+//		xml.getSection().get(0).getSection().add(exSection());
 		return xml;
 	}
 	
@@ -90,6 +90,7 @@ public class XmlSurveyQuery
 	public static Section exSection()
 	{		
 		Section xml = rSection();
+		xml.getQuestion().clear();
 		xml.getQuestion().add(exQuestion());
 		return xml;
 	}
@@ -212,7 +213,7 @@ public class XmlSurveyQuery
 	
 	
 	//JEESL
-	public static enum KeyJeesl {data,answer,template,questionCode}
+	public static enum KeyJeesl {data,answer,exTemplate,template,questionCode}
 	
 	private static Map<KeyJeesl,QuerySurvey> mQueriesJeesl;
 	
@@ -228,7 +229,8 @@ public class XmlSurveyQuery
 				case data: q.setData(data());break;
 				case answer: q.setAnswer(answer());break;
 				case questionCode: q.setQuestion(question());break;
-				case template: q.setTemplate(template());break;
+				case exTemplate: q.setTemplate(exTemplate());break;
+				case template: q.setTemplate(rTemplate());break;
 			}
 			mQueriesJeesl.put(key, q);
 		}
@@ -240,14 +242,6 @@ public class XmlSurveyQuery
 	public static Data data()
 	{	
 		Data xml = new Data();
-		xml.setId(0);
-		xml.getSection().add(exSection());
-		return xml;
-	}
-	
-	public static Template template()
-	{	
-		Template xml = new Template();
 		xml.setId(0);
 		xml.getSection().add(exSection());
 		return xml;

@@ -21,7 +21,7 @@ public interface JeeslSurveyRestExport
 	Aht exportSurveyTemplateStatus();
 	
 	@GET @Path("/survey/question/unit") @Produces(MediaType.APPLICATION_XML)
-	Aht exportSurveyUnits();
+	org.jeesl.model.xml.jeesl.Container surveyQuestionUnits();
 	
 	@GET @Path("/survey/status") @Produces(MediaType.APPLICATION_XML)
 	Aht exportSurveyStatus();

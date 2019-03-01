@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.system.io.mail.template;
 import java.util.List;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -23,12 +24,10 @@ public interface JeeslIoTemplate<L extends UtilsLang,D extends UtilsDescription,
 								>
 		extends EjbWithId,EjbSaveable,EjbRemoveable,
 				EjbWithCode,EjbWithPositionVisible,EjbWithPositionParent,
-				EjbWithLang<L>,EjbWithDescription<D>
+				EjbWithLang<L>,EjbWithDescription<D>,
+				JeeslWithCategory<L,D,CATEGORY>
 {	
 	public enum Attributes{category,scope,visible}
-	
-	CATEGORY getCategory();
-	void setCategory(CATEGORY category);
 	
 	SCOPE getScope();
 	void setScope(SCOPE scope);

@@ -1,5 +1,6 @@
 package org.jeesl.factory.json.db.tuple.t1;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class Json1TupleFactory<A extends EjbWithId>
 	{
 		Object[] array = (Object[])object;
         long id = ((BigInteger)array[0]).longValue();
-        long count = ((Integer)array[1]).longValue();
+        long count = ((BigDecimal)array[1]).longValue();
         
         Json1Tuple<A> json = new Json1Tuple<A>();
         json.setId(id);

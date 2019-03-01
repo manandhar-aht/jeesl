@@ -14,16 +14,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class SqlWeightedRatingFactory<L extends UtilsLang, D extends UtilsDescription,
-										CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-										DOMAIN extends EjbWithId,
-										RATING extends JeeslRating<L,D,CATEGORY,DOMAIN>
-									>
+public class SqlWeightedRatingFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(SqlWeightedRatingFactory.class);
 
 
-	public String build(String table, String category, String domain, Collection<RATING> ratings)
+	public static <L extends UtilsLang, D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, DOMAIN extends EjbWithId, RATING extends JeeslRating<L,D,CATEGORY,DOMAIN>>
+					String build(String table, String category, String domain, Collection<RATING> ratings)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("WITH weights (id, weight) AS (").append(weightValues(ratings)).append(")").append(System.lineSeparator());
@@ -38,7 +35,8 @@ public class SqlWeightedRatingFactory<L extends UtilsLang, D extends UtilsDescri
 		return sb.toString();
 	}
 	
-	private String weightValues(Collection<RATING> ratings)
+	private static <L extends UtilsLang, D extends UtilsDescription, CATEGORY extends UtilsStatus<CATEGORY,L,D>, DOMAIN extends EjbWithId, RATING extends JeeslRating<L,D,CATEGORY,DOMAIN>>
+				String weightValues(Collection<RATING> ratings)
 	{
 		List<String> pairs = new ArrayList<String>();
 		for(RATING rating : ratings)

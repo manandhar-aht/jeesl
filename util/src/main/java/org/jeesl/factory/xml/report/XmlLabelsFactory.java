@@ -6,10 +6,8 @@ import java.util.Map;
 
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
+import org.openfuxml.interfaces.configuration.OfxTranslationProvider;
+import org.openfuxml.util.translation.OfxDefaultTranslationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,5 +80,15 @@ public class XmlLabelsFactory
 			else if(label.getScope().equals(scope)){map.put(label.getKey(),label.getValue());}
 		}
 		return map;
+	}
+	
+	public static OfxTranslationProvider toTranslationProvider(String localeCode, Labels labels)
+	{
+		OfxDefaultTranslationProvider tp = new OfxDefaultTranslationProvider();
+		for(Label label : labels.getLabel())
+		{
+			tp.addTranslation(localeCode, label.getScope(), label.getKey(), label.getValue());
+		}
+		return tp;
 	}
 }

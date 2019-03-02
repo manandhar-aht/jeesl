@@ -12,7 +12,7 @@
   	</ui:fragment>
 
 	<p:tabView var="l" value="#{locales}" rendered="#{locales.size() gt 1}">  
-  		<p:tab title="#{t.code}">
+  		<p:tab title="#{l.code}">
   			<p:selectOneMenu value="#{value[l.code].type}" effect="fade" rendered="false">  
                 <f:selectItems value="#{markups}" var="m" itemLabel="#{m.name[localeCode].lang}" itemValue="#{m}"/>
             </p:selectOneMenu>

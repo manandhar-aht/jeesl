@@ -98,7 +98,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 	private boolean showAssessment; public boolean isShowAssessment() {return showAssessment;}
 	private boolean allowAssessment; public boolean isAllowAssessment() {return allowAssessment;} //public void setAllowAssessment(boolean allowAssessment) {this.allowAssessment = allowAssessment;}
 	
-	public static boolean debug = false;
+	public static boolean debug = true;
 	public static int debugDelay = 1000;
 	
 	public SurveyHandler(JeeslFacesMessageBean bMessage,
@@ -172,6 +172,7 @@ public class SurveyHandler<L extends UtilsLang, D extends UtilsDescription,
 		catch (UtilsNotFoundException e){surveyData = efData.build(survey,correlation);}
 		template = survey.getTemplate().getNested();
 		condition.init(template);
+		validation.init(template);
 		activeSections.addAll(bSurvey.getMapSection().get(template));
 	}
 	

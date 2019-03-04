@@ -94,7 +94,7 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 	{
 		questions.add(question);
 		List<VALIDATION> list = cache.getValidations(question);
-		if(list==null) {logger.warn("THe condition List is null ...");}
+		if(list==null) {logger.warn("THe validation List is null ...");}
 		else
 		{
 			validations.put(question,list);
@@ -103,23 +103,22 @@ public class SurveyValidationHandler<L extends UtilsLang, D extends UtilsDescrip
 				try
 				{
 					Class<?> cAlgorithm = Class.forName(v.getAlgorithm().getCode()).asSubclass(SurveyValidator.class);
-					Class<?> cConfig = Class.forName(v.getAlgorithm().getConfig()).asSubclass(SurveyValidatorConfiguration.class);
-					
-					if(SurveyHandler.debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName()+" "+cConfig.getSimpleName());}
-					if(SurveyHandler.debug) {logger.info("Config: "+v.getConfig());}
-					
+					if(SurveyHandler.debug) {logger.info("Configuration of "+cAlgorithm.getSimpleName());}
 					SurveyValidator validator = (SurveyValidator)cAlgorithm.newInstance();
-					SurveyValidatorConfiguration config = (SurveyValidatorConfiguration)JsonUtil.read(v.getConfig(),cConfig);
-					JsonUtil.info(config);
-					validator.init(config);
+					
+					if(v.getAlgorithm().getConfig()!=null && v.getAlgorithm().getConfig().trim().length()>0)
+					{
+						Class<?> cConfig = Class.forName(v.getAlgorithm().getConfig()).asSubclass(SurveyValidatorConfiguration.class);
+						if(SurveyHandler.debug) {logger.info("Config: "+v.getConfig());}
+						SurveyValidatorConfiguration config = (SurveyValidatorConfiguration)JsonUtil.read(v.getConfig(),cConfig);
+						JsonUtil.info(config);
+						validator.init(config);
+					}
+					
 					validators.put(v,validator);
 					
 				}
 				catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException e) {e.printStackTrace();}
-				
-//				logger.info(c.toString());
-//				if(!triggers.containsKey(c.getTriggerQuestion())) {triggers.put(c.getTriggerQuestion(),new HashSet<QUESTION>());}
-//				triggers.get(c.getTriggerQuestion()).add(question);
 			}
 		}
 	}

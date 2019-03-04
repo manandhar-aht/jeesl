@@ -1,7 +1,6 @@
 package org.jeesl.interfaces.model.module.survey.data;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.survey.question.JeeslSurveyOption;
@@ -30,13 +29,6 @@ public interface JeeslSurveyAnswer<L extends UtilsLang, D extends UtilsDescripti
 	
 	Boolean getValueBoolean();
 	void setValueBoolean(Boolean valueBoolean);
-	
-	Date getValueDate();
-	void setValueDate(Date getValueDate);
-
-	
-	String getValueText();
-	void setValueText(String valueText);
 	
 	List<OPTION> getOptions();
 	void setOptions(List<OPTION> option);

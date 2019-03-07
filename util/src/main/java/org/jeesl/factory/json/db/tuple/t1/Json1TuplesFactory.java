@@ -58,7 +58,6 @@ public class Json1TuplesFactory <A extends EjbWithId>
 	protected void clear()
 	{
 		setId.clear();
-		
 		mapA.clear();
 	}
 	

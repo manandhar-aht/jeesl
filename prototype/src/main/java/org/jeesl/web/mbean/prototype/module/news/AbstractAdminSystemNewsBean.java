@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslSystemNewsFacade;
+import org.jeesl.factory.builder.system.NewsFactoryBuilder;
 import org.jeesl.factory.ejb.system.EjbSystemNewsFactory;
 import org.jeesl.interfaces.model.system.news.JeeslSystemNews;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -33,11 +35,9 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemNewsBean.class);
 	
 	protected JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews;
+	private final NewsFactoryBuilder<L,D,CATEGORY,NEWS,USER> fbNews;
 	
-	private Class<CATEGORY> cCategory;
-	private Class<NEWS> cNews;
-	
-	private EjbSystemNewsFactory<L,D,CATEGORY,NEWS,USER> efNews;
+	private final EjbSystemNewsFactory<L,D,CATEGORY,NEWS,USER> efNews;
 	
 	private List<CATEGORY> categories;public List<CATEGORY> getCategories() {return categories;}
 	private List<NEWS> list; public List<NEWS> getList() {return list;}
@@ -45,27 +45,26 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	private NEWS news; public NEWS getNews() {return news;} public void setNews(NEWS news) {this.news = news;}
 	protected USER user;
 	
-	public AbstractAdminSystemNewsBean(final Class<L> cL, final Class<D> cD)
+	public AbstractAdminSystemNewsBean(NewsFactoryBuilder<L,D,CATEGORY,NEWS,USER> fbNews)
 	{
-		super(cL,cD);
+		super(fbNews.getClassL(),fbNews.getClassD());
+		this.fbNews=fbNews;
+		efNews = fbNews.news(localeCodes);
 	}
 
-	protected void initSuper(String[] localeCodes, JeeslFacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews, final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, Class<NEWS> cNews, Class<USER> cUser)
+	protected void postConstructNews(JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews)
 	{
-		super.initAdmin(localeCodes,cL,cD,bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fNews=fNews;
-		this.cCategory=cCategory;
-		this.cNews=cNews;
-		categories = fNews.allOrderedPositionVisible(cCategory);
+		categories = fNews.allOrderedPositionVisible(fbNews.getClassCategory());
 		active = new HashMap<NEWS,Boolean>();
 		
-		efNews = EjbSystemNewsFactory.factory(localeCodes,cL, cD, cNews);
 		reloadNews();
 	}
 	
 	private void reloadNews()
 	{
-		list = fNews.allOrdered(cNews,JeeslSystemNews.Attributes.validFrom.toString(),false);
+		list = fNews.allOrdered(fbNews.getClassNews(),JeeslSystemNews.Attributes.validFrom.toString(),false);
 		active.clear();
 		for(NEWS n : list){active.put(n,false);}
 		for(NEWS n : fNews.fActiveNews()){active.put(n,true);}
@@ -74,14 +73,14 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	
 	public void addNews() throws UtilsNotFoundException
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(cNews));}
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbNews.getClassNews()));}
 		news = efNews.build(null,user);
 	}
 	
 	public void selectNews() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(news));}
-		news = fNews.find(cNews,news);
+		news = fNews.find(fbNews.getClassNews(),news);
 		news = efLang.persistMissingLangs(fNews,langs,news);
 		news = efDescription.persistMissingLangs(fNews,langs,news);
 	}
@@ -89,7 +88,7 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 	public void saveNews() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.saveEntity(news));}
-		if(news.getCategory()!=null){news.setCategory(fNews.find(cCategory, news.getCategory()));}
+		if(news.getCategory()!=null){news.setCategory(fNews.find(fbNews.getClassCategory(), news.getCategory()));}
 		news = fNews.save(news);
 		reloadNews();
 		bMessage.growlSuccessSaved();

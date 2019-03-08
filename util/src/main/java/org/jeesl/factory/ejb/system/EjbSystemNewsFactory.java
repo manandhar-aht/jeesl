@@ -33,15 +33,6 @@ public class EjbSystemNewsFactory<L extends UtilsLang,D extends UtilsDescription
 		efLang = EjbLangFactory.factory(cL);
 		efDescription = EjbDescriptionFactory.factory(cD);
 	}
-	
-	public static <L extends UtilsLang,D extends UtilsDescription,
-					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-					NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
-					USER extends EjbWithId>
-		EjbSystemNewsFactory<L,D,CATEGORY,NEWS,USER> factory(String[] localeCodes, final Class<L> cL, final Class<D> cD, final Class<NEWS> cNews)
-	{
-		return new EjbSystemNewsFactory<L,D,CATEGORY,NEWS,USER>(localeCodes,cL,cD,cNews);
-	}
     
 	public NEWS build(CATEGORY category, USER user)
 	{

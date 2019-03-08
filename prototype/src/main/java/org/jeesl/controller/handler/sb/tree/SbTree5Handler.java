@@ -110,11 +110,9 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 			L4 parent = getParentForL5(ejb);
 			boolean isCascade = ejb.equals(l5);
 			boolean isAllow = allowChild5.contains(ejb);
-			boolean isParentInList = list4.contains(parent);
 			boolean isInPath = allowPath5.contains(ejb);
 			
 			boolean isParentsAllowedChild = allowChild1.contains(getParentForL2(getParentForL3(getParentForL4(parent)))) || allowChild2.contains(getParentForL3(getParentForL4(parent))) || allowChild3.contains(getParentForL4(parent)) || allowChild4.contains(parent);
-			boolean isParentsAllowedPath = allowPath1.contains(getParentForL2(getParentForL3(getParentForL4(parent)))) || allowPath2.contains(getParentForL3(getParentForL4(parent))) || allowPath3.contains(getParentForL4(parent)) || allowPath4.contains(parent);
 			boolean isParentsAllowed = isParentsAllowedChild;
 			boolean isNotIgnore = !ignore5.contains(ejb);	
 			if(evaluateToAddChild(ejb,isCascade,isAllow,isInPath,isParentsAllowed,isNotIgnore)) {list5.add(ejb);}

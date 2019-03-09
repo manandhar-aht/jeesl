@@ -21,7 +21,7 @@
 	
 	<composite:implementation>
 		<jp:grid id="grid">
-			<aht:row id="rowDocuments" rendered="#{(cc.attrs.bean.sbhCms.twiceSelected) or (empty cc.attrs.bean.cms) or  (cc.attrs.bean.cms.id eq 0)}">
+			<j:row id="rowDocuments" rendered="#{(cc.attrs.bean.sbhCms.twiceSelected) or (empty cc.attrs.bean.cms) or  (cc.attrs.bean.cms.id eq 0)}">
 				<aht:slot id="sDocuments" width="6">
 					<h:form id="fDocuments">
 						<p:dataTable var="d" value="#{cc.attrs.bean.sbhCms.list}" draggableRows="true"
@@ -59,9 +59,9 @@
 						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs :fStatusBar" tableHeader="#{msg.jeeslCmsLanguages}"/>
 					</h:form>
 				</aht:slot>
-			</aht:row>
-			<aht:row rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0) and (not empty cc.attrs.bean.sbhLocale.selection)}">
-				<aht:slot width="4">
+			</j:row>
+			<j:row rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0) and (not empty cc.attrs.bean.sbhLocale.selection)}">
+				<j:slot width="4">
 					<h:form id="fTree" >
 						<p:panel header="#{msg.jeeslCmsDocumentStructure}" styleClass="jeeslTree" >
 							<f:facet name="actions">
@@ -80,7 +80,7 @@
 					        </p:tree>
 						</p:panel>
 					</h:form>
-				</aht:slot>
+				</j:slot>
 				<aht:slot id="sSection" width="8">
 					<h:form id="fSection" rendered="#{not empty cc.attrs.bean.section}">
 						<p:panel header="#{msg.jeeslCmsSection}" styleClass="jeeslPanel">
@@ -181,7 +181,7 @@
 						<composite:insertChildren/>
 					</h:panelGroup>
 				</aht:slot>
-			</aht:row>
+			</j:row>
 	    </jp:grid>
 	</composite:implementation>
 </html>

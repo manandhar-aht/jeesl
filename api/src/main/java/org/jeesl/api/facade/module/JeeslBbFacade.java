@@ -1,5 +1,7 @@
 package org.jeesl.api.facade.module;
 
+import java.util.List;
+
 import org.jeesl.interfaces.model.module.bb.JeeslBb;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
@@ -14,5 +16,5 @@ public interface JeeslBbFacade <L extends UtilsLang,D extends UtilsDescription,
 								USER extends EjbWithEmail>
 			extends UtilsFacade
 {	
-	
+	List<BB> fBulletinBoards(SCOPE scope, long refId);
 }

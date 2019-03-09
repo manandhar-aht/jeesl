@@ -1,6 +1,7 @@
 package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.module.bb.EjbBbBoardFactory;
 import org.jeesl.interfaces.model.module.bb.JeeslBb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,20 @@ public class BbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(BbFactoryBuilder.class);
 	
 	private final Class<SCOPE> cScope; public Class<SCOPE> getClassScope() {return cScope;}
+	private final Class<BB> cBb; public Class<BB> getClassBoard() {return cBb;}
 
 	public BbFactoryBuilder(final Class<L> cL,final Class<D> cD,
-								final Class<SCOPE> cScope)
+								final Class<SCOPE> cScope,
+								final Class<BB> cBb)
 	{       
 		super(cL,cD);
 		this.cScope=cScope;
+		this.cBb=cBb;
 	}
 
 
+	public EjbBbBoardFactory<L,D,SCOPE,BB> bb()
+	{
+		return new EjbBbBoardFactory<L,D,SCOPE,BB>(cBb);
+	}
 }

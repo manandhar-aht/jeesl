@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslBbTree">
+    	<s:langs>
+    		<s:lang key="de" translation="Forenstruktur"/>
+    		<s:lang key="en" translation="Bulletin Board Structure"/>
+    		<s:lang key="fr" translation="Bulletin Board Structure"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

@@ -279,26 +279,26 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
         int index=1;
         for(TreeNode n : dropNode.getChildren())
         {
-        		S child =(S)n.getData();
-        		S db = fCms.load(child,false);
-        		efS.update(db,child);
-        		child.setSection(parent);
-        		child.setPosition(index);
-        		fCms.save(child);
-        		index++;
+    		S child =(S)n.getData();
+    		S db = fCms.load(child,false);
+    		efS.update(db,child);
+    		child.setSection(parent);
+    		child.setPosition(index);
+    		fCms.save(child);
+    		index++;
         }  
     }
 
     @SuppressWarnings("unchecked")
 	public void onSectionSelect(NodeSelectEvent event)
     {
-    		logger.info("Selected "+event.getTreeNode().toString());
-    		section = (S)event.getTreeNode().getData();
-    		section = efLang.persistMissingLangs(fCms, cmsLocales, section);
-    		S db = fCms.load(section,false);
-    		efS.update(db,section);
-    		reloadSection();
-    		reset(true);
+		logger.info("Selected "+event.getTreeNode().toString());
+		section = (S)event.getTreeNode().getData();
+		section = efLang.persistMissingLangs(fCms, cmsLocales, section);
+		S db = fCms.load(section,false);
+		efS.update(db,section);
+		reloadSection();
+		reset(true);
     }
     
 	@SuppressWarnings("unchecked")
@@ -346,7 +346,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		boolean appendToTree = EjbIdFactory.isUnSaved(section);
 		
 		section = fCms.save(section);
-		if(appendToTree) {new DefaultTreeNode(section, tree);}
+		if(appendToTree) {new DefaultTreeNode(section,tree);}
 		reloadSection();
 	}
 	

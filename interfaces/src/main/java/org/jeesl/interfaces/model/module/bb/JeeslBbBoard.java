@@ -10,13 +10,16 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRefId;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
-public interface JeeslBb<L extends UtilsLang, D extends UtilsDescription,
+public interface JeeslBbBoard<L extends UtilsLang, D extends UtilsDescription,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
-								BB extends JeeslBb<L,D,SCOPE,BB,USER>,
+								BB extends JeeslBbBoard<L,D,SCOPE,BB,PUB,POST,USER>,
+								PUB extends UtilsStatus<PUB,L,D>,
+								POST extends JeeslBbPost<BB,USER>,
 								USER extends EjbWithEmail>
 						extends Serializable,
-								EjbWithId,EjbWithRefId,EjbWithPosition,
+								EjbWithId,EjbWithRefId,EjbWithPosition,EjbWithName,
 								EjbSaveable
 {	
 	public enum Attributes{scope,refId}
@@ -27,5 +30,9 @@ public interface JeeslBb<L extends UtilsLang, D extends UtilsDescription,
 	SCOPE getScope();
 	void setScope(SCOPE scope);
 	
+	String getDescription();
+	void setDescription(String description);
 	
+	PUB getPublishing();
+	void setPublishing(PUB publishing);
 }

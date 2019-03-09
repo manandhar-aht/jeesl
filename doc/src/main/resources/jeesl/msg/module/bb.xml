@@ -7,4 +7,39 @@
     		<s:lang key="fr" translation="Bulletin Board Structure"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslBbBoard">
+    	<s:langs>
+    		<s:lang key="de" translation="Forum"/>
+    		<s:lang key="en" translation="Bulletin Board"/>
+    		<s:lang key="fr" translation="Bulletin Board"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslBbName">
+    	<s:langs>
+    		<s:lang key="de" translation="Name"/>
+    		<s:lang key="en" translation="Name"/>
+    		<s:lang key="fr" translation="Name"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslBbDescription">
+    	<s:langs>
+    		<s:lang key="de" translation="Beschreibung"/>
+    		<s:lang key="en" translation="Description"/>
+    		<s:lang key="fr" translation="Description"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslBbPublishing">
+    	<s:langs>
+    		<s:lang key="de" translation="Veröffentlichung"/>
+    		<s:lang key="en" translation="Publishing"/>
+    		<s:lang key="fr" translation="Publishing"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslBbTopic">
+    	<s:langs>
+    		<s:lang key="de" translation="Topic"/>
+    		<s:lang key="en" translation="Topic"/>
+    		<s:lang key="fr" translation="Topic"/>
+    	</s:langs>
+    </s:translation>
 </s:translations>

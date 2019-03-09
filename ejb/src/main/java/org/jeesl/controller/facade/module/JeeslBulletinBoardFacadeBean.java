@@ -14,7 +14,8 @@ import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslBbFacade;
 import org.jeesl.factory.builder.module.BbFactoryBuilder;
-import org.jeesl.interfaces.model.module.bb.JeeslBb;
+import org.jeesl.interfaces.model.module.bb.JeeslBbBoard;
+import org.jeesl.interfaces.model.module.bb.JeeslBbPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,16 +27,18 @@ import net.sf.ahtutils.interfaces.model.with.EjbWithEmail;
 
 public class JeeslBulletinBoardFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 										SCOPE extends UtilsStatus<SCOPE,L,D>,
-										BB extends JeeslBb<L,D,SCOPE,BB,USER>,
+										BB extends JeeslBbBoard<L,D,SCOPE,BB,PUB,POST,USER>,
+										PUB extends UtilsStatus<PUB,L,D>,
+										POST extends JeeslBbPost<BB,USER>,
 										USER extends EjbWithEmail>
 					extends UtilsFacadeBean
-					implements JeeslBbFacade<L,D,SCOPE,BB,USER>
+					implements JeeslBbFacade<L,D,SCOPE,BB,PUB,POST,USER>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslBulletinBoardFacadeBean.class);
 	
-	private final BbFactoryBuilder<L,D,SCOPE,BB,USER> fbBb;
+	private final BbFactoryBuilder<L,D,SCOPE,BB,PUB,POST,USER> fbBb;
 	
-	public JeeslBulletinBoardFacadeBean(EntityManager em, final BbFactoryBuilder<L,D,SCOPE,BB,USER> fbBb)
+	public JeeslBulletinBoardFacadeBean(EntityManager em, final BbFactoryBuilder<L,D,SCOPE,BB,PUB,POST,USER> fbBb)
 	{
 		super(em);
 		this.fbBb=fbBb;
@@ -49,8 +52,8 @@ public class JeeslBulletinBoardFacadeBean<L extends UtilsLang,D extends UtilsDes
 		Root<BB> bb = cQ.from(fbBb.getClassBoard());
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
-		Expression<Long> eRefId = bb.get(JeeslBb.Attributes.refId.toString());
-		Path<SCOPE> pScope = bb.get(JeeslBb.Attributes.scope.toString());
+		Expression<Long> eRefId = bb.get(JeeslBbBoard.Attributes.refId.toString());
+		Path<SCOPE> pScope = bb.get(JeeslBbBoard.Attributes.scope.toString());
 		
 		predicates.add(cB.equal(eRefId,refId));
 		predicates.add(cB.equal(pScope,scope));

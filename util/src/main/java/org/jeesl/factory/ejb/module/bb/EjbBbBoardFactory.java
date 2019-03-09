@@ -1,6 +1,6 @@
 package org.jeesl.factory.ejb.module.bb;
 
-import org.jeesl.interfaces.model.module.bb.JeeslBb;
+import org.jeesl.interfaces.model.module.bb.JeeslBbBoard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbBbBoardFactory<L extends UtilsLang,D extends UtilsDescription,
 								SCOPE extends UtilsStatus<SCOPE,L,D>,
-								BB extends JeeslBb<L,D,SCOPE,BB,?>>
+								BB extends JeeslBbBoard<L,D,SCOPE,BB,PUB,?,?>,
+								PUB extends UtilsStatus<PUB,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbBbBoardFactory.class);
 	
@@ -21,7 +22,7 @@ public class EjbBbBoardFactory<L extends UtilsLang,D extends UtilsDescription,
         this.cBb = cBb;
     }
 	
-	public BB build(BB parent, SCOPE scope, long refId)
+	public BB build(BB parent, SCOPE scope, long refId, PUB publishing)
 	{
 		try
 		{
@@ -29,6 +30,8 @@ public class EjbBbBoardFactory<L extends UtilsLang,D extends UtilsDescription,
 			ejb.setParent(parent);
 			ejb.setScope(scope);
 			ejb.setRefId(refId);
+			ejb.setPosition(0);
+			ejb.setPublishing(publishing);
 		    return ejb;
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

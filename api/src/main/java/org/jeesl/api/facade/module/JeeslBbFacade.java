@@ -3,7 +3,7 @@ package org.jeesl.api.facade.module;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.bb.JeeslBbBoard;
-import org.jeesl.interfaces.model.module.bb.JeeslBbPost;
+import org.jeesl.interfaces.model.module.bb.post.JeeslBbPost;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;

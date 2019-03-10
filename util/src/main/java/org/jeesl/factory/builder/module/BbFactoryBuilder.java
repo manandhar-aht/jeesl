@@ -3,7 +3,7 @@ package org.jeesl.factory.builder.module;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.bb.EjbBbBoardFactory;
 import org.jeesl.interfaces.model.module.bb.JeeslBbBoard;
-import org.jeesl.interfaces.model.module.bb.JeeslBbPost;
+import org.jeesl.interfaces.model.module.bb.post.JeeslBbPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

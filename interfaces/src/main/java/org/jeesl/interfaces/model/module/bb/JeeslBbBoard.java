@@ -2,6 +2,8 @@ package org.jeesl.interfaces.model.module.bb;
 
 import java.io.Serializable;
 
+import org.jeesl.interfaces.model.module.bb.post.JeeslBbPost;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;

@@ -15,7 +15,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.module.JeeslBbFacade;
 import org.jeesl.factory.builder.module.BbFactoryBuilder;
 import org.jeesl.interfaces.model.module.bb.JeeslBbBoard;
-import org.jeesl.interfaces.model.module.bb.JeeslBbPost;
+import org.jeesl.interfaces.model.module.bb.post.JeeslBbPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

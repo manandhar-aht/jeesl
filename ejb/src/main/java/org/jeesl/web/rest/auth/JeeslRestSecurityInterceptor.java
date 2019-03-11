@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.pojo.UtilsCredential;
-import net.sf.ahtutils.web.rest.auth.RestBasicAuthenticator;
 
 public abstract class JeeslRestSecurityInterceptor
 {
@@ -12,12 +11,12 @@ public abstract class JeeslRestSecurityInterceptor
 	
     public boolean isBasicAuthentication(String authorizationHeader)
     {
-    	return authorizationHeader.toUpperCase().startsWith(RestBasicAuthenticator.BASIC);
+    	return authorizationHeader.toUpperCase().startsWith(JeeslRestBasicAuthenticator.BASIC);
 
     }
     
     protected UtilsCredential decodeBasicAuthentication(String authorizationHeader)
     {
-    	return RestBasicAuthenticator.decode(authorizationHeader);
+    	return JeeslRestBasicAuthenticator.decode(authorizationHeader);
     }
 }

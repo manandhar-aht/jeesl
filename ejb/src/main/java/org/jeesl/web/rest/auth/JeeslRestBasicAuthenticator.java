@@ -38,9 +38,10 @@ public class JeeslRestBasicAuthenticator
         	logger.trace("Authorization: "+token);
         	
         	String[] splitted = token.split(":");
+        	logger.trace("L: "+splitted.length);
         	
-        	if(splitted.length<1) {throw new UnauthorizedException("The format of the decoded authorisation token ("+token+") is wrong.");}
-        	else if(splitted.length>2) {throw new UnauthorizedException("The character ':' in username/password is not allowed in decoded authorisation token ("+token+").");}
+        	if(splitted.length<2) {throw new UnauthorizedException("The format of the decoded authorisation token ("+token+") is wrong. See https://www.ietf.org/rfc/rfc2617.txt");}
+        	else if(splitted.length>2) {throw new UnauthorizedException("The character ':' in username/password is not allowed in decoded authorisation token ("+token+"). https://www.ietf.org/rfc/rfc2617.txt");}
         	else
         	{
         		return new UtilsCredential(splitted[0],splitted[1]);

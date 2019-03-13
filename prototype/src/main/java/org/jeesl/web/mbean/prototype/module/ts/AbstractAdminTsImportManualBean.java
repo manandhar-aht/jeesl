@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslTsFacade;
-import org.jeesl.controller.handler.op.OpEntitySelectionHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -70,7 +70,7 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private List<EC> classes; public List<EC> getClasses() {return classes;}
 	private List<INT> intervals; public List<INT> getIntervals() {return intervals;}
 	private List<WS> workspaces; public List<WS> getWorkspaces() {return workspaces;}
-	private List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
+	private final List<SOURCE> sources; public List<SOURCE> getSources() {return sources;}
 
 	private final List<EjbWithId> entities; public List<EjbWithId> getEntities() {return entities;}
 	private Map<EjbWithId,String> mapLabels; public Map<EjbWithId,String> getMapLabels() {return mapLabels;}
@@ -82,17 +82,15 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 	private EC clas; public EC getClas() {return clas;} public void setClas(EC clas) {this.clas = clas;}
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	protected WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
-	protected USER transactionUser;
+	protected BRIDGE bridge; public BRIDGE getBridge() {return bridge;}
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 	private TS ts;
+	private USER transactionUser;
 	
 	private TimeSeries timeSeries; public TimeSeries getTimeSeries() {return timeSeries;} public void setTimeSeries(TimeSeries timeSeries) {this.timeSeries = timeSeries;}
 	private final Map<TS,EjbWithId> mapTsEntity; public Map<TS,EjbWithId> getMapTsEntity() {return mapTsEntity;}
 
-
 	private Ds ds; public Ds getDs() {return ds;} public void setDs(Ds ds) {this.ds = ds;}
-
-	protected UtilsXlsDefinitionResolver xlsResolver;
 
 	private Comparator<Data> cTsData;
 	
@@ -105,14 +103,19 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		entities = new ArrayList<EjbWithId>();
 		mapTsEntity = new HashMap<TS,EjbWithId>();
 		efData = fbTs.data();
+		sources = new ArrayList<>();
 	}
 
-	protected void initSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, JeeslFacesMessageBean bMessage, UtilsXlsDefinitionResolver xlsResolver)
+	protected void postConstructTsManual(JeeslTranslationBean<L,D,?> bTranslation,
+								JeeslFacesMessageBean bMessage, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs,
+								USER transactionUser)
 	{
-		super.initTsSuper(langs,fTs,bMessage);
-		this.xlsResolver=xlsResolver;
+		super.postConstructTs(bTranslation,bMessage,fTs);
+		this.transactionUser=transactionUser;
 		cTsData = TsDataComparator.factory(TsDataComparator.Type.date);
-		sources = fTs.all(fbTs.getClassSource());
+		sources.addAll(fTs.all(fbTs.getClassSource()));
+		
+		initTransaction();
 	}
 
 	protected void initLists()
@@ -120,6 +123,14 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		workspaces = fTs.all(fbTs.getClassWorkspace());
 		category = null; if(categories.size()>0){category = categories.get(0);}
 		changeCategory();
+	}
+	
+	public void cancelData(){reset(false,true);}
+	private void reset(boolean rTransaction, boolean rData)
+	{
+		if(rTransaction) {transaction = null;}
+		if(rData) {data = null;}
+		
 	}
 
 	public void changeCategory()
@@ -180,8 +191,6 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		}
 	}
 
-	protected BRIDGE bridge; public BRIDGE getBridge() {return bridge;}
-
 	private void reloadBridges()
 	{
 		entities.clear();
@@ -196,16 +205,29 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		catch (ClassNotFoundException e){e.printStackTrace();} catch(UtilsConstraintViolationException e) { e.printStackTrace(); }
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(EjbWithId.class,entities));}
 	}
-
+	
+	public void initTransaction()
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassData()));}
+		uiAllowAdd=false;
+		uiAllowSave=false;
+		transaction = fbTs.transaction().build(transactionUser, sources.get(0));
+		transaction.setRecord(new Date());
+	}
+	
+	public void saveTransaction() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassData()));}
+		transaction.setSource(fTs.find(fbTs.getClassSource(),transaction.getSource()));
+		transaction = fTs.save(transaction);
+		uiAllowAdd=true;
+		uiAllowSave=true;
+	}
 
 	public void selectEntity() throws UtilsConstraintViolationException
 	{
 		logger.info("Selected: "+ entity.toString());
-		
-		//FIND The Bridge/Timeseries
-		// ts = fTs.fc ..
-//		lData = fTs.fData(workspace, tsh.getOpList().get(0));
-
+		reset(false,true);
 		ts = fTs.fcTimeSeries(scope, interval,fTs.fcBridge(fbTs.getClassBridge(), clas, entity));
 		reloadData();
 	}
@@ -225,17 +247,12 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 		date = data.getRecord();
 		value = data.getValue();
-		transaction = data.getTransaction();
 		logger.info("Existing data found: " + date + " / " + value);
 	}
 
 	public void addData()
 	{
-		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbTs.getClassData()));}
-		transaction = fbTs.transaction().build(transactionUser, fTs.all(fbTs.getClassSource()).get(0));
-		transaction.setRecord(new Date());
-		
-		//Tkae the TS
+		reset(false,true);
 		data = efData.build(workspace, ts, null, null, null);
 	}
 
@@ -244,8 +261,6 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 
 	public void saveData() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-
-		if(EjbIdFactory.isUnSaved(transaction)) {transaction = fTs.save(transaction);}
 		data.setTransaction(transaction);
 		data.setRecord(date);
 		data.setValue(value);
@@ -254,17 +269,4 @@ public class AbstractAdminTsImportManualBean<L extends UtilsLang, D extends Util
 		logger.info(AbstractLogMessage.savedEntity(data));
 		reloadData();
 	}
-
-	public void cancel()
-	{
-		data = null;
-		transaction = null;
-	}
-
-	public void reset()
-	{
-		data = null;
-		transaction = null;
-	}
-
 }

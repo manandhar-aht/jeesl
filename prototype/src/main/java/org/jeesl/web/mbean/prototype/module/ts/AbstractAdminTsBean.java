@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
@@ -89,6 +90,11 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 		
 		sbhCategory = new SbMultiHandler<CAT>(fbTs.getClassCategory(),this);
 		sbhWorkspace = new SbMultiHandler<WS>(fbTs.getClassWorkspace(),this);
+	}
+	
+	protected void postConstructTs(JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs)
+	{
+		this.initTsSuper(bTranslation.getLangKeys().toArray(new String[bTranslation.getLangKeys().size()]), fTs, bMessage);
 	}
 	
 	protected void initTsSuper(String[] langs, JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs, JeeslFacesMessageBean bMessage)

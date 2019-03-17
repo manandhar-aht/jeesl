@@ -117,7 +117,6 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 	
 	private void reloadBridges()
 	{
-		
 		tsh.setTbList(fTs.fTimeSeries(sbhScope.getSelection(), sbhInterval.getSelection(), sbhClass.getSelection()));
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbTs.getClassTs(),tsh.getTbList()));}
 		

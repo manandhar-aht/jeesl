@@ -23,11 +23,11 @@ public class Nested2Map <L1 extends EjbWithId, L2 extends EjbWithId, VALUE exten
     
     public void clear()
     {
-	    	for(Map<L2,VALUE> m : m.values())
-	    	{
-	    		m.clear();
-	    	}
-	    	m.clear();
+    	for(Map<L2,VALUE> m : m.values())
+    	{
+    		m.clear();
+    	}
+    	m.clear();
     }
     
     public void put(L1 l1, L2 l2, VALUE value)
@@ -38,17 +38,17 @@ public class Nested2Map <L1 extends EjbWithId, L2 extends EjbWithId, VALUE exten
     
     public boolean containsKey(L1 l1, L2 l2)
     {
-    		return (m.containsKey(l1) && m.get(l1).containsKey(l2));
+    	return (m.containsKey(l1) && m.get(l1).containsKey(l2));
     }
     
     public List<VALUE> values()
     {
-	    	List<VALUE> list = new ArrayList<VALUE>();
-	    	for(Map<L2,VALUE> map : m.values())
-	    	{
-	    		list.addAll(map.values());
-	    	}
-	    	return list;
+    	List<VALUE> list = new ArrayList<VALUE>();
+    	for(Map<L2,VALUE> map : m.values())
+    	{
+    		list.addAll(map.values());
+    	}
+    	return list;
     }
 	
 	public VALUE get(L1 l1, L2 l2)

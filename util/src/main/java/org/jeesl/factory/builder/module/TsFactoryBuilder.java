@@ -1,6 +1,7 @@
 package org.jeesl.factory.builder.module;
 
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.controller.handler.module.ts.TsYearlyDataHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;

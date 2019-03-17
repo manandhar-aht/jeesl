@@ -54,19 +54,24 @@ public class JbossModuleConfigurator
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.0.0"),moduleMain);
 		}
-		if(version.equals("7.0"))
+		else if(version.equals("7.0"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.1.4"),moduleMain);
 		}
-		if(version.equals("7.1"))
+		else if(version.equals("7.1"))
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.1.4"),moduleMain);
+		}
+		else if(version.equals("7.2"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgis:postgis-jdbc:1.5.3"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.postgresql:postgresql:42.2.5"),moduleMain);
 		}
 		else
 		{
-			logger.warn("NO POSTGIS");
+			logger.warn("NO PostGIS drivers defined in "+this.getClass().getSimpleName()+" for "+version);
 		}
 	}
 	
@@ -105,7 +110,7 @@ public class JbossModuleConfigurator
 		}
 		else
 		{
-			logger.warn("NO MYSQL");
+			logger.warn("NO MySQL drivers defined in "+this.getClass().getSimpleName()+" for "+version);
 		}
 	}
 	
@@ -133,9 +138,13 @@ public class JbossModuleConfigurator
 		{
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5"),dirMain);
 		}
+		else if(version.equals("7.2"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.mariadb.jdbc:mariadb-java-client:2.2.5"),dirMain);
+		}
 		else
 		{
-			logger.warn("NO MYSQL");
+			logger.warn("NO MariaDB drivers defined in "+this.getClass().getSimpleName()+" for "+version);
 		}
 	}
 	
@@ -170,6 +179,7 @@ public class JbossModuleConfigurator
 		String src = srcBaseDir+"/"+product+"/"+version+"/hibernate.xml";
 		InputStream input = mrl.searchIs(src);
 		FileUtils.copyInputStreamToFile(input, moduleXml);
+//		System.out.println("Copy "+src+" to "+moduleXml.getAbsolutePath());
 		
 		if(version.equals("6.3"))
 		{
@@ -187,6 +197,12 @@ public class JbossModuleConfigurator
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("com.vividsolutions:jts:1.13"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.geolatte:geolatte-geom:1.0.6"),moduleMain);
 			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.hibernate:hibernate-spatial:5.1.12.Final"),moduleMain);
+		}
+		else if(version.equals("7.2"))
+		{
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("com.vividsolutions:jts-core:1.14.0"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.geolatte:geolatte-geom:1.3.0"),moduleMain);
+			FileUtils.copyFileToDirectory(MavenArtifactResolver.resolve("org.hibernate:hibernate-spatial:5.3.7.Final"),moduleMain);
 		}
 	}
 	

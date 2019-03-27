@@ -210,6 +210,27 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		fileHandler.init(file,false);
     }
     
+    public void deleteFile() throws UtilsConstraintViolationException, UtilsLockingException
+    {
+		if(debugOnInfo) {logger.info(AbstractLogMessage.rmEntity(file));}
+		
+		if(fileHandler.getMetas()!=null && fileHandler.getMetas().size()>0)
+		{
+			bMessage.errorConstraintViolationInUse();
+			return;
+		}
+		
+		if(file.getAttributeContainer()!=null)	
+		{
+			ACONTAINER container = file.getAttributeContainer();
+			fAttribute.rm(container);
+			file.setAttributeContainer(null);
+		}
+		fFr.rm(file);
+		reset(false,true);
+		reloadFiles();
+    }
+    
 	@Override
 	public void save(JeeslAttributeHandler<ACONTAINER> handler) throws UtilsConstraintViolationException, UtilsLockingException
 	{

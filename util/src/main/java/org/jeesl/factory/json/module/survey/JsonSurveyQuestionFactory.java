@@ -79,7 +79,7 @@ public class JsonSurveyQuestionFactory<L extends UtilsLang,D extends UtilsDescri
 		if(q.isSetTopic() && ejb.getName().containsKey(localeCode)){json.setTopic(ejb.getName().get(localeCode).getLang());}
 		
 		if(q.isSetQuestion() && ejb.getText().containsKey(localeCode)){json.setQuestion(ejb.getText().get(localeCode).getLang());}
-		if(q.isSetRemark()){json.setRemark(ejb.getRemark());}
+		if(q.isSetRemark() && ejb.getDescription().containsKey(localeCode)){json.setRemark(ejb.getDescription().get(localeCode).getLang());}
 		
 		if(q.isSetCalculateScore()){json.setCalculateScore(ejb.getCalculateScore());}
 		if(q.isSetMinScore()){json.setMinScore(ejb.getMinScore());}

@@ -59,7 +59,7 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderFiles()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectFile()}" update=":#{cc.id}:sSection"/>
-							<p:column >  
+							<p:column>  
 								<h:outputText value="#{f.name[localeCode].lang}"/>
 							</p:column>
 					   	</p:dataTable>
@@ -71,6 +71,7 @@
 								<aht:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveFile()}" update=":#{cc.id}:sSection"  tooltip="#{msg.ttSave}"/>
 								<aht:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteFile()}" update=":#{cc.id}:sSection" rendered="#{cc.attrs.bean.file.id gt 0}" tooltip="#{msg.ttDelete}" mayDisappear="true"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="false" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslVisible}"/>
 								<p:selectBooleanCheckbox value="#{cc.attrs.bean.file.visible}"/>

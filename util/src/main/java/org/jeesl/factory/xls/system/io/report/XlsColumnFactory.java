@@ -87,4 +87,15 @@ public class XlsColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 			}
         }
     }
+	
+	public static int code2Index(String code)
+	{
+		if(code.equals("a")) {return 0;}
+		else if(code.equals("b")) {return 1;}
+		else if(code.equals("c")) {return 2;}
+		else if(code.equals("d")) {return 3;}
+		else if(code.equals("e")) {return 4;}
+		else if(code.equals("f")) {return 5;}
+		return -1;
+	}
 }

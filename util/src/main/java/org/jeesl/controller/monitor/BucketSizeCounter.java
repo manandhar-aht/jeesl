@@ -1,9 +1,14 @@
 package org.jeesl.controller.monitor;
 
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.openfuxml.factory.xml.table.XmlTableFactory;
+import org.openfuxml.renderer.text.OfxTextSilentRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +49,43 @@ public class BucketSizeCounter
 		for(String key : map.keySet())
 		{
 			logger.info("\t"+key+": "+FileUtils.byteCountToDisplaySize(map.get(key)));
+		}
+	}
+	
+	public void debugAsSize()
+	{
+		logger.info("Sizes in category "+category);
+		for(String key : map.keySet())
+		{
+			logger.info("\t"+key+": "+map.get(key));
+		}
+	}
+	
+	public void ofx(OutputStream os)
+	{
+		List<String> header = new ArrayList<>();
+		header.add("Event");
+		header.add("Size");
+		
+		List<Object[]> data = new ArrayList<>();
+		
+		for(String key : map.keySet())
+		{
+			String numbers[] = {key, Long.valueOf(map.get(key)).toString()};
+			data.add(numbers);
+		}
+		
+		OfxTextSilentRenderer.table(XmlTableFactory.build(category,header, data),os);
+	}
+	
+	public void jira(OutputStream os)
+	{
+		System.out.println("*"+category+"*");
+		System.out.println("||Event||Size||");
+		
+		for(String key : map.keySet())
+		{
+			System.out.println("|"+key+"|"+Long.valueOf(map.get(key)).toString()+"|");
 		}
 	}
 	

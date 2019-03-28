@@ -114,6 +114,22 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		scope = this.find(fbTs.getClassScope(),scope);
 		return scope.getIntervals().contains(interval) && scope.getClasses().contains(c);
 	}
+	
+	@Override public List<TS> fTimeSeries(List<BRIDGE> bridges)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TS> cQ = cB.createQuery(fbTs.getClassTs());
+		
+		Root<TS> ts = cQ.from(fbTs.getClassTs());
+		Join<TS,BRIDGE> jBridge = ts.join(JeeslTimeSeries.Attributes.bridge.toString());
+		
+		predicates.add(jBridge.in(bridges));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(ts);
+		return em.createQuery(cQ).getResultList();
+	}
 
 	@Override public List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass)
 	{

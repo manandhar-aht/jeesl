@@ -73,4 +73,14 @@ public class EjbTsBridgeFactory<L extends UtilsLang, D extends UtilsDescription,
 		}
 		return map;
 	}
+	
+	public List<Long> toRefIds(List<BRIDGE> bridges)
+	{
+		List<Long> list = new ArrayList<Long>();
+		for(BRIDGE bridge : bridges)
+		{
+			list.add(bridge.getRefId());
+		}
+		return list;
+	}
 }

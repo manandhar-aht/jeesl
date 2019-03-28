@@ -8,6 +8,7 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
+import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;

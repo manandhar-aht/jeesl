@@ -57,9 +57,10 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 	
+	private Map<EC,Map<Long,EjbWithId>> map; public Map<EC, Map<Long, EjbWithId>> getMap() {return map;}
 	private List<TRANSACTION> transactions; public List<TRANSACTION> getTransactions() {return transactions;}
 	private List<DATA> datas; public List<DATA> getDatas() {return datas;}
-	private Map<EC,Map<Long,EjbWithId>> map; public Map<EC, Map<Long, EjbWithId>> getMap() {return map;}
+	
 	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 

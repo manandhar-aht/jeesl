@@ -51,6 +51,7 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	
 	boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c);
 	
+	List<TS> fTimeSeries(List<BRIDGE> bridges);
 	List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass);
 	TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
 	TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;

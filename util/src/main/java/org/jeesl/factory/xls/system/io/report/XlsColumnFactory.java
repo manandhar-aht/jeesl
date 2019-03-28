@@ -90,12 +90,12 @@ public class XlsColumnFactory <L extends UtilsLang,D extends UtilsDescription,
 	
 	public static int code2Index(String code)
 	{
-		if(code.equals("a")) {return 0;}
-		else if(code.equals("b")) {return 1;}
-		else if(code.equals("c")) {return 2;}
-		else if(code.equals("d")) {return 3;}
-		else if(code.equals("e")) {return 4;}
-		else if(code.equals("f")) {return 5;}
-		return -1;
+		int result = 0;
+		for(int i=0;i<code.length();i++)
+		{
+			if(Character.isUpperCase(code.charAt(i))){result = result *26 +(code.charAt(i)-('A'-1));}			
+			else{result = result *26 +(code.charAt(i)-('a'-1));}
+		}
+		return result -1;
 	}
 }

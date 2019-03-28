@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class EjbTsDataFactory<TS extends JeeslTimeSeries<?,?,?>,
-								TRANSACTION extends JeeslTsTransaction<?,DATA,?>,
+								TRANSACTION extends JeeslTsTransaction<?,DATA,?,?>,
 								DATA extends JeeslTsData<TS,TRANSACTION,?,WS>,
 								WS extends UtilsStatus<WS,?,?>>
 {

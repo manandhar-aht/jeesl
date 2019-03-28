@@ -43,7 +43,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
-											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
+											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER,?>,
 											SOURCE extends EjbWithLangDescription<L,D>, 
 											BRIDGE extends JeeslTsBridge<EC>,
 											EC extends JeeslTsEntityClass<L,D,CAT>,
@@ -124,7 +124,7 @@ public class AbstractAdminTsViewerBean <L extends UtilsLang, D extends UtilsDesc
 		{
 			mapTsEntity.clear();
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(sbhClass.getSelection().getCode()).asSubclass(EjbWithId.class);
-			Map<Long,TS> mapBridgeTs = efTs.toMapBridgeTs(tsh.getTbList());
+			Map<Long,TS> mapBridgeTs = efTs.toMapBridgeRefIdTs(tsh.getTbList());
 			for(EjbWithId ejb : fTs.find(c,efTs.toBridgeIds(tsh.getTbList())))
 			{
 				mapTsEntity.put(mapBridgeTs.get(ejb.getId()),ejb);

@@ -26,7 +26,7 @@ public class EjbTsFactory<L extends UtilsLang,D extends UtilsDescription,
 							SCOPE extends JeeslTsScope<L,D,CAT,?,UNIT,EC,INT>,
 							UNIT extends UtilsStatus<UNIT,L,D>,
 							TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
-							TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
+							TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER,?>,
 							SOURCE extends EjbWithLangDescription<L,D>, 
 							BRIDGE extends JeeslTsBridge<EC>,
 							EC extends JeeslTsEntityClass<L,D,CAT>,
@@ -68,10 +68,21 @@ public class EjbTsFactory<L extends UtilsLang,D extends UtilsDescription,
 		return result;
 	}
 	
-	public Map<Long,TS> toMapBridgeTs(List<TS> list)
+	public Map<Long,TS> toMapBridgeRefIdTs(List<TS> list)
 	{
 		Map<Long,TS> map = new HashMap<Long,TS>();
 		for(TS ts : list) {map.put(ts.getBridge().getRefId(),ts);}
+		return map;
+	}
+	
+	public Map<BRIDGE,List<TS>> toMapBridgTsList(List<TS> list)
+	{
+		Map<BRIDGE,List<TS>> map = new HashMap<BRIDGE,List<TS>>();
+		for(TS ts : list)
+		{
+			if(!map.containsKey(ts.getBridge())) {map.put(ts.getBridge(), new ArrayList<TS>());}
+			map.get(ts.getBridge()).add(ts);
+		}
 		return map;
 	}
 }

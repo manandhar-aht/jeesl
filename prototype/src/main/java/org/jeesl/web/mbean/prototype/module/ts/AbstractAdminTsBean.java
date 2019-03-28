@@ -47,7 +47,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 									UNIT extends UtilsStatus<UNIT,L,D>,
 									MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 									TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
-									TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
+									TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER,?>,
 									SOURCE extends EjbWithLangDescription<L,D>, 
 									BRIDGE extends JeeslTsBridge<EC>,
 									EC extends JeeslTsEntityClass<L,D,CAT>,

@@ -41,7 +41,7 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 											UNIT extends UtilsStatus<UNIT,L,D>,
 											MP extends JeeslTsMultiPoint<L,D,SCOPE,UNIT>,
 											TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
-											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER>,
+											TRANSACTION extends JeeslTsTransaction<SOURCE,DATA,USER,?>,
 											SOURCE extends EjbWithLangDescription<L,D>, 
 											BRIDGE extends JeeslTsBridge<EC>,
 											EC extends JeeslTsEntityClass<L,D,CAT>,
@@ -58,11 +58,9 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractTsSummaryBean.class);
 
-	protected final Map<Long,EjbWithId> mapBridge;
-	public Map<Long, EjbWithId> getMapBridge() {
-		return mapBridge;
-	}
-
+	protected final Map<Long,EjbWithId> mapBridge; public Map<Long, EjbWithId> getMapBridge() {return mapBridge;}
+	protected final Map<BRIDGE,List<TS>> mapTs; public Map<BRIDGE, List<TS>> getMapTs() {return mapTs;}
+	
 	protected List<BRIDGE> bridges; public List<BRIDGE> getBridges() {return bridges;}
 	
 	protected BRIDGE bridge;  public BRIDGE getBridge() {return bridge;} public void setBridge(BRIDGE bridge) {this.bridge = bridge;}
@@ -73,6 +71,7 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 	{
 		super(fbTs);
 		mapBridge = new HashMap<Long,EjbWithId>();
+		mapTs = new HashMap<BRIDGE,List<TS>>();
 		sbhClass = new SbSingleHandler<EC>(fbTs.getClassEntity(),this);
 	}
 	
@@ -103,6 +102,7 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 		bridges = fTs.allForParent(fbTs.getClassBridge(),sbhClass.getSelection());
 		
 		mapBridge.clear();
+		mapTs.clear();
 		
 		try
 		{
@@ -113,8 +113,9 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 		catch (ClassNotFoundException e) {e.printStackTrace();}
 		
 		List<TS> list = fTs.fTimeSeries(bridges);
-		
+		mapTs.putAll(efTs.toMapBridgTsList(list));
 		if(debugOnInfo){logger.info("reloadBridges Bridges:"+bridges.size()+" TS:"+list.size());}
+		
 	}
 	
 	public void select() throws UtilsNotFoundException

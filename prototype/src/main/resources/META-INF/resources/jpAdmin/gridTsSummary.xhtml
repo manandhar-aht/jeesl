@@ -33,7 +33,12 @@
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCategories" listener="#{cc.attrs.bean.select()}"/>
 				          	<p:column rendered="true" headerText="#{msg.jeeslId}">  
 								<j:outputXpath value="#{cc.attrs.bean.mapBridge[b.refId]}" xpath="#{b.entityClass.xpath}"/>
-				          	</p:column> 	
+				          	</p:column>
+				          	<p:column headerText="#{msg.jeeslId}">  
+								<ui:repeat var="ts" value="#{cc.attrs.bean.mapTs[b]}">
+					     			<h:outputText value="#{ts.scope.name[localeCode].lang}"/>
+				    			</ui:repeat>
+				          	</p:column>	
 						</p:dataTable>
 					</h:form>
 				</j:slot>

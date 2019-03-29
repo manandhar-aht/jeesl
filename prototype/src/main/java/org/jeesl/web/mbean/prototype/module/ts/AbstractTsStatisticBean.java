@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +23,11 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.model.json.module.ts.TsStatistic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
@@ -34,8 +38,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
+import net.sf.exlp.util.io.JsonUtil;
 
-public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public class AbstractTsStatisticBean <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CAT extends UtilsStatus<CAT,L,D>,
 											SCOPE extends JeeslTsScope<L,D,CAT,ST,UNIT,EC,INT>,
 											ST extends UtilsStatus<ST,L,D>,
@@ -57,26 +62,17 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractTsSummaryBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractTsStatisticBean.class);
 
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
 	private final JsonTuple1Handler<TS> th; public JsonTuple1Handler<TS> getTh() {return th;}
+		
 	
-	protected final Map<Long,EjbWithId> mapBridge; public Map<Long, EjbWithId> getMapBridge() {return mapBridge;}
-	protected final Map<BRIDGE,List<TS>> mapTs; public Map<BRIDGE, List<TS>> getMapTs() {return mapTs;}
+	protected String jsonStream; public String getJsonStream() {return jsonStream;}
 	
-	protected List<BRIDGE> bridges; public List<BRIDGE> getBridges() {return bridges;}
-	protected List<TS> series; public List<TS> getSeries() {return series;} public void setSeries(List<TS> series) {this.series = series;}
-	
-	protected BRIDGE bridge;  public BRIDGE getBridge() {return bridge;} public void setBridge(BRIDGE bridge) {this.bridge = bridge;}
-	private TS ts; public TS getTs() {return ts;} public void setTs(TS ts) {this.ts = ts;}
-	
-	
-	public AbstractTsSummaryBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
+	public AbstractTsStatisticBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
 	{
 		super(fbTs);
-		mapBridge = new HashMap<Long,EjbWithId>();
-		mapTs = new HashMap<BRIDGE,List<TS>>();
 		sbhClass = new SbSingleHandler<EC>(fbTs.getClassEntity(),this);
 		th = new JsonTuple1Handler<TS>(fbTs.getClassTs());
 	}
@@ -102,31 +98,27 @@ public class AbstractTsSummaryBean <L extends UtilsLang, D extends UtilsDescript
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	private void reloadBridges()
 	{
-		bridges = fTs.allForParent(fbTs.getClassBridge(),sbhClass.getSelection());
-		
-		mapBridge.clear();
-		mapTs.clear();
-		
-		try
-		{
-			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(sbhClass.getSelection().getCode()).asSubclass(EjbWithId.class);
-			List<EjbWithId> list = fTs.find(c, efBridge.toRefIds(bridges));
-			mapBridge.putAll(EjbIdFactory.toIdMap(list));
-		}
-		catch (ClassNotFoundException e) {e.printStackTrace();}
-		
-		series = fTs.fTimeSeries(bridges);
-		mapTs.putAll(efTs.toMapBridgTsList(series));
+		List<TS> series = fTs.all(fbTs.getClassTs());
 		th.init(fTs.tpCountRecordsByTs(series));
-		if(debugOnInfo){logger.info("reloadBridges Bridges:"+bridges.size()+" TS:"+series.size());}
 		
-	}
-	
-	public void select() throws UtilsNotFoundException
-	{
-		logger.info(AbstractLogMessage.selectEntity(ts));
+		
+		List<TsStatistic> list = new ArrayList<TsStatistic>();
+		for(TS ts : series)
+		{
+			TsStatistic json = new TsStatistic();
+			if(th.contains(ts)){json.setCount(Long.valueOf(th.getMap1().get(ts).getCount()).intValue());}
+			else {json.setCount(0);}
+			json.setEntity(ts.getBridge().getEntityClass().getName().get("en").getLang());
+			json.setScope(ts.getScope().getName().get("en").getLang());
+			json.setInterval(ts.getInterval().getName().get("en").getLang());
+			list.add(json);
+		}
+		jsonStream = "";
+
+		try {jsonStream = JsonUtil.toString(list);}
+		catch (JsonProcessingException e) {e.printStackTrace();}
+//		logger.info("Stram: "+jsonStream);
 	}
 }

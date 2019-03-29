@@ -23,22 +23,27 @@
 			<j:row>
 				<j:slot id="sCategories" width="8">
 					<h:form id="fCategories">
-						<p:dataTable var="b" value="#{cc.attrs.bean.bridges}" draggableRows="true"
-							selection="#{cc.attrs.bean.bridge}" selectionMode="single" rowKey="#{b.id}">
+						<p:dataTable var="ts" value="#{cc.attrs.bean.series}"
+							selection="#{cc.attrs.bean.ts}" selectionMode="single" rowKey="#{ts.id}"
+							sortBy="#{ts.bridge.id}" expandableRowGroups="true">
 							<f:facet name="header">
 								<j:dtHeader title="#{cc.attrs.bean.sbhClass.selection.name[localeCode].lang}">
 									
 								</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sCategories" listener="#{cc.attrs.bean.select()}"/>
-				          	<p:column rendered="true" headerText="#{msg.jeeslId}">  
-								<j:outputXpath value="#{cc.attrs.bean.mapBridge[b.refId]}" xpath="#{b.entityClass.xpath}"/>
+							<p:column>
+					        	<j:outputXpath value="#{cc.attrs.bean.mapBridge[ts.bridge.refId]}" xpath="#{ts.bridge.entityClass.xpath}"/>
+					        </p:column>
+				          	<p:column headerText="#{msg.jeeslTsScope}">  
+								<h:outputText value="#{ts.scope.name[localeCode].lang}"/>
 				          	</p:column>
-				          	<p:column headerText="#{msg.jeeslId}">  
-								<ui:repeat var="ts" value="#{cc.attrs.bean.mapTs[b]}">
-					     			<h:outputText value="#{ts.scope.name[localeCode].lang}"/>
-				    			</ui:repeat>
-				          	</p:column>	
+				          	<p:column headerText="#{msg.jeeslTsInterval}">  
+								<h:outputText value="#{ts.interval.name[localeCode].lang}"/>
+				          	</p:column>
+				          	<p:column headerText="#{msg.jeeslCount}">  
+								<h:outputText value="#{cc.attrs.bean.th.map1[ts].count}"/>
+				          	</p:column>
 						</p:dataTable>
 					</h:form>
 				</j:slot>

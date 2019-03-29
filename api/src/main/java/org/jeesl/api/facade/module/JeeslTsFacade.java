@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
@@ -65,4 +66,6 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	List<TRANSACTION> fTransactions(List<USER> users, Date from, Date to);
 	
 	void deleteTransaction(TRANSACTION transaction) throws UtilsConstraintViolationException;
+	
+	Json1Tuples<TS> tpCountRecordsByTs(List<TS> series);
 }

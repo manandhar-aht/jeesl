@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -18,6 +20,7 @@ import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
+import org.jeesl.factory.json.db.tuple.t1.Json1TuplesFactory;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.JeeslTsData;
@@ -27,6 +30,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.controller.util.ParentPredicate;
@@ -270,5 +274,26 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		cQ.orderBy(cB.asc(eRecord));
 		
 		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override public Json1Tuples<TS> tpCountRecordsByTs(List<TS> series)
+	{
+		Json1TuplesFactory<TS> jtf = new Json1TuplesFactory<TS>(this,fbTs.getClassTs());
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+		Root<DATA> data = cQ.from(fbTs.getClassData());
+		
+		Expression<Long> eCount = cB.count(data.<Long>get("id"));
+		Join<DATA,TS> jTs = data.join(JeeslTsData.Attributes.timeSeries.toString());
+//		Path<BRIDGE> pModule = jFr.get(ErpSrsFr.Attributes.module.toString());
+//		Path<ErpSrsRelease> pRelease = item.get(ErpSrsImplementation.Attributes.release.toString());
+		
+		cQ.groupBy(jTs.get("id"));
+		cQ.multiselect(jTs.get("id"),eCount);
+//
+//		cQ.where(cB.and(ErpPredicateBuilder.srsImplementation(cB, query, item)));
+//	       
+		TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        return jtf.buildCount(tQ.getResultList());
 	}
 }

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="aupTsTimeSerie">
+    	<s:langs>
+    		<s:lang key="de" translation="Zeitserien"/>
+    		<s:lang key="en" translation="Timeseries"/>
+    		<s:lang key="fr" translation="Timeseries"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsTimeSerie">
+    	<s:langs>
+    		<s:lang key="de" translation="Zeitserie"/>
+    		<s:lang key="en" translation="Timeseries"/>
+    		<s:lang key="fr" translation="Timeseries"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslTsScopes">
     	<s:langs>
     		<s:lang key="de" translation="Bereiche"/>
@@ -89,13 +103,6 @@
     		<s:lang key="de" translation="Upload"/>
     		<s:lang key="en" translation="Upload"/>
     		<s:lang key="fr" translation="Upload"/>
-    	</s:langs>
-    </s:translation>
-	<s:translation key="aupTsTimeSerie">
-    	<s:langs>
-    		<s:lang key="de" translation="Zeitserien"/>
-    		<s:lang key="en" translation="Timeseries"/>
-    		<s:lang key="fr" translation="Timeseries"/>
     	</s:langs>
     </s:translation>
     <s:translation key="jeeslTsData">

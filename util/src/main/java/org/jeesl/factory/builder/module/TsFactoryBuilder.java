@@ -1,7 +1,8 @@
 package org.jeesl.factory.builder.module;
 
+import java.util.Comparator;
+
 import org.jeesl.api.facade.module.JeeslTsFacade;
-import org.jeesl.controller.handler.module.ts.TsYearlyDataHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
@@ -21,6 +22,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.util.comparator.ejb.module.ts.TsScopeComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,5 +135,10 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	public McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS> metaChart(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs)
 	{
 		return new McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS>(this,fTs);
+	}
+	
+	public Comparator<SCOPE> cmpScope(TsScopeComparator.Type type)
+	{
+		return (new TsScopeComparator<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>()).factory(TsScopeComparator.Type.position);
 	}
 }

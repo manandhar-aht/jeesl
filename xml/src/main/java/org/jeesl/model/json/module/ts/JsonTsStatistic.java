@@ -8,9 +8,14 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonRootName(value="statistic")
-public class TsStatistic implements Serializable
+public class JsonTsStatistic implements Serializable
 {
 	public static final long serialVersionUID=1;
+
+	@JsonProperty("Category")
+	private String category;
+	public String getCategory() {return category;}
+	public void setCategory(String category) {this.category = category;}
 
 	@JsonProperty("Entity")
 	private String entity;
@@ -24,13 +29,8 @@ public class TsStatistic implements Serializable
 
 	@JsonProperty("Scope")
 	private String scope;
-
-	public String getScope() {
-		return scope;
-	}
-	public void setScope(String scope) {
-		this.scope = scope;
-	}
+	public String getScope() {return scope;}
+	public void setScope(String scope) {this.scope = scope;}
 
 	@JsonProperty("Count")
 	private int count;

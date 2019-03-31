@@ -842,10 +842,10 @@ public class UtilsFacadeBean implements UtilsFacade
 		return em.createQuery(select).getResultList();
 	}
 	
-	private <T extends Object> CriteriaQuery<T> cqOrdered(CriteriaBuilder cb, Class<T> cl, String by, boolean ascending)
+	private <T extends Object> CriteriaQuery<T> cqOrdered(CriteriaBuilder cb, Class<T> c, String by, boolean ascending)
 	{
-		CriteriaQuery<T> criteriaQuery = cb.createQuery(cl);
-		Root<T> from = criteriaQuery.from(cl);
+		CriteriaQuery<T> criteriaQuery = cb.createQuery(c);
+		Root<T> from = criteriaQuery.from(c);
 		
 		Expression<Date> eOrder = from.get(by);
 		

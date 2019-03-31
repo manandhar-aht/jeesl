@@ -2,9 +2,7 @@ package org.jeesl.web.mbean.prototype.module.ts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
@@ -12,7 +10,6 @@ import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.controller.handler.tuple.JsonTuple1Handler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
-import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
@@ -23,7 +20,7 @@ import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
-import org.jeesl.model.json.module.ts.TsStatistic;
+import org.jeesl.model.json.module.ts.JsonTsStatistic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,13 +28,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
-import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.io.JsonUtil;
 
 public class AbstractTsStatisticBean <L extends UtilsLang, D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
@@ -66,8 +61,7 @@ public class AbstractTsStatisticBean <L extends UtilsLang, D extends UtilsDescri
 
 	protected final SbSingleHandler<EC> sbhClass; public SbSingleHandler<EC> getSbhClass() {return sbhClass;}
 	private final JsonTuple1Handler<TS> th; public JsonTuple1Handler<TS> getTh() {return th;}
-		
-	
+
 	protected String jsonStream; public String getJsonStream() {return jsonStream;}
 	
 	public AbstractTsStatisticBean(final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
@@ -104,14 +98,15 @@ public class AbstractTsStatisticBean <L extends UtilsLang, D extends UtilsDescri
 		th.init(fTs.tpCountRecordsByTs(series));
 		
 		
-		List<TsStatistic> list = new ArrayList<TsStatistic>();
+		List<JsonTsStatistic> list = new ArrayList<JsonTsStatistic>();
 		for(TS ts : series)
 		{
-			TsStatistic json = new TsStatistic();
+			JsonTsStatistic json = new JsonTsStatistic();
 			if(th.contains(ts)){json.setCount(Long.valueOf(th.getMap1().get(ts).getCount()).intValue());}
 			else {json.setCount(0);}
-			json.setEntity(ts.getBridge().getEntityClass().getName().get("en").getLang());
+			json.setCategory(ts.getScope().getCategory().getName().get("en").getLang());
 			json.setScope(ts.getScope().getName().get("en").getLang());
+			json.setEntity(ts.getBridge().getEntityClass().getName().get("en").getLang());
 			json.setInterval(ts.getInterval().getName().get("en").getLang());
 			list.add(json);
 		}

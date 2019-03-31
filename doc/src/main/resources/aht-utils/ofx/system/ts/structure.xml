@@ -69,7 +69,7 @@
 	    <ofx:title>Entity Relationship Diagram of Time Series</ofx:title>
 	    <layout:alignment horizontal="center"/>
 	    <layout:width unit="cm">6</layout:width>
-	    <media:media src="aht-utils/svg/admin/development/er/ts.svg" dst="admin/development/er/ts"/>
+	    <media:media src="jeesl/svg/administration/development/er/ts.svg" dst="admin/development/er/ts"/>
 	</media:image>
 	
 </ofx:section>

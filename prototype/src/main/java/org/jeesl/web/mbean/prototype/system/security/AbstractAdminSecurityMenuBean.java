@@ -50,7 +50,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityMenuBean.class);
 	
-	private EjbSecurityMenuFactory<V,M> efMenu;
+	private final EjbSecurityMenuFactory<V,M> efMenu;
 	
 	private TreeNode tree; public TreeNode getTree() {return tree;}
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}

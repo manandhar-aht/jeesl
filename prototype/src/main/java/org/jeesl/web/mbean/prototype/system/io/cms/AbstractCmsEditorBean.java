@@ -124,7 +124,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		types = new ArrayList<ET>();
 	}
 	
-	protected void postConstructCms(JeeslTranslationBean bTranslation, String currentLocaleCode,
+	protected void postConstructCms(JeeslTranslationBean<L,D,LOC> bTranslation, String currentLocaleCode,
 									List<LOC> locales, JeeslFacesMessageBean bMessage, JeeslCmsCacheBean<S> bCache,
 									JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms,
 									JeeslFileRepositoryHandler<FS,FC,FM> hFileRepository)

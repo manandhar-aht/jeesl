@@ -25,6 +25,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 										CAT extends UtilsStatus<CAT,L,D>,
@@ -48,7 +49,8 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 	private JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	
 	private final Map<S,Map<String,Section>> mapSection;
-	
+	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
+
 	public AbstractCmsCacheBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms)
 	{
 		this.fbCms=fbCms;
@@ -71,35 +73,35 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 	
 	public Section build(String localeCode, S section)
 	{
-//		logger.info("Building "+localeCode+" "+section.toString());
-		if(!mapSection.containsKey(section)) {mapSection.put(section, new HashMap<String,Section>());}
-		
-//		logger.info("Cached section:"+mapSection.containsKey(section));
-//		logger.info("Cached locale:"+mapSection.get(section).containsKey(localeCode));
-		
-		if(mapSection.get(section).containsKey(localeCode)) {return mapSection.get(section).get(localeCode);}
+		if(section==null) {logger.warn("Section is NULL"); return new Section();}
 		else
 		{
-			section = fCms.find(fbCms.getClassSection(),section);
-			logger.info("Trancoding Section: " + section.getCode());
-			Section ofxSection = null;
-			try
+			if(debugOnInfo) {logger.info("Requesting "+localeCode+" "+section.toString());}
+			if(!mapSection.containsKey(section)) {mapSection.put(section, new HashMap<String,Section>());}
+			
+//			logger.info("Cached section:"+mapSection.containsKey(section));
+//			logger.info("Cached locale:"+mapSection.get(section).containsKey(localeCode));
+			
+			if(mapSection.get(section).containsKey(localeCode)) {return mapSection.get(section).get(localeCode);}
+			else
 			{
-				LOC locale = fCms.fByCode(fbCms.getClassLocale(), localeCode);
-				GenericLocaleProvider<L,D,LOC> lp = new GenericLocaleProvider<L,D,LOC>();
-				lp.setLocales(Arrays.asList(locale));
-				
-				ofxSection = ofx.build(lp,localeCode,section);
-				mapSection.get(section).put(localeCode, ofxSection);
-			}
-			catch (OfxAuthoringException e)
-			{
-				e.printStackTrace();
-			} catch (UtilsNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ofxSection;
-		}		
+				section = fCms.find(fbCms.getClassSection(),section);
+				if(debugOnInfo) {logger.info("Not in cache, Trrancoding Section: " + section.toString());}
+				Section ofxSection = null;
+				try
+				{
+					LOC locale = fCms.fByCode(fbCms.getClassLocale(), localeCode);
+					GenericLocaleProvider<L,D,LOC> lp = new GenericLocaleProvider<L,D,LOC>();
+					lp.setLocales(Arrays.asList(locale));
+					
+					ofxSection = ofx.build(lp,localeCode,section);
+					if(debugOnInfo) {JaxbUtil.info(ofxSection);}
+					mapSection.get(section).put(localeCode, ofxSection);
+				}
+				catch (OfxAuthoringException e){e.printStackTrace();}
+				catch (UtilsNotFoundException e) {e.printStackTrace();}
+				return ofxSection;
+			}		
+		}
 	}
 }

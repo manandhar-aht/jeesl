@@ -26,6 +26,11 @@ public abstract class AbstractAppUtilsBean<L extends UtilsLang, D extends UtilsD
 	protected Class<GT> cGraphicType;
 	protected Class<FS> cGraphicStyle;
 
+	public AbstractAppUtilsBean()
+	{
+		
+	}
+	
 	protected void initSuper(Class<GT> cGraphicType,Class<FS> cGraphicStyle)
 	{
 		this.cGraphicType=cGraphicType;

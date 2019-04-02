@@ -15,14 +15,11 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.primefaces.event.NodeCollapseEvent;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
-import org.primefaces.event.TreeDragDropEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
-import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
@@ -53,6 +50,7 @@ public abstract class AbstractSystemPageBean <L extends UtilsLang, D extends Uti
 	
 	public void postConstructSystemPage(JeeslSecurityFacade<L,D,?,?,V,?,?,?,M,?> fSecurity, JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage)
 	{
+		this.fSecurity=fSecurity;
 		reload();
 	}
 		

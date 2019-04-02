@@ -31,6 +31,7 @@
 					            <p:ajax event="expand" listener="#{cc.attrs.bean.onNodeExpand}" />
 								<p:ajax event="collapse" listener="#{cc.attrs.bean.onNodeCollapse}" />
 					            <p:treeNode>
+					            	<h:graphicImage rendered="#{node.view.documentation}" name="#{appIconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
 					                <h:outputText value="#{node.view.category.position}.#{node.view.position} #{node.view.name[localeCode].lang}" />
 					            </p:treeNode>
 					        </p:tree>

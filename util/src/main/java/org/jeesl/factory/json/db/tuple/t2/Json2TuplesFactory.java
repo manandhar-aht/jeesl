@@ -104,8 +104,20 @@ public class Json2TuplesFactory <A extends EjbWithId, B extends EjbWithId>
 	
 	public void ejb2Load(Json2Tuples<A,B> json)
 	{
-		if(fUtils!=null)
-		{
+		if(fUtils==null)
+		{	// A object is created and the corresponding id is set
+			for(Json2Tuple<A,B> t : json.getTuples())
+			{
+				try
+				{
+					t.setEjb1(cA.newInstance());t.getEjb1().setId(t.getId1());
+					t.setEjb2(cB.newInstance());t.getEjb2().setId(t.getId2());
+				}
+				catch (InstantiationException | IllegalAccessException e) {e.printStackTrace();}
+			}
+		}
+		else
+		{	// Here we really load the objects from the DB
 			Map<Long,A> map1 = EjbIdFactory.toIdMap(fUtils.find(cA,setId1));
 			Map<Long,B> map2 = EjbIdFactory.toIdMap(fUtils.find(cB,setId2));
 			

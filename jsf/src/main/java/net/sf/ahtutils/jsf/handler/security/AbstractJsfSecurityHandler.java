@@ -231,6 +231,10 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			{
 				logger.info("\t"+key+": "+mapAllow.get(key));
 			}
+			for(A a : actions)
+			{
+				logger.info("\t"+a.toString());
+			}
 		}
 	}
 }

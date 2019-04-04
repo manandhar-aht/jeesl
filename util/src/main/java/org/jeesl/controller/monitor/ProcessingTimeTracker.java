@@ -70,7 +70,7 @@ public class ProcessingTimeTracker implements ProgressTimeTracker
 		
 		sb.append("[");
 		sb.append(tfPeriod.debugMillis(now-previousEvent));
-		sb.append("] total [");
+		sb.append("]  [\\u2211 ");
 		sb.append(tfPeriod.debugMillis(now-start));
 		sb.append("] for ");
 		sb.append(event);

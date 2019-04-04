@@ -25,7 +25,6 @@ import net.sf.ahtutils.xml.status.Status;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}status"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="pid" type="{http://www.w3.org/2001/XMLSchema}long" /&gt;
- *       &lt;attribute name="state" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="statement" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -51,8 +50,6 @@ public class Query
     protected Status status;
     @XmlAttribute(name = "pid")
     protected Long pid;
-    @XmlAttribute(name = "state")
-    protected String state;
     @XmlAttribute(name = "statement")
     protected String statement;
 
@@ -142,34 +139,6 @@ public class Query
 
     public void unsetPid() {
         this.pid = null;
-    }
-
-    /**
-     * Gets the value of the state property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getState() {
-        return state;
-    }
-
-    /**
-     * Sets the value of the state property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setState(String value) {
-        this.state = value;
-    }
-
-    public boolean isSetState() {
-        return (this.state!= null);
     }
 
     /**

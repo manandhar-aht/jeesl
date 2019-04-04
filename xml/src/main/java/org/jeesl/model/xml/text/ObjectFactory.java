@@ -70,6 +70,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Achievement }
+     * 
+     */
+    public Achievement createAchievement() {
+        return new Achievement();
+    }
+
+    /**
      * Create an instance of {@link Solution }
      * 
      */

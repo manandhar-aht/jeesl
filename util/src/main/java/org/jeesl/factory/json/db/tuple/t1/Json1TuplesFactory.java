@@ -13,6 +13,7 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.model.json.db.tuple.JsonTuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuple;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
+import org.jeesl.model.json.db.tuple.two.Json2Tuple;
 
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -101,7 +102,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 			setId.add(j.getId());
         	json.getTuples().add(j);
         }
-		fillEjbs(json);	
+		ejb1Load(json);	
 		return json;
 	}
 	
@@ -115,7 +116,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 			setId.add(j.getId());
         	json.getTuples().add(j);
         }
-		fillEjbs(json);
+		ejb1Load(json);
 		return json;
 	}
 	
@@ -129,7 +130,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 			setId.add(j.getId());
         	json.getTuples().add(j);
         }
-		fillEjbs(json);
+		ejb1Load(json);
 		return json;
 	}
 	
@@ -142,7 +143,7 @@ public class Json1TuplesFactory <A extends EjbWithId>
 			setId.add(j.getId());
         	json.getTuples().add(j);
 		}
-		fillEjbs(json);
+		ejb1Load(json);
 		return json;
 	}
 	
@@ -156,14 +157,25 @@ public class Json1TuplesFactory <A extends EjbWithId>
 			setId.add(j.getId());
         	json.getTuples().add(j);
         }
-		fillEjbs(json);
+		ejb1Load(json);
 		return json;
 	}
 	
-	private void fillEjbs(Json1Tuples<A> json)
+	private void ejb1Load(Json1Tuples<A> json)
 	{
-		if(fUtils!=null)
-		{
+		if(fUtils==null)
+		{	// A object is created and the corresponding id is set
+			for(Json1Tuple<A> t : json.getTuples())
+			{
+				try
+				{
+					t.setEjb(cA.newInstance());t.getEjb().setId(t.getId());
+				}
+				catch (InstantiationException | IllegalAccessException e) {e.printStackTrace();}
+			}
+		}
+		else
+		{	// Here we really load the objects from the DB
 			Map<Long,A> map = EjbIdFactory.toIdMap(fUtils.find(cA,setId));
 			for(Json1Tuple<A> t : json.getTuples())
 			{

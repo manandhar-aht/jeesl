@@ -39,6 +39,16 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="achievement">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                	<xsd:attribute name="version" type="xsd:int"/>
+                    <xsd:attribute name="key" type="xsd:string"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
 	<xsd:element name="solution">
         <xsd:complexType>
             <xsd:simpleContent>

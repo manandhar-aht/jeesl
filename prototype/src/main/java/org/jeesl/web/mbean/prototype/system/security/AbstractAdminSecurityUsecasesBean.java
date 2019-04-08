@@ -144,7 +144,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 		usecase = fSecurity.save(usecase);
 		reloadUsecase();
 		reloadUsecases();
-	
+		bSecurity.update(usecase);
 	}
 	
 	//OverlayPanel
@@ -156,6 +156,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 			usecase = fSecurity.save(usecase);
 			opView = null;
 			selectUsecase();
+			bSecurity.update(usecase);
 		}
 	}
 	public void opAddAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -166,6 +167,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 			usecase = fSecurity.save(usecase);
 			opAction = null;
 			selectUsecase();
+			bSecurity.update(usecase);
 		}
 	}
 	
@@ -178,6 +180,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 			usecase = fSecurity.save(usecase);
 			tblView = null;
 			selectUsecase();
+			bSecurity.update(usecase);
 		}
 	}
 	public void opRmAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -188,6 +191,7 @@ public class AbstractAdminSecurityUsecasesBean <L extends UtilsLang, D extends U
 			usecase = fSecurity.save(usecase);
 			tblAction = null;
 			selectUsecase();
+			bSecurity.update(usecase);
 		}
 	}
 	

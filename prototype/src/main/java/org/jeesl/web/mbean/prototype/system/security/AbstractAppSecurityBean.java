@@ -178,6 +178,5 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	{
 		if(!mapActionsByUsecase.containsKey(usecase)){update(usecase);}
 		return mapActionsByUsecase.get(usecase);
-		
 	}
 }

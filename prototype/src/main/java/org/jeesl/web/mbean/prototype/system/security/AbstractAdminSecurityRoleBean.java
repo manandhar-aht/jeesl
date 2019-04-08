@@ -41,7 +41,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 											M extends JeeslSecurityMenu<V,M>,
 											USER extends JeeslUser<R>>
 			extends AbstractAdminSecurityBean<L,D,C,R,V,U,A,AT,M,USER>
-					implements Serializable
+			implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSecurityRoleBean.class);
@@ -106,8 +106,6 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 		logger.info("Reloaded "+roles.size()+" (uiShowInvisible:"+uiShowInvisible+")");
 	}
 	
-	
-
 	private void reloadActions()
 	{
 		for(V v : role.getViews())
@@ -190,6 +188,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			opView = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	public void opAddAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -200,6 +199,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			opAction = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	public void opAddUsecase() throws UtilsConstraintViolationException, UtilsLockingException
@@ -210,6 +210,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			opUsecase = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	
@@ -222,6 +223,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			tblView = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	public void opRmAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -232,6 +234,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			tblAction = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	public void opRmUsecase() throws UtilsConstraintViolationException, UtilsLockingException
@@ -242,9 +245,9 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 			role = fSecurity.save(role);
 			tblUsecase = null;
 			selectRole();
+			bSecurity.update(role);
 		}
 	}
 	
-	//Order
 	public void reorderRoles() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, roles);}
 }

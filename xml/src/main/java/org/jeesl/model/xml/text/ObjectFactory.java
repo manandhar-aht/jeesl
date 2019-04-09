@@ -38,6 +38,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Markups }
+     * 
+     */
+    public Markups createMarkups() {
+        return new Markups();
+    }
+
+    /**
+     * Create an instance of {@link Markup }
+     * 
+     */
+    public Markup createMarkup() {
+        return new Markup();
+    }
+
+    /**
      * Create an instance of {@link Remarks }
      * 
      */

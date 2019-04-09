@@ -182,6 +182,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	public void deleteView() throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(view));
+		
 		fSecurity.rm(view);
 		reset(true,true);
 		reloadViews();

@@ -2,6 +2,22 @@
 <xsd:schema targetNamespace="http://www.jeesl.org/text"
 	xmlns:text="http://www.jeesl.org/text"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="markups">
+	    <xsd:complexType>
+            <xsd:sequence>
+	            <xsd:element ref="text:markup" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>    
+    </xsd:element>
+	<xsd:element name="markup">
+	    <xsd:complexType>
+            <xsd:sequence>
+	            <xsd:element ref="text:description" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:long"/>
+		</xsd:complexType>    
+    </xsd:element>
+	
 	<xsd:element name="remarks">
 		<xsd:complexType>
 			<xsd:sequence>

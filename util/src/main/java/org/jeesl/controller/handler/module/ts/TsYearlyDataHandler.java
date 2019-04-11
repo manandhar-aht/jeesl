@@ -64,45 +64,50 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 //	private JeeslComparatorProvider<T> jcpA; public void setComparatorProviderA(JeeslComparatorProvider<A> jcpA) {this.jcpA = jcpA;}
 	
 	private final Map<Integer,JsonYear> mapYears;
-	private final Nested2Map<DOMAIN,JsonYear,JsonIdValue> nestedMap; public Nested2Map<DOMAIN,JsonYear,JsonIdValue> getNestedMap() {return nestedMap;}
-	private final List<DOMAIN> domains; public List<DOMAIN> getDomains() {return domains;}
+	private final Nested2Map<EjbWithId,JsonYear,JsonIdValue> nestedMap; public Nested2Map<EjbWithId,JsonYear,JsonIdValue> getNestedMap() {return nestedMap;}
+	private final List<EjbWithId> domains; public List<EjbWithId> getDomains() {return domains;}
 	private final List<JsonYear> years; public List<JsonYear> getYears() {return years;}
 	
-	protected final Class<DOMAIN> cDomain;
 	private EC entityClass; public EC getEntityClass() {return entityClass;}
 	private SCOPE scope; public SCOPE getScope() {return scope;}
 	private INT interval;
 	private WS workspace;
 	
-	public TsYearlyDataHandler(Class<DOMAIN> cDomain,
-			JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs,
+	public TsYearlyDataHandler(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs,
 			TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs)
 	{
-		this.cDomain=cDomain;
 		this.fTs=fTs;
 		this.fbTs=fbTs;
 		
-		nestedMap = new Nested2Map<DOMAIN,JsonYear,JsonIdValue>();
+		nestedMap = new Nested2Map<EjbWithId,JsonYear,JsonIdValue>();
 		mapYears = new HashMap<Integer,JsonYear>();
-		domains = new ArrayList<DOMAIN>();
+		domains = new ArrayList<EjbWithId>();
 		years = new ArrayList<JsonYear>();
 
 	}
 	
-	public <E1 extends Enum<E1>, E2 extends Enum<E2>, E3 extends Enum<E3>> void init(E1 scope, E2 interval, E3 workspace)
+	public <E1 extends Enum<E1>, E2 extends Enum<E2>, E3 extends Enum<E3>> void init(Class<DOMAIN> cDomain, E1 scope, E2 interval, E3 workspace)
 	{
 		try
 		{
 			entityClass = fTs.fByCode(fbTs.getClassEntity(), cDomain.getName());
+			init(entityClass,scope,interval,workspace);
+		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		
+	}
+	
+	public <E1 extends Enum<E1>, E2 extends Enum<E2>, E3 extends Enum<E3>> void init(EC entityClass, E1 scope, E2 interval, E3 workspace)
+	{
+		this.entityClass=entityClass;
+		try
+		{
 			this.scope = fTs.fByCode(fbTs.getClassScope(), scope);
 			this.interval = fTs.fByCode(fbTs.getClassInterval(), interval);
 			this.workspace = fTs.fByCode(fbTs.getClassWorkspace(), workspace);
 			
 		}
-		catch (UtilsNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
 	public void clear()
@@ -130,8 +135,25 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 			catch (UtilsNotFoundException e) {logger.warn(e.getMessage());}
 		}
 	}
+	public <E1 extends Enum<E1>, E2 extends Enum<E2>> void reloadId(List<EjbWithId> domains, Date start, Date end)
+	{
+		clear();
+		this.domains.addAll(domains);
+		
+		for(EjbWithId t : domains)
+		{
+			try
+			{
+				BRIDGE bridge = fTs.fBridge(fbTs.getClassBridge(), entityClass, t);
+				TS ts = fTs.fTimeSeries(scope,interval,bridge);
+				List<DATA> datas = fTs.fData(workspace,ts,start,end);
+				process(t,datas);
+			}
+			catch (UtilsNotFoundException e) {logger.warn(e.getMessage());}
+		}
+	}
 	
-	private void process(DOMAIN domain, List<DATA> datas)
+	private void process(EjbWithId domain, List<DATA> datas)
 	{
 		for(DATA d : datas)
 		{

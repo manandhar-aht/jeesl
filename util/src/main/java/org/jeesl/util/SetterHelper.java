@@ -98,16 +98,30 @@ public class SetterHelper {
 				}
 			}
 
-			// This is important if the String is a Number, Excel will format the cell to be a "general number"
+			// This is important if the Boolean is a Number or String
 			else if (parameterClass.equals("java.lang.Boolean") || parameterClass.equals("boolean"))
 			{
-				Number number = (Number) parameter;
-				Boolean b     = true;
-				if (number.intValue() == 0)
+				if (parameter.getClass().equals(String.class))
 				{
-					b = false;
+					String value = (String) parameter;
+					if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("1") || value.equalsIgnoreCase("1"))
+					{
+						correctParameter = true;
+					}
+					else
+					{
+						correctParameter = false;
+					}
 				}
-				correctParameter = b;
+				if (parameter.getClass().equals(Number.class))
+				{
+					Number number = (Number) parameter;
+					Boolean b     = true;
+					if (number.intValue() == 0)
+					{
+						correctParameter = false;
+					}
+				}
 			}
 		return correctParameter;
 	}

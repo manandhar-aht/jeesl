@@ -80,16 +80,13 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 			predicates.add(jLink.in(links));
 		}
 		
-		if(a!=null)
-		{
-			Path<Long> pA = data.get(JeeslIoSsiData.Attributes.refA.toString());
-			predicates.add(cB.equal(pA,a.getId()));
-		}
-		if(b!=null)
-		{
-			Path<Long> pB = data.get(JeeslIoSsiData.Attributes.refB.toString());
-			predicates.add(cB.equal(pB,b.getId()));
-		}
+		Path<Long> pA = data.get(JeeslIoSsiData.Attributes.refA.toString());
+		if(a==null) {predicates.add(cB.isNull(pA));}
+		else {predicates.add(cB.equal(pA,a.getId()));}
+		
+		Path<Long> pB = data.get(JeeslIoSsiData.Attributes.refB.toString());
+		if(b==null) {predicates.add(cB.isNull(pB));}
+		else {predicates.add(cB.equal(pB,b.getId()));}
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(data);
@@ -161,20 +158,35 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 		Join<DATA,MAPPING> jMapping = data.join(JeeslIoSsiData.Attributes.mapping.toString());
 		predicates.add(jMapping.in(mapping));
 		
-		if(a!=null)
-		{
-			Path<Long> pA = data.get(JeeslIoSsiData.Attributes.refA.toString());
-			predicates.add(cB.equal(pA,a.getId()));
-		}
-		if(b!=null)
-		{
-			Path<Long> pB = data.get(JeeslIoSsiData.Attributes.refB.toString());
-			predicates.add(cB.equal(pB,b.getId()));
-		}
+		Path<Long> pA = data.get(JeeslIoSsiData.Attributes.refA.toString());
+		if(a==null) {predicates.add(cB.isNull(pA));}
+		else {predicates.add(cB.equal(pA,a.getId()));}
+		
+		Path<Long> pB = data.get(JeeslIoSsiData.Attributes.refB.toString());
+		if(b==null) {predicates.add(cB.isNull(pB));}
+		else {predicates.add(cB.equal(pB,b.getId()));}
 		
 		cQ.groupBy(pLink.get("id"));
 		cQ.multiselect(pLink.get("id"),cCount);
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+	       
+		TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        return jtf.buildCount(tQ.getResultList());
+	}
+	
+	@Override
+	public Json1Tuples<MAPPING> tpMapping()
+	{
+		Json1TuplesFactory<MAPPING> jtf = new Json1TuplesFactory<MAPPING>(this,fbSsi.getClassMapping());
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+		Root<DATA> item = cQ.from(fbSsi.getClassData());
+		
+		Expression<Long> eCount = cB.count(item.<Long>get("id"));
+		Join<DATA,MAPPING> jData = item.join(JeeslIoSsiData.Attributes.mapping.toString());
+		
+		cQ.groupBy(jData.get("id"));
+		cQ.multiselect(jData.get("id"),eCount);
 	       
 		TypedQuery<Tuple> tQ = em.createQuery(cQ);
         return jtf.buildCount(tQ.getResultList());

@@ -39,6 +39,11 @@
 						<f:facet name="header"><h:outputText value="#{msg.jeeslIoSsiMappingClass}"/></f:facet>
 						<h:outputText value="#{m.entity.name[localeCode].lang}"/>
 					</p:column>
+					<p:column styleClass="jeeslRight">
+				    	<h:outputText value="#{cc.attrs.bean.th.mapA[m].count}">
+				    		<f:convertNumber type="number"  />
+				    	</h:outputText>  
+				    </p:column>
 				</p:dataTable>
 			</h:form>
 		</j:slot>

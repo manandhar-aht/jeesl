@@ -181,10 +181,10 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	Integer end   = activeSheet.getLastRowNum();
 	Integer start = activeSheet.getFirstRowNum();
 
-	logger.info("Sheet goes from " +start +" to " +end);
+	if (logger.isDebugEnabled()){logger.debug("Sheet goes from " +start +" to " +end);}
 	if (skipTitle) {start++;}
 	if (startRow!=null) {start = startRow;}
-	logger.info("Starting at " +start);
+	if (logger.isDebugEnabled()){logger.debug("Starting at " +start);}
 	// Iterate through all given rows
 	for (int i = start; i < end+1; i++)
 	{

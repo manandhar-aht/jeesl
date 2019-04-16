@@ -115,8 +115,8 @@
 						    </p:panel>
 						    <br/>
 						    <p:panel rendered="#{not empty cc.attrs.bean.scopes}">
-						     <ui:repeat value="#{cc.attrs.bean.scopes}" var="tsScope">
-							<p:dataTable var="d" value="#{cc.attrs.bean.timeSeriesMap[tsScope].keySet()}" rendered="#{not empty cc.attrs.bean.timeSeriesMap[tsScope]}"
+						     <ui:repeat rendered="false" value="#{cc.attrs.bean.scopes}" var="tsScope">
+							<p:dataTable  var="d" value="#{cc.attrs.bean.timeSeriesMap[tsScope].keySet()}" rendered="#{not empty cc.attrs.bean.timeSeriesMap[tsScope]}"
 									rows="5"
 									paginator="true"
 									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -144,9 +144,31 @@
 							    </p:column>
 							</p:dataTable>
 						    </ui:repeat>
+							<p:dataTable  var="dataForFirstScope" value="#{cc.attrs.bean.timeSeriesMap[cc.attrs.bean.scopes[0]].keySet()}" 
+									scrollable="true" scrollWidth="800"  frozenColumns="2"
+									rowIndexVar="rowNr">
+							    <f:facet name="header">
+								    <aht:pfDataTableHeader title="#{msg.aupTsTimeSerie} #{dataForFirstScope.code}"/>
+							    </f:facet>
+								<p:column width="90" rendered="true" headerText="#{msg.station}">  
+									<h:outputText value="#{cc.attrs.bean.getBridgeName(dataForFirstScope)}">
+									<f:convertDateTime type="both" pattern="dd.MM.yy HH:mm" dateStyle="short" timeStyle="medium" />
+									</h:outputText>
+							    </p:column>
+								<p:column width="150" rendered="true" headerText="#{msg.aupDate}">  
+									<h:outputText value="#{dataForFirstScope.record}">
+									<f:convertDateTime type="both" pattern="dd.MM.yy HH:mm" dateStyle="short" timeStyle="medium" />
+									</h:outputText>
+							    </p:column>
+								<c:forEach items="#{cc.attrs.bean.timeSeriesMap.keySet()}" varStatus="status" var="tsScope">
+									<p:column width="30"  headerText="#{tsScope.code}" >
+										<h:outputText value="#{cc.attrs.bean.timeSeriesMap[tsScope].keySet().toArray()[rowNr].value}" />
+									</p:column>
+								</c:forEach>
+							</p:dataTable>
 						    </p:panel>
 						</p:tab>
-						<p:tab id="wImport" title="Save Data">
+						<p:tab id="wImport" title="Save Data" >
 						    <p:panel id="pImport" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
 							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
 								<p:outputLabel value="#{msg.aupTsWorkspace}"/>
@@ -163,19 +185,49 @@
 								
 								<h:outputText value=""/>
 								<p:commandButton value="Save" type="button">
-									<p:ajax event="click" update="@form" listener="#{cc.attrs.bean.importDataList()}" process="@form"/>
+									<p:ajax event="click" update="@all" listener="#{cc.attrs.bean.importDataList()}" process="@form" oncomplete="window.location.href = '#{request.contextPath}/admin/system/ts/transaction';"/>
 								</p:commandButton>
 							</p:panelGrid>
 						    </p:panel>
 						</p:tab>
 					    </p:wizard>
-					    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+						<p:ajaxStatus onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide()" />
 					    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-							<!--
-							<p:progressBar widgetVar="pbAjax" ajax="true" value="#{cc.attrs.bean.progress}" labelTemplate="{value}%" styleClass="animated" global="false">
-								<p:ajax event="complete" listener="#{progressBarView.onComplete}" update="@this" oncomplete="startButton2.enable()"/>
-							</p:progressBar>
-							-->
+							<h:outputScript>
+								console.log('Progress Bar triggered');
+							</h:outputScript>
+							<p:outputPanel autoUpdate="true">
+								<h:outputText rendered="false" value="#{cc.attrs.bean.processing}"/>
+								<h:outputScript value="#{cc.attrs.bean.processing}">
+									console.log('Progress Bar triggered');
+									try {
+									if (PF) {
+										if (PF('pbAjax'))
+										{
+											PF('pbAjax').start();
+										}
+									}
+									}
+									catch (e)
+									{console.log('Cant deal with PrimeFaces PF here');}
+								</h:outputScript>
+								<h:outputScript value="#{not cc.attrs.bean.processing}">
+									console.log('Progress Bar stopping triggered');
+									try {
+									if (PF) {
+										if (PF('pbAjax'))
+										{
+											PF('pbAjax').stop();
+										}
+									}
+									}
+									catch (e)
+									{console.log('Cant deal with PrimeFaces PF here');}
+								</h:outputScript>
+								<p:progressBar rendered="false" widgetVar="pbAjax" ajax="true" value="#{cc.attrs.bean.progress}" labelTemplate="{value}%" styleClass="animated" global="false">
+								</p:progressBar>	
+							</p:outputPanel>
+							<br/>
 							<h:graphicImage library="aupGfx" name="jeesl_ajax_spinner.svg" />
 					    </p:dialog>
 					</h:form>

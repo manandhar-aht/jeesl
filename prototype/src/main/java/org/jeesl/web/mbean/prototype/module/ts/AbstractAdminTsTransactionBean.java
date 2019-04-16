@@ -1,6 +1,10 @@
 package org.jeesl.web.mbean.prototype.module.ts;
 
+import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +64,6 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 	private Map<EC,Map<Long,EjbWithId>> map; public Map<EC, Map<Long, EjbWithId>> getMap() {return map;}
 	private List<TRANSACTION> transactions; public List<TRANSACTION> getTransactions() {return transactions;}
 	private List<DATA> datas; public List<DATA> getDatas() {return datas;}
-	
 	
 	private TRANSACTION transaction; public TRANSACTION getTransaction() {return transaction;} public void setTransaction(TRANSACTION transaction) {this.transaction = transaction;}
 
@@ -128,4 +131,23 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 			reloadTransactions();
 		}
 	}
+	
+	
+	public void purgeAllTransactions() throws UtilsConstraintViolationException
+	{
+		// This is strictly only to be used in DEVELOPMENT ENVIRONMENTS!!!!
+		Path token =  Paths.get(System.getProperty("user.home") +File.separator +"devModeActivator.token");
+		if(Files.exists(token))
+		{
+			logger.info("In DEV MODE - PURGING ALL TRANSACTIONs");
+			for (TRANSACTION transactionToDelete : fTs.fTransactions(null,null,null))
+			{
+				logger.info(AbstractLogMessage.rmEntity(transactionToDelete));
+				fTs.deleteTransaction(transactionToDelete);
+			}
+		}
+		transaction = null;
+		reloadTransactions();
+	}
+	
 }

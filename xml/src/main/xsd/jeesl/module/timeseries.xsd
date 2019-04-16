@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.jeesl.org/timeseries"
+    xmlns:ts="http://www.jeesl.org/timeseries"
+    xmlns:sec="http://ahtutils.aht-group.com/security"
+    xmlns:jt="http://www.jeesl.org/text"
+    xmlns:js="http://ahtutils.aht-group.com/status"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://ahtutils.aht-group.com/security" schemaLocation="../../aht/security.xsd"/>
+	<xsd:import namespace="http://ahtutils.aht-group.com/status"   schemaLocation="../../aht/status.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/text" schemaLocation="../text.xsd"/>
+	<xsd:element name="ts">
+        <xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element ref="ts:transaction" maxOccurs="unbounded"/>
+				<xsd:element ref="ts:data" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="timeSeries">
+        <xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element ref="ts:entity" maxOccurs="1"/>
+				<xsd:element ref="ts:data" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="data">
+        <xsd:complexType>
+        	<xsd:sequence>
+
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="record" type="xsd:dateTime"/>
+            <xsd:attribute name="value" type="xsd:double"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="entity">
+        <xsd:complexType>
+        	<xsd:sequence>
+
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="code" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="transaction">
+        <xsd:complexType>
+        	<xsd:sequence>
+				<xsd:element ref="sec:user" maxOccurs="1"/>
+				<xsd:element ref="js:source" maxOccurs="1"/>
+				<xsd:element ref="jt:reference" maxOccurs="1"/>
+				<xsd:element ref="jt:remark" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:long"/>
+            <xsd:attribute name="record" type="xsd:dateTime"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

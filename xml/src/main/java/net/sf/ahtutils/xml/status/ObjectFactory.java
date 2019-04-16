@@ -198,6 +198,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Source }
+     * 
+     */
+    public Source createSource() {
+        return new Source();
+    }
+
+    /**
      * Create an instance of {@link Unit }
      * 
      */
@@ -419,14 +427,6 @@ public class ObjectFactory {
      */
     public Origin createOrigin() {
         return new Origin();
-    }
-
-    /**
-     * Create an instance of {@link Source }
-     * 
-     */
-    public Source createSource() {
-        return new Source();
     }
 
     /**

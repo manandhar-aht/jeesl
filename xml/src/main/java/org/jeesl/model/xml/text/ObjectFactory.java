@@ -30,6 +30,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Reference }
+     * 
+     */
+    public Reference createReference() {
+        return new Reference();
+    }
+
+    /**
+     * Create an instance of {@link Remark }
+     * 
+     */
+    public Remark createRemark() {
+        return new Remark();
+    }
+
+    /**
      * Create an instance of {@link Description }
      * 
      */
@@ -59,14 +75,6 @@ public class ObjectFactory {
      */
     public Remarks createRemarks() {
         return new Remarks();
-    }
-
-    /**
-     * Create an instance of {@link Remark }
-     * 
-     */
-    public Remark createRemark() {
-        return new Remark();
     }
 
     /**

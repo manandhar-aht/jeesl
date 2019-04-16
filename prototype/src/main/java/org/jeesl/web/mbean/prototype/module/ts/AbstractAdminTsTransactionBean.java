@@ -104,6 +104,7 @@ public class AbstractAdminTsTransactionBean <L extends UtilsLang, D extends Util
 		{
 			try
 			{
+				@SuppressWarnings("unchecked")
 				Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(ec.getCode()).asSubclass(EjbWithId.class);
 				Map<Long,EjbWithId> m = new HashMap<Long,EjbWithId>();
 				List<EjbWithId> list = fTs.find(c, x.get(ec));

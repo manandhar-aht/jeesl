@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 import net.sf.ahtutils.xml.status.Category;
 import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
-import org.jeesl.model.xml.module.ts.TimeSeries;
+import org.jeesl.model.xml.module.ts.Ts;
 
 
 /**
@@ -37,7 +37,7 @@ import org.jeesl.model.xml.module.ts.TimeSeries;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}descriptions"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/status}category"/&gt;
  *         &lt;element ref="{http://ahtutils.aht-group.com/report}xlsWorkbook"/&gt;
- *         &lt;element ref="{http://www.jeesl.org/timeseries}timeSeries" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{http://www.jeesl.org/timeseries}ts"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
@@ -63,7 +63,7 @@ import org.jeesl.model.xml.module.ts.TimeSeries;
     "descriptions",
     "category",
     "xlsWorkbook",
-    "timeSeries"
+    "ts"
 })
 @XmlRootElement(name = "report")
 public class Report
@@ -84,7 +84,7 @@ public class Report
     @XmlElement(required = true)
     protected XlsWorkbook xlsWorkbook;
     @XmlElement(namespace = "http://www.jeesl.org/timeseries", required = true)
-    protected List<TimeSeries> timeSeries;
+    protected Ts ts;
     @XmlAttribute(name = "id")
     protected String id;
     @XmlAttribute(name = "code")
@@ -282,40 +282,31 @@ public class Report
     }
 
     /**
-     * Gets the value of the timeSeries property.
+     * Gets the value of the ts property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the timeSeries property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTimeSeries().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TimeSeries }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Ts }
+     *     
      */
-    public List<TimeSeries> getTimeSeries() {
-        if (timeSeries == null) {
-            timeSeries = new ArrayList<TimeSeries>();
-        }
-        return this.timeSeries;
+    public Ts getTs() {
+        return ts;
     }
 
-    public boolean isSetTimeSeries() {
-        return ((this.timeSeries!= null)&&(!this.timeSeries.isEmpty()));
+    /**
+     * Sets the value of the ts property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Ts }
+     *     
+     */
+    public void setTs(Ts value) {
+        this.ts = value;
     }
 
-    public void unsetTimeSeries() {
-        this.timeSeries = null;
+    public boolean isSetTs() {
+        return (this.ts!= null);
     }
 
     /**

@@ -30,6 +30,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Ts }
+     * 
+     */
+    public Ts createTs() {
+        return new Ts();
+    }
+
+    /**
+     * Create an instance of {@link Transaction }
+     * 
+     */
+    public Transaction createTransaction() {
+        return new Transaction();
+    }
+
+    /**
+     * Create an instance of {@link Data }
+     * 
+     */
+    public Data createData() {
+        return new Data();
+    }
+
+    /**
      * Create an instance of {@link TimeSeries }
      * 
      */
@@ -43,14 +67,6 @@ public class ObjectFactory {
      */
     public Entity createEntity() {
         return new Entity();
-    }
-
-    /**
-     * Create an instance of {@link Data }
-     * 
-     */
-    public Data createData() {
-        return new Data();
     }
 
 }

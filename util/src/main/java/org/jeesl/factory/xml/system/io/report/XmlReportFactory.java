@@ -3,7 +3,6 @@ package org.jeesl.factory.xml.system.io.report;
 import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
 import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
-import org.jeesl.factory.xml.system.status.XmlImplementationFactory;
 import org.jeesl.interfaces.model.system.io.report.JeeslIoReport;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportCell;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportColumn;
@@ -14,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportStyle;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportTemplate;
 import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.jeesl.model.xml.module.ts.Ts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,8 +86,11 @@ public class XmlReportFactory <L extends UtilsLang,D extends UtilsDescription,
 		return xml;
 	}
 	
-	public static Report build()
+	public static Report build(){return new Report();}
+	public static Report build(Ts ts)
 	{
-		return new Report();
+		Report xml = build();
+		xml.setTs(ts);
+		return xml;
 	}
 }

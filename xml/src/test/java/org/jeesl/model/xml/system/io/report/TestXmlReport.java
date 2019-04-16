@@ -41,7 +41,7 @@ public class TestXmlReport extends AbstractXmlReportTest<Report>
     		xml.setCategory(TestXmlCategory.create(false));
     		xml.setXlsWorkbook(TestXmlXlsWorkbook.create(false));
     		
-    		xml.getTimeSeries().add(TestXmlTimeSeries.create(false));xml.getTimeSeries().add(TestXmlTimeSeries.create(false));
+//    		xml.getTimeSeries().add(TestXmlTimeSeries.create(false));xml.getTimeSeries().add(TestXmlTimeSeries.create(false));
     	}
     	
     	return xml;

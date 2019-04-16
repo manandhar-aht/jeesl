@@ -113,7 +113,7 @@ public class TimeSeriesReport <L extends UtilsLang,D extends UtilsDescription,
 			xTs.getData().add(XmlDataFactory.build(data.getRecord(),data.getValue()));
 		}
 		
-		xml.getTimeSeries().add(xTs);
+//		xml.getTimeSeries().add(xTs);
 		
 		return xml;
 	}

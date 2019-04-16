@@ -112,6 +112,13 @@
     		<s:lang key="fr" translation="Timeseries Data"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslTsDate">
+    	<s:langs>
+    		<s:lang key="de" translation="Datum"/>
+    		<s:lang key="en" translation="Date"/>
+    		<s:lang key="fr" translation="Date"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslTsDateTime">
     	<s:langs>
     		<s:lang key="de" translation="Datum/Uhrzeit"/>

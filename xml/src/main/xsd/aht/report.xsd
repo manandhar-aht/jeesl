@@ -9,7 +9,7 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:import namespace="http://ahtutils.aht-group.com/status" schemaLocation="status.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/symbol" schemaLocation="../jeesl/symbol.xsd"/>
-	<xsd:import namespace="http://www.jeesl.org/timeseries" schemaLocation="../jeesl/timeseries.xsd"/>
+	<xsd:import namespace="http://www.jeesl.org/timeseries" schemaLocation="../jeesl/module/timeseries.xsd"/>
 	<xsd:import namespace="http://www.jeesl.org/text" schemaLocation="../jeesl/text.xsd"/>
 	<xsd:element name="reports">
 	    <xsd:complexType>
@@ -35,7 +35,7 @@
 				<xsd:element ref="us:category" maxOccurs="1"/>
 <!-- 				<xsd:element ref="jt:example" maxOccurs="1"/> -->
 				<xsd:element ref="r:xlsWorkbook" maxOccurs="1"/>
-				<xsd:element ref="ts:timeSeries" maxOccurs="unbounded"/>
+				<xsd:element ref="ts:ts" maxOccurs="1"/>
 			</xsd:sequence>
 			<xsd:attribute name="id" type="xsd:string"/>
 			<xsd:attribute name="code" type="xsd:string"/>

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.factory.xml.status;
+package org.jeesl.factory.xml.system.status;
 
 import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
 import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Source;
 
-public class XmlSourceFactory
+public class XmlSourceFactory<L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlSourceFactory.class);
 		
@@ -23,8 +23,8 @@ public class XmlSourceFactory
 		this.q=q;
 	}
 	
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Source build(S ejb){return build(ejb,null);}
-	public <S extends UtilsStatus<S,L,D>,L extends UtilsLang, D extends UtilsDescription> Source build(S ejb, String group)
+	public Source build(S ejb){return build(ejb,null);}
+	public Source build(S ejb, String group)
 	{
 		Source xml = new Source();
 		if(q.isSetId()){xml.setId(ejb.getId());}

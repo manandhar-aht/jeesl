@@ -62,6 +62,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link QueryTs }
+     * 
+     */
+    public QueryTs createQueryTs() {
+        return new QueryTs();
+    }
+
+    /**
      * Create an instance of {@link QuerySecurity }
      * 
      */

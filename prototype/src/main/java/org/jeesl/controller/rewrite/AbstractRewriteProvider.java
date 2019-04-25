@@ -51,7 +51,7 @@ public abstract class AbstractRewriteProvider <L extends UtilsLang, D extends Ut
 	protected String forwardLogin;
 	protected String forwardDenied;
 	
-	public AbstractRewriteProvider(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+	public AbstractRewriteProvider(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity)
 	{
 		debugOnInfo = false;
 		forwardDeactivated = "/jsf/settings/system/security/access/pageDeactivated.xhtml";

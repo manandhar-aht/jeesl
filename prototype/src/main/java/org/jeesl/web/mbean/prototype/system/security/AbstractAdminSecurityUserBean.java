@@ -50,7 +50,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 
 	protected JeeslUserFacade<USER> fUtilsUser;
 	protected JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fUtilsSecurity;
-	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity;
 	
 	protected List<USER> users;public List<USER> getUsers() {return users;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
@@ -66,7 +66,7 @@ public abstract class AbstractAdminSecurityUserBean <L extends UtilsLang,
 	
 	protected UtilsRevisionPageFlow<USER,USER> revision; public UtilsRevisionPageFlow<USER, USER> getRevision() {return revision;}
 	
-	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+	public AbstractAdminSecurityUserBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity)
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;

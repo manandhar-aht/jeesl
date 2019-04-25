@@ -14,6 +14,7 @@ import org.jeesl.factory.json.system.security.JsonPageFactory;
 import org.jeesl.factory.json.system.security.JsonPagesFactory;
 import org.jeesl.factory.txt.system.security.TxtStaffFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -37,6 +38,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 									AT extends JeeslSecurityTemplate<L,D,C>,
 									M extends JeeslSecurityMenu<V,M>,
+									AR extends JeeslSecurityArea<L,D,V>,
 									USER extends JeeslUser<R>
 //,I extends JeeslIdentity<R,V,U,A,USER>
 >
@@ -123,8 +125,8 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		return new JsonPageFactory<L,D,C,V,M>();
 	}
 	
-	public JsonPagesFactory<L,D,C,R,V,U,A,AT,M,USER> jsonPages()
+	public JsonPagesFactory<L,D,C,R,V,U,A,AT,M,AR,USER> jsonPages()
 	{
-		return new JsonPagesFactory<L,D,C,R,V,U,A,AT,M,USER>(this);
+		return new JsonPagesFactory<L,D,C,R,V,U,A,AT,M,AR,USER>(this);
 	}
 }

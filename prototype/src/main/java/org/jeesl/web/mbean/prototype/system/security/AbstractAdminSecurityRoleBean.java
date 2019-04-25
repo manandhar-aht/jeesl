@@ -58,7 +58,7 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	
 	private boolean denyRemove; public boolean isDenyRemove(){return denyRemove;}
 	
-	public AbstractAdminSecurityRoleBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+	public AbstractAdminSecurityRoleBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,AR,USER> fbSecurity)
 	{
 		super(fbSecurity);
 	}

@@ -32,7 +32,7 @@ public abstract class AbstractSystemPageBean <L extends UtilsLang, D extends Uti
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSystemPageBean.class);
 	
-	private final SecurityFactoryBuilder<L,D,?,?,V,?,?,?,M,?> fbSecurity;
+	private final SecurityFactoryBuilder<L,D,?,?,V,?,?,?,M,?,?> fbSecurity;
 	private final EjbSecurityMenuFactory<V,M> efMenu;
 	
 	private JeeslSecurityFacade<L,D,?,?,V,?,?,?,M,?> fSecurity;
@@ -41,7 +41,7 @@ public abstract class AbstractSystemPageBean <L extends UtilsLang, D extends Uti
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private M menu; public M getMenu() {return menu;}
 	
-	public AbstractSystemPageBean(SecurityFactoryBuilder<L,D,?,?,V,?,?,?,M,?> fbSecurity)
+	public AbstractSystemPageBean(SecurityFactoryBuilder<L,D,?,?,V,?,?,?,M,?,?> fbSecurity)
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;

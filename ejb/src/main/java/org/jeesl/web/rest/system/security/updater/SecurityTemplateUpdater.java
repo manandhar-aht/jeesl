@@ -9,6 +9,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
@@ -34,15 +35,16 @@ public class SecurityTemplateUpdater <L extends UtilsLang,
  								A extends JeeslSecurityAction<L,D,R,V,U,AT>,
  								AT extends JeeslSecurityTemplate<L,D,C>,
  								M extends JeeslSecurityMenu<V,M>,
+ 								AR extends JeeslSecurityArea<L,D,V>,
  								USER extends JeeslUser<R>>
-		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,USER>
+		extends AbstractSecurityUpdater<L,D,C,R,V,U,A,AT,M,AR,USER>
 		implements JeeslSecurityRestTemplateImport
 {
 	final static Logger logger = LoggerFactory.getLogger(SecurityTemplateUpdater.class);
 	
 	private JeeslDbCodeEjbUpdater<R> updateRole;
 	
-	public SecurityTemplateUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
+	public SecurityTemplateUpdater(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,AR,USER> fbSecurity,JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{       
         super(fbSecurity,fSecurity);
 	}

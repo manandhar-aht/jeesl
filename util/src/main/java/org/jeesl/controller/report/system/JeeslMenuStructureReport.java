@@ -43,14 +43,14 @@ public class JeeslMenuStructureReport <L extends UtilsLang,
 	final static Logger logger = LoggerFactory.getLogger(JeeslMenuStructureReport.class);
 
 	private final JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
-	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity;
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity;
 	
 	private final String localeCode;
 	
 //	private org.jeesl.factory.xml.system.security.XmlViewFactory<L,D,C,R,V,U,A,AT,USER> xfView;
 	private Comparator<V> comparatorView;
 	
-	public JeeslMenuStructureReport(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,USER> fbSecurity)
+	public JeeslMenuStructureReport(String localeCode, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity, SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity)
 	{
 		this.localeCode=localeCode;
 		this.fSecurity=fSecurity;

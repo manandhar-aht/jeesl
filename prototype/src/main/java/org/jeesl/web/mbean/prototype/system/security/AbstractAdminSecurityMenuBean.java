@@ -59,7 +59,7 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 	private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 	private M menu; public M getMenu() {return menu;}
 	
-	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,USER> fbSecurity)
+	public AbstractAdminSecurityMenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,AR,USER> fbSecurity)
 	{
 		super(fbSecurity);
 		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());

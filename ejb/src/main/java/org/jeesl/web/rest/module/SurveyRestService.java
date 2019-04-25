@@ -475,6 +475,7 @@ public class SurveyRestService <L extends UtilsLang, D extends UtilsDescription,
 		for(ANSWER a : answers)
 		{
 			if(map.containsKey(a)) {a.setMatrix(map.get(a));}
+			else {a.setMatrix(new ArrayList<MATRIX>());}
 			result.getAnswers().add(jfAnswer.build(a));
 		}
 

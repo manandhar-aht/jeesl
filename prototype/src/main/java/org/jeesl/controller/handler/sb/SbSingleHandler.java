@@ -126,7 +126,6 @@ public class SbSingleHandler <T extends EjbWithId> implements Serializable,SbSin
 		}
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public <E extends Enum<E>, S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription> void add(UtilsFacade fUtils, Class<S> c, E code)
 	{

@@ -25,6 +25,8 @@ public interface JeeslSecurityAction<L extends UtilsLang, D extends UtilsDescrip
 					EjbWithPositionVisible,EjbWithParentAttributeResolver,
 					EjbWithLang<L>,EjbWithDescription<D>
 {	
+	public enum Attributes{view}
+	
 	public String toCode();
 	public Map<String,L> toName();
 	

@@ -105,7 +105,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 	}
 	
 	//Security Handling
-	protected boolean uiAllowAdd;public boolean isUiAllowAdd() {return uiAllowAdd;}
+	protected boolean uiAllowAdd; public boolean isUiAllowAdd() {return uiAllowAdd;}
 	protected boolean uiAllowSave; public boolean getUiAllowSave() {return uiAllowSave;}
 	protected boolean uiAllowRemove; public boolean isUiAllowRemove() {return uiAllowRemove;}
 	protected boolean uiAllowReorder; public boolean getUiAllowReorder() {return uiAllowReorder;}

@@ -2,9 +2,9 @@ package org.jeesl.factory.ejb.module.ts;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
-import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
-import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

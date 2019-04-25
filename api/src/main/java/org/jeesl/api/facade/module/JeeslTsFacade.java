@@ -3,15 +3,15 @@ package org.jeesl.api.facade.module;
 import java.util.Date;
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
-import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
-import org.jeesl.interfaces.model.module.ts.JeeslTsData;
-import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
-import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
-import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
-import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
-import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
-import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsBridge;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsSample;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.jeesl.model.json.db.tuple.t1.Json1Tuples;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;

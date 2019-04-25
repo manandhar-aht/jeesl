@@ -35,6 +35,13 @@
             <s:lang key="fr" translation="Station"/>
         </s:langs>
     </s:translation>
+    <s:translation key="jeeslTsDimension">
+    	<s:langs>
+    		<s:lang key="de" translation="Dimension"/>
+    		<s:lang key="en" translation="Dimension"/>
+    		<s:lang key="fr" translation="Dimension"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="jeeslTsUnit">
     	<s:langs>
     		<s:lang key="de" translation="Einheit"/>

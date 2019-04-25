@@ -11,6 +11,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -44,8 +45,9 @@ public abstract class AbstractAdminSecurityMenuBean <L extends UtilsLang, D exte
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C>,
 											M extends JeeslSecurityMenu<V,M>,
+											AR extends JeeslSecurityArea<L,D,V>,
 											USER extends JeeslUser<R>>
-		extends AbstractAdminSecurityBean<L,D,LOC,C,R,V,U,A,AT,M,USER>
+		extends AbstractAdminSecurityBean<L,D,LOC,C,R,V,U,A,AT,M,AR,USER>
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;

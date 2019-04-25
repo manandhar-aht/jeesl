@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
@@ -36,8 +37,9 @@ public class AbstractAdminSecurityActionBean <L extends UtilsLang, D extends Uti
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C>,
 											M extends JeeslSecurityMenu<V,M>,
+											AR extends JeeslSecurityArea<L,D,V>,
 											USER extends JeeslUser<R>>
-		extends AbstractAdminSecurityBean<L,D,LOC,C,R,V,U,A,AT,M,USER>
+		extends AbstractAdminSecurityBean<L,D,LOC,C,R,V,U,A,AT,M,AR,USER>
 		implements Serializable
 {
 	private static final long serialVersionUID = 1L;

@@ -15,18 +15,19 @@ import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityUsecaseFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityViewFactory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityUsecaseComparator;
 import org.jeesl.util.comparator.ejb.system.security.SecurityViewComparator;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityMenu;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang, D extends UtilsDesc
 											A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 											AT extends JeeslSecurityTemplate<L,D,C>,
 											M extends JeeslSecurityMenu<V,M>,
+											AR extends JeeslSecurityArea<L,D,V>,
 											USER extends JeeslUser<R>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable

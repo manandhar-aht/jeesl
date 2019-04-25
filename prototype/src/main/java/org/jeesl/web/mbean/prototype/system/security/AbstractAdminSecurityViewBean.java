@@ -51,11 +51,13 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 
 	private List<V> views; public List<V> getViews(){return views;}
 	private List<A> actions; public List<A> getActions(){return actions;}
+	private List<AR> areas; public List<AR> getAreas(){return areas;}
 	private List<R> roles; public List<R> getRoles(){return roles;}
 	private List<U> usecases; public List<U> getUsecases(){return usecases;}
 	
-	private V view;public V getView(){return view;}public void setView(V view) {this.view = view;}
-	private A action;public A getAction(){return action;}public void setAction(A action) {this.action = action;}
+	private V view; public V getView(){return view;} public void setView(V view) {this.view = view;}
+	private A action; public A getAction(){return action;} public void setAction(A action) {this.action = action;}
+	private AR area; public AR getArea(){return area;} public void setAction(AR area) {this.area = area;}
 	
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
 	private final TriStateBinder tsb; public TriStateBinder getTsb() {return tsb;}

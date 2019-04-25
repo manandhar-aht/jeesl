@@ -25,8 +25,8 @@
 			<aht:row>
 				<aht:slot id="sCategories" width="5">
 					<h:form id="fCategories">
-						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="auPanelWithGrid">
-							<p:panelGrid columns="2" columnClasses="auPwg20,auPwg80">
+						<p:panel id="pLang" header="#{msg.aupTsImport}" styleClass="jeeslPanel">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.aupCategory}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.category}" effect="fade" >
 									<f:selectItems value="#{cc.attrs.bean.categories}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
@@ -65,7 +65,7 @@
                                <p:outputLabel value="#{msg.jeeslDate}"/>
                                <jp:outputDate value="#{cc.attrs.bean.transaction.record}"/>
                                
-                               <p:outputLabel value="#{msg.jeeslValue}" />
+                               <p:outputLabel value="#{msg.jeeslRemark}" />
                                <jtp:inputRemark value="#{cc.attrs.bean.transaction.remark}" rendered="#{cc.attrs.bean.transaction.id eq 0}"/>
                                <h:outputText value="#{cc.attrs.bean.transaction.remark}" rendered="#{cc.attrs.bean.transaction.id gt 0}"/>
                                

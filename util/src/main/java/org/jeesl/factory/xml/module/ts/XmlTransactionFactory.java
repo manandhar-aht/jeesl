@@ -4,7 +4,7 @@ import org.jeesl.factory.xml.system.security.XmlUserFactory;
 import org.jeesl.factory.xml.system.status.XmlSourceFactory;
 import org.jeesl.factory.xml.system.util.text.XmlReferenceFactory;
 import org.jeesl.factory.xml.system.util.text.XmlRemarkFactory;
-import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.model.xml.jeesl.QueryTs;
 import org.jeesl.model.xml.module.ts.Transaction;

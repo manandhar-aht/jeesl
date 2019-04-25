@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.ts;
+package org.jeesl.interfaces.model.module.ts.core;
 
 import java.io.Serializable;
 

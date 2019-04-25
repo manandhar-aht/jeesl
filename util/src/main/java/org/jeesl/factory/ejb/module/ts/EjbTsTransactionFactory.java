@@ -2,13 +2,13 @@ package org.jeesl.factory.ejb.module.ts;
 
 import java.util.Date;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
-import org.jeesl.interfaces.model.module.ts.JeeslTsBridge;
-import org.jeesl.interfaces.model.module.ts.JeeslTsData;
-import org.jeesl.interfaces.model.module.ts.JeeslTsEntityClass;
-import org.jeesl.interfaces.model.module.ts.JeeslTsSample;
-import org.jeesl.interfaces.model.module.ts.JeeslTsScope;
-import org.jeesl.interfaces.model.module.ts.JeeslTsTransaction;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsBridge;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsSample;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

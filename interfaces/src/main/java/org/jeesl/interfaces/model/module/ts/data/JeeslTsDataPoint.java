@@ -1,6 +1,8 @@
-package org.jeesl.interfaces.model.module.ts;
+package org.jeesl.interfaces.model.module.ts.data;
 
 import java.io.Serializable;
+
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;

@@ -398,9 +398,23 @@
 	</s:translation>
 	<s:translation key="TsDataSource">
 		<s:langs>
-			<s:lang key="en" translation="Datenursprung" />
+			<s:lang key="de" translation="Datenursprung" />
 			<s:lang key="en" translation="Data Source" />
 			<s:lang key="fr" translation="Data Source" />
+		</s:langs>
+	</s:translation>
+	<s:translation key="TsInputMethod">
+		<s:langs>
+			<s:lang key="de" translation="Eingabemethode" />
+			<s:lang key="en" translation="Input Method" />
+			<s:lang key="fr" translation="Input Method" />
+		</s:langs>
+	</s:translation>
+	<s:translation key="TsDimension">
+		<s:langs>
+			<s:lang key="en" translation="Dimension" />
+			<s:lang key="en" translation="Dimension" />
+			<s:lang key="fr" translation="Dimension" />
 		</s:langs>
 	</s:translation>
 	<s:translation key="ApprovalProcessCategory">

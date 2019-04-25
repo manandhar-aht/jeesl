@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.ts;
+package org.jeesl.interfaces.model.module.ts.data;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

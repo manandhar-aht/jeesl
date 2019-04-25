@@ -2,8 +2,8 @@ package org.jeesl.factory.mc.ts;
 
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTimeSeries;
-import org.jeesl.interfaces.model.module.ts.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
 import org.metachart.factory.xml.chart.XmlDataFactory;
 import org.metachart.factory.xml.chart.XmlDataSetFactory;
 import org.metachart.xml.chart.Ds;

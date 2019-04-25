@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jeesl.interfaces.model.module.ts.JeeslTsData;
-import org.jeesl.interfaces.model.module.ts.JeeslTsDataPoint;
-import org.jeesl.interfaces.model.module.ts.JeeslTsMultiPoint;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

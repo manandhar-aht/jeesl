@@ -12,15 +12,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
+import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 
 public interface JeeslTsDimension <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang,
 									D extends UtilsDescription,
 									G extends JeeslGraphic<L,D,G,?,?,?>>
 					extends Serializable,EjbPersistable,
-								EjbWithCode,UtilsStatusFixedCode,
+								EjbWithCode,UtilsStatusFixedCode,UtilsWithSymbol,
 								JeeslOptionRestDownload,EjbWithCodeGraphic<G>,
 								UtilsStatus<S,L,D>
 {	
-	public enum Code{length,volume}
+	public enum Code{length,velocity,time,volume,temp}
 }

@@ -372,11 +372,26 @@
 	        <s:lang key="fr" translation="Workspace"/>
     	</s:langs>
 	</s:translation>
+	<s:translation key="TsDimension">
+		<s:langs>
+			<s:lang key="de" translation="Dimension" />
+			<s:lang key="en" translation="Dimension" />
+			<s:lang key="fr" translation="Dimension" />
+    		</s:langs>
+	</s:translation>
 	<s:translation key="TsUnit">
 		<s:langs>
+			<s:lang key="de" translation="Einheit" />
 			<s:lang key="en" translation="Unit" />
 			<s:lang key="fr" translation="Unit" />
-    		</s:langs>
+		</s:langs>
+	</s:translation>
+	<s:translation key="TsInputMethod">
+		<s:langs>
+			<s:lang key="de" translation="Eingabe Methode" />
+			<s:lang key="en" translation="Input Method" />
+			<s:lang key="fr" translation="Input Method" />
+		</s:langs>
 	</s:translation>
 	<s:translation key="TsStatistic">
 		<s:langs>

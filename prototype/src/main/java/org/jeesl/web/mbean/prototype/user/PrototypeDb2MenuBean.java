@@ -49,8 +49,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	final static Logger logger = LoggerFactory.getLogger(PrototypeDb2MenuBean.class);
 	private static final long serialVersionUID = 1L;
 	
-	private final Class<M> cMenu;
-	
+	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity;
 	private JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity;
 	
 	private final XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER> xfMenuItem;
@@ -68,10 +67,9 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 	private boolean setupRequired=false;
 	private boolean debugOnInfo; protected void setDebugOnInfo(boolean log) {debugOnInfo = log;}
 
-	public PrototypeDb2MenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity, final Class<M> cMenu)
+	public PrototypeDb2MenuBean(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,?,USER> fbSecurity)
 	{
-		this.cMenu=cMenu;
-		
+		this.fbSecurity=fbSecurity;
 		mapKey = new HashMap<String,M>();
 		mapMenu = new HashMap<M,Menu>();
 		mapChild = new HashMap<M,List<M>>();
@@ -79,7 +77,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		mapBreadcrumb = new HashMap<M,Breadcrumb>();
 		
 		xfMenuItem = new XmlMenuItemFactory<L,D,C,R,V,U,A,AT,M,USER>(localeCode);
-		efMenu = fbSecurity.ejbMenu(cMenu);
+		efMenu = fbSecurity.ejbMenu();
 		tfMenu = new TxtSecurityMenuFactory<L,D,C,R,V,U,A,AT,M,USER>();
 		
 		debugOnInfo = false;
@@ -119,7 +117,7 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 			
 			M root = efMenu.build();
 			mapKey.put(JeeslSecurityMenu.keyRoot, root);
-			for(M m : fSecurity.allOrderedPosition(cMenu))
+			for(M m : fSecurity.allOrderedPosition(fbSecurity.getClassMenu()))
 			{
 				if(debugOnInfo)
 				{

@@ -45,7 +45,7 @@ public class JsonPagesFactory<L extends UtilsLang, D extends UtilsDescription,
 	public JsonPagesFactory(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,AR,USER> fbSecurity)
 	{
 		this.fbSecurity=fbSecurity;
-		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());
+		efMenu = fbSecurity.ejbMenu();
 		jfPage = fbSecurity.jsonPage();
 	}
 	

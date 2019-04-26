@@ -80,30 +80,13 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cUser=cUser;
 	}
 	
-	public EjbSecurityCategoryFactory<C> ejbCategory()
-	{
-		return new EjbSecurityCategoryFactory<C>(cCategory);
-	}
-	
-	public EjbSecurityRoleFactory<C,R> ejbRole()
-	{
-		return new EjbSecurityRoleFactory<C,R>(cRole);
-	}
-	
-	public EjbSecurityViewFactory<C,V> ejbView()
-	{
-		return new EjbSecurityViewFactory<C,V>(cView);
-	}
-	
+	public EjbSecurityCategoryFactory<C> ejbCategory(){return new EjbSecurityCategoryFactory<C>(cCategory);}
+	public EjbSecurityRoleFactory<C,R> ejbRole(){return new EjbSecurityRoleFactory<C,R>(cRole);}
+	public EjbSecurityViewFactory<C,V> ejbView(){return new EjbSecurityViewFactory<C,V>(cView);}
 	public EjbSecurityUsecaseFactory<C,U> ejbUsecase() {return new EjbSecurityUsecaseFactory<C,U>(cUsecase);}
 	public EjbSecurityActionFactory<V,A> ejbAction() {return new EjbSecurityActionFactory<V,A>(cAction);}
-	
-	public EjbSecurityActionTemplateFactory<C,AT> ejbTemplate()
-	{
-		return new EjbSecurityActionTemplateFactory<C,AT>(cTemplate);
-	}
-	
-	public EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM){return new EjbSecurityMenuFactory<V,M>(cM);}
+	public EjbSecurityActionTemplateFactory<C,AT> ejbTemplate(){return new EjbSecurityActionTemplateFactory<C,AT>(cTemplate);}
+	public EjbSecurityMenuFactory<V,M> ejbMenu(){return new EjbSecurityMenuFactory<V,M>(cMenu);}
 	public EjbSecurityAreaFactory<V,AR> ejbArea() {return new EjbSecurityAreaFactory<V,AR>(cArea);}
 	
 	public EjbSecurityUserFactory<USER> ejbUser()

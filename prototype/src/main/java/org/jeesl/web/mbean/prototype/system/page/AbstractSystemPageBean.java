@@ -45,7 +45,7 @@ public abstract class AbstractSystemPageBean <L extends UtilsLang, D extends Uti
 	{
 		super(fbSecurity.getClassL(),fbSecurity.getClassD());
 		this.fbSecurity=fbSecurity;
-		efMenu = fbSecurity.ejbMenu(fbSecurity.getClassMenu());
+		efMenu = fbSecurity.ejbMenu();
 	}
 	
 	public void postConstructSystemPage(JeeslSecurityFacade<L,D,?,?,V,?,?,?,M,?> fSecurity, JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage)

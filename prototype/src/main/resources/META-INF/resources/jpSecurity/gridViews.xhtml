@@ -128,12 +128,12 @@
 						<p:dataTable var="a" value="#{cc.attrs.bean.actions}" draggableRows="true"
 									selection="#{cc.attrs.bean.action}" selectionMode="single" rowKey="#{a.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslSecurityActions}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAction()}" update=":#{cc.id}:fActions :#{cc.id}:fAction" tooltip="#{msg.ttNew}"/>
-								</aht:pfDataTableHeader>
+								<j:dtHeader title="#{msg.jeeslSecurityActions}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAction()}" update=":#{cc.id}:fActions :#{cc.id}:fAction" tooltip="#{msg.ttNew}"/>
+								</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
-							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAction}" update=":#{cc.id}:fActions :#{cc.id}:fAction"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAction}" update=":#{cc.id}:fAction"/>
 							<p:column>  
 								<h:outputText value="#{a.position}" />  
 				            </p:column>
@@ -172,7 +172,7 @@
 								</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderAreas()}" update="@form"/>
-							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectArea}" update=":#{cc.id}:sViews"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectArea}" update=":#{cc.id}:fArea"/>
 							<p:column>  
 								<h:outputText value="#{a.position}" />  
 				            </p:column>
@@ -189,7 +189,7 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
-								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.area.toCode}"/>
+								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.area.code}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.area.code}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.area}" keys="#{appTranslationBean.langKeys}" withDescription="true"/>

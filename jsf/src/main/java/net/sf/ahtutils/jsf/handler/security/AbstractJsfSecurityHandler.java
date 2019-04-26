@@ -50,8 +50,9 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	protected I identity;
 	
-	protected List<A> actions; public List<A> getActions() {return actions;}
 	protected List<R> roles; public List<R> getRoles() {return roles;}
+	protected final List<A> actions; public List<A> getActions() {return actions;}
+	private final List<AR> areas; public List<AR> getAreas() {return areas;}
 	
 	protected String pageCode; public String getPageCode() {return pageCode;}
 	protected V view; public V getView() {return view;}
@@ -83,6 +84,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		mapAllow = new Hashtable<String,Boolean>();
 		mapHasRole = new Hashtable<R,Boolean>();
 		actions = new ArrayList<A>();
+		areas = new ArrayList<AR>();
 		
 		SecurityActionComparator<L,D,C,R,V,U,A,AT,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>();
 		cfAction.factory(SecurityActionComparator.Type.position);
@@ -123,6 +125,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		mapAllow = new Hashtable<String,Boolean>();
 		mapHasRole = new Hashtable<R,Boolean>();
 		actions = new ArrayList<A>();
+		areas = new ArrayList<AR>();
 		
 		SecurityActionComparator<L,D,C,R,V,U,A,AT,USER> cfAction = new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>();
 		cfAction.factory(SecurityActionComparator.Type.position);
@@ -146,12 +149,15 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			if(identity!=null){allow=identity.hasAction(action.toCode());}
 			addActionWithSecurity(action,allow);
 		}
+		
 		checkIcon();
 	}
 	
 	protected void clear()
 	{
 		actions.clear();
+		areas.clear();
+		
 		mapAllow.clear();
 		mapHasRole.clear();
 		for(R r : roles)
@@ -236,6 +242,10 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			for(A a : actions)
 			{
 				logger.info("\t"+a.toString());
+			}
+			for(AR area : areas)
+			{
+				logger.info("\tAR\t"+area.toString());
 			}
 		}
 	}

@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.interfaces.qualifier.RestDescription;
 import org.openfuxml.content.ofx.Comment;
 import org.openfuxml.content.ofx.Listing;
 import org.openfuxml.content.ofx.Paragraph;
@@ -41,7 +42,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.doc.ofx.AbstractUtilsOfxDocumentationFactory;
-import net.sf.ahtutils.interfaces.qualifier.RestDescription;
 import net.sf.ahtutils.xml.status.Translations;
 
 public class OfxRestSectionFactory extends AbstractUtilsOfxDocumentationFactory

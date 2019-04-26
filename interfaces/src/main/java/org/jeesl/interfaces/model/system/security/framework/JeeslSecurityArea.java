@@ -23,4 +23,7 @@ public interface JeeslSecurityArea<L extends UtilsLang, D extends UtilsDescripti
 	
 	public V getView();
 	public void setView(V view);
+	
+//	public boolean isRestricted();
+//	void setRestricted(boolean restricted);
 }

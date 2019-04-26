@@ -86,6 +86,13 @@
     		<s:lang key="fr" translation="Area"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslSecurityAreaRestricted">
+    	<s:langs>
+    		<s:lang key="de" translation="Zugriffsbeschränkt"/>
+    		<s:lang key="en" translation="Restricted"/>
+    		<s:lang key="fr" translation="Restricted"/>
+    	</s:langs>
+    </s:translation>
 	<s:translation key="aupSecurityUsecases">
     	<s:langs>
     		<s:lang key="de" translation="Use-Cases"/>

@@ -47,11 +47,11 @@
 				         <p:column headerText="#{msg.aupSecurityView}">  
 								<h:outputText value="#{v.name[localeCode].lang}" />  
 				            </p:column>
-							<p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslPfTcCenter">  
+							<p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslCenter">  
 								<h:graphicImage rendered="#{v.visible}" name="#{appIconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
 				                <h:graphicImage rendered="#{not v.visible}" name="#{appIconBean.icon12['jeeslSecurityInvisible']}" library="gfx"/>
-				         </p:column>
-							<p:column rendered="#{cc.attrs.bean.uiShowDocumentation}"  styleClass="jeeslPfTcCenter">  
+				         	</p:column>
+							<p:column rendered="#{cc.attrs.bean.uiShowDocumentation}" styleClass="jeeslCenter">  
 								<h:graphicImage rendered="#{v.documentation}" name="#{appIconBean.icon12['jeeslSecurityDocumentation']}" library="gfx"/>
 				            </p:column>
 				       	</p:dataTable>
@@ -179,6 +179,9 @@
 				            <p:column headerText="#{msg.jeeslSecurityArea}">  
 								<h:outputText value="#{a.name[localeCode].lang}"/>
 				            </p:column>
+				            <p:column rendered="#{cc.attrs.bean.uiShowInvisible}" styleClass="jeeslCenter">  
+								<h:graphicImage rendered="#{a.restricted}" name="#{appIconBean.icon12['jeeslSecurityVisible']}" library="gfx"/>
+				         	</p:column>
 				       	</p:dataTable>
 					</h:form>
 					<h:form id="fArea">						
@@ -191,6 +194,10 @@
 								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>
 								<h:outputText rendered="#{not cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.area.code}"/>
 								<p:inputText rendered="#{cc.attrs.bean.uiAllowCode}" value="#{cc.attrs.bean.area.code}"/>
+								
+								<p:outputLabel value="#{msg.jeeslSecurityAreaRestricted}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.area.restricted}"/>
+								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.area}" keys="#{appTranslationBean.langKeys}" withDescription="true"/>
 						</p:panel>

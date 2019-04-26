@@ -57,7 +57,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	
 	private V view; public V getView(){return view;} public void setView(V view) {this.view = view;}
 	private A action; public A getAction(){return action;} public void setAction(A action) {this.action = action;}
-	private AR area; public AR getArea(){return area;} public void setAction(AR area) {this.area = area;}
+	private AR area; public AR getArea(){return area;} public void setArea(AR area) {this.area = area;}
 	
 	private JeeslSecurityBean<L,D,C,R,V,U,A,AT,M,USER> bSecurity;
 	private final TriStateBinder tsb; public TriStateBinder getTsb() {return tsb;}
@@ -108,6 +108,8 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		
 		usecases = view.getUsecases();
 		Collections.sort(usecases,comparatorUsecase);
+		
+		reloadAreas();
 	}
 	
 	private void reloadActions()
@@ -116,10 +118,11 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		Collections.sort(actions, comparatorAction);
 	}
 	
-	private void reset(boolean rView, boolean rAction)
+	private void reset(boolean rView, boolean rAction, boolean rArea)
 	{
 		if(rView) {view=null;}
 		if(rAction) {action=null;}
+		if(rArea) {area=null;}
 	}
 	
 	//Add
@@ -143,13 +146,13 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 	
 	public void selectView()
 	{
+		reset(false,true,true);
 		logger.info(AbstractLogMessage.selectEntity(view));
 		view = fSecurity.load(fbSecurity.getClassView(), view);
 		view = efLang.persistMissingLangs(fSecurity,localeCodes,view);
 		view = efDescription.persistMissingLangs(fSecurity,localeCodes,view);
 		reloadView();
 		reloadActions();
-		action=null;
 	}
 	
 	public void selectAction()
@@ -178,7 +181,7 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		V clone = efView.clone(view);
 		clone.setName(efLang.clone(view.getName()));
 		clone.setDescription(efDescription.clone(view.getDescription()));
-		reset(true,true);
+		reset(true,true,true);
 		view = clone;
 	}
 	
@@ -189,10 +192,19 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		logger.info(AbstractLogMessage.rmEntity(view));
 		
 		fSecurity.rm(view);
-		reset(true,true);
+		reset(true,true,true);
 		reloadViews();
 		propagateChanges();
 		bMessage.growlSuccessRemoved();
+	}
+	
+	//ACTION
+	public void addAction() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassAction()));
+		action = efAction.build(view,"",actions);
+		action.setName(efLang.createEmpty(localeCodes));
+		action.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException
@@ -218,15 +230,6 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		reloadActions();
 		propagateChanges();
 		bMessage.growlSuccessSaved();
-	}
-	
-	//ACTION
-	public void addAction() throws UtilsConstraintViolationException
-	{
-		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassAction()));
-		action = efAction.build(view,"",actions);
-		action.setName(efLang.createEmpty(localeCodes));
-		action.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void rmAction() throws UtilsConstraintViolationException
@@ -255,6 +258,47 @@ public abstract class AbstractAdminSecurityViewBean <L extends UtilsLang, D exte
 		}
 	}
 	
-	public void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, views);}
-	public void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, actions);}
+	//AREA
+	public void reloadAreas()
+	{
+		areas = fSecurity.allForParent(fbSecurity.getClassArea(), view);
+	}
+	
+	public void addArea() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassArea()));
+		area = fbSecurity.ejbArea().build(view,areas);
+		area.setName(efLang.createEmpty(localeCodes));
+		area.setDescription(efDescription.createEmpty(localeCodes));
+	}
+	
+	public void saveArea() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info(AbstractLogMessage.saveEntity(area));
+		area = fSecurity.save(area);
+		reloadAreas();
+		propagateChanges();
+		bMessage.growlSuccessSaved();
+	}
+	
+	public void selectArea() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.addEntity(fbSecurity.getClassArea()));
+		area = efLang.persistMissingLangs(fSecurity,localeCodes,area);
+		area = efDescription.persistMissingLangs(fSecurity,localeCodes,area);
+	}
+	
+	public void deleteArea() throws UtilsConstraintViolationException
+	{
+		logger.info(AbstractLogMessage.rmEntity(area));
+		fSecurity.rm(area);
+		reset(false,false,true);
+		reloadAreas();
+		propagateChanges();
+		bMessage.growlSuccessRemoved();
+	}
+	
+	public void reorderViews() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity,views);}
+	public void reorderActions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity,actions);}
+	public void reorderAreas() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fSecurity, areas);}
 }

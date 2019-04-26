@@ -20,7 +20,7 @@
 		<p:dataTable id="dtActions" var="a" value="#{cc.attrs.actions}"
 						 selection="#{cc.attrs.bean.tblAction}" selectionMode="single" rowKey="#{a.id}">
 			<f:facet name="header">
-				<aht:pfDataTableHeader id="dth" title="#{msg.aupSecurityActions}">
+				<aht:pfDataTableHeader id="dth" title="#{msg.jeeslSecurityActions}">
 					<h:graphicImage id="giActionAdd" styleClass="pf-panel-header-action-icon" library="gfx" name="#{appIconBean.icon12['jeeslAdd']}"/>
                     <p:tooltip for="giActionAdd" value="#{msg.ttAdd}" />
                     <aht:icon rendered="#{cc.attrs.withRemove and (not empty cc.attrs.bean.tblAction)}" type="jeeslRemove" mayDisappear="true" listener="#{cc.attrs.bean.opRmAction()}" update="#{cc.attrs.update}" tooltip="#{msg.ttRemove}"/>
@@ -36,7 +36,7 @@
 			<p:column headerText="#{msg.jeeslSecurityCode}">
 				<h:outputText value="#{a.toCode()}" />
 			</p:column>
-			<p:column headerText="#{msg.aupSecurityAction}">
+			<p:column headerText="#{msg.jeeslSecurityAction}">
 				<h:outputText value="#{a.toName()[userBean.localeCode].lang}" />
 			</p:column>
 		</p:dataTable>
@@ -55,7 +55,7 @@
 				<p:column headerText="#{msg.jeeslSecurityCode}">
 					<h:outputText value="#{a.toCode()}" />
 				</p:column>
-				<p:column headerText="#{msg.aupSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.toName()[userBean.localeCode].lang}" filterMatchMode="contains">
+				<p:column headerText="#{msg.jeeslSecurityAction}" sortBy="#{a.view.toName[userBean.localeCode].lang}" filterBy="#{a.toName()[userBean.localeCode].lang}" filterMatchMode="contains">
 					<h:outputText value="#{a.toName()[userBean.localeCode].lang}" />
 				</p:column>
 			</p:dataTable>

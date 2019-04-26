@@ -58,18 +58,32 @@
     	</s:langs>
     </s:translation>
     
-	<s:translation key="aupSecurityAction">
+	<s:translation key="jeeslSecurityAction">
     	<s:langs>
     		<s:lang key="de" translation="Action"/>
     		<s:lang key="en" translation="Action"/>
     		<s:lang key="fr" translation="Action"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupSecurityActions">
+	<s:translation key="jeeslSecurityActions">
     	<s:langs>
     		<s:lang key="de" translation="Actions"/>
     		<s:lang key="en" translation="Actions"/>
     		<s:lang key="fr" translation="Actions"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSecurityAreas">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereiche"/>
+    		<s:lang key="en" translation="Areas"/>
+    		<s:lang key="fr" translation="Areas"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslSecurityArea">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Area"/>
+    		<s:lang key="fr" translation="Area"/>
     	</s:langs>
     </s:translation>
 	<s:translation key="aupSecurityUsecases">

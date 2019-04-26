@@ -3,6 +3,7 @@ package org.jeesl.factory.builder.system;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityActionTemplateFactory;
+import org.jeesl.factory.ejb.system.security.EjbSecurityAreaFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityCategoryFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityMenuFactory;
 import org.jeesl.factory.ejb.system.security.EjbSecurityRoleFactory;
@@ -53,9 +54,19 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
     private final Class<A> cAction; public Class<A> getClassAction(){return cAction;}
     private final Class<AT> cTemplate; public Class<AT> getClassTemplate(){return cTemplate;}
     private final Class<M> cMenu; public Class<M> getClassMenu(){return cMenu;}
+    private final Class<AR> cArea; public Class<AR> getClassArea(){return cArea;}
     private final Class<USER> cUser; public Class<USER> getClassUser(){return cUser;}
 	
-	public SecurityFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<C> cCategory, final Class<R> cRole, final Class<V> cView, final Class<U> cUsecase, final Class<A> cAction, final Class<AT> cTemplate, final Class<M> cMenu, final Class<USER> cUser)
+	public SecurityFactoryBuilder(final Class<L> cL, final Class<D> cD,
+									final Class<C> cCategory,
+									final Class<R> cRole,
+									final Class<V> cView,
+									final Class<U> cUsecase,
+									final Class<A> cAction,
+									final Class<AT> cTemplate,
+									final Class<M> cMenu,
+									final Class<AR> cArea,
+									final Class<USER> cUser)
 	{		
 		super(cL,cD);
 		this.cCategory=cCategory;
@@ -65,6 +76,7 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cAction=cAction;
 		this.cTemplate=cTemplate;
 		this.cMenu=cMenu;
+		this.cArea=cArea;
 		this.cUser=cUser;
 	}
 	
@@ -83,25 +95,16 @@ public class SecurityFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		return new EjbSecurityViewFactory<C,V>(cView);
 	}
 	
-	public EjbSecurityUsecaseFactory<C,U> ejbUsecase()
-	{
-		return new EjbSecurityUsecaseFactory<C,U>(cUsecase);
-	}
-	
-	public EjbSecurityActionFactory<V,A> ejbAction()
-	{
-		return new EjbSecurityActionFactory<V,A>(cAction);
-	}
+	public EjbSecurityUsecaseFactory<C,U> ejbUsecase() {return new EjbSecurityUsecaseFactory<C,U>(cUsecase);}
+	public EjbSecurityActionFactory<V,A> ejbAction() {return new EjbSecurityActionFactory<V,A>(cAction);}
 	
 	public EjbSecurityActionTemplateFactory<C,AT> ejbTemplate()
 	{
 		return new EjbSecurityActionTemplateFactory<C,AT>(cTemplate);
 	}
 	
-	public EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM)
-	{
-		return new EjbSecurityMenuFactory<V,M>(cM);
-	}
+	public EjbSecurityMenuFactory<V,M> ejbMenu(Class<M> cM){return new EjbSecurityMenuFactory<V,M>(cM);}
+	public EjbSecurityAreaFactory<V,AR> ejbArea() {return new EjbSecurityAreaFactory<V,AR>(cArea);}
 	
 	public EjbSecurityUserFactory<USER> ejbUser()
 	{

@@ -147,7 +147,7 @@
 						<p:panel rendered="#{not empty cc.attrs.bean.action}" header="#{msg.jeeslSecurityAction}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<aht:icon type="jeeslSave" listener="#{cc.attrs.bean.saveAction()}" update=":#{cc.id}:fActions :#{cc.id}:fAction" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.hasDeveloperAction}" listener="#{cc.attrs.bean.rmAction()}" update=":#{cc.id}:fActions :#{cc.id}:fAction" tooltip="#{msg.ttDelete}"/>
+								<aht:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.hasDeveloperAction}" listener="#{cc.attrs.bean.rmAction()}" update=":#{cc.id}:sView" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.aupTemplate}"/>
@@ -185,7 +185,7 @@
 						<p:panel rendered="#{not empty cc.attrs.bean.area}" header="#{msg.jeeslSecurityArea}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<j:icon type="jeeslSave" listener="#{cc.attrs.bean.saveArea()}" update=":#{cc.id}:fAreas :#{cc.id}:fArea"/>
-								<j:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.hasDeveloperAction}" listener="#{cc.attrs.bean.deleteArea()}" update=":#{cc.id}:fActions :#{cc.id}:fAction" tooltip="#{msg.ttDelete}"/>
+								<j:icon type="jeeslDelete" mayDisappear="true" rendered="#{cc.attrs.bean.hasDeveloperAction}" listener="#{cc.attrs.bean.deleteArea()}" update=":#{cc.id}:sView" tooltip="#{msg.ttDelete}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.jeeslSecurityCode}"/>

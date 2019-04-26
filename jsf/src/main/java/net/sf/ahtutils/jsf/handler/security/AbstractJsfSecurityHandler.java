@@ -12,6 +12,7 @@ import org.jeesl.api.facade.system.JeeslSecurityFacade;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
 import org.jeesl.factory.txt.system.security.TxtSecurityActionFactory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityAction;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityArea;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityCategory;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplate;
@@ -19,6 +20,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslIdentity;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.util.comparator.ejb.system.security.SecurityActionComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 
 public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends UtilsDescription,
 													C extends JeeslSecurityCategory<L,D>,
@@ -35,9 +36,10 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 													U extends JeeslSecurityUsecase<L,D,C,R,V,A>,
 													A extends JeeslSecurityAction<L,D,R,V,U,AT>,
 													AT extends JeeslSecurityTemplate<L,D,C>,
+													AR extends JeeslSecurityArea<L,D,V>,
 													USER extends JeeslUser<R>,
 													I extends JeeslIdentity<R,V,U,A,USER>>
-								implements UtilsJsfSecurityHandler<L,D,C,R,V,U,A,AT,USER>
+								implements JeeslJsfSecurityHandler<L,D,C,R,V,U,A,AT,AR,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;

@@ -23,6 +23,7 @@ import org.jeesl.interfaces.model.system.io.report.JeeslReportWorkbook;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.util.JeeslTrafficLight;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportCellComparator;
 import org.jeesl.util.comparator.ejb.system.io.report.IoReportTemplateComparator;
 import org.slf4j.Logger;
@@ -33,7 +34,6 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -204,7 +204,7 @@ public class AbstractAdminIoReportTemplateBean <L extends UtilsLang,D extends Ut
 	protected void updatePerformed(){}	
 	
 	@SuppressWarnings("rawtypes")
-	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
+	@Override protected void updateSecurity2(JeeslJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);
 

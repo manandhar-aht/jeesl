@@ -19,6 +19,7 @@ import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsSample;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithLangDescription;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -249,7 +249,7 @@ public class AbstractAdminTsScopeBean <L extends UtilsLang, D extends UtilsDescr
 		reloadMultiPoints();
 	}
 	
-	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
+	@Override protected void updateSecurity2(JeeslJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
 		uiShowInvisible= jsfSecurityHandler.allow(viewCode);
 

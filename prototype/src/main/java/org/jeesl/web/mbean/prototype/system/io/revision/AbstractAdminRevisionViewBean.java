@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -190,7 +190,7 @@ public class AbstractAdminRevisionViewBean <L extends UtilsLang,D extends UtilsD
 	protected void updatePerformed(){}	
 	
 	@SuppressWarnings("rawtypes")
-	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
+	@Override protected void updateSecurity2(JeeslJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);
 

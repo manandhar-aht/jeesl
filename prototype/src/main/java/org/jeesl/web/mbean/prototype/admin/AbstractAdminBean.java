@@ -6,13 +6,13 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.factory.ejb.system.status.EjbDescriptionFactory;
 import org.jeesl.factory.ejb.system.status.EjbLangFactory;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.jsf.util.NullNumberBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.exlp.util.io.StringUtil;
 
 public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> implements Serializable
@@ -114,7 +114,7 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 	protected boolean uiShowDocumentation; public boolean isUiShowDocumentation() {return uiShowDocumentation;}
 	
 	@SuppressWarnings("rawtypes")
-	protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
+	protected void updateSecurity2(JeeslJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
 		String actionDeveloper = viewCode+".Developer";
 		String actionAdministrator = viewCode+".Administrator";

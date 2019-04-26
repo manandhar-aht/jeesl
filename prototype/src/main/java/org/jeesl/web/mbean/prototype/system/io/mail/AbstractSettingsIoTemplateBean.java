@@ -21,6 +21,7 @@ import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.mail.freemarker.FreemarkerIoTemplateEngine;
 import org.jeesl.util.comparator.ejb.system.io.template.IoTemplateComparator;
 import org.jeesl.util.comparator.ejb.system.io.template.IoTemplateDefinitionComparator;
@@ -40,7 +41,6 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
@@ -348,7 +348,7 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	protected void updatePerformed(){}	
 	
 	@SuppressWarnings("rawtypes")
-	@Override protected void updateSecurity2(UtilsJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
+	@Override protected void updateSecurity2(JeeslJsfSecurityHandler jsfSecurityHandler, String actionDeveloper)
 	{
 		uiAllowSave = jsfSecurityHandler.allow(actionDeveloper);
 

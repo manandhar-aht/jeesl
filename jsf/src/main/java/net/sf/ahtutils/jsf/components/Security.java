@@ -9,9 +9,9 @@ import javax.faces.component.UIPanel;
 import javax.faces.context.FacesContext;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public class Security extends UIPanel
 		{
 			ValueExpression ve = this.getValueExpression(Properties.handler.toString());
 			if(ve==null){throw new UtilsNotFoundException("");}
-			UtilsJsfSecurityHandler handler = (UtilsJsfSecurityHandler)ve.getValue(context.getELContext());
+			JeeslJsfSecurityHandler handler = (JeeslJsfSecurityHandler)ve.getValue(context.getELContext());
 			
 			String action = ComponentAttribute.get(Properties.action.toString(),context,this);
 			accessGranted = (handler.allow(action) && accessGrantedAttribute);

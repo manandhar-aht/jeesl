@@ -30,6 +30,7 @@ import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.util.db.JeeslGraphicDbUpdater;
 import org.jeesl.util.db.JeeslStatusDbUpdater;
@@ -55,7 +56,6 @@ import net.sf.ahtutils.interfaces.model.with.image.EjbWithImage;
 import net.sf.ahtutils.interfaces.model.with.image.EjbWithImageAlt;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParent;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
-import net.sf.ahtutils.interfaces.web.UtilsJsfSecurityHandler;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -148,7 +148,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		graphicStyles = fUtils.allOrderedPositionVisible(fbSvg.getClassFigureStyle());
 	}
 	
-	protected void updateSecurity(UtilsJsfSecurityHandler jsfSecurityHandler, String viewCode)
+	protected void updateSecurity(JeeslJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
 		super.updateSecurity2(jsfSecurityHandler, viewCode);
 	}

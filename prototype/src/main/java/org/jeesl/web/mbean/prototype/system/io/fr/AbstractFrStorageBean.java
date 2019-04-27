@@ -6,8 +6,10 @@ import java.util.List;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
+import org.jeesl.controller.handler.tuple.JsonTuple2Handler;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
+import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
@@ -38,6 +40,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	private JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
 	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr;
 	
+	private final JsonTuple2Handler<STORAGE,TYPE> thCount; public JsonTuple2Handler<STORAGE, TYPE> getThCount() {return thCount;}
 	private final EjbIoFrStorageFactory<STORAGE> efStorage;
 	
 	private List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
@@ -45,11 +48,13 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
 
-	protected AbstractFrStorageBean(final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr)
+	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr, JeeslComparatorProvider<TYPE> jcpB)
 	{
 		super(fbFr.getClassL(),fbFr.getClassD());
 		this.fbFr=fbFr;
 		efStorage = fbFr.ejbStorage();
+		thCount = new JsonTuple2Handler<STORAGE,TYPE>(fbFr.getClassStorage(),fbFr.getClassType());
+		thCount.setComparatorProviderB(jcpB);
 	}
 	
 	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage)
@@ -58,6 +63,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 		this.fFr=fFr;
 		reloadStorages();
 		engines = fFr.allOrderedPositionVisible(fbFr.getClassEngine());
+		thCount.init(fFr.tpIoFileByStorageType());
 	}
 	
 	public void resetStorage() {reset(true);}

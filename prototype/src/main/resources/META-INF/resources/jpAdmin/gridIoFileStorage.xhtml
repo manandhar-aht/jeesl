@@ -6,6 +6,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
 	xmlns:aupAdmin="http://ahtutils.sourceforge.net/prototype/admin"
@@ -19,7 +22,7 @@
 	<composite:implementation>
 		<aup:grid id="grid">
 			<aht:row>
-				<aht:slot id="sStorages" width="7">
+				<aht:slot id="sStorages" width="8">
 					<h:form id="fStorages">
 						<p:dataTable var="s" value="#{cc.attrs.bean.storages}" draggableRows="true"
 							selection="#{cc.attrs.bean.storage}" selectionMode="single" rowKey="#{s.id}">
@@ -30,17 +33,24 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderStorages()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sStorage" listener="#{cc.attrs.bean.selectStorage()}"/>
-							
-					      	<p:column headerText="#{msg.jeeslIoFileStorageEngine}">  
-								<h:outputText value="#{s.engine.name[localeCode].lang}"/>
+					      	<p:column headerText="#{msg.jeeslIoFileStorageEngine}" styleClass="jeeslCenter">
+					      		<jtp:symbolizer value="#{s.engine}"/>
+								<h:outputText value="#{s.engine.name[localeCode].lang}" rendered="false"/>
 					     	</p:column>
 					     	<p:column headerText="#{msg.jeeslName}">  
 								<h:outputText value="#{s.name[localeCode].lang}"/>
 					     	</p:column>
+					     	<p:columns var="type" value="#{cc.attrs.bean.thCount.listB}" columnIndexVar="colIndex" styleClass="jeeslCenter">
+								<f:facet name="header">
+									<jtp:symbolizer value="#{type}"/>
+									<h:outputText value="#{type.name[localeCode].lang}" rendered="false"/>
+								</f:facet>
+								<h:outputText value="#{cc.attrs.bean.thCount.map[s][type].count}"/>
+							</p:columns>
 					   	</p:dataTable>
 					</h:form>
 				</aht:slot>
-				<aht:slot id="sStorage" width="5">
+				<aht:slot id="sStorage" width="4">
 					<h:form id="fStorage">
 						<p:panel header="#{msg.jeeslIoFileStorage}" rendered="#{not empty cc.attrs.bean.storage}" styleClass="jeeslPanel">
 							<f:facet name="actions">

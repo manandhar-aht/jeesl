@@ -2,7 +2,7 @@ package org.jeesl.factory.builder.io;
 
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
-import org.jeesl.controller.handler.fr.DefaultFileRepositoryHandler;
+import org.jeesl.controller.handler.system.io.fr.DefaultFileRepositoryHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrContainerFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;

@@ -1,4 +1,4 @@
-package org.jeesl.util.db;
+package org.jeesl.util.db.cache;
 
 import java.util.HashMap;
 import java.util.Map;

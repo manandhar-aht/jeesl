@@ -16,6 +16,4 @@ public class TestTxtMimeTypeFactory extends AbstractJeeslUtilTest
 		System.out.println(TxtMimeTypeFactory.build("x.doc"));
 		System.out.println(TxtMimeTypeFactory.build("x.docx"));
     }
- 
-
 }

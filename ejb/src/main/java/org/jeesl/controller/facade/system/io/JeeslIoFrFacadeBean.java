@@ -4,14 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
-import org.jeesl.controller.handler.fr.storage.FileRepositoryFileStorage;
+import org.jeesl.controller.handler.system.io.fr.storage.FileRepositoryFileStorage;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
+import org.jeesl.factory.json.db.tuple.t2.Json2TuplesFactory;
 import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryStore;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +67,6 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		return mapStorages.get(storage);
 	}
 
-
 	@Override public META saveToFileRepository(META meta, byte[] bytes) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		meta.setMd5Hash(HashUtil.hash(bytes));
@@ -84,5 +93,27 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		meta.getContainer().getMetas().remove(meta);
 		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
 		this.rm(meta);
+	}
+
+	@Override
+	public Json2Tuples<STORAGE,TYPE> tpIoFileByStorageType()
+	{
+		Json2TuplesFactory<STORAGE,TYPE> jtf = new Json2TuplesFactory<STORAGE,TYPE>(this,fbFile.getClassStorage(),fbFile.getClassType());
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<Tuple> cQ = cB.createTupleQuery();
+		Root<META> item = cQ.from(fbFile.getClassMeta());
+		
+		Expression<Long> eCount = cB.count(item.<Long>get("id"));
+		
+		Join<META,CONTAINER> jContainer = item.join(JeeslFileMeta.Attributes.container.toString());
+		Path<STORAGE> pStorage = jContainer.get(JeeslFileContainer.Attributes.storage.toString());
+		Path<TYPE> pType = item.get(JeeslFileMeta.Attributes.type.toString());
+		
+		cQ.groupBy(pStorage.get("id"),pType.get("id"));
+		cQ.multiselect(pStorage.get("id"),pType.get("id"),eCount);
+
+//		cQ.where(cB.and(ErpPredicateBuilder.srsImplementation(cB, query, item)));
+		TypedQuery<Tuple> tQ = em.createQuery(cQ);
+        return jtf.buildCount(tQ.getResultList());
 	}
 }

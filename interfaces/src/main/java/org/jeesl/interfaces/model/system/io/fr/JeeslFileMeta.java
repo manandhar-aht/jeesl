@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.system.io.fr;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -22,19 +23,17 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 //					EjbWithPosition,
 					EjbWithCode,
 //					EjbWithName,
+					JeeslWithType<TYPE>,
 					EjbWithSize,EjbWithRecord,
 					EjbWithDescription<D>
 {
-	public enum Attributes{container}
+	public enum Attributes{container,type}
 	
 	public Integer getPosition();
 	public void setPosition(Integer position);
 	
 	CONTAINER getContainer();
 	void setContainer(CONTAINER container);
-	
-	TYPE getType();
-	void setType(TYPE type);
 	
 	String getMd5Hash();
 	void setMd5Hash(String md5Hash);

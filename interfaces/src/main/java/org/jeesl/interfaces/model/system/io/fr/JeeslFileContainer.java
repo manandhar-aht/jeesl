@@ -10,6 +10,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslFileContainer<STORAGE extends JeeslFileStorage<?,?,?>, META extends JeeslFileMeta<?,?,?>>
 		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable
 {
+	public enum Attributes{storage}
+	
 	STORAGE getStorage();
 	void setStorage(STORAGE storage);
 	

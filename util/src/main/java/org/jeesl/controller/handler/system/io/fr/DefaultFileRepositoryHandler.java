@@ -6,6 +6,7 @@ import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ public class DefaultFileRepositoryHandler<L extends UtilsLang, D extends UtilsDe
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									TYPE extends JeeslFileType<TYPE,L,D,?>>
 	extends AbstractFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {
 	private static final long serialVersionUID = 1L;

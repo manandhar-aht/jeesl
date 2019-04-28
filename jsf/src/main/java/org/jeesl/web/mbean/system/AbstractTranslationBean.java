@@ -51,7 +51,6 @@ public class AbstractTranslationBean<L extends UtilsLang, D extends UtilsDescrip
 	}
 	
 	
-	
 	protected void initMap(ClassLoader cl, String fXml, UtilsFacade fUtils)
 	{
 		this.fUtils=fUtils;

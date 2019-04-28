@@ -41,7 +41,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									TYPE extends JeeslFileType<TYPE,L,D,?>>
 	implements org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler<STORAGE,CONTAINER,META>
 {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +53,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
 	protected final JeeslFileRepositoryCallback callback;
 	
+	private final JeeslFileTypeHandler<META,TYPE> fth;
 	protected final EjbDescriptionFactory<D> efDescription;
 	protected final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
 	protected final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
@@ -86,6 +87,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		this.fbFile=fbFile;
 		this.callback=callback;
 		
+		fth = new JeeslFileTypeHandler<META,TYPE>(fbFile,fFr);
 		efDescription = new EjbDescriptionFactory<D>(fbFile.getClassD());
 		efContainer = fbFile.ejbContainer();
 		efMeta = fbFile.ejbMeta();
@@ -191,7 +193,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		xmlFile.setData(XmlDataFactory.build(bytes));
 		meta = efMeta.build(container,name,bytes.length,new Date());
 		meta.setCategory(category);
-		meta.setType(fFr.fByCode(fbFile.getClassType(), JeeslFileType.Code.unknown));
+		fth.updateType(meta);
 	}
 	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
@@ -207,7 +209,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	{
 		logger.info("selectFile "+meta.toString());
 		fileName = meta.getFileName();
-		meta = efDescription.persistMissingLangs(fFr, locales, meta);
+		meta = efDescription.persistMissingLangs(fFr,locales,meta);
 	}
 	
 	public void saveMeta() throws UtilsConstraintViolationException, UtilsLockingException
@@ -283,5 +285,4 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		logger.warn("NYI until META implements position");
 //		PositionListReorderer.reorder(fFr,metas);
 	}
-
 }

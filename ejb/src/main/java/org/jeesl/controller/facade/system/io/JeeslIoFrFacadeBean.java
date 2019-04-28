@@ -21,6 +21,7 @@ import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryStore;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-									TYPE extends UtilsStatus<TYPE,L,D>>
+									TYPE extends JeeslFileType<TYPE,L,D,?>>
 					extends UtilsFacadeBean
 					implements JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {	

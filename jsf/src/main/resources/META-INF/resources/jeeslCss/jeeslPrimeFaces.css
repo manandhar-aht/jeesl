@@ -79,6 +79,9 @@
    For SelectOneMenu this is realized by introducing a p:panelGrid with layout=block that renders a DIV
 */
 
+/* Galleria */
+.ui-galleria {width: 100%;}
+
 /***********************************************************************************/
 
 /* Defines the columns for multi-column standard layouts */

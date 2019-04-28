@@ -24,6 +24,7 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicStyle;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.graphic.with.EjbWithCodeGraphic;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRest;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
 import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
@@ -66,7 +67,9 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-										F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+										F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>
+										,RE extends JeeslRevisionEntity<L,D,?,?,?>
+>
 			extends AbstractAdminBean<L,D>
 			implements Serializable
 {
@@ -138,7 +141,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
-	protected void initUtils(JeeslTranslationBean bTranslation, JeeslGraphicFacade<L,D,?,G,GT,F,FS> fGraphic, JeeslFacesMessageBean bMessage)
+	protected void postConstructOptionTable(JeeslTranslationBean<L,D,LOC> bTranslation,
+											JeeslGraphicFacade<L,D,?,G,GT,F,FS> fGraphic,
+											JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation, bMessage);
 		this.fUtils=fGraphic;

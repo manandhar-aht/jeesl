@@ -10,6 +10,7 @@ import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
 											META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-											TYPE extends UtilsStatus<TYPE,L,D>>
+											TYPE extends JeeslFileType<TYPE,L,D,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoFileRepositoryFactoryBuilder.class);

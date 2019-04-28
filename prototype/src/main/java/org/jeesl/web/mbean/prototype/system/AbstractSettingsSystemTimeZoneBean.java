@@ -25,8 +25,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractSettingsSystemTimeZoneBean <L extends UtilsLang,
-											D extends UtilsDescription,
+public class AbstractSettingsSystemTimeZoneBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											CALENDAR extends JeeslCalendar<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 											ZONE extends JeeslCalendarTimeZone<L,D,CALENDAR,ZONE,CT,ITEM,IT>,
 											CT extends UtilsStatus<CT,L,D>,
@@ -54,7 +53,7 @@ public class AbstractSettingsSystemTimeZoneBean <L extends UtilsLang,
 		this.fbCalendar=fbCalendar;
 	}
 	
-	public void postConstructTimeZone(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage)
+	public void postConstructTimeZone(JeeslCalendarFacade<L,D,CALENDAR,ZONE,CT,ITEM,IT> fCalendar, JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fCalendar=fCalendar;

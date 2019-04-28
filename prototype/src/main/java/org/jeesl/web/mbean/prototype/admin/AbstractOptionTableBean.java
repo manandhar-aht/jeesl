@@ -14,6 +14,7 @@ import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.system.JeeslExportRestFacade;
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
 import org.jeesl.api.rest.JeeslExportRest;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.system.StatusFactoryBuilder;
 import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
@@ -26,6 +27,7 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.graphic.with.EjbWithCodeGraphic;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRest;
+import org.jeesl.interfaces.model.system.option.JeeslOptionRestDescription;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
 import org.jeesl.interfaces.model.system.option.JeeslOptionUploadable;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
@@ -33,6 +35,7 @@ import org.jeesl.interfaces.model.system.with.EjbWithGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
 import org.jeesl.model.xml.jeesl.Container;
+import org.jeesl.model.xml.system.revision.Entity;
 import org.jeesl.util.db.JeeslGraphicDbUpdater;
 import org.jeesl.util.db.JeeslStatusDbUpdater;
 import org.primefaces.event.FileUploadEvent;
@@ -80,6 +83,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	private final StatusFactoryBuilder<L,D,LOC> fbStatus;
 	private final SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg;
+	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,?,?,?> fbRevision;
 	
 	private final JeeslGraphicDbUpdater<G,GT> dbuGraphic;
 	
@@ -88,6 +92,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	
 	private boolean supportsUpload; public boolean getSupportsUpload(){return supportsUpload;}
 	private boolean supportsDownload; public boolean getSupportsDownload(){return supportsDownload;}
+	private boolean supportsDescription; public boolean getSupportsDescription(){return supportsDescription;}
 	protected boolean supportsSymbol; public boolean getSupportsSymbol(){return supportsSymbol;}
 	protected boolean supportsImage; public boolean getSupportsImage() {return supportsImage;}
 	protected boolean supportsGraphic; public boolean getSupportsGraphic() {return supportsGraphic;}
@@ -99,7 +104,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	protected Object category; public Object getCategory() {return category;} public void setCategory(Object category) {this.category = category;}
 	protected Object status; public Object getStatus() {return status;} public void setStatus(Object status) {this.status = status;}
 	private G graphic; public G getGraphic() {return graphic;} public void setGraphic(G graphic) {this.graphic = graphic;}
-
+	private RE entity; public RE getEntity() {return entity;}
+	
 	@SuppressWarnings("rawtypes")
 	protected Class cl,clParent;
 	
@@ -111,17 +117,19 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	private List<F> figures; public List<F> getFigures() {return figures;}
 	private F figure; public F getFigure() {return figure;} public void setFigure(F figure) {this.figure = figure;}
 
-	
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
 	
 	protected final EjbGraphicFactory<L,D,G,GT,F,FS> efGraphic;
 	private final EjbGraphicFigureFactory<L,D,G,GT,F,FS> efFigure;
 	
-	public AbstractOptionTableBean(StatusFactoryBuilder<L,D,LOC> fbStatus, SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg)
+	public AbstractOptionTableBean(StatusFactoryBuilder<L,D,LOC> fbStatus,
+									SvgFactoryBuilder<L,D,G,GT,F,FS> fbSvg,
+									IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,?,?,?> fbRevision)
 	{
 		super(fbStatus.getClassL(),fbStatus.getClassD());
 		this.fbStatus=fbStatus;
 		this.fbSvg=fbSvg;
+		this.fbRevision=fbRevision;
 		dbuGraphic = new JeeslGraphicDbUpdater<G,GT>(fbSvg);
 
 		efGraphic = fbSvg.efGraphic();
@@ -153,6 +161,11 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		graphicStyles = fUtils.allOrderedPositionVisible(fbSvg.getClassFigureStyle());
 	}
 	
+	private void reset(boolean rEntity)
+	{
+		if(rEntity) {entity=null;}
+	}
+	
 	protected void updateSecurity(JeeslJsfSecurityHandler jsfSecurityHandler, String viewCode)
 	{
 		super.updateSecurity2(jsfSecurityHandler, viewCode);
@@ -162,6 +175,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		supportsUpload = JeeslOptionUploadable.class.isAssignableFrom(cl);
 		supportsDownload = JeeslOptionRestDownload.class.isAssignableFrom(cl);
+		supportsDescription = JeeslOptionRestDescription.class.isAssignableFrom(cl);
 		supportsImage = UtilsWithImage.class.isAssignableFrom(cl);
 		supportsGraphic = EjbWithGraphic.class.isAssignableFrom(cl);
 		supportsSymbol = UtilsWithSymbol.class.isAssignableFrom(cl);
@@ -180,6 +194,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\tSymbol? "+supportsSymbol);
 			logger.info("\tFigure? "+supportsFigure);
 			logger.info("\t"+JeeslOptionRestDownload.class.getSimpleName()+"? "+supportsDownload);
+			logger.info("\t"+JeeslOptionRestDescription.class.getSimpleName()+"? "+supportsDescription);
 			logger.info("\t"+JeeslOptionUploadable.class.getSimpleName()+"? "+supportsUpload);
 		}
 	}
@@ -193,6 +208,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings("unchecked")
 	public void selectCategory(boolean reset) throws ClassNotFoundException
 	{
+		reset(true);
 		if(category==null) {logger.error("selectCategory, but category is NULL");}
 		
 		StringBuilder sb = new StringBuilder();
@@ -204,6 +220,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		cl = Class.forName(((EjbWithImage)category).getImage());
 		updateUiForCategory();
+		
+		try {entity = fUtils.fByCode(fbRevision.getClassEntity(), cl.getName());}
+		catch (UtilsNotFoundException e) {}
 		
 		uiAllowAdd = allowAdditionalElements.get(((EjbWithId)category).getId()) || hasDeveloperAction;
 		
@@ -431,9 +450,9 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	public void pageFlowPrimaryAdd() {}
 	
 	
-	//JEESL REST
+	//JEESL REST DATA
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void download() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	public <X extends JeeslOptionRest, S extends UtilsStatus, W extends EjbWithCodeGraphic<G>> void downloadData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
 	{
 		logger.info("Downloading REST");
 		
@@ -451,7 +470,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		else
 		{
 			logger.info("Using Direct Connection (JBoss EAP7)");
-			xml = getFromRest(x.getRestCode());
+			xml = downloadOptionsFromRest(x.getRestCode());
 		}
 		
 		JaxbUtil.info(xml);
@@ -467,9 +486,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
         
         selectCategory();
 	}
-	
 	@SuppressWarnings("unchecked")
-	private Container getFromRest(String code) throws UtilsConfigurationException
+	private Container downloadOptionsFromRest(String code) throws UtilsConfigurationException
 	{
 		StringBuilder url = new StringBuilder();
 		if(code.startsWith(JeeslExportRestFacade.packageJeesl)) {url.append(JeeslExportRestFacade.urlJeesl);}
@@ -479,5 +497,40 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		ResteasyWebTarget restTarget = client.target(url.toString());
 		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
 		return rest.exportStatus(code);
+	}
+	
+	//JEESL REST Description
+	@SuppressWarnings({ "unchecked"})
+	public <X extends JeeslOptionRest> void downloadDescription() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UtilsConfigurationException
+	{
+		logger.info("Downloading REST");
+		
+		Class<X> cX = (Class<X>)Class.forName(((EjbWithImage)category).getImage()).asSubclass(JeeslOptionRest.class);
+		
+		X x = cX.newInstance();
+		
+		Entity xml;
+		if(fUtils instanceof JeeslExportRestFacade)
+		{
+			logger.info("Using Facade Connection for JBoss EAP6 ("+fUtils.getClass().getSimpleName()+" implements "+JeeslExportRestFacade.class.getSimpleName()+"): "+x.getRestCode());
+//			xml = ((JeeslExportRestFacade)fUtils).exportJeeslReferenceRest(x.getRestCode());
+		}
+		else
+		{
+			logger.info("Using Direct Connection (JBoss EAP7) "+x.getRestCode());
+			xml = downloadRevisionFromRest(x.getRestCode());
+		}
+	}
+	@SuppressWarnings("unchecked")
+	private Entity downloadRevisionFromRest(String code) throws UtilsConfigurationException
+	{
+		StringBuilder url = new StringBuilder();
+		if(code.startsWith(JeeslExportRestFacade.packageJeesl)) {url.append(JeeslExportRestFacade.urlJeesl);}
+		else if(code.startsWith(JeeslExportRestFacade.packageGeojsf)) {url.append(JeeslExportRestFacade.urlGeojsf);}
+		
+		ResteasyClient client = new ResteasyClientBuilder().build();
+		ResteasyWebTarget restTarget = client.target(url.toString());
+		JeeslExportRest<L,D> rest = restTarget.proxy(JeeslExportRest.class);
+		return rest.exportRevisionEntity(code);
 	}
 }

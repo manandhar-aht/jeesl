@@ -1,11 +1,18 @@
 package org.jeesl.web.rest.system;
 
+import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.system.graphic.JeeslGraphicFacade;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
+import org.jeesl.factory.xml.system.revision.XmlEntityFactory;
 import org.jeesl.factory.xml.system.symbol.XmlGraphicFactory;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.rest.JeeslExportRest;
+import org.jeesl.model.xml.system.revision.Entity;
+import org.jeesl.util.query.xml.RevisionQuery;
 import org.jeesl.util.query.xml.SymbolQuery;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -22,30 +29,50 @@ import net.sf.ahtutils.xml.status.Status;
 public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 								S extends EjbWithId,
 								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
+								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>,
+								RC extends UtilsStatus<RC,L,D>,
+								RE extends JeeslRevisionEntity<L,D,RC,?,RA>,
+								RA extends JeeslRevisionAttribute<L,D,RE,?,RAT>,
+								RAT extends UtilsStatus<RAT,L,D>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslExportRest<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslRestService.class);
-		
-	private final JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic;
-	private final XmlGraphicFactory<L,D,G,GT,F,FS> xfGraphic;
 	
-	private JeeslRestService(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic,final Class<L> cL, final Class<D> cD)
+	protected final IoRevisionFactoryBuilder<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fbRevision;
+	
+	private final JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic;
+	private final JeeslIoRevisionFacade<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fRevision;
+	
+	private final XmlGraphicFactory<L,D,G,GT,F,FS> xfGraphic;
+	private final XmlEntityFactory<L,D,RC,RE,RA,?> xfEntity;
+	
+	private JeeslRestService(IoRevisionFactoryBuilder<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fbRevision,
+							JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic,
+							JeeslIoRevisionFacade<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fRevision)
 	{
-		super(fGraphic,cL,cD);
+		super(fGraphic,fbRevision.getClassL(),fbRevision.getClassD());
+		this.fbRevision=fbRevision;
+		this.fRevision=fRevision;
 		this.fGraphic=fGraphic;
 		xfGraphic = new XmlGraphicFactory<L,D,G,GT,F,FS>(SymbolQuery.get(SymbolQuery.Key.GraphicExport));
+		xfEntity = new XmlEntityFactory<L,D,RC,RE,RA,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 	}
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 						S extends EjbWithId,
 						G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
-	JeeslRestService<L,D,S,G,GT,F,FS>
-		factory(JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic ,final Class<L> cL, final Class<D> cD)
+						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>,
+						RC extends UtilsStatus<RC,L,D>,
+						RE extends JeeslRevisionEntity<L,D,RC,?,RA>,
+						RA extends JeeslRevisionAttribute<L,D,RE,?,RAT>,
+						RAT extends UtilsStatus<RAT,L,D>>
+	JeeslRestService<L,D,S,G,GT,F,FS,RC,RE,RA,RAT>
+		factory(IoRevisionFactoryBuilder<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fbRevision,
+				JeeslGraphicFacade<L,D,S,G,GT,F,FS> fGraphic,
+				JeeslIoRevisionFacade<L,D,RC,?,?,?,?,RE,?,RA,?,RAT> fRevision)
 	{
-		return new JeeslRestService<L,D,S,G,GT,F,FS>(fGraphic,cL,cD);
+		return new JeeslRestService<L,D,S,G,GT,F,FS,RC,RE,RA,RAT>(fbRevision,fGraphic,fRevision);
 	}
 	
 
@@ -74,6 +101,17 @@ public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 			return xml;
 		}
 		catch (ClassNotFoundException e) {throw new UtilsConfigurationException(e.getMessage());}
+		catch (UtilsNotFoundException e) {throw new UtilsConfigurationException(e.getMessage());}
+	}
+
+	@Override public Entity exportRevisionEntity(String code) throws UtilsConfigurationException
+	{
+		try
+		{
+			RE entity = fGraphic.fByCode(fbRevision.getClassEntity(), code);
+			entity = fRevision.load(fbRevision.getClassEntity(), entity);
+			return xfEntity.build(entity);
+		}
 		catch (UtilsNotFoundException e) {throw new UtilsConfigurationException(e.getMessage());}
 	}
 }

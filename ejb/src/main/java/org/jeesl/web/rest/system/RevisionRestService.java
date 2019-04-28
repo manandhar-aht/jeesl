@@ -73,7 +73,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 	private final Class<RAT> cRAT;
 
 	private XmlContainerFactory xfContainer;
-	private XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> xfEntity;
+	private XmlEntityFactory<L,D,RC,RE,RA,RAT> xfEntity;
 
 	private EjbLangFactory<L> efLang;
 	private EjbDescriptionFactory<D> efDescription;
@@ -97,7 +97,7 @@ public class RevisionRestService <L extends UtilsLang,D extends UtilsDescription
 		this.cRAT=cRAT;
 	
 		xfContainer = new XmlContainerFactory(XmlStatusQuery.get(XmlStatusQuery.Key.StatusExport).getStatus());
-		xfEntity = new XmlEntityFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(RevisionQuery.get(RevisionQuery.Key.exEntity));
+		xfEntity = new XmlEntityFactory<>(RevisionQuery.get(RevisionQuery.Key.exEntity));
 			
 		efLang = EjbLangFactory.factory(cL);
 		efDescription = EjbDescriptionFactory.factory(cD);

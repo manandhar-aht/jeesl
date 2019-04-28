@@ -4,11 +4,6 @@ import org.jeesl.factory.xml.system.lang.XmlDescriptionsFactory;
 import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.jeesl.factory.xml.system.status.XmlTypeFactory;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.model.xml.system.revision.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +14,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription,
-								RC extends UtilsStatus<RC,L,D>,
-								RV extends JeeslRevisionView<L,D,RVM>,
-								RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
-								RS extends JeeslRevisionScope<L,D,RC,RA>,
-								RST extends UtilsStatus<RST,L,D>,
-								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
+								RA extends JeeslRevisionAttribute<L,D,?,?,RAT>,
+								
 								RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlAttributeFactory.class);
@@ -35,15 +24,14 @@ public class XmlAttributeFactory <L extends UtilsLang,D extends UtilsDescription
 	
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
-	private XmlTypeFactory xfType;
+	private XmlTypeFactory<RAT,L,D> xfType;
 	
 	public XmlAttributeFactory(Attribute q)
 	{
 		this.q=q;
-		
-		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
-		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
-		if(q.isSetType()){xfType = new XmlTypeFactory(q.getType());}
+		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<>(q.getLangs());}
+		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<>(q.getDescriptions());}
+		if(q.isSetType()){xfType = new XmlTypeFactory<>(q.getType());}
 	}
 	
 	public Attribute build(RA ejb)

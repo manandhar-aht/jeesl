@@ -6,6 +6,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jeesl.model.xml.system.revision.Entity;
+
 import net.sf.ahtutils.exception.processing.UtilsConfigurationException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -16,4 +18,7 @@ public interface JeeslExportRest <L extends UtilsLang,D extends UtilsDescription
 {	
 	@GET @Path("/status/{code}") @Produces(MediaType.APPLICATION_XML)
 	<X extends UtilsStatus<X,L,D>> org.jeesl.model.xml.jeesl.Container exportStatus(@PathParam("code") String code) throws UtilsConfigurationException;
+	
+	@GET @Path("/revision/entity/{code}") @Produces(MediaType.APPLICATION_XML)
+	Entity exportRevisionEntity(@PathParam("code") String code) throws UtilsConfigurationException;
 }

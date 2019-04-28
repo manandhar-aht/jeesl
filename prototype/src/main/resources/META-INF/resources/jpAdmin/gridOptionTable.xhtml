@@ -39,6 +39,17 @@
 					</h:form>
 				</aht:slot>
 				<aht:slot id="sCategory" width="6">
+					<h:form id="fEntity" rendered="#{(not empty cc.attrs.bean.entity)}">
+						<p:panel id="pLang" header="#{cc.attrs.bean.entity.name[localeCode].lang}" styleClass="jeeslPanel">
+							<f:facet name="actions">
+								<j:icon type="jeeslDownload" listener="#{cc.attrs.bean.downloadDescription()}" update=":#{cc.id}:fCategory" rendered="#{cc.attrs.bean.supportsDescription}"/>
+							</f:facet>
+							<p:panelGrid columns="1" columnClasses="jeeslGrid100">
+								<h:outputText value="#{cc.attrs.bean.entity.description[localeCode].lang}"/>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+					
 					<h:form id="fCategory" rendered="#{not empty cc.attrs.bean.category}">
 						<p:dataTable var="s" value="#{cc.attrs.bean.items}" draggableRows="#{cc.attrs.bean.uiAllowReorder}"
 					          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
@@ -46,9 +57,9 @@
 					          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
 					          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>
 					          		<aht:icon type="jeeslUpload" listener="#{cc.attrs.bean.upload()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsUpload}"/>
-					          		<aht:icon type="jeeslDownload" listener="#{cc.attrs.bean.download()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsDownload}"/>
-					          		<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.bean.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.bean.showDescription}" mayDisappear="true"/>
-									<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.bean.toggleDescription()}" update="@form" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{not cc.attrs.bean.showDescription}" mayDisappear="true"/>
+					          		<j:icon type="jeeslDownload" listener="#{cc.attrs.bean.downloadData()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" rendered="#{cc.attrs.bean.supportsDownload}"/>
+					          		<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.bean.toggleDescription()}" update=":#{cc.id}:sCategory" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.bean.showDescription}" mayDisappear="true"/>
+									<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.bean.toggleDescription()}" update=":#{cc.id}:sCategory" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{not cc.attrs.bean.showDescription}" mayDisappear="true"/>
 					          	</aht:pfDataTableHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>
@@ -67,7 +78,7 @@
 							<p:column>  
 					             <f:facet name="header">#{msg.aupTranslation}</f:facet>  
 					             <h:outputText value="#{s.name[localeCode].lang}" />
-					             <h:outputText value="&lt;br/&gt;" escape="false"  rendered="#{cc.attrs.bean.showDescription}"/>
+					             <h:outputText value="&lt;br/&gt;" escape="false" rendered="#{cc.attrs.bean.showDescription}"/>
 								<h:outputText value="#{s.description[localeCode].lang}" rendered="#{cc.attrs.bean.showDescription}" styleClass="jeeslItalic"/>
 							</p:column>
 							<p:column rendered="#{cc.attrs.bean.supportsSymbol}">

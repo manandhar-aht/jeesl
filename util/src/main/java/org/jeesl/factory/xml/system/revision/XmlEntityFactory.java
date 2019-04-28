@@ -5,10 +5,6 @@ import org.jeesl.factory.xml.system.lang.XmlLangsFactory;
 import org.jeesl.factory.xml.system.status.XmlCategoryFactory;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntityMapping;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionScope;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionView;
-import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionViewMapping;
 import org.jeesl.model.xml.system.revision.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,32 +17,27 @@ import net.sf.ahtutils.xml.aht.Query;
 
 public class XmlEntityFactory <L extends UtilsLang,D extends UtilsDescription,
 								RC extends UtilsStatus<RC,L,D>,
-								RV extends JeeslRevisionView<L,D,RVM>,
-								RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
-								RS extends JeeslRevisionScope<L,D,RC,RA>,
-								RST extends UtilsStatus<RST,L,D>,
-								RE extends JeeslRevisionEntity<L,D,RC,REM,RA>,
-								REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
-								RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
+								RE extends JeeslRevisionEntity<L,D,RC,?,RA>,	
+								RA extends JeeslRevisionAttribute<L,D,RE,?,RAT>,
 								RAT extends UtilsStatus<RAT,L,D>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlEntityFactory.class);
 	
 	private Entity q;
 	
-	private XmlCategoryFactory xfCategory;
+	private XmlCategoryFactory<RC,L,D> xfCategory;
 	private XmlLangsFactory<L> xfLangs;
 	private XmlDescriptionsFactory<D> xfDescriptions;
-	private XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> xfAttribute;
+	private XmlAttributeFactory<L,D,RA,RAT> xfAttribute;
 	
 	public XmlEntityFactory(Query q){this(q.getEntity());}
 	public XmlEntityFactory(Entity q)
 	{
 		this.q=q;
-		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory(q.getCategory());}
-		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<L>(q.getLangs());}
-		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<D>(q.getDescriptions());}
-		if(q.isSetAttribute()){xfAttribute = new XmlAttributeFactory<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>(q.getAttribute().get(0));}
+		if(q.isSetCategory()){xfCategory = new XmlCategoryFactory<>(q.getCategory());}
+		if(q.isSetLangs()){xfLangs = new XmlLangsFactory<>(q.getLangs());}
+		if(q.isSetDescriptions()){xfDescriptions = new XmlDescriptionsFactory<>(q.getDescriptions());}
+		if(q.isSetAttribute()){xfAttribute = new XmlAttributeFactory<>(q.getAttribute().get(0));}
 	}
 	
 	public Entity build(RE ejb)

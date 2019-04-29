@@ -1,21 +1,32 @@
 package org.jeesl.util.query.ejb.system.io;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbFileMetaQuery
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbFileMetaQuery.class);
 	
-	public static <T extends EjbWithId, L extends EjbWithId> int size(Map<T,List<L>> map)
+	public static <META extends JeeslFileMeta<?,?,?>> List<META> filterImages(List<META> metas)
 	{	
-		int result = 0;
-		for(List<L> list : map.values()){result = result+list.size();}
-		return 1;
+		List<META> images = new ArrayList<META>();
+				
+		for(META meta : metas)
+		{
+			if(meta.getType()!=null && meta.getType().getCode()!=null)
+			{
+				if(meta.getType().getCode().equals(JeeslFileType.Code.jpg.toString())
+						|| meta.getType().getCode().equals(JeeslFileType.Code.png.toString()))
+				{
+					images.add(meta);
+				}
+			}
+		}
+		return images;
 	}
 }

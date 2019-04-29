@@ -8,7 +8,6 @@ import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.EjbWithSize;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
@@ -17,7 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslFileMeta<D extends UtilsDescription,
 								CONTAINER extends JeeslFileContainer<?,?>,
-								TYPE extends UtilsStatus<TYPE,?,?>>
+								TYPE extends JeeslFileType<TYPE,?,D,?>>
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithParentAttributeResolver,
 //					EjbWithPosition,

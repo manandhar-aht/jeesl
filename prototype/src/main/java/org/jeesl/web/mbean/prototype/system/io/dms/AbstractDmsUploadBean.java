@@ -224,8 +224,11 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 		if(file.getAttributeContainer()!=null)	
 		{
 			ACONTAINER container = file.getAttributeContainer();
-			fAttribute.rm(container);
+			
 			file.setAttributeContainer(null);
+			fFr.save(file);
+			
+			fFr.rm(container);
 		}
 		fFr.rm(file);
 		reset(false,true);

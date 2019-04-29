@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
+import org.jeesl.controller.handler.system.io.fr.JeeslFileTypeHandler;
 import org.jeesl.controller.handler.tuple.JsonTuple2Handler;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -43,11 +45,13 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	
 	private final JsonTuple2Handler<STORAGE,TYPE> thCount; public JsonTuple2Handler<STORAGE, TYPE> getThCount() {return thCount;}
 	private final EjbIoFrStorageFactory<STORAGE> efStorage;
+	private JeeslFileTypeHandler<META,TYPE> fth;
 	
 	private List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
 	private List<ENGINE> engines; public List<ENGINE> getEngines() {return engines;}
 	
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
+	private TYPE typeUnknown;public TYPE getTypeUnknown() {return typeUnknown;}
 
 	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr, JeeslComparatorProvider<TYPE> jcpB)
 	{
@@ -62,9 +66,19 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fFr=fFr;
+		fth = new JeeslFileTypeHandler<>(fbFr,fFr);
+		try
+		{
+			typeUnknown = fFr.fByCode(fbFr.getClassType(), JeeslFileType.Code.unknown);
+		}
+		catch (UtilsNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		reloadStorages();
 		engines = fFr.allOrderedPositionVisible(fbFr.getClassEngine());
 		thCount.init(fFr.tpIoFileByStorageType());
+		
 	}
 	
 	public void resetStorage() {reset(true);}
@@ -109,6 +123,24 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 		storage = efDescription.persistMissingLangs(fFr, localeCodes, storage);
 		if(debugOnInfo) {logger.info(AbstractLogMessage.selectEntity(storage));}
 		reset(false);
+	}
+	
+	public void fixType()
+	{	
+		if(typeUnknown!=null && fth!=null)
+		{
+			for(META meta : fFr.allForType(fbFr.getClassMeta(), typeUnknown))
+			{
+				String code = meta.getType().getCode();
+				fth.updateType(meta);
+				if(!code.contentEquals(meta.getType().getCode()))
+				{
+					try {fFr.save(meta);}
+					catch (UtilsConstraintViolationException | UtilsLockingException e) {e.printStackTrace();}
+				}
+			}
+		}
+		thCount.init(fFr.tpIoFileByStorageType());
 	}
 	
 	public void reorderStorages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fFr, storages);}

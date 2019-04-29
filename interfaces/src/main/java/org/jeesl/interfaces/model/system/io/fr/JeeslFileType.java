@@ -12,16 +12,15 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
-import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 
 public interface JeeslFileType <S extends UtilsStatus<S,L,D>,
 								L extends UtilsLang,
 								D extends UtilsDescription,
 								G extends JeeslGraphic<L,D,G,?,?,?>>
 							extends Serializable,EjbPersistable,
-									EjbWithCode,UtilsStatusFixedCode,UtilsWithSymbol,
+									EjbWithCode,UtilsStatusFixedCode,
 									JeeslOptionRestDownload,EjbWithCodeGraphic<G>,
 									UtilsStatus<S,L,D>
 {	
-	public enum Code{pdf,docx,xlsx,xml,csv,jpg,zip,unknown}
+	public enum Code{pdf,docx,xlsx,xml,csv,txt,jpg,png,zip,unknown}
 }

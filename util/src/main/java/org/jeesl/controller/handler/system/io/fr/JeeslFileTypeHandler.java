@@ -35,9 +35,11 @@ public class JeeslFileTypeHandler<META extends JeeslFileMeta<?,?,TYPE>,
 		else if(fileName.endsWith(".xls") || fileName.endsWith(".xlsx")){return JeeslFileType.Code.xlsx;}
 		else if(fileName.endsWith(".pdf")){return JeeslFileType.Code.pdf;}
 		else if(fileName.endsWith(".csv")){return JeeslFileType.Code.csv;}
+		else if(fileName.endsWith(".txt")){return JeeslFileType.Code.txt;}
 		else if(fileName.endsWith(".xml")){return JeeslFileType.Code.xml;}
 		else if(fileName.endsWith(".zip") || fileName.endsWith(".rar")){return JeeslFileType.Code.zip;}
 		else if(fileName.endsWith(".jpeg") || fileName.endsWith(".jpg")){return JeeslFileType.Code.jpg;}
+		else if(fileName.endsWith(".png")){return JeeslFileType.Code.png;}
 		return JeeslFileType.Code.unknown;
 	}
 }

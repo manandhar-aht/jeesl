@@ -89,7 +89,7 @@
                                 <aht:pfDataTableHeader title="#{msg.jeeslTsEntity}"/>
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectEntity()}" update=":#{cc.id}:sTimeSeries :#{cc.id}:sTs"/>
-                            <p:column rendered="true" filterBy="#{e}" filterMatchMode="contains" filterStyle="width: 100px;">
+                            <p:column rendered="#{not empty cc.attrs.bean.bridge.entityClass.xpath}" filterBy="#{e}" filterMatchMode="contains" filterStyle="width: 100px;">
                                 <jeesl:outputXpath value="#{e}" xpath="#{cc.attrs.bean.bridge.entityClass.xpath}"/>
                             </p:column>
                             <p:column rendered="#{not empty cc.attrs.bean.bridge.entityClass.xpathName}">

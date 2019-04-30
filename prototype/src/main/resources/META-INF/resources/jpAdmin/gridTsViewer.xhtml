@@ -28,14 +28,12 @@
 								<aht:pfDataTableHeader title="#{msg.jeeslTsStation}"/>
 							</f:facet>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTimeseries()}" update=":#{cc.id}:sCategory"/>
-							<p:column rendered="true">
-								<ui:remove>
-									<h:outputText value="[#{ts.id}] "/>
-									<h:outputText value="#{cc.attrs.bean.mapTsEntity[ts].id} "/>
-								    <h:outputText value="#{ts.bridge.entityClass.xpath}"/>
-								</ui:remove>
+							<p:column rendered="#{not empty ts.bridge.entityClass.xpath}">
 								<jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[ts]}" xpath="#{ts.bridge.entityClass.xpath}"/>
 				            </p:column>
+				            <p:column rendered="#{not empty ts.bridge.entityClass.xpathName}">
+                                <jeesl:outputXpath value="#{cc.attrs.bean.mapTsEntity[ts]}" xpath="#{ts.bridge.entityClass.xpathName}" localeCode="#{localeCode}"/>
+                            </p:column>
 				       	</p:dataTable>
 					</h:form>
 				</aht:slot>

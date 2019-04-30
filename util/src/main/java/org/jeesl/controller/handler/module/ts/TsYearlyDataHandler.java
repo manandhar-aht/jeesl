@@ -2,6 +2,8 @@ package org.jeesl.controller.handler.module.ts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.jeesl.model.json.db.tuple.JsonIdValue;
 import org.jeesl.model.json.util.time.JsonYear;
 import org.jeesl.model.pojo.map.generic.Nested2Map;
+import org.jeesl.util.comparator.json.JsonYearComparator;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +64,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 	private final JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs;
 	private final TsFactoryBuilder<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fbTs;
 	
+	private final Comparator<JsonYear> cpYear;
 //	private JeeslComparatorProvider<T> jcpA; public void setComparatorProviderA(JeeslComparatorProvider<A> jcpA) {this.jcpA = jcpA;}
 	
 	private final Map<Integer,JsonYear> mapYears;
@@ -84,6 +88,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 		domains = new ArrayList<EjbWithId>();
 		years = new ArrayList<JsonYear>();
 
+		cpYear = new JsonYearComparator();
 	}
 	
 	public <E1 extends Enum<E1>, E2 extends Enum<E2>, E3 extends Enum<E3>> void init(Class<DOMAIN> cDomain, E1 scope, E2 interval, E3 workspace)
@@ -134,6 +139,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 			}
 			catch (UtilsNotFoundException e) {logger.warn(e.getMessage());}
 		}
+		Collections.sort(years,cpYear);
 	}
 	public <E1 extends Enum<E1>, E2 extends Enum<E2>> void reloadId(List<EjbWithId> domains, Date start, Date end)
 	{
@@ -151,6 +157,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 			}
 			catch (UtilsNotFoundException e) {logger.warn(e.getMessage());}
 		}
+		Collections.sort(years,cpYear);
 	}
 	
 	private void process(EjbWithId domain, List<DATA> datas)

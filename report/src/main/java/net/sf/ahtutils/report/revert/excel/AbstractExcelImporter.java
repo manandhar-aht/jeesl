@@ -191,18 +191,18 @@ public abstract class AbstractExcelImporter <C extends Serializable, I extends I
 	    // Get the next row
 	    Row row = activeSheet.getRow(i);
 	    if (row==null || isEmptyRow(row)) {continue;}
-	    // Create a new Entity
-	    C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
-            if (entity instanceof EjbWithId)
-	    {
-		Long currentId = new Long(1);
-		if (tempPropertyStore.containsKey("currentId")) 
-		{
-		    currentId = (Long) tempPropertyStore.get("currentId");
-		}
-		((EjbWithId) entity).setId(currentId + 1);
-		tempPropertyStore.put("currentId", currentId +1);
-	    }
+			// Create a new Entity
+			C entity = (C) Class.forName(structure.getTargetClass()).newInstance();
+			if (entity instanceof EjbWithId && !(tempPropertyStore.containsKey("dontGenerateIds")))
+				{
+					Long currentId = new Long(1);
+					if (tempPropertyStore.containsKey("currentId")) 
+					{
+						currentId = (Long) tempPropertyStore.get("currentId");
+					}
+					((EjbWithId) entity).setId(currentId + 1);
+					tempPropertyStore.put("currentId", currentId +1);
+				}
 
 	    // Create a list of properties that falied the validation
 	    // This can be used for staging purposes later on

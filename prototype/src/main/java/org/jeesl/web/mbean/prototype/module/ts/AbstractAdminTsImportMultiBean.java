@@ -314,8 +314,11 @@ public class AbstractAdminTsImportMultiBean <L extends UtilsLang, D extends Util
                         data.setWorkspace(workspace);
                         data.setTransaction(transaction);
                         if (logger.isTraceEnabled()) {logger.warn("Saving data point for reference ID " +data.getTimeSeries().getBridge().getRefId()+ " in transaction source " +transaction.getSource().getName().get("en"));}
-                        
+                        //logger.info("ID was " +data.getId());
+						data.setId(0);
                         fTs.save(data);
+						//logger.info("ID is set to " +data.getId());
+						
                     }
 
                     entities=null;

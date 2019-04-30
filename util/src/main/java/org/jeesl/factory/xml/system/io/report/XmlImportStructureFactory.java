@@ -65,11 +65,11 @@ public class XmlImportStructureFactory <L extends UtilsLang,D extends UtilsDescr
             associationsContainer.getDataAssociation().add(association);
             if (propertyUtil.isWriteable(test, association.getProperty())) 
             {
-                logger.info("Added " +association.getProperty() + " to be imported from column " +association.getColumn());
+                if (logger.isTraceEnabled()){logger.trace("Added " +association.getProperty() + " to be imported from column " +association.getColumn());}
             }
             else
             {
-                logger.warn("The property " +association.getProperty() +" is not a writable field of " +targetClass.getName() +". Please fix your configuration!");
+                if (logger.isTraceEnabled()){logger.warn("The property " +association.getProperty() +" is not a writable field of " +targetClass.getName() +". Please fix your configuration!");}
             }
         }
 

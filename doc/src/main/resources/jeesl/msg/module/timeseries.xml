@@ -77,13 +77,35 @@
     		<s:lang key="fr" translation="Class"/>
     	</s:langs>
     </s:translation>
-	<s:translation key="aupTsClassAttribute">
+	<s:translation key="jeeslTsClassAttribute">
     	<s:langs>
     		<s:lang key="de" translation="Attribute"/>
     		<s:lang key="en" translation="Attribute"/>
     		<s:lang key="fr" translation="Attribute"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslTsClassXpathParent">
+    	<s:langs>
+    		<s:lang key="de" translation="XPath (Übergeordnet)"/>
+    		<s:lang key="en" translation="XPath (Superior)"/>
+    		<s:lang key="fr" translation="XPath (Superior)"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsClassXpathCode">
+    	<s:langs>
+    		<s:lang key="de" translation="XPath (Code)"/>
+    		<s:lang key="en" translation="XPath (Code)"/>
+    		<s:lang key="fr" translation="XPath (Code)"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslTsClassXpathName">
+    	<s:langs>
+    		<s:lang key="de" translation="XPath (Name)"/>
+    		<s:lang key="en" translation="XPath (Name)"/>
+    		<s:lang key="fr" translation="XPath (Name)"/>
+    	</s:langs>
+    </s:translation>
+    
 	<s:translation key="jeeslTsWorkspaces">
     	<s:langs>
     		<s:lang key="de" translation="Arbeitsbereiche"/>

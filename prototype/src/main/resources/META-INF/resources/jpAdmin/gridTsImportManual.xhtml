@@ -92,6 +92,9 @@
                             <p:column rendered="true" filterBy="#{e}" filterMatchMode="contains" filterStyle="width: 100px;">
                                 <jeesl:outputXpath value="#{e}" xpath="#{cc.attrs.bean.bridge.entityClass.xpath}"/>
                             </p:column>
+                            <p:column rendered="#{not empty cc.attrs.bean.bridge.entityClass.xpathName}">
+                                <jeesl:outputXpath value="#{e}" xpath="#{cc.attrs.bean.bridge.entityClass.xpathName}" localeCode="#{localeCode}"/>
+                            </p:column>
                         </p:dataTable>
                     </h:form>
                 </aht:slot>

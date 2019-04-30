@@ -25,6 +25,7 @@ public class OutputXpath extends AbstractXpath
 	private enum Properties {value,xpath,column,styleClass,localeCode}
 	
 	private static boolean debugOnInfo = false;
+	private static String token = "$localeCode$";
 	
 	@Override
 	public void encodeBegin(FacesContext context) throws IOException
@@ -44,9 +45,9 @@ public class OutputXpath extends AbstractXpath
 	{	
 		String xpath = ComponentAttribute.get(Properties.xpath,"",context,this);
 		String localeCode = ComponentAttribute.get(Properties.localeCode, null, context, this);
-		if(localeCode!=null)
+		if(localeCode!=null && xpath.contains(token))
 		{
-			xpath=xpath.replace("$localeCode$", localeCode);
+			xpath=xpath.replace(token, localeCode);
 		}
 		if(debugOnInfo) {logger.info("localeCode: "+(localeCode!=null)+" "+xpath);}
 				

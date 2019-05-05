@@ -10,9 +10,13 @@ import org.openfuxml.transform.XhtmlTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.exlp.util.xml.JaxbUtil;
+
 public class JeeslMarkupFactory
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslMarkupFactory.class);
+	
+	private boolean debug = true;
 	
 	private final XhtmlTransformer xhtmlTransformer;
 
@@ -23,7 +27,13 @@ public class JeeslMarkupFactory
 	
 	public Section build(String type, String content)
 	{
-		logger.info("Building Paragraph ");
+		if(debug)
+		{
+			logger.info("Building Markup");
+			logger.info(content);
+		}
+		
+		
 		Section section = XmlSectionFactory.build();
 
 		if(type.equals(JeeslIoCmsMarkupType.Code.text.toString()))
@@ -36,11 +46,13 @@ public class JeeslMarkupFactory
 		else if(type.equals(JeeslIoCmsMarkupType.Code.xhtml.toString()))
 		{
 			Section xml = xhtmlTransformer.process(content);
+			if(debug)
+			{
+				JaxbUtil.info(xml);
+			}
 			section.getContent().addAll(xml.getContent());
 		}
 		else {logger.warn("Unhandled markup Type: "+type);}
 		return section;
 	}
-	
-	
 }

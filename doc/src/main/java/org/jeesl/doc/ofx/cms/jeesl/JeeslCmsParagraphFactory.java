@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JeeslCmsParagraphFactory<E extends JeeslIoCmsElement<?,?,?,?,C,?>,
-								C extends JeeslIoCmsContent<?,E,?>>
+										C extends JeeslIoCmsContent<?,E,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsParagraphFactory.class);
 	

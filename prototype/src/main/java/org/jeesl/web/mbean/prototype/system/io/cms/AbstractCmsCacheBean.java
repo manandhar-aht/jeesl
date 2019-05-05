@@ -25,6 +25,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
@@ -95,7 +96,14 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 					lp.setLocales(Arrays.asList(locale));
 					
 					ofxSection = ofx.build(lp,localeCode,section);
-					if(debugOnInfo) {JaxbUtil.info(ofxSection);}
+					if(debugOnInfo)
+					{
+						logger.info(StringUtil.stars());
+						if(section.getName().containsKey("en")) {logger.info(section.getName().get("en").getLang());}
+						
+						logger.info(StringUtil.stars());
+						JaxbUtil.info(ofxSection);
+					}
 					mapSection.get(section).put(localeCode, ofxSection);
 				}
 				catch (OfxAuthoringException e){e.printStackTrace();}

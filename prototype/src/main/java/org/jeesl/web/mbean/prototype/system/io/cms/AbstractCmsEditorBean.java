@@ -62,7 +62,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 										C extends JeeslIoCmsContent<V,E,MT>,
 										MT extends UtilsStatus<MT,L,D>,
 										FS extends JeeslFileStorage<L,D,?>,
-										FC extends JeeslFileContainer<FS,?>,
+										FC extends JeeslFileContainer<FS,FM>,
 										FM extends JeeslFileMeta<D,FC,?>
 										>
 					extends AbstractAdminBean<L,D>
@@ -73,13 +73,13 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	
 	protected JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	private JeeslCmsCacheBean<S> bCache;
-	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms;
+	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC,FM> fbCms;
 	
 	private String currentLocaleCode;
 	protected String[] cmsLocales; public String[] getCmsLocales() {return cmsLocales;}
 	
 	protected final EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC> efCms;
-	private final EjbIoCmsSectionFactory<L,S> efS;
+	private final EjbIoCmsSectionFactory<L,S,FM> efS;
 	private final EjbIoCmsElementFactory<L,S,E> efElement;
 	private final EjbIoCmsContentFactory<LOC,E,C,MT> efContent;
 	
@@ -106,7 +106,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 	private TreeNode tree; public TreeNode getTree() {return tree;}
     private TreeNode node; public TreeNode getNode() {return node;} public void setNode(TreeNode node) {this.node = node;}
 
-	public AbstractCmsEditorBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms)
+	public AbstractCmsEditorBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC,FM> fbCms)
 	{
 		super(fbCms.getClassL(),fbCms.getClassD());
 		this.fbCms=fbCms;
@@ -135,6 +135,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		this.fCms=fCms;
 		this.hFileRepository=hFileRepository;
 		
+		this.hFileRepository.setDebugOnInfo(debugOnInfo);
 		opLocale.setOpList(locales);
 		
 		elementCategories=fCms.allOrderedPositionVisible(fbCms.getClassElementCategory());

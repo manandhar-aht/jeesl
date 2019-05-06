@@ -47,8 +47,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractFileRepositoryHandler.class);
 	
-	private boolean debugOnInfo = true;
-
+	protected boolean debugOnInfo; @Override public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
+	
 	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
 	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
 	protected final JeeslFileRepositoryCallback callback;
@@ -86,6 +86,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		this.fFr=fFr;
 		this.fbFile=fbFile;
 		this.callback=callback;
+		debugOnInfo = false;
 		
 		fth = new JeeslFileTypeHandler<META,TYPE>(fbFile,fFr);
 		efDescription = new EjbDescriptionFactory<D>(fbFile.getClassD());
@@ -180,7 +181,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	public void addFile()
 	{
-		logger.info("Adding File");
+		if(debugOnInfo) {logger.info("Adding File");}
 		xmlFile = XmlFileFactory.build("");
 	}
 	
@@ -198,23 +199,23 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	public void saveFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("Saving: "+xmlFile.getName()+" Now calling fFr.saveToFileRepository");
+		if(debugOnInfo) {logger.info("Saving: "+xmlFile.getName()+" Now calling fFr.saveToFileRepository");}
 		meta = fFr.saveToFileRepository(meta,xmlFile.getData().getValue());
-		logger.info("Saved");
+		if(debugOnInfo) {logger.info("Saved");}
 		reload();
 		reset(true);
     }
 	
 	public void selectFile()
 	{
-		logger.info("selectFile "+meta.toString());
+		if(debugOnInfo) {logger.info("selectFile "+meta.toString());}
 		fileName = meta.getFileName();
 		meta = efDescription.persistMissingLangs(fFr,locales,meta);
 	}
 	
 	public void saveMeta() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("save meta "+meta.toString());
+		if(debugOnInfo) {logger.info("save meta "+meta.toString());}
 		if(FilenameUtils.getExtension(fileName).equals(FilenameUtils.getExtension(meta.getFileName())))
 		{
 			meta.setFileName(fileName);
@@ -228,7 +229,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	@Override public void deleteFile() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("DELETING: "+meta.toString());
+		if(debugOnInfo) {logger.info("DELETING: "+meta.toString());}
 		fFr.delteFileFromRepository(meta);
 		reload();
 		reset(true);

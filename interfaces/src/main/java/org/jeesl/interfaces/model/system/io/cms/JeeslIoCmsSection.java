@@ -25,4 +25,6 @@ public interface JeeslIoCmsSection<L extends UtilsLang, S extends JeeslIoCmsSect
 	
 	List<S> getSections();
 	void setSections(List<S> columns);
+	
+	
 }

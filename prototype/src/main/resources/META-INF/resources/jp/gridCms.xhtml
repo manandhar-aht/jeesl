@@ -56,7 +56,9 @@
 				</aht:slot>
 				<aht:slot id="sLangs" width="2">
 					<h:form id="fLangs" rendered="#{(not empty cc.attrs.bean.cms) and (cc.attrs.bean.cms.id gt 0)}">
-						<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs :fStatusBar" tableHeader="#{msg.jeeslCmsLanguages}"/>
+						<ui:remove>
+							<jp:opSelection handler="#{cc.attrs.bean.opLocale}" update=":#{cc.id}:fLangs :fStatusBar" tableHeader="#{msg.jeeslCmsLanguages}"/>
+						</ui:remove>
 					</h:form>
 				</aht:slot>
 			</j:row>
@@ -104,7 +106,6 @@
 							</p:panelGrid>
 						</p:panel>
 					</h:form>
-					
 					<h:form id="fElements" rendered="#{(not empty cc.attrs.bean.section) and (cc.attrs.bean.section.id gt 0)}">
 						<p:dataTable var="e" value="#{cc.attrs.bean.elements}" draggableRows="true"
 							selection="#{cc.attrs.bean.element}" selectionMode="single" rowKey="#{e.id}">
@@ -118,8 +119,7 @@
 							<p:column rendered="true"><h:outputText value="#{e.position}"/></p:column>
 							<p:column><jtp:symbolizer value="#{e.type}"/></p:column>
 							<p:column headerText="#{msg.jeeslCmsElementType}"><h:outputText value="#{e.type.name[localeCode].lang}"/></p:column>
-							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>
-							
+							<p:column headerText="#{msg.jeeslCmsElement} ID"><h:outputText value="#{e.id}"/></p:column>	
 						</p:dataTable>
 					</h:form>
 					<h:form id="fElement" rendered="#{not empty cc.attrs.bean.element}">

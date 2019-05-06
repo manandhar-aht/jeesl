@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,8 @@ public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
 								MT extends UtilsStatus<MT,L,D>,
-								FC extends JeeslFileContainer<?,?>
+								FC extends JeeslFileContainer<?,FM>,
+								FM extends JeeslFileMeta<D,FC,?>
 								>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -71,9 +73,9 @@ public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 		return new EjbIoCmsFactory<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,LOC>(cCms);
 	}
 	
-	public EjbIoCmsSectionFactory<L,S> ejbSection()
+	public EjbIoCmsSectionFactory<L,S,FM> ejbSection()
 	{
-		return new EjbIoCmsSectionFactory<L,S>(cSection);
+		return new EjbIoCmsSectionFactory<L,S,FM>(cSection);
 	}
 	
 	public EjbIoCmsElementFactory<L,S,E> ejbElement()

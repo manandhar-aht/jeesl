@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.openfuxml.content.ofx.Section;
 import org.openfuxml.exception.OfxAuthoringException;
 import org.slf4j.Logger;
@@ -38,21 +39,22 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<V,E,MT>,
 										MT extends UtilsStatus<MT,L,D>,
-										FC extends JeeslFileContainer<?,?>
+										FC extends JeeslFileContainer<?,FM>,
+										FM extends JeeslFileMeta<D,FC,?>
 										>
 					implements Serializable,JeeslCmsCacheBean<S>
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractCmsCacheBean.class);
 	
-	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms;
+	private final IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC,FM> fbCms;
 	private JeeslCmsRenderer<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> ofx;
 	private JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	
 	private final Map<S,Map<String,Section>> mapSection;
 	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
-	public AbstractCmsCacheBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> fbCms)
+	public AbstractCmsCacheBean(IoCmsFactoryBuilder<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC,FM> fbCms)
 	{
 		this.fbCms=fbCms;
 		

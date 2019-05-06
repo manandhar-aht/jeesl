@@ -1,12 +1,16 @@
 package org.jeesl.factory.ejb.system.io.cms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class EjbIoCmsSectionFactory <L extends UtilsLang,S extends JeeslIoCmsSection<L,S>>
+public class EjbIoCmsSectionFactory <L extends UtilsLang, S extends JeeslIoCmsSection<L,S>, META extends JeeslFileMeta<?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsSectionFactory.class);
 	
@@ -37,5 +41,21 @@ public class EjbIoCmsSectionFactory <L extends UtilsLang,S extends JeeslIoCmsSec
 		dst.setSection(src.getSection());
 		dst.setPosition(src.getPosition());
 		dst.setName(src.getName());
+	}
+	
+	public List<META> toMeta(S section)
+	{
+		List<META> list = new ArrayList<>();
+		toMeta(list,section);
+		return list;
+	}
+	
+	private void toMeta(List<META> result, S section)
+	{
+		
+		for(S child : section.getSections())
+		{
+			toMeta(result,child);
+		}
 	}
 }

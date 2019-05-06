@@ -18,6 +18,8 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 											META extends JeeslFileMeta<?,CONTAINER,?>>
 		extends Serializable
 {
+	void setDebugOnInfo(boolean debugOnInfo);
+	
 	STORAGE getStorage();
 	void setStorage(STORAGE storage);
 	

@@ -6,6 +6,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
@@ -18,56 +20,54 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<aup:grid id="grid">
-			<aht:row>
-				<aht:slot id="sCategories" width="8">
+		<jp:grid id="grid" rendered="#{cc.attrs.bean.sbhContext.hasSome}">
+			<j:row id="rProcess" rendered="#{cc.attrs.bean.sbhProcess.twiceSelected or cc.attrs.bean.sbhProcess.hasNone}">
+				<j:slot id="sCategories" width="8">
 					<h:form id="fCategories">
-						<p:dataTable var="p" value="#{cc.attrs.bean.processes}" draggableRows="true"
+						<p:dataTable var="p" value="#{cc.attrs.bean.sbhProcess.list}" draggableRows="true"
 								selection="#{cc.attrs.bean.process}" selectionMode="single" rowKey="#{p.id}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslTsScopes}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
-								</aht:pfDataTableHeader>
+								<j:dtHeader title="#{msg.jeeslApprovalProcesses}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addProcess()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
+								</j:dtHeader>
 							</f:facet>
-							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderScopes()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.select()}"/>
-							<p:column rendered="true">
-								<h:graphicImage rendered="#{not p.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
-								<h:outputText rendered="#{p.visible}" value="#{p.category.position}.#{p.position}"/>
-							</p:column>
-							<p:column rendered="false" headerText="#{msg.jeeslCode}">  
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderProcesses()}" update="@form :fStatusBar"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.selectProcess()}"/>
+							
+							<p:column rendered="true" headerText="#{msg.jeeslCode}">  
 								<h:outputText value="#{p.code}"/>  
 							</p:column>
-							<p:column headerText="#{msg.jeeslCategory}">  
-								<h:outputText value="#{p.category.name[localeCode].lang}"/>
+							<p:column rendered="true" headerText="#{msg.jeeslName}">  
+								<h:outputText value="#{p.name[localeCode].lang}"/>  
 							</p:column>
 											
 						</p:dataTable>
 					</h:form>
-				</aht:slot>
-				<aht:slot id="sCategory" width="4">
+				</j:slot>
+				<j:slot id="sCategory" width="4">
 					<h:form id="fCategory">
-						<p:panel id="pLang" header="#{msg.jeeslTsScope}"
+						<p:panel id="pLang" header="#{msg.jeeslApprovalProcesse}"
 								 rendered="#{not empty cc.attrs.bean.process}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<aht:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancel()}" update=":#{cc.id}:sCategory" tooltip="#{msg.jeeslTtCancel}"/>
-								<aht:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.save()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttSave}"/>
-								<aht:icon type="jeeslDelete" rendered="#{cc.attrs.bean.process.id gt 0}" listener="#{cc.attrs.bean.rm()}" update=":#{cc.id}:sCategories :#{cc.id}:sCategory" tooltip="#{msg.ttDelete}"/>
+								<j:icon type="jeeslSave"   rendered="#{cc.attrs.bean.uiAllowSave}" listener="#{cc.attrs.bean.saveProcess()}" update=":fStatusBar :#{cc.id}:rProcess"/>
+								<j:icon type="jeeslDelete" rendered="#{cc.attrs.bean.process.id gt 0}" listener="#{cc.attrs.bean.deleteProcess()}" update=":fStatusBar :#{cc.id}:rProcess"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslApprovalContext}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.process.context}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.sbhContext.list}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
+								</p:selectOneMenu>
+								
 								<p:outputLabel value="#{msg.jeeslCode}"/>
 								<p:inputText autocomplete="off" value="#{cc.attrs.bean.process.code}"/>
 								
-								<p:outputLabel value="#{msg.jeeslCategory}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.process.category}" effect="fade" autoWidth="false">
-									<f:selectItems value="#{cc.attrs.bean.sbhCategory.list}" var="c" itemLabel="#{c.name[localeCode].lang}" itemValue="#{c}"/>
-								</p:selectOneMenu>
+								
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.process}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
 						</p:panel>
 					</h:form>
-				</aht:slot>
-			</aht:row>
-	    </aup:grid>
+				</j:slot>
+			</j:row>
+	    </jp:grid>
 	</composite:implementation>
 </html>

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.prototype.web.mbean.app;
+package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
 import java.util.List;

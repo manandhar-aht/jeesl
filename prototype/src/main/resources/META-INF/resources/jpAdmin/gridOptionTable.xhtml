@@ -33,7 +33,8 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCategory}" update=":#{cc.id}:sCategory :#{cc.id}:sLang"/>
 							<p:column>
 								<f:facet name="header">#{msg.jeeslOptionTables}</f:facet>
-								<h:outputText value="#{msg[c.code]}" />
+								<h:outputText value="#{msg[c.code]}" rendered="#{empty cc.attrs.bean.mapEntity[c]}"/>
+								<h:outputText value="#{cc.attrs.bean.mapEntity[c].name[localeCode].lang}" rendered="#{not empty cc.attrs.bean.mapEntity[c]}"/>
 							</p:column>
 						</p:dataTable>
 					</h:form>
@@ -54,13 +55,17 @@
 						<p:dataTable var="s" value="#{cc.attrs.bean.items}" draggableRows="#{cc.attrs.bean.uiAllowReorder}"
 					          selection="#{cc.attrs.bean.status}" selectionMode="single" rowKey="#{s.id}">
 							<f:facet name="header">
-					          	<aht:pfDataTableHeader title="#{msg[cc.attrs.bean.category.code]}">
+					          	<j:dtHeader>
+					          		<f:facet name="header">
+										<h:outputText value="#{msg[cc.attrs.bean.category.code]}" rendered="#{empty cc.attrs.bean.mapEntity[cc.attrs.bean.category]}"/>
+										<h:outputText value="#{cc.attrs.bean.mapEntity[cc.attrs.bean.category].name[localeCode].lang}" rendered="#{not empty cc.attrs.bean.mapEntity[cc.attrs.bean.category]}"/>
+									</f:facet>
 					          		<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.add()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttNew}" rendered="#{cc.attrs.bean.uiAllowAdd}"/>
 					          		<aht:icon type="jeeslUpload" listener="#{cc.attrs.bean.upload()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" tooltip="#{msg.ttUpload}" rendered="#{cc.attrs.bean.supportsUpload}"/>
 					          		<j:icon type="jeeslDownload" listener="#{cc.attrs.bean.downloadData()}" update=":#{cc.id}:sCategory :#{cc.id}:sLang" rendered="#{cc.attrs.bean.supportsDownload}"/>
 					          		<j:icon type="jeeslIoAttributeCriteriaWithDescription" listener="#{cc.attrs.bean.toggleDescription()}" update=":#{cc.id}:sCategory" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{cc.attrs.bean.showDescription}" mayDisappear="true"/>
 									<j:icon type="jeeslIoAttributeCriteriaWithoutDescription" listener="#{cc.attrs.bean.toggleDescription()}" update=":#{cc.id}:sCategory" tooltip="#{msg.jeeslIoAttributeToggleDescription}" rendered="#{not cc.attrs.bean.showDescription}" mayDisappear="true"/>
-					          	</aht:pfDataTableHeader>
+					          	</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorder()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectStatus}" update=":#{cc.id}:sLang"/>

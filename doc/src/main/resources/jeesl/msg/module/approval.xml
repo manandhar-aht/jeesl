@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslApprovalContext">
+    	<s:langs>
+    		<s:lang key="de" translation="Kontext"/>
+    		<s:lang key="en" translation="Kontext"/>
+    		<s:lang key="fr" translation="Kontext"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

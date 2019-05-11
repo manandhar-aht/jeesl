@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -64,14 +65,15 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
+import net.sf.ahtutils.xml.status.Description;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-										F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>
-										,RE extends JeeslRevisionEntity<L,D,?,?,?>
+										F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>,
+										RE extends JeeslRevisionEntity<L,D,?,?,?>
 >
 			extends AbstractAdminBean<L,D>
 			implements Serializable
@@ -109,12 +111,14 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	@SuppressWarnings("rawtypes")
 	protected Class cl,clParent;
 	
-	protected List<EjbWithPosition> categories; public List<EjbWithPosition> getCategories(){return categories;}
+	private final Map<EjbWithPosition,RE> mapEntity; public Map<EjbWithPosition, RE> getMapEntity() {return mapEntity;}
+	protected final List<EjbWithPosition> categories; public List<EjbWithPosition> getCategories(){return categories;}
 	protected List<EjbWithPosition> parents; public List<EjbWithPosition> getParents(){return parents;}
 	protected List<EjbWithPosition> items; public List<EjbWithPosition> getItems() {return items;}
 	private List<GT> graphicTypes; public List<GT> getGraphicTypes() {return graphicTypes;}
 	private List<FS> graphicStyles; public List<FS> getGraphicStyles() {return graphicStyles;}
 	private List<F> figures; public List<F> getFigures() {return figures;}
+	
 	private F figure; public F getFigure() {return figure;} public void setFigure(F figure) {this.figure = figure;}
 
 	protected long parentId; public long getParentId(){return parentId;}public void setParentId(long parentId){this.parentId = parentId;}
@@ -146,6 +150,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		status = null;
 		allowAdditionalElements = new Hashtable<Long,Boolean>();
 		
+		mapEntity = new HashMap<>();
 		categories = new ArrayList<EjbWithPosition>();
 	}
 	
@@ -196,6 +201,20 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			logger.info("\t"+JeeslOptionRestDownload.class.getSimpleName()+"? "+supportsDownload);
 			logger.info("\t"+JeeslOptionRestDescription.class.getSimpleName()+"? "+supportsDescription);
 			logger.info("\t"+JeeslOptionUploadable.class.getSimpleName()+"? "+supportsUpload);
+		}
+	}
+	
+	protected void loadEntities()
+	{
+		for(EjbWithPosition p : categories)
+		{
+			try
+			{
+				String fqcn = ((EjbWithImage)p).getImage();
+				RE e = fUtils.fByCode(fbRevision.getClassEntity(),fqcn);
+				mapEntity.put(p,e);
+			}
+			catch (UtilsNotFoundException e) {}
 		}
 	}
 	
@@ -509,7 +528,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		
 		X x = cX.newInstance();
 		
-		Entity xml;
+		Entity xml = null;
 		if(fUtils instanceof JeeslExportRestFacade)
 		{
 			logger.info("Using Facade Connection for JBoss EAP6 ("+fUtils.getClass().getSimpleName()+" implements "+JeeslExportRestFacade.class.getSimpleName()+"): "+x.getRestCode());
@@ -519,6 +538,23 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 		{
 			logger.info("Using Direct Connection (JBoss EAP7) "+x.getRestCode());
 			xml = downloadRevisionFromRest(x.getRestCode());
+			JaxbUtil.info(xml);
+		}
+		
+		if(xml!=null && xml.isSetDescriptions())
+		{
+			try
+			{
+				for(Description d : xml.getDescriptions().getDescription())
+				{
+					if(entity.getDescription().containsKey(d.getKey()))
+					{
+						entity.getDescription().get(d.getKey()).setLang(d.getValue());
+					}
+				}
+				entity = fUtils.save(entity);
+			}
+			catch (UtilsConstraintViolationException | UtilsLockingException e) {e.printStackTrace();}
 		}
 	}
 	@SuppressWarnings("unchecked")

@@ -7,4 +7,33 @@
     		<s:lang key="fr" translation="Kontext"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslApprovalProcesses">
+    	<s:langs>
+    		<s:lang key="de" translation="Prozesse"/>
+    		<s:lang key="en" translation="Processes"/>
+    		<s:lang key="fr" translation="Processes"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="jeeslApprovalProcess">
+    	<s:langs>
+    		<s:lang key="de" translation="Prozess"/>
+    		<s:lang key="en" translation="Process"/>
+    		<s:lang key="fr" translation="Process"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="jeeslApprovalStages">
+    	<s:langs>
+    		<s:lang key="de" translation="Stages"/>
+    		<s:lang key="en" translation="Stages"/>
+    		<s:lang key="fr" translation="Stages"/>
+    	</s:langs>
+    </s:translation>
+        <s:translation key="jeeslApprovalStage">
+    	<s:langs>
+    		<s:lang key="de" translation="Stage"/>
+    		<s:lang key="en" translation="Stage"/>
+    		<s:lang key="fr" translation="Stage"/>
+    	</s:langs>
+    </s:translation>
+    
 </s:translations>

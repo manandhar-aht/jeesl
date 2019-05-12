@@ -2,6 +2,7 @@ package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalProcessFactory;
+import org.jeesl.factory.ejb.module.approval.EjbApprovalStageFactory;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
@@ -34,8 +35,6 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cStage=cStage;
 	}
 	
-	public EjbApprovalProcessFactory<P> ejbProcess()
-	{
-		return new EjbApprovalProcessFactory<P>(cProcess);
-	}
+	public EjbApprovalProcessFactory<P> ejbProcess() {return new EjbApprovalProcessFactory<>(cProcess);}
+	public EjbApprovalStageFactory<P,S> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
 }

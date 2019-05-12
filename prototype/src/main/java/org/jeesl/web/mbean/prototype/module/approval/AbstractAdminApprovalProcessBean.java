@@ -62,6 +62,11 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		this.fApproval=fApproval;
 		reloadContexts();
 		reloadProcesses();
+		if(sbhProcess.isSelected())
+		{
+			process = fApproval.find(fbApproval.getClassProcess(),sbhProcess.getSelection());
+			reloadStages();
+		}
 	}
 	
 	private void reloadContexts()
@@ -90,14 +95,13 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	
 	public void reloadStages()
 	{
-//		stages = fApproval.allForParent(fbApproval.getClassProcess(), parent)
+		stages = fApproval.allForParent(fbApproval.getClassStage(), process);
 	}
 	
 	private void reset(boolean rProcess)
 	{
 		if(rProcess) {process=null;}
 	}
-	
 
 	public void addProcess() throws UtilsNotFoundException
 	{
@@ -131,6 +135,23 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		fApproval.rm(process);
 		reset(true);
 		reloadProcesses();
+	}
+	
+	public void addStage()
+	{
+		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassProcess()));
+		stage = fbApproval.ejbStage().build(process,stages);
+		stage.setName(efLang.createEmpty(localeCodes));
+		stage.setDescription(efDescription.createEmpty(localeCodes));
+		stage.setProcess(process);
+	}
+	
+	public void saveStage() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(stage));
+		stage.setProcess(fApproval.find(fbApproval.getClassProcess(), stage.getProcess()));
+		stage = fApproval.save(stage);
+		reloadStages();
 	}
 	
 	protected void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}

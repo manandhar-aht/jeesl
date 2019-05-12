@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.module.approval;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
@@ -10,6 +11,7 @@ import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,8 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											CTX extends JeeslApprovalContext<CTX,L,D,?>,
-											PROCESS extends JeeslApprovalProcess<L,D,CTX>
+											P extends JeeslApprovalProcess<L,D,CTX>,
+											S extends JeeslApprovalStage<L,D,P>
 											>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -34,23 +37,26 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminApprovalProcessBean.class);
 
-	protected JeeslApprovalFacade<L,D,CTX,PROCESS> fApproval;
-	protected final ApprovalFactoryBuilder<L,D,CTX,PROCESS> fbApproval;
+	protected JeeslApprovalFacade<L,D,CTX,P,S> fApproval;
+	protected final ApprovalFactoryBuilder<L,D,CTX,P,S> fbApproval;
 	
 	private final SbSingleHandler<CTX> sbhContext; public SbSingleHandler<CTX> getSbhContext() {return sbhContext;}
-	private final SbSingleHandler<PROCESS> sbhProcess; public SbSingleHandler<PROCESS> getSbhProcess() {return sbhProcess;}
+	private final SbSingleHandler<P> sbhProcess; public SbSingleHandler<P> getSbhProcess() {return sbhProcess;}
 		
-	protected PROCESS process; public PROCESS getProcess() {return process;} public void setProcess(PROCESS process) {this.process = process;}
+	private List<S> stages; public List<S> getStages() {return stages;} public void setStages(List<S> stages) {this.stages = stages;}
+	
+	protected P process; public P getProcess() {return process;} public void setProcess(P process) {this.process = process;}
+	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
 
-	public AbstractAdminApprovalProcessBean(final ApprovalFactoryBuilder<L,D,CTX,PROCESS> fbApproval)
+	public AbstractAdminApprovalProcessBean(final ApprovalFactoryBuilder<L,D,CTX,P,S> fbApproval)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbApproval=fbApproval;
 		sbhContext = new SbSingleHandler<CTX>(fbApproval.getClassContext(),this);
-		sbhProcess = new SbSingleHandler<PROCESS>(fbApproval.getClassProcess(),this);
+		sbhProcess = new SbSingleHandler<P>(fbApproval.getClassProcess(),this);
 	}
 	
-	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,CTX,PROCESS> fApproval, JeeslFacesMessageBean bMessage)
+	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,CTX,P,S> fApproval, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation, bMessage);
 		this.fApproval=fApproval;
@@ -65,12 +71,6 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbApproval.getClassContext(), sbhContext.getList()));}
 	}
 	
-	public void reloadProcesses()
-	{
-		sbhProcess.update(fApproval.all(fbApproval.getClassProcess()),sbhProcess.getSelection());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbApproval.getClassProcess(), sbhProcess.getList(),sbhContext.getSelection()));}
-	}
-	
 	@Override
 	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
@@ -78,8 +78,19 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		else if(item instanceof JeeslApprovalProcess)
 		{
 			process = fApproval.find(fbApproval.getClassProcess(),sbhProcess.getSelection());
+			reloadStages();
 		}
-		
+	}
+	
+	public void reloadProcesses()
+	{
+		sbhProcess.update(fApproval.all(fbApproval.getClassProcess()),sbhProcess.getSelection());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbApproval.getClassProcess(), sbhProcess.getList(),sbhContext.getSelection()));}
+	}
+	
+	public void reloadStages()
+	{
+//		stages = fApproval.allForParent(fbApproval.getClassProcess(), parent)
 	}
 	
 	private void reset(boolean rProcess)
@@ -103,12 +114,13 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		process = fApproval.find(fbApproval.getClassProcess(), process);
 		process = efLang.persistMissingLangs(fApproval,localeCodes,process);
 		process = efDescription.persistMissingLangs(fApproval,localeCodes,process);
+		reloadStages();
 	}
 	
 	public void saveProcess() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(process));
-//		process.setCategory(fTs.find(fbTs.getClassCategory(), scope.getCategory()));
+		process.setContext(fApproval.find(fbApproval.getClassContext(), process.getContext()));
 		process = fApproval.save(process);
 		reloadProcesses();
 	}

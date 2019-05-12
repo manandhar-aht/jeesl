@@ -68,6 +68,30 @@
 					</h:form>
 				</j:slot>
 			</j:row>
+			<j:row id="rStage">
+				<j:slot id="sStages" width="8">
+					<h:form id="fStages">
+						<p:dataTable var="s" value="#{cc.attrs.bean.stages}" draggableRows="true"
+								selection="#{cc.attrs.bean.stage}" selectionMode="single" rowKey="#{p.id}">
+							<f:facet name="header">
+								<j:dtHeader title="#{msg.jeeslApprovalProcesses}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addProcess()}" update=":#{cc.id}:sCategory" tooltip="#{msg.ttNew}"/>
+								</j:dtHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderProcesses()}" update="@form :fStatusBar"/>
+							<p:ajax event="rowSelect" update=":#{cc.id}:sCategory" listener="#{cc.attrs.bean.selectProcess()}"/>
+							
+							<p:column rendered="true" headerText="#{msg.jeeslCode}">  
+								<h:outputText value="#{p.code}"/>  
+							</p:column>
+							<p:column rendered="true" headerText="#{msg.jeeslName}">  
+								<h:outputText value="#{p.name[localeCode].lang}"/>  
+							</p:column>
+											
+						</p:dataTable>
+					</h:form>
+				</j:slot>
+			</j:row>
 	    </jp:grid>
 	</composite:implementation>
 </html>

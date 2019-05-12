@@ -95,21 +95,30 @@
 						<p:panel id="pLang" header="#{msg.jeeslApprovalStage}"
 								  styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStage()}" update=":#{cc.id}:rStage"/>
-								<j:icon type="jeeslDelete" rendered="#{cc.attrs.bean.process.id gt 0}" listener="#{cc.attrs.bean.deleteStage()}" update=":#{cc.id}:rStage"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStage()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editStage}"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteStage()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.process.id gt 0) and cc.attrs.bean.editStage}"/>
+								<j:icon type="jeeslEditGrey" listener="#{cc.attrs.bean.toggleEditStage()}" update="@form" mayDisappear="true" rendered="#{not cc.attrs.bean.editStage}"/>
+								<j:icon type="jeeslEdit" listener="#{cc.attrs.bean.toggleEditStage()}" update="@form" mayDisappear="true" rendered="#{cc.attrs.bean.editStage}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslApprovalProcess}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.stage.process}" effect="fade" autoWidth="false">
+								<p:selectOneMenu value="#{cc.attrs.bean.stage.process}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editStage}">
 									<f:selectItems value="#{cc.attrs.bean.sbhProcess.list}" var="p" itemLabel="#{p.name[localeCode].lang}" itemValue="#{p}"/>
 								</p:selectOneMenu>
+								<h:outputText value="#{cc.attrs.bean.stage.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editStage}"/>
 								
 								<p:outputLabel value="#{msg.jeeslCode}"/>
-								<p:inputText autocomplete="off" value="#{cc.attrs.bean.stage.code}"/>
+								<p:inputText value="#{cc.attrs.bean.stage.code}" autocomplete="off" rendered="#{cc.attrs.bean.editStage}"/>
+								<h:outputText value="#{cc.attrs.bean.stage.code}" rendered="#{not cc.attrs.bean.editStage}"/>
 								
+								<p:outputLabel value="#{msg.jeeslName}" rendered="#{not cc.attrs.bean.editStage}"/>
+								<h:outputText value="#{cc.attrs.bean.stage.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editStage}"/>
+								
+								<p:outputLabel value="#{msg.jeeslDescription}" rendered="#{not cc.attrs.bean.editStage}"/>
+								<h:outputText value="#{cc.attrs.bean.stage.description[localeCode].lang}" rendered="#{not cc.attrs.bean.editStage}"/>
 								
 							</p:panelGrid>
-							<aht:tabTranslationEditor value="#{cc.attrs.bean.stage}" keys="#{cc.attrs.localeKeys}" withDescription="true"/>
+							<aht:tabTranslationEditor value="#{cc.attrs.bean.stage}" keys="#{cc.attrs.localeKeys}" withDescription="true" rendered="#{cc.attrs.bean.editStage}"/>
 						</p:panel>
 					</h:form>
 				</j:slot>

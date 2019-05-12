@@ -48,12 +48,16 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	protected P process; public P getProcess() {return process;} public void setProcess(P process) {this.process = process;}
 	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
 
+	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
+
 	public AbstractAdminApprovalProcessBean(final ApprovalFactoryBuilder<L,D,CTX,P,S> fbApproval)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbApproval=fbApproval;
 		sbhContext = new SbSingleHandler<CTX>(fbApproval.getClassContext(),this);
 		sbhProcess = new SbSingleHandler<P>(fbApproval.getClassProcess(),this);
+		
+		editStage = false;
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,CTX,P,S> fApproval, JeeslFacesMessageBean bMessage)
@@ -144,6 +148,7 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		stage.setName(efLang.createEmpty(localeCodes));
 		stage.setDescription(efDescription.createEmpty(localeCodes));
 		stage.setProcess(process);
+		editStage = true;
 	}
 	
 	public void saveStage() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -152,6 +157,15 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		stage.setProcess(fApproval.find(fbApproval.getClassProcess(), stage.getProcess()));
 		stage = fApproval.save(stage);
 		reloadStages();
+	}
+	
+	public void selectStage() throws UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.selectEntity(stage));
+		stage = fApproval.find(fbApproval.getClassStage(), stage);
+		stage = efLang.persistMissingLangs(fApproval,localeCodes,stage);
+		stage = efDescription.persistMissingLangs(fApproval,localeCodes,stage);
+		editStage = true;
 	}
 	
 	protected void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}

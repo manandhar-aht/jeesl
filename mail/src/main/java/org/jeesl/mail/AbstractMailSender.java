@@ -36,6 +36,7 @@ public abstract class AbstractMailSender
 	{
 		this.smtpHost=smtpHost;
 		this.smtpPort=smtpPort;
+		logger.info("Using "+smtpHost+":"+smtpPort);
 		alwaysBcc = new ArrayList<EmailAddress>();
 		overrideOnlyTo = null;
 		

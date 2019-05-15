@@ -5,6 +5,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
@@ -24,15 +25,15 @@
 								selection="#{cc.attrs.bean.prop}" selectionMode="single" rowKey="#{p.id}">
 							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslProperties}"/></f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sProperties :#{cc.id}:sProperty" listener="#{cc.attrs.bean.selectProperty}"/>  
-			            <p:column headerText="#{msg.jeeslCategory}">  
-								<h:outputText value="#{p.category.name[localeCode].lang}" />  
-			            </p:column>
-			            <p:column headerText="#{msg.jeeslPropertyKey}">  
-								<h:outputText value="#{p.key}" />  
-			            </p:column>
-			            <p:column headerText="#{msg.jeeslPropertyValue}">  
-								<h:outputText value="#{p.value}" />  
-			            </p:column>
+				            <p:column headerText="#{msg.jeeslCategory}">  
+									<h:outputText value="#{p.category.name[localeCode].lang}" />  
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslPropertyKey}">  
+									<h:outputText value="#{p.key}" />  
+				            </p:column>
+				            <p:column headerText="#{msg.jeeslPropertyValue}">  
+								<h:outputText value="#{of:abbreviate(p.value, 40)}" />  
+				            </p:column>
 						</p:dataTable>
 					</h:form>
 				</aht:slot>

@@ -97,6 +97,7 @@ public class SbMultiHandler <T extends EjbWithId> implements Serializable
 		refresh();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <E extends Enum<E>> void preSelect(E... codes)
 	{
 		if(EjbWithCode.class.isAssignableFrom(cT))

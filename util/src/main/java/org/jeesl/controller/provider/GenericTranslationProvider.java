@@ -1,5 +1,7 @@
 package org.jeesl.controller.provider;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +35,8 @@ public class GenericTranslationProvider <L extends UtilsLang,D extends UtilsDesc
 	private final SimpleDateFormat sdfTime;
 	private final TranslationHandler<L,D,RE,RA> th;
 	
+	private DecimalFormat dfCurrency;
+	
 	public GenericTranslationProvider(TranslationHandler<L,D,RE,RA> th)
 	{
 		this.th=th;
@@ -40,6 +44,11 @@ public class GenericTranslationProvider <L extends UtilsLang,D extends UtilsDesc
 		localeCodes = new ArrayList<String>();
 		sdfDate = new SimpleDateFormat("dd.MM.yyyy");
 		sdfTime = new SimpleDateFormat("hh:mm");
+		
+		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols();
+		otherSymbols.setDecimalSeparator(',');
+		otherSymbols.setGroupingSeparator('.');
+		dfCurrency = new DecimalFormat("0.00",otherSymbols);
 	}
 	
 	public void setLanguages(List<LOC> locales)
@@ -78,6 +87,13 @@ public class GenericTranslationProvider <L extends UtilsLang,D extends UtilsDesc
 	{
 		if(record==null){return "";}
 		return sdfTime.format(record);
+	}
+
+	@Override
+	public String toCurrency(String localeCode, Double value)
+	{
+		if(value==null){return "";}
+		return dfCurrency.format(value);
 	}
 
 	

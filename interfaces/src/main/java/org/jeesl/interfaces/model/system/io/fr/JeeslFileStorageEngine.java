@@ -20,5 +20,5 @@ public interface JeeslFileStorageEngine <S extends UtilsStatus<S,L,D>,
 									EjbWithCodeGraphic<G>,UtilsStatusFixedCode,
 									UtilsStatus<S,L,D>
 {	
-	public enum Code{fs,oak,gridFS,amazonS3}
+	public enum Code{fs,oak,gridFS,amazonS3,postgres}
 }

@@ -28,12 +28,42 @@
     		<s:lang key="fr" translation="Stages"/>
     	</s:langs>
     </s:translation>
-        <s:translation key="jeeslApprovalStage">
+    <s:translation key="jeeslApprovalStage">
     	<s:langs>
     		<s:lang key="de" translation="Stage"/>
     		<s:lang key="en" translation="Stage"/>
     		<s:lang key="fr" translation="Stage"/>
     	</s:langs>
     </s:translation>
+    
+	<s:translation key="jeeslApprovalTransitions">
+    	<s:langs>
+    		<s:lang key="de" translation="Übergänge"/>
+    		<s:lang key="en" translation="Transitions"/>
+    		<s:lang key="fr" translation="Transitions"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslApprovalTransition">
+    	<s:langs>
+    		<s:lang key="de" translation="Übergang"/>
+    		<s:lang key="en" translation="Transition"/>
+    		<s:lang key="fr" translation="Transition"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslApprovalTrasitionSource">
+    	<s:langs>
+    		<s:lang key="de" translation="Ursprung"/>
+    		<s:lang key="en" translation="Source"/>
+    		<s:lang key="fr" translation="Source"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslApprovalTrasitionDestination">
+    	<s:langs>
+    		<s:lang key="de" translation="Ziel"/>
+    		<s:lang key="en" translation="Destination"/>
+    		<s:lang key="fr" translation="Destination"/>
+    	</s:langs>
+    </s:translation>
+    
     
 </s:translations>

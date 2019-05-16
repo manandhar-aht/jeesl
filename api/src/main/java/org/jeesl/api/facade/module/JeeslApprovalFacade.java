@@ -1,5 +1,6 @@
 package org.jeesl.api.facade.module;
 
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
@@ -13,7 +14,8 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 									CTX extends JeeslApprovalContext<CTX,L,D,?>,
 									P extends JeeslApprovalProcess<L,D,CTX>,
 									S extends JeeslApprovalStage<L,D,P>,
-									T extends JeeslApprovalTransition<L,D,S>>
+									T extends JeeslApprovalTransition<L,D,S>,
+									C extends JeeslApprovalCommunication<T>>
 			extends UtilsFacade
 {	
 	

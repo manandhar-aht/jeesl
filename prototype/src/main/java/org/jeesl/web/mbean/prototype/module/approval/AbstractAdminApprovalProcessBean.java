@@ -8,12 +8,15 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +33,11 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											CTX extends JeeslApprovalContext<CTX,L,D,?>,
-											P extends JeeslApprovalProcess<L,D,CTX>,
-											S extends JeeslApprovalStage<L,D,P>,
-											T extends JeeslApprovalTransition<L,D,S>
+											AP extends JeeslApprovalProcess<L,D,CTX>,
+											S extends JeeslApprovalStage<L,D,AP>,
+											T extends JeeslApprovalTransition<L,D,S>,
+											C extends JeeslApprovalCommunication<T>,
+											MT extends JeeslIoTemplate<L,D,?,?,?,?>
 											>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -40,38 +45,51 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminApprovalProcessBean.class);
 
-	protected JeeslApprovalFacade<L,D,CTX,P,S,T> fApproval;
-	protected final ApprovalFactoryBuilder<L,D,CTX,P,S,T> fbApproval;
+	protected JeeslApprovalFacade<L,D,CTX,AP,S,T,C> fApproval;
+	
+	private final ApprovalFactoryBuilder<L,D,CTX,AP,S,T,C> fbApproval;
+	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	
 	private final SbSingleHandler<CTX> sbhContext; public SbSingleHandler<CTX> getSbhContext() {return sbhContext;}
-	private final SbSingleHandler<P> sbhProcess; public SbSingleHandler<P> getSbhProcess() {return sbhProcess;}
-		
-	private List<S> stages; public List<S> getStages() {return stages;} public void setStages(List<S> stages) {this.stages = stages;}
-	private final List<T> transitions; public List<T> getTransitions() {return transitions;} 
+	private final SbSingleHandler<AP> sbhProcess; public SbSingleHandler<AP> getSbhProcess() {return sbhProcess;}
 	
-	protected P process; public P getProcess() {return process;} public void setProcess(P process) {this.process = process;}
+	private final List<MT> templates; public List<MT> getTemplates() {return templates;}
+	private List<S> stages; public List<S> getStages() {return stages;} public void setStages(List<S> stages) {this.stages = stages;}
+	private final List<T> transitions; public List<T> getTransitions() {return transitions;}
+	private final List<C> communications; public List<C> getCommunications() {return communications;}
+	
+	
+	protected AP process; public AP getProcess() {return process;} public void setProcess(AP process) {this.process = process;}
 	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
 	private T transition; public T getTransition() {return transition;} public void setTransition(T transition) {this.transition = transition;}
+	private C communication; public C getCommunication() {return communication;} public void setCommunication(C communication) {this.communication = communication;}
 	
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractAdminApprovalProcessBean(final ApprovalFactoryBuilder<L,D,CTX,P,S,T> fbApproval)
+	public AbstractAdminApprovalProcessBean(final ApprovalFactoryBuilder<L,D,CTX,AP,S,T,C> fbApproval, IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbApproval=fbApproval;
-		sbhContext = new SbSingleHandler<CTX>(fbApproval.getClassContext(),this);
-		sbhProcess = new SbSingleHandler<P>(fbApproval.getClassProcess(),this);
+		this.fbTemplate=fbTemplate;
 		
+		sbhContext = new SbSingleHandler<CTX>(fbApproval.getClassContext(),this);
+		sbhProcess = new SbSingleHandler<AP>(fbApproval.getClassProcess(),this);
+		
+		templates = new ArrayList<>();
 		transitions = new ArrayList<>();
+		communications = new ArrayList<>();
+		
 		editStage = false;
+		editTransition = false;
 	}
 	
-	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,CTX,P,S,T> fApproval, JeeslFacesMessageBean bMessage)
+	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,CTX,AP,S,T,C> fApproval, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation, bMessage);
 		this.fApproval=fApproval;
-		reloadContexts();
+		
+		initPageSettings();
 		reloadProcesses();
 		if(sbhProcess.isSelected())
 		{
@@ -80,17 +98,21 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		}
 	}
 	
-	private void reset(boolean rTransitions, boolean rTransition)
+	protected void initPageSettings()
 	{
-		if(rTransitions) {transitions.clear();}
-		if(rTransition) {transition=null;}
-	}
-	
-	private void reloadContexts()
-	{
+		templates.addAll(fApproval.all(fbTemplate.getClassTemplate()));
+		
 		sbhContext.setList(fApproval.allOrderedPositionVisible(fbApproval.getClassContext()));
 		sbhContext.setDefault();
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbApproval.getClassContext(), sbhContext.getList()));}
+	}
+	
+	private void reset(boolean rTransitions, boolean rTransition, boolean rCommunications, boolean rCommunication)
+	{
+		if(rTransitions) {transitions.clear();}
+		if(rTransition) {transition=null;}
+		if(rCommunications) {communications.clear();}
+		if(rCommunication) {communication=null;}
 	}
 	
 	@Override
@@ -145,13 +167,13 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	{
 		logger.info(AbstractLogMessage.rmEntity(process));
 		fApproval.rm(process);
-		reset(true,true);
+		reset(true,true,true,true);
 		reloadProcesses();
 	}
 	
 	public void addStage()
 	{
-		reset(true,true);
+		reset(true,true,true,true);
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassProcess()));
 		stage = fbApproval.ejbStage().build(process,stages);
 		stage.setName(efLang.createEmpty(localeCodes));
@@ -170,7 +192,7 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	
 	public void selectStage() throws UtilsNotFoundException
 	{
-		reset(true,true);
+		reset(true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(stage));
 		stage = fApproval.find(fbApproval.getClassStage(), stage);
 		stage = efLang.persistMissingLangs(fApproval,localeCodes,stage);
@@ -187,7 +209,7 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 	
 	public void addTransition()
 	{
-		reset(false,true);
+		reset(false,true,true,true);
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
 		transition = fbApproval.ejbTransition().build(stage,transitions);
 		transition.setName(efLang.createEmpty(localeCodes));
@@ -195,5 +217,32 @@ public class AbstractAdminApprovalProcessBean <L extends UtilsLang, D extends Ut
 		editTransition = true;
 	}
 	
-	protected void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}
+	public void saveTransition() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(transition));
+		transition.setDestination(fApproval.find(fbApproval.getClassStage(), transition.getDestination()));
+		transition = fApproval.save(transition);
+		reloadTransitions();
+	}
+	
+	public void selectTransition() throws UtilsNotFoundException
+	{
+		reset(false,false,true,true);
+		logger.info(AbstractLogMessage.selectEntity(transition));
+		transition = fApproval.find(fbApproval.getClassTransition(),transition);
+		transition = efLang.persistMissingLangs(fApproval,localeCodes,transition);
+		transition = efDescription.persistMissingLangs(fApproval,localeCodes,transition);
+		editTransition = false;
+	}
+	
+	public void addCommunication()
+	{
+		reset(false,false,false,true);
+		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
+		communication = fbApproval.ejbCommunication().build(transition,communications);
+//		editTransition = true;
+	}
+	
+	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}
+	public void reorderStages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,stages);}
 }

@@ -94,10 +94,10 @@
 					<h:form id="fStage" rendered="#{not empty cc.attrs.bean.stage}">
 						<p:panel header="#{msg.jeeslApprovalStage}"  styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStage()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editStage}"/>
-								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteStage()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.stage.id gt 0) and cc.attrs.bean.editStage}"/>
 								<j:icon type="jeeslEditGrey" listener="#{cc.attrs.bean.toggleEditStage()}" update="@form" mayDisappear="true" rendered="#{not cc.attrs.bean.editStage}"/>
 								<j:icon type="jeeslEdit" listener="#{cc.attrs.bean.toggleEditStage()}" update="@form" mayDisappear="true" rendered="#{cc.attrs.bean.editStage}"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveStage()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editStage}"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteStage()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.stage.id gt 0) and cc.attrs.bean.editStage}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslApprovalProcess}"/>
@@ -120,7 +120,7 @@
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.stage}" keys="#{cc.attrs.localeKeys}" withDescription="true" rendered="#{cc.attrs.bean.editStage}"/>
 						</p:panel>
 					</h:form>
-					<h:form id="fTransitions" rendered="#{not empty cc.attrs.bean.stage}">
+					<h:form id="fTransitions" rendered="#{(not empty cc.attrs.bean.stage) and (cc.attrs.bean.stage.id gt 0)}">
 						<p:dataTable var="t" value="#{cc.attrs.bean.transitions}" draggableRows="true"
 								selection="#{cc.attrs.bean.transition}" selectionMode="single" rowKey="#{t.id}">
 							<f:facet name="header">
@@ -143,10 +143,10 @@
 					<h:form id="fTransition" rendered="#{not empty cc.attrs.bean.transition}">
 						<p:panel header="#{msg.jeeslApprovalTransition}" styleClass="jeeslPanel">
 							<f:facet name="actions">
-								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveTransition()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editTransition}"/>
-								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteTransition()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.transition.id gt 0) and cc.attrs.bean.editTransition}"/>
 								<j:icon type="jeeslEditGrey" listener="#{cc.attrs.bean.toggleEditTransition()}" update="@form" mayDisappear="true" rendered="#{not cc.attrs.bean.editTransition}"/>
 								<j:icon type="jeeslEdit" listener="#{cc.attrs.bean.toggleEditTransition()}" update="@form" mayDisappear="true" rendered="#{cc.attrs.bean.editTransition}"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveTransition()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editTransition}"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteTransition()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.transition.id gt 0) and cc.attrs.bean.editTransition}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslApprovalTrasitionSource}"/>
@@ -177,26 +177,36 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCommunication()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sStage" listener="#{cc.attrs.bean.selectCommunication()}"/>
-							
-							<p:column rendered="true" headerText="#{msg.jeeslName}">  
-								<h:outputText value="#{c.id}"/>  
+							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
+								<h:outputText value="#{c.template.name[localeCode].lang}"/>  
 							</p:column>
-											
+							<p:column rendered="true" headerText="#{msg.jeeslCategory}">  
+								<h:outputText value="#{c.role.category.name[localeCode].lang}"/>  
+							</p:column>
+							<p:column rendered="true" headerText="#{msg.jeeslSecurityRole}">  
+								<h:outputText value="#{c.role.name[localeCode].lang}"/>  
+							</p:column>			
 						</p:dataTable>
 					</h:form>
 					<h:form id="fCommunication" rendered="#{not empty cc.attrs.bean.communication}">
 						<p:panel header="#{msg.jeeslApprovalCommunication}" styleClass="jeeslPanel">
 							<f:facet name="actions">
+								<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelCommunication()}" update=":#{cc.id}:rStage" mayDisappear="true"/>
 								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveCommunication()}" update=":#{cc.id}:rStage"/>
 								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteCommunication()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.communication.id gt 0)}"/>
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<p:outputLabel value="#{msg.jeeslApprovalTrasition}"/>
+								<p:outputLabel value="#{msg.jeeslApprovalTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.communication.transition.name[localeCode].lang}" />
 								
 								<p:outputLabel value="#{msg.jeeslApprovalCommunicationTemplate}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.communication.template}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.templates}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslSecurityRole}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.communication.role}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
 						</p:panel>

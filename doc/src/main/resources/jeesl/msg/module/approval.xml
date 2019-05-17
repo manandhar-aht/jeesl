@@ -64,6 +64,27 @@
     		<s:lang key="fr" translation="Destination"/>
     	</s:langs>
     </s:translation>
+    <s:translation key="jeeslApprovalCommunications">
+    	<s:langs>
+    		<s:lang key="de" translation="Nachrichten"/>
+    		<s:lang key="en" translation="Communications"/>
+    		<s:lang key="fr" translation="Communications"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslApprovalCommunication">
+    	<s:langs>
+    		<s:lang key="de" translation="Nachricht"/>
+    		<s:lang key="en" translation="Communication"/>
+    		<s:lang key="fr" translation="Communication"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslApprovalCommunicationTemplate">
+    	<s:langs>
+    		<s:lang key="de" translation="Vorlage"/>
+    		<s:lang key="en" translation="Template"/>
+    		<s:lang key="fr" translation="Template"/>
+    	</s:langs>
+    </s:translation>
     
     
 </s:translations>

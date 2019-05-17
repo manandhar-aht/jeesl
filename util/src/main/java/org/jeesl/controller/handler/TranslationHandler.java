@@ -1,6 +1,7 @@
 package org.jeesl.controller.handler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -32,7 +33,7 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 	private final Map<String,Map<String,Map<String,L>>> labels; public Map<String, Map<String, Map<String,L>>> getLabels() {return labels;}
 	private final Map<String,Map<String,Map<String,D>>> descriptions;public Map<String, Map<String, Map<String,D>>> getDescriptions() {return descriptions;}
 
-	public final Map<String,RE> mapEntities; public Map<String, RE> getMapEntities() {return mapEntities;}
+	public final Map<String,RE> mapEntities; public Map<String,RE> getMapEntities() {return mapEntities;}
 	
 	public TranslationHandler(JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision, final Class<RE> cRE)
 	{
@@ -93,4 +94,6 @@ public class TranslationHandler<L extends UtilsLang,D extends UtilsDescription,
 		}
 		catch (ClassNotFoundException e) {logger.warn("CNFE: "+re.getCode());}
 	}
+
+	@Override public List<RE> allEntities() {return new ArrayList<RE>(mapEntities.values());}
 }

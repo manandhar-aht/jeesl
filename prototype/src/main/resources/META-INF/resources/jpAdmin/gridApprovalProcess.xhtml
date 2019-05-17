@@ -198,8 +198,14 @@
 								<p:selectOneMenu value="#{cc.attrs.bean.action.bot}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.bots}" var="b" itemLabel="#{b.name[localeCode].lang}" itemValue="#{b}"/>
 								</p:selectOneMenu>
-								
-								
+							</p:panelGrid>
+							<p:panelGrid id="pgEntity" columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.entity}" effect="fade" autoWidth="false">
+									<f:selectItem itemLabel="--"/>
+									<f:selectItems value="#{cc.attrs.bean.entities}" var="e" itemLabel="#{e.category.name[localeCode].lang} - #{e.name[localeCode].lang}" itemValue="#{e}"/>
+									<p:ajax event="change" listener="#{cc.attrs.bean.changeEntity()}" update="pgEntity"/>
+								</p:selectOneMenu>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

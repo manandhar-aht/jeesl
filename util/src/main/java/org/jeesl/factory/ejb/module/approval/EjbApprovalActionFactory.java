@@ -6,12 +6,14 @@ import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbApprovalActionFactory<T extends JeeslApprovalTransition<?,?,?>,
-											AA extends JeeslApprovalAction<T,AB>,
-											AB extends JeeslApprovalBot<AB,?,?,?>
+											AA extends JeeslApprovalAction<T,AB,RA>,
+											AB extends JeeslApprovalBot<AB,?,?,?>,
+											RA extends JeeslRevisionAttribute<?,?,?,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalActionFactory.class);

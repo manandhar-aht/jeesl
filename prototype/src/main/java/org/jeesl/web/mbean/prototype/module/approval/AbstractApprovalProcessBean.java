@@ -8,6 +8,7 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
@@ -20,6 +21,8 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -35,16 +38,18 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											AX extends JeeslApprovalContext<AX,L,D,?>,
 											AP extends JeeslApprovalProcess<L,D,AX>,
 											S extends JeeslApprovalStage<L,D,AP>,
 											AT extends JeeslApprovalTransition<L,D,S>,
 											AC extends JeeslApprovalCommunication<AT,MT,SR>,
-											AA extends JeeslApprovalAction<AT,AB>,
+											AA extends JeeslApprovalAction<AT,AB,RA>,
 											AB extends JeeslApprovalBot<AB,L,D,?>,
 											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
-											SR extends JeeslSecurityRole<L,D,?,?,?,?,?>
+											SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
+											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
+											RA extends JeeslRevisionAttribute<L,D,RE,?,?>
 											>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -54,8 +59,9 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 
 	protected JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RA> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
+	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
 	
 	private final SbSingleHandler<AX> sbhContext; public SbSingleHandler<AX> getSbhContext() {return sbhContext;}
@@ -68,22 +74,27 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AB> bots; public List<AB> getBots() {return bots;}
+	protected final List<RE> entities; public List<RE> getEntities() {return entities;}
+	private final List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	
 	protected AP process; public AP getProcess() {return process;} public void setProcess(AP process) {this.process = process;}
 	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
 	private AT transition; public AT getTransition() {return transition;} public void setTransition(AT transition) {this.transition = transition;}
 	private AC communication; public AC getCommunication() {return communication;} public void setCommunication(AC communication) {this.communication = communication;}
 	private AA action; public AA getAction() {return action;} public void setAction(AA action) {this.action = action;}
+	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
 	
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RA> fbApproval,
+											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbApproval=fbApproval;
+		this.fbRevision=fbRevision;
 		this.fbSecurity=fbSecurity;
 		this.fbTemplate=fbTemplate;
 		
@@ -96,6 +107,8 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 		communications = new ArrayList<>();
 		actions = new ArrayList<>();
 		bots = new ArrayList<>();
+		entities = new ArrayList<>();
+		attributes = new ArrayList<>();
 		
 		editStage = false;
 		editTransition = false;
@@ -107,8 +120,8 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 		this.fApproval=fApproval;
 		
 		bots.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassBot()));
+		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
 		initPageSettings();
-		
 		
 		reloadProcesses();
 		if(sbhProcess.isSelected())
@@ -117,6 +130,8 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 			reloadStages();
 		}
 	}
+	
+	protected abstract void initEntities() throws UtilsNotFoundException;
 	
 	protected void initPageSettings()
 	{
@@ -352,6 +367,16 @@ public class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDe
 		fApproval.rm(action);
 		reset(false,false,false,false,false,true,true);
 		reloadActions();
+	}
+	
+	public void changeEntity()
+	{
+		logger.info(AbstractLogMessage.selectOneMenuChange(entity));
+		attributes.clear();
+		if(entity!=null)
+		{
+//			attributes.addAll(fApproval.allForParent(fbRevision.getClassAttribute(), entity));
+		}
 	}
 	
 	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}

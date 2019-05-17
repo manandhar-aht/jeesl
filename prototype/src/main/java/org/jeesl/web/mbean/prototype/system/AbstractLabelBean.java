@@ -2,6 +2,7 @@ package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.keyvalue.MultiKey;
@@ -37,9 +38,8 @@ public class AbstractLabelBean <L extends UtilsLang,D extends UtilsDescription,
 	public Map<String, Map<String, Map<String,L>>> getLabels() {return th.getLabels();}
 	public Map<String, Map<String, Map<String,D>>> getDescriptions() {return th.getDescriptions();}
 	
-	
 	public Map<String,RE> getMapEntities() {return th.getMapEntities();}
-
+	@Override public List<RE> allEntities() {return th.allEntities();}
 	
 	public AbstractLabelBean(IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision)
 	{

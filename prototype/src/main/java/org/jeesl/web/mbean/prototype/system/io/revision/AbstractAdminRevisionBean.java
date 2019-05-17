@@ -35,7 +35,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminRevisionBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RVM>,
 											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,

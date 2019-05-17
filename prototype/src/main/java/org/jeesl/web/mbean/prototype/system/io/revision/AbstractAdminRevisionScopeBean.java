@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminRevisionScopeBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RVM>,
 											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
@@ -34,7 +34,7 @@ public class AbstractAdminRevisionScopeBean <L extends UtilsLang,D extends Utils
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 											RAT extends UtilsStatus<RAT,L,D>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
+					extends AbstractAdminRevisionBean<L,D,LOC,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;

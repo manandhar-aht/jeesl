@@ -10,7 +10,6 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
-import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -21,14 +20,11 @@ public interface JeeslRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 										RER extends UtilsStatus<RER,L,D>,
 										RAT extends UtilsStatus<RAT,L,D>>
 		extends Serializable,EjbRemoveable,EjbPersistable,UtilsWithSymbol,EjbWithId,
-				EjbWithCode,EjbWithPosition,//EjbWithParentAttributeResolver,
+				EjbWithCode,EjbWithPosition,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
 	public enum Attributes{entity};
 	public static enum Type{text,number,date,amount,bool}
-	
-	RE getEntity();
-	void setEntity(RE entity);
 	
 	RAT getType();
 	void setType(RAT type);
@@ -68,6 +64,9 @@ public interface JeeslRevisionAttribute<L extends UtilsLang,D extends UtilsDescr
 	
 	RER getRelation();
 	void setRelation(RER relation);
+	
+	RE getEntity();
+	void setEntity(RE entity);
 	
 	Boolean getRelationOwner();
 	void setRelationOwner(Boolean relationOwner);

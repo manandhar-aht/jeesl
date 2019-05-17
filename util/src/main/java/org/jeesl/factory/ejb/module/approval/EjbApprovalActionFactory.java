@@ -7,13 +7,19 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+
 public class EjbApprovalActionFactory<T extends JeeslApprovalTransition<?,?,?>,
-											AA extends JeeslApprovalAction<T,AB,RA>,
+											AA extends JeeslApprovalAction<T,AB,RE,RA>,
 											AB extends JeeslApprovalBot<AB,?,?,?>,
-											RA extends JeeslRevisionAttribute<?,?,?,?,?>
+											RE extends JeeslRevisionEntity<?,?,?,?,RA>,
+											RA extends JeeslRevisionAttribute<?,?,RE,?,?>
+//,
+//											AO extends EjbWithId
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalActionFactory.class);

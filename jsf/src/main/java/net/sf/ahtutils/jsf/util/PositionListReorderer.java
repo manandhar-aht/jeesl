@@ -41,16 +41,16 @@ public class PositionListReorderer
 			T prototype = c.newInstance();
 			String attribute = prototype.resolveParentAttribute();
 			attribute = attribute.substring(0, 1).toUpperCase()+attribute.substring(1,attribute.length());
-			logger.info("M: "+attribute);
+//			logger.info("M: "+attribute);
 			m = c.getDeclaredMethod("get"+attribute);
-			logger.info("Method: "+m.getName());
+//			logger.info("Method: "+m.getName());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		catch (NoSuchMethodException e) {e.printStackTrace();}
 		catch (SecurityException e) {e.printStackTrace();}
 
-		logger.info("updateOrder "+list.size());
+//		logger.info("updateOrder "+list.size());
 		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
 		
 		int i=1;
@@ -63,7 +63,7 @@ public class PositionListReorderer
 				{
 					EjbWithPosition pos = (EjbWithPosition)o;
 					if(!map.containsKey(pos.getPosition())){map.put(pos.getPosition(), 1);}
-					logger.info(o.toString()+" jhas püos");
+//					logger.info(o.toString()+" jhas püos");
 				}
 			}
 			catch (IllegalAccessException e) {e.printStackTrace();}
@@ -97,7 +97,7 @@ public class PositionListReorderer
 		
 		for(T t : list)
 		{
-			logger.info(t.getPosition()+" "+t.toString());
+//			logger.info(t.getPosition()+" "+t.toString());
 			facade.update(t);
 		}
 	}

@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public class AbstractAdminRevisionEntityBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											RC extends UtilsStatus<RC,L,D>,
 											RV extends JeeslRevisionView<L,D,RVM>,
 											RVM extends JeeslRevisionViewMapping<RV,RE,REM>,
@@ -38,7 +38,7 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 											REM extends JeeslRevisionEntityMapping<RS,RST,RE>,
 											RA extends JeeslRevisionAttribute<L,D,RE,RER,RAT>, RER extends UtilsStatus<RER,L,D>,
 											RAT extends UtilsStatus<RAT,L,D>>
-					extends AbstractAdminRevisionBean<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
+					extends AbstractAdminRevisionBean<L,D,LOC,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 					implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -240,11 +240,8 @@ public class AbstractAdminRevisionEntityBean <L extends UtilsLang,D extends Util
 	}
 	
 	//UI
-	private boolean uiWithJpqlTree;
+	private boolean uiWithJpqlTree; public boolean isUiWithJpqlTree() {return uiWithJpqlTree;}
 	
-	public boolean isUiWithJpqlTree() {
-		return uiWithJpqlTree;
-	}
 	private void updateUi()
 	{
 		uiWithJpqlTree = false;

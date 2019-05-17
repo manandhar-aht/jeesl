@@ -15,12 +15,14 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									CTX extends JeeslApprovalContext<CTX,L,D,?>,
@@ -28,11 +30,13 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									S extends JeeslApprovalStage<L,D,AP>,
 									AT extends JeeslApprovalTransition<L,D,S>,
 									AC extends JeeslApprovalCommunication<AT,MT,MR>,
-									AA extends JeeslApprovalAction<AT,AB,RA>,
+									AA extends JeeslApprovalAction<AT,AB,RE,RA>,
 									AB extends JeeslApprovalBot<AB,L,D,?>,
+//									AO extends EjbWithId,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 									MR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
-									RA extends JeeslRevisionAttribute<L,D,?,?,?>>
+									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
+									RA extends JeeslRevisionAttribute<L,D,RE,?,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(ApprovalFactoryBuilder.class);
@@ -68,5 +72,5 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbApprovalStageFactory<AP,S> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
 	public EjbApprovalTransitionFactory<S,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
 	public EjbApprovalCommunicationFactory<AT,AC,MT,MR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
-	public EjbApprovalActionFactory<AT,AA,AB,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
+	public EjbApprovalActionFactory<AT,AA,AB,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
 }

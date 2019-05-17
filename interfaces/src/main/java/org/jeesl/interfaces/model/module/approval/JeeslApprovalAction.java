@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.module.approval;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -13,7 +14,11 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalAction <T extends JeeslApprovalTransition<?,?,?>,
 										AB extends JeeslApprovalBot<AB,?,?,?>,
-										RA extends JeeslRevisionAttribute<?,?,?,?,?>>
+										RE extends JeeslRevisionEntity<?,?,?,?,RA>,
+										RA extends JeeslRevisionAttribute<?,?,RE,?,?>
+//,
+//										AO extends EjbWithId
+>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
 				
@@ -26,6 +31,12 @@ public interface JeeslApprovalAction <T extends JeeslApprovalTransition<?,?,?>,
 	AB getBot();
 	void setBot(AB bot);
 	
+	RE getEntity();
+	void setEntity(RE entity);
+	
 	RA getAttribute();
 	void setAttribute(RA attribute);
+	
+//	AO getOption();
+//	void setOption(AO option);
 }

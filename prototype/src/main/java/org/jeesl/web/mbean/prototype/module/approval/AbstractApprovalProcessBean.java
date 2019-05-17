@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
+import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
@@ -34,6 +35,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
@@ -44,8 +46,9 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 											S extends JeeslApprovalStage<L,D,AP>,
 											AT extends JeeslApprovalTransition<L,D,S>,
 											AC extends JeeslApprovalCommunication<AT,MT,SR>,
-											AA extends JeeslApprovalAction<AT,AB,RA>,
+											AA extends JeeslApprovalAction<AT,AB,RE,RA>,
 											AB extends JeeslApprovalBot<AB,L,D,?>,
+											AO extends EjbWithId,
 											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 											SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
@@ -57,9 +60,10 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractApprovalProcessBean.class);
 
-	protected JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval;
+	private JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval;
+	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RA> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RE,RA> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -76,18 +80,21 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private final List<AB> bots; public List<AB> getBots() {return bots;}
 	protected final List<RE> entities; public List<RE> getEntities() {return entities;}
 	private final List<RA> attributes; public List<RA> getAttributes() {return attributes;}
+	private final List<EjbWithId> options; public List<EjbWithId> getOptions() {return options;}
 	
 	protected AP process; public AP getProcess() {return process;} public void setProcess(AP process) {this.process = process;}
 	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
 	private AT transition; public AT getTransition() {return transition;} public void setTransition(AT transition) {this.transition = transition;}
 	private AC communication; public AC getCommunication() {return communication;} public void setCommunication(AC communication) {this.communication = communication;}
 	private AA action; public AA getAction() {return action;} public void setAction(AA action) {this.action = action;}
-	private RE entity; public RE getEntity() {return entity;} public void setEntity(RE entity) {this.entity = entity;}
+	
+	private Class<EjbWithPosition> cOption;
+	private Long option; public Long getOption() {return option;} public void setOption(Long option) {this.option = option;}
 	
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RA> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RE,RA> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -109,15 +116,19 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		bots = new ArrayList<>();
 		entities = new ArrayList<>();
 		attributes = new ArrayList<>();
+		options = new ArrayList<>();
 		
 		editStage = false;
 		editTransition = false;
 	}
 	
-	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval, JeeslFacesMessageBean bMessage)
+	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
+										JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval,
+										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
-		super.initJeeslAdmin(bTranslation, bMessage);
+		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fApproval=fApproval;
+		this.fRevision=fRevision;
 		
 		bots.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
@@ -277,7 +288,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void selectTransition() throws UtilsNotFoundException
 	{
-		reset(false,false,false,true,true,false,false);
+		reset(false,false,false,true,true,true,true);
 		logger.info(AbstractLogMessage.selectEntity(transition));
 		transition = fApproval.find(fbApproval.getClassTransition(),transition);
 		transition = efLang.persistMissingLangs(fApproval,localeCodes,transition);
@@ -351,6 +362,16 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		logger.info(AbstractLogMessage.saveEntity(action));
 		action.setBot(fApproval.find(fbApproval.getClassBot(), action.getBot()));
 		
+		if(action.getEntity()!=null) {action.setEntity(fApproval.find(fbRevision.getClassEntity(),action.getEntity()));}
+		if(action.getAttribute()!=null)
+		{
+			action.setAttribute(fApproval.find(fbRevision.getClassAttribute(),action.getAttribute()));
+			logger.info("Saving option:"+option+" for "+cOption.getName());
+		}
+		
+		
+		
+		
 		action = fApproval.save(action);
 		reloadActions();
 	}
@@ -359,6 +380,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.selectEntity(action));
 		action = fApproval.find(fbApproval.getClassAction(),action);
+		changeEntity();
 	}
 	
 	public void deleteAction() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
@@ -371,11 +393,47 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void changeEntity()
 	{
-		logger.info(AbstractLogMessage.selectOneMenuChange(entity));
+		logger.info(AbstractLogMessage.selectOneMenuChange(action.getEntity()));
 		attributes.clear();
-		if(entity!=null)
+		if(action.getEntity()==null) {action.setAttribute(null);}
+		else
 		{
-//			attributes.addAll(fApproval.allForParent(fbRevision.getClassAttribute(), entity));
+			action.setEntity(fApproval.find(fbRevision.getClassEntity(),action.getEntity()));
+			action.setEntity(fRevision.load(fbRevision.getClassEntity(),action.getEntity()));
+			attributes.addAll(action.getEntity().getAttributes());
+			
+			if(attributes.isEmpty()) {action.setAttribute(null);}
+			else
+			{
+				if(action.getAttribute()==null) {action.setAttribute(attributes.get(0));}
+				else
+				{
+					if(!attributes.contains(action.getAttribute())){action.setAttribute(attributes.get(0));}
+				}
+			}
+		}
+		changeAttribute();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void changeAttribute()
+	{
+		options.clear();
+		if(action.getAttribute()!=null && action.getAttribute().getEntity()!=null)
+		{
+			logger.info("Evaluating "+action.getAttribute().getEntity().getCode());
+			try
+			{
+				cOption = (Class<EjbWithPosition>)Class.forName(action.getAttribute().getEntity().getCode()).asSubclass(EjbWithPosition.class);
+				options.addAll(fApproval.allOrderedPosition(cOption));
+				
+			}
+			catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			logger.info("Options: "+options.size());
+			option = action.getAttribute().getId();
 		}
 	}
 	

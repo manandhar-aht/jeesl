@@ -1,11 +1,13 @@
 package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
+import org.jeesl.factory.ejb.module.approval.EjbApprovalActionFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalCommunicationFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalProcessFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalStageFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalTransitionFactory;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
@@ -25,7 +27,8 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									S extends JeeslApprovalStage<L,D,AP>,
 									AT extends JeeslApprovalTransition<L,D,S>,
 									AC extends JeeslApprovalCommunication<AT,MT,MR>,
-									AA extends JeeslApprovalAction<AT>,
+									AA extends JeeslApprovalAction<AT,AB>,
+									AB extends JeeslApprovalBot<AB,L,D,?>,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 									MR extends JeeslSecurityRole<L,D,?,?,?,?,?>>
 				extends AbstractFactoryBuilder<L,D>
@@ -38,6 +41,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AT> cTransition; public Class<AT> getClassTransition() {return cTransition;}
 	private final Class<AC> cCommunication; public Class<AC> getClassCommunication() {return cCommunication;}
 	private final Class<AA> cAction; public Class<AA> getClassAction() {return cAction;}
+	private final Class<AB> cBot; public Class<AB> getClassBot() {return cBot;}
 	
 	public ApprovalFactoryBuilder(final Class<L> cL, final Class<D> cD,
 									final Class<CTX> cContext,
@@ -45,7 +49,8 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<S> cStage,
 									final Class<AT> cTransition,
 									final Class<AC> cCommunication,
-									final Class<AA> cAction)
+									final Class<AA> cAction,
+									final Class<AB> cBot)
 	{
 		super(cL,cD);
 		this.cContext=cContext;
@@ -54,10 +59,12 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cTransition=cTransition;
 		this.cCommunication=cCommunication;
 		this.cAction=cAction;
+		this.cBot=cBot;
 	}
 	
 	public EjbApprovalProcessFactory<AP> ejbProcess() {return new EjbApprovalProcessFactory<>(cProcess);}
 	public EjbApprovalStageFactory<AP,S> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
 	public EjbApprovalTransitionFactory<S,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
 	public EjbApprovalCommunicationFactory<AT,AC,MT,MR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
+	public EjbApprovalActionFactory<AT,AA,AB> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
 }

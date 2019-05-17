@@ -86,5 +86,27 @@
     	</s:langs>
     </s:translation>
     
+    <s:translation key="jeeslApprovalActions">
+    	<s:langs>
+    		<s:lang key="de" translation="Aktionen"/>
+    		<s:lang key="en" translation="Actions"/>
+    		<s:lang key="fr" translation="Actions"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslApprovalAction">
+    	<s:langs>
+    		<s:lang key="de" translation="Aktion"/>
+    		<s:lang key="en" translation="Action"/>
+    		<s:lang key="fr" translation="Action"/>
+    	</s:langs>
+    </s:translation>
+    
+    <s:translation key="jeeslApprovalBot">
+    	<s:langs>
+    		<s:lang key="de" translation="Bot"/>
+    		<s:lang key="en" translation="Bot"/>
+    		<s:lang key="fr" translation="Bot"/>
+    	</s:langs>
+    </s:translation>
     
 </s:translations>

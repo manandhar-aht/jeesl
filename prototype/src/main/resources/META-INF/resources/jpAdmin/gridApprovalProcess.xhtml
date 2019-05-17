@@ -177,10 +177,31 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAction()}" update=":#{cc.id}:sStage"/>
-							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
-								<h:outputText value="#{a.id}"/>  
+							
+							<p:column rendered="true" headerText="#{msg.jeeslApprovalBot}">  
+								<h:outputText value="#{a.bot.name[localeCode].lang}"/>  
 							</p:column>
 						</p:dataTable>
+					</h:form>
+					<h:form id="fAction" rendered="#{not empty cc.attrs.bean.action}">
+						<p:panel header="#{msg.jeeslApprovalAction}" styleClass="jeeslPanel">
+							<f:facet name="actions">
+								<j:icon type="jeeslCancel" listener="#{cc.attrs.bean.cancelAction()}" update=":#{cc.id}:rStage" mayDisappear="true"/>
+								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveAction()}" update=":#{cc.id}:rStage"/>
+								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteAction()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.action.id gt 0)}"/>
+							</f:facet>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslApprovalTransition}"/>
+								<h:outputText value="#{cc.attrs.bean.action.transition.name[localeCode].lang}" />
+								
+								<p:outputLabel value="#{msg.jeeslApprovalBot}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.action.bot}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.bots}" var="b" itemLabel="#{b.name[localeCode].lang}" itemValue="#{b}"/>
+								</p:selectOneMenu>
+								
+								
+							</p:panelGrid>
+						</p:panel>
 					</h:form>
 					<h:form id="fCommunications" rendered="#{(not empty cc.attrs.bean.transition) and (cc.attrs.bean.transition.id gt 0)}">
 						<p:dataTable var="c" value="#{cc.attrs.bean.communications}" draggableRows="true"

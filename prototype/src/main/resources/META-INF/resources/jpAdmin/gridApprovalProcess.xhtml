@@ -167,6 +167,21 @@
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.transition}" keys="#{cc.attrs.localeKeys}" withDescription="true" rendered="#{cc.attrs.bean.editTransition}"/>
 						</p:panel>
 					</h:form>
+					<h:form id="fActions" rendered="#{(not empty cc.attrs.bean.transition) and (cc.attrs.bean.transition.id gt 0)}">
+						<p:dataTable var="a" value="#{cc.attrs.bean.actions}" draggableRows="true"
+								selection="#{cc.attrs.bean.action}" selectionMode="single" rowKey="#{a.id}">
+							<f:facet name="header">
+								<j:dtHeader title="#{msg.jeeslApprovalActions}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addAction()}" update=":#{cc.id}:sStage"/>
+								</j:dtHeader>
+							</f:facet>
+							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderActions()}" update="@form"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAction()}" update=":#{cc.id}:sStage"/>
+							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
+								<h:outputText value="#{a.id}"/>  
+							</p:column>
+						</p:dataTable>
+					</h:form>
 					<h:form id="fCommunications" rendered="#{(not empty cc.attrs.bean.transition) and (cc.attrs.bean.transition.id gt 0)}">
 						<p:dataTable var="c" value="#{cc.attrs.bean.communications}" draggableRows="true"
 								selection="#{cc.attrs.bean.communication}" selectionMode="single" rowKey="#{c.id}">
@@ -176,7 +191,7 @@
 								</j:dtHeader>
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCommunication()}" update="@form"/>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sStage" listener="#{cc.attrs.bean.selectCommunication()}"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCommunication()}" update=":#{cc.id}:sStage"/>
 							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
 								<h:outputText value="#{c.template.name[localeCode].lang}"/>  
 							</p:column>

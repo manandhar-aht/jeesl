@@ -5,6 +5,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
@@ -16,8 +17,9 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 									CTX extends JeeslApprovalContext<CTX,L,D,?>,
 									AP extends JeeslApprovalProcess<L,D,CTX>,
 									AS extends JeeslApprovalStage<L,D,AP>,
-									T extends JeeslApprovalTransition<L,D,AS>,
-									C extends JeeslApprovalCommunication<T,MT,MR>,
+									AT extends JeeslApprovalTransition<L,D,AS,ATT>,
+									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+									C extends JeeslApprovalCommunication<AT,MT,MR>,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 									MR extends JeeslSecurityRole<?,?,?,?,?,?,?>>
 			extends UtilsFacade

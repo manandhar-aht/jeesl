@@ -10,7 +10,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalCommunicationFactory<T extends JeeslApprovalTransition<?,?,?>,
+public class EjbApprovalCommunicationFactory<T extends JeeslApprovalTransition<?,?,?,?>,
 											C extends JeeslApprovalCommunication<T,MT,MR>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
 											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>

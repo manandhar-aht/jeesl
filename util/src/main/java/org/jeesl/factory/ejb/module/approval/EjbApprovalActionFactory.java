@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbApprovalActionFactory<T extends JeeslApprovalTransition<?,?,?>,
+public class EjbApprovalActionFactory<T extends JeeslApprovalTransition<?,?,?,?>,
 											AA extends JeeslApprovalAction<T,AB,AO,RE,RA>,
 											AB extends JeeslApprovalBot<AB,?,?,?>,
 											AO extends EjbWithId,

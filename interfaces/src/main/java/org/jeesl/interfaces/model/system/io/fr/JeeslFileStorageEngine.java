@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.graphic.with.EjbWithCodeGraphic;
+import org.jeesl.interfaces.model.system.option.JeeslOptionRestDescription;
 import org.jeesl.interfaces.model.system.option.JeeslOptionRestDownload;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -16,7 +17,8 @@ public interface JeeslFileStorageEngine <S extends UtilsStatus<S,L,D>,
 										L extends UtilsLang,
 										D extends UtilsDescription,
 										G extends JeeslGraphic<L,D,G,?,?,?>>
-							extends Serializable,EjbPersistable,JeeslOptionRestDownload,
+							extends Serializable,EjbPersistable,
+									JeeslOptionRestDescription,JeeslOptionRestDownload,
 									EjbWithCodeGraphic<G>,UtilsStatusFixedCode,
 									UtilsStatus<S,L,D>
 {	

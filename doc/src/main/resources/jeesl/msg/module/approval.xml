@@ -64,6 +64,13 @@
     		<s:lang key="fr" translation="Destination"/>
     	</s:langs>
     </s:translation>
+  	<s:translation key="jeeslApprovalTrasitionType">
+    	<s:langs>
+    		<s:lang key="de" translation="Typ"/>
+    		<s:lang key="en" translation="Type"/>
+    		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>  
     <s:translation key="jeeslApprovalCommunications">
     	<s:langs>
     		<s:lang key="de" translation="Nachrichten"/>

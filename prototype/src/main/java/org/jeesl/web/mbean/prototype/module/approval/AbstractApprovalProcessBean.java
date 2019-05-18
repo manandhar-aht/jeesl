@@ -21,6 +21,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -44,7 +45,8 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 											AX extends JeeslApprovalContext<AX,L,D,?>,
 											AP extends JeeslApprovalProcess<L,D,AX>,
 											S extends JeeslApprovalStage<L,D,AP>,
-											AT extends JeeslApprovalTransition<L,D,S>,
+											AT extends JeeslApprovalTransition<L,D,S,ATT>,
+											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 											AC extends JeeslApprovalCommunication<AT,MT,SR>,
 											AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslApprovalBot<AB,L,D,?>,
@@ -60,10 +62,10 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractApprovalProcessBean.class);
 
-	private JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval;
+	private JeeslApprovalFacade<L,D,AX,AP,S,AT,ATT,AC,MT,SR> fApproval;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -75,6 +77,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private final List<SR> roles; public List<SR> getRoles() {return roles;}
 	private List<S> stages; public List<S> getStages() {return stages;} public void setStages(List<S> stages) {this.stages = stages;}
 	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
+	private final List<ATT> transitionTypes; public List<ATT> getTransitionTypes() {return transitionTypes;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AB> bots; public List<AB> getBots() {return bots;}
@@ -94,7 +97,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -111,6 +114,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		roles = new ArrayList<>();
 		templates = new ArrayList<>();
 		transitions = new ArrayList<>();
+		transitionTypes = new ArrayList<>();
 		communications = new ArrayList<>();
 		actions = new ArrayList<>();
 		bots = new ArrayList<>();
@@ -123,12 +127,14 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval,
+										JeeslApprovalFacade<L,D,AX,AP,S,AT,ATT,AC,MT,SR> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fApproval=fApproval;
 		this.fRevision=fRevision;
+		
+		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassTransitionType()));
 		
 		bots.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
@@ -281,6 +287,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.saveEntity(transition));
 		transition.setDestination(fApproval.find(fbApproval.getClassStage(), transition.getDestination()));
+		transition.setType((fApproval.find(fbApproval.getClassTransitionType(), transition.getType())));
 		transition = fApproval.save(transition);
 		reloadTransitions();
 		reloadActions();

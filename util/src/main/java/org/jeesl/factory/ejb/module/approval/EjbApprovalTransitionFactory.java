@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbApprovalTransitionFactory<S extends JeeslApprovalStage<?,?,?>,
-											T extends JeeslApprovalTransition<?,?,S>
+											T extends JeeslApprovalTransition<?,?,S,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalTransitionFactory.class);

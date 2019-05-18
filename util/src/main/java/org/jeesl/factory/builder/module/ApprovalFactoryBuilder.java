@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -27,8 +28,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									CTX extends JeeslApprovalContext<CTX,L,D,?>,
 									AP extends JeeslApprovalProcess<L,D,CTX>,
-									S extends JeeslApprovalStage<L,D,AP>,
-									AT extends JeeslApprovalTransition<L,D,S>,
+									AS extends JeeslApprovalStage<L,D,AP>,
+									AT extends JeeslApprovalTransition<L,D,AS,ATT>,
+									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 									AC extends JeeslApprovalCommunication<AT,MT,MR>,
 									AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
 									AB extends JeeslApprovalBot<AB,L,D,?>,
@@ -43,8 +45,9 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	
 	private final Class<CTX> cContext; public Class<CTX> getClassContext() {return cContext;}
 	private final Class<AP> cProcess; public Class<AP> getClassProcess() {return cProcess;}
-	private final Class<S> cStage; public Class<S> getClassStage() {return cStage;}
+	private final Class<AS> cStage; public Class<AS> getClassStage() {return cStage;}
 	private final Class<AT> cTransition; public Class<AT> getClassTransition() {return cTransition;}
+	private final Class<ATT> cTransitionType; public Class<ATT> getClassTransitionType() {return cTransitionType;}
 	private final Class<AC> cCommunication; public Class<AC> getClassCommunication() {return cCommunication;}
 	private final Class<AA> cAction; public Class<AA> getClassAction() {return cAction;}
 	private final Class<AB> cBot; public Class<AB> getClassBot() {return cBot;}
@@ -52,8 +55,9 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public ApprovalFactoryBuilder(final Class<L> cL, final Class<D> cD,
 									final Class<CTX> cContext,
 									final Class<AP> cProcess,
-									final Class<S> cStage,
+									final Class<AS> cStage,
 									final Class<AT> cTransition,
+									final Class<ATT> cTransitionType,
 									final Class<AC> cCommunication,
 									final Class<AA> cAction,
 									final Class<AB> cBot)
@@ -63,14 +67,15 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cProcess=cProcess;
 		this.cStage=cStage;
 		this.cTransition=cTransition;
+		this.cTransitionType=cTransitionType;
 		this.cCommunication=cCommunication;
 		this.cAction=cAction;
 		this.cBot=cBot;
 	}
 	
 	public EjbApprovalProcessFactory<AP> ejbProcess() {return new EjbApprovalProcessFactory<>(cProcess);}
-	public EjbApprovalStageFactory<AP,S> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
-	public EjbApprovalTransitionFactory<S,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
+	public EjbApprovalStageFactory<AP,AS> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
+	public EjbApprovalTransitionFactory<AS,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
 	public EjbApprovalCommunicationFactory<AT,AC,MT,MR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
 	public EjbApprovalActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
 }

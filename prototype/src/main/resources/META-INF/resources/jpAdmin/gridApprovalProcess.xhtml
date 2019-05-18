@@ -131,6 +131,9 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTransitions()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTransition()}" update=":#{cc.id}:sStage"/>
 							
+							<p:column>  
+								<jtp:symbolizer value="#{t.type}"/>  
+							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslName}">  
 								<h:outputText value="#{t.name[localeCode].lang}"/>  
 							</p:column>
@@ -157,6 +160,12 @@
 									<f:selectItems value="#{cc.attrs.bean.stages}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
 								</p:selectOneMenu>
 								<h:outputText value="#{cc.attrs.bean.transition.destination.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
+								
+								<p:outputLabel value="#{msg.jeeslApprovalTrasitionType}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.transition.type}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editTransition}">
+									<f:selectItems value="#{cc.attrs.bean.transitionTypes}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+								<h:outputText value="#{cc.attrs.bean.transition.type.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
 								
 								<p:outputLabel value="#{msg.jeeslName}" rendered="#{not cc.attrs.bean.editTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.transition.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>

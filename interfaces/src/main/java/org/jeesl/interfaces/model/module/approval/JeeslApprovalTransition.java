@@ -14,14 +14,17 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslApprovalTransition <L extends UtilsLang, D extends UtilsDescription,
-									S extends JeeslApprovalStage<L,D,?>
-									
+									S extends JeeslApprovalStage<L,D,?>,
+									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
 	public static enum Attributes{source,destination}
+	
+	ATT getType();
+	void setType(ATT type);
 	
 	S getSource();
 	void setSource(S source);

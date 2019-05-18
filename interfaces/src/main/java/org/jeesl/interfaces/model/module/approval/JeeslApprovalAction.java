@@ -14,10 +14,9 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalAction <T extends JeeslApprovalTransition<?,?,?>,
 										AB extends JeeslApprovalBot<AB,?,?,?>,
+										AO extends EjbWithId,
 										RE extends JeeslRevisionEntity<?,?,?,?,RA>,
 										RA extends JeeslRevisionAttribute<?,?,RE,?,?>
-//,
-//										AO extends EjbWithId
 >
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
@@ -37,6 +36,6 @@ public interface JeeslApprovalAction <T extends JeeslApprovalTransition<?,?,?>,
 	RA getAttribute();
 	void setAttribute(RA attribute);
 	
-//	AO getOption();
-//	void setOption(AO option);
+	AO getOption();
+	void setOption(AO option);
 }

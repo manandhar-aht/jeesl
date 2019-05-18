@@ -46,7 +46,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 											S extends JeeslApprovalStage<L,D,AP>,
 											AT extends JeeslApprovalTransition<L,D,S>,
 											AC extends JeeslApprovalCommunication<AT,MT,SR>,
-											AA extends JeeslApprovalAction<AT,AB,RE,RA>,
+											AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslApprovalBot<AB,L,D,?>,
 											AO extends EjbWithId,
 											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
@@ -63,7 +63,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private JeeslApprovalFacade<L,D,AX,AP,S,AT,AC,MT,SR> fApproval;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RE,RA> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -94,7 +94,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,MT,SR,RE,RA> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -155,6 +155,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	}
 	
 	public void cancelCommunication() {reset(false,false,false,false,true,false,false);}
+	public void cancelAction() {reset(false,false,false,false,false,false,true);}
 	private void reset(boolean rStage, boolean rTransitions, boolean rTransition, boolean rCommunications, boolean rCommunication, boolean rActions, boolean rAction)
 	{
 		if(rStage) {stage=null;}
@@ -357,6 +358,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		action = fbApproval.ejbAction().build(transition,actions);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
@@ -367,10 +369,9 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		{
 			action.setAttribute(fApproval.find(fbRevision.getClassAttribute(),action.getAttribute()));
 			logger.info("Saving option:"+option+" for "+cOption.getName());
-		}
-		
-		
-		
+			AO id = (AO)fApproval.find(cOption,option);
+			action.setOption(id);
+		}	
 		
 		action = fApproval.save(action);
 		reloadActions();
@@ -426,14 +427,11 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 			{
 				cOption = (Class<EjbWithPosition>)Class.forName(action.getAttribute().getEntity().getCode()).asSubclass(EjbWithPosition.class);
 				options.addAll(fApproval.allOrderedPosition(cOption));
-				
 			}
-			catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			catch (ClassNotFoundException e) {e.printStackTrace();}
 			logger.info("Options: "+options.size());
-			option = action.getAttribute().getId();
+			if(action.getOption()!=null) {option = action.getOption().getId();}
+			else {option=null;}
 		}
 	}
 	

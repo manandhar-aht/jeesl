@@ -183,11 +183,12 @@
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslRevisionEntity} - #{msg.jeeslRevisionAttribute}">  
 								<h:outputText value="#{a.entity.name[localeCode].lang}"/>
-								<jtp:symbolizer value="#{a.attribute.relation}"/>  
+								<jtp:symbolizer value="#{a.attribute.relation}" marginLeftRight="5"/>
 								<h:outputText value="#{a.attribute.name[localeCode].lang}"/>
 							</p:column>
-							<p:column rendered="false" headerText="#{msg.jeeslApprovalOption}">  
-								<h:outputText value="#{a.bot.name[localeCode].lang}"/>  
+							<p:column rendered="true" headerText="#{msg.jeeslApprovalOption}">
+								<jtp:symbolizer value="#{a.option}" marginRight="5"/>
+								<h:outputText value="#{a.option.name[localeCode].lang}"/>  
 							</p:column>
 						</p:dataTable>
 					</h:form>

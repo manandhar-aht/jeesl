@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class EjbApprovalActionFactory<T extends JeeslApprovalTransition<?,?,?>,
-											AA extends JeeslApprovalAction<T,AB,RE,RA>,
+											AA extends JeeslApprovalAction<T,AB,AO,RE,RA>,
 											AB extends JeeslApprovalBot<AB,?,?,?>,
+											AO extends EjbWithId,
 											RE extends JeeslRevisionEntity<?,?,?,?,RA>,
 											RA extends JeeslRevisionAttribute<?,?,RE,?,?>
-//,
-//											AO extends EjbWithId
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalActionFactory.class);

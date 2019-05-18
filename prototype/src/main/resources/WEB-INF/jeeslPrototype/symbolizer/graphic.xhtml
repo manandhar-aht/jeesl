@@ -14,6 +14,7 @@
 						height="#{height}" 
 						value="/image/symbolizer/graphic/#{value.class.name}/#{height}/#{value.id}">
 		<c:if test="#{not empty marginRight}"><f:attribute name="style" value="margin-right: #{marginRight}px;"/></c:if>
+		<c:if test="#{not empty marginLeftRight}"><f:attribute name="style" value="margin-left: #{marginLeftRight}px; margin-right: #{marginLeftRight}px;"/></c:if>
 		<c:if test="#{not empty style}"><f:attribute name="style" value="#{style}"/></c:if>
 		<c:if test="#{not empty styleClass}"><f:attribute name="styleClass" value="#{styleClass}"/></c:if>
 	</p:graphicImage>

@@ -30,9 +30,9 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									S extends JeeslApprovalStage<L,D,AP>,
 									AT extends JeeslApprovalTransition<L,D,S>,
 									AC extends JeeslApprovalCommunication<AT,MT,MR>,
-									AA extends JeeslApprovalAction<AT,AB,RE,RA>,
+									AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
 									AB extends JeeslApprovalBot<AB,L,D,?>,
-//									AO extends EjbWithId,
+									AO extends EjbWithId,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 									MR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
@@ -72,5 +72,5 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbApprovalStageFactory<AP,S> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
 	public EjbApprovalTransitionFactory<S,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
 	public EjbApprovalCommunicationFactory<AT,AC,MT,MR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
-	public EjbApprovalActionFactory<AT,AA,AB,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
+	public EjbApprovalActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
 }

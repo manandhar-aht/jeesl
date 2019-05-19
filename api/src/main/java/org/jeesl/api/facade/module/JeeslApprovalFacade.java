@@ -19,9 +19,9 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 									AS extends JeeslApprovalStage<L,D,AP>,
 									AT extends JeeslApprovalTransition<L,D,AS,ATT>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-									C extends JeeslApprovalCommunication<AT,MT,MR>,
+									C extends JeeslApprovalCommunication<AT,MT,SR>,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
-									MR extends JeeslSecurityRole<?,?,?,?,?,?,?>>
+									SR extends JeeslSecurityRole<?,?,?,?,?,?,?>>
 			extends UtilsFacade
 {	
 	

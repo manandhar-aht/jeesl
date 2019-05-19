@@ -8,6 +8,7 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
+import org.jeesl.controller.handler.module.approval.ApprovalResetHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
@@ -18,8 +19,10 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalPermissionType;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
@@ -44,8 +47,10 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											AX extends JeeslApprovalContext<AX,L,D,?>,
 											AP extends JeeslApprovalProcess<L,D,AX>,
-											S extends JeeslApprovalStage<L,D,AP>,
-											AT extends JeeslApprovalTransition<L,D,S,ATT>,
+											AS extends JeeslApprovalStage<L,D,AP>,
+											ASP extends JeeslApprovalStagePermission<AS,APT,SR>,
+											APT extends JeeslApprovalPermissionType<APT,L,D,?>,
+											AT extends JeeslApprovalTransition<L,D,AS,ATT>,
 											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 											AC extends JeeslApprovalCommunication<AT,MT,SR>,
 											AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
@@ -62,10 +67,10 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractApprovalProcessBean.class);
 
-	private JeeslApprovalFacade<L,D,AX,AP,S,AT,ATT,AC,MT,SR> fApproval;
+	private JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -75,7 +80,9 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	private final List<MT> templates; public List<MT> getTemplates() {return templates;}
 	private final List<SR> roles; public List<SR> getRoles() {return roles;}
-	private List<S> stages; public List<S> getStages() {return stages;} public void setStages(List<S> stages) {this.stages = stages;}
+	private List<AS> stages; public List<AS> getStages() {return stages;} public void setStages(List<AS> stages) {this.stages = stages;}
+	private final List<ASP> permissions; public List<ASP> getPermissions() {return permissions;}
+	private final List<APT> permissionTypes; public List<APT> getPermissionTypes() {return permissionTypes;}
 	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<ATT> transitionTypes; public List<ATT> getTransitionTypes() {return transitionTypes;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
@@ -86,7 +93,8 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private final List<EjbWithId> options; public List<EjbWithId> getOptions() {return options;}
 	
 	protected AP process; public AP getProcess() {return process;} public void setProcess(AP process) {this.process = process;}
-	private S stage; public S getStage() {return stage;} public void setStage(S stage) {this.stage = stage;}
+	private AS stage; public AS getStage() {return stage;} public void setStage(AS stage) {this.stage = stage;}
+	private ASP permission; public ASP getPermission() {return permission;} public void setPermission(ASP permission) {this.permission = permission;}
 	private AT transition; public AT getTransition() {return transition;} public void setTransition(AT transition) {this.transition = transition;}
 	private AC communication; public AC getCommunication() {return communication;} public void setCommunication(AC communication) {this.communication = communication;}
 	private AA action; public AA getAction() {return action;} public void setAction(AA action) {this.action = action;}
@@ -97,7 +105,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,S,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -113,6 +121,8 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		
 		roles = new ArrayList<>();
 		templates = new ArrayList<>();
+		permissions = new ArrayList<>();
+		permissionTypes = new ArrayList<>();
 		transitions = new ArrayList<>();
 		transitionTypes = new ArrayList<>();
 		communications = new ArrayList<>();
@@ -127,7 +137,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslApprovalFacade<L,D,AX,AP,S,AT,ATT,AC,MT,SR> fApproval,
+										JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
@@ -135,6 +145,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		this.fRevision=fRevision;
 		
 		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassTransitionType()));
+		permissionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassPermissionType()));
 		
 		bots.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
@@ -160,17 +171,20 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbApproval.getClassContext(), sbhContext.getList()));}
 	}
 	
-	public void cancelCommunication() {reset(false,false,false,false,true,false,false);}
-	public void cancelAction() {reset(false,false,false,false,false,false,true);}
-	private void reset(boolean rStage, boolean rTransitions, boolean rTransition, boolean rCommunications, boolean rCommunication, boolean rActions, boolean rAction)
+	public void cancelPermission() {reset(ApprovalResetHandler.build().none().permission(true));}
+	public void cancelCommunication() {reset(ApprovalResetHandler.build().none().communication(true));}
+	public void cancelAction() {reset(ApprovalResetHandler.build().none().action(true));}
+	private void reset(ApprovalResetHandler arh)
 	{
-		if(rStage) {stage=null;}
-		if(rTransitions) {transitions.clear();}
-		if(rTransition) {transition=null;}
-		if(rCommunications) {communications.clear();}
-		if(rCommunication) {communication=null;}
-		if(rActions) {actions.clear();}
-		if(rAction) {action=null;}
+		if(arh.isStage()) {stage=null;}
+		if(arh.isPermissions()) {permissions.clear();;}
+		if(arh.isPermission()) {permission=null;}
+		if(arh.isTransistions()) {transitions.clear();}
+		if(arh.isTransistion()) {transition=null;}
+		if(arh.isCommunications()) {communications.clear();}
+		if(arh.isCommunication()) {communication=null;}
+		if(arh.isActions()) {actions.clear();}
+		if(arh.isAction()) {action=null;}
 	}
 	
 	@Override
@@ -225,13 +239,13 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.rmEntity(process));
 		fApproval.rm(process);
-		reset(true,true,true,true,true,true,true);
+		reset(ApprovalResetHandler.build().all());
 		reloadProcesses();
 	}
 	
 	public void addStage()
 	{
-		reset(true,true,true,true,true,true,true);
+		reset(ApprovalResetHandler.build().all());
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassProcess()));
 		stage = fbApproval.ejbStage().build(process,stages);
 		stage.setName(efLang.createEmpty(localeCodes));
@@ -250,21 +264,59 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void selectStage() throws UtilsNotFoundException
 	{
-		reset(false,true,true,true,true,true,true);
+		reset(ApprovalResetHandler.build().all().stage(false));
 		logger.info(AbstractLogMessage.selectEntity(stage));
 		stage = fApproval.find(fbApproval.getClassStage(), stage);
 		stage = efLang.persistMissingLangs(fApproval,localeCodes,stage);
 		stage = efDescription.persistMissingLangs(fApproval,localeCodes,stage);
 		editStage = false;
 		reloadTransitions();
+		reloadPermissions();
 	}
 	
 	public void deleteStage() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(stage));
 		fApproval.rm(stage);
-		reset(true,false,true,true,true,true,true);
+		reset(ApprovalResetHandler.build().all());
 		reloadStages();
+	}
+	
+	private void reloadPermissions()
+	{
+		reset(ApprovalResetHandler.build().none().permissions(true));
+		permissions.addAll(fApproval.allForParent(fbApproval.getClassPermission(),stage));
+	}
+	
+	public void addPermission()
+	{
+		reset(ApprovalResetHandler.build().none().permission(true));
+		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassPermission()));
+		permission = fbApproval.ejbPermission().build(stage,permissions);
+	}
+	
+	public void savePermission() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.saveEntity(permission));
+		permission.setRole(fApproval.find(fbSecurity.getClassRole(), permission.getRole()));
+		permission.setType(fApproval.find(fbApproval.getClassPermissionType(), permission.getType()));
+		permission = fApproval.save(permission);
+		reloadPermissions();
+	}
+	
+	public void selectPermission() throws UtilsNotFoundException
+	{
+		reset(ApprovalResetHandler.build().none());
+		logger.info(AbstractLogMessage.selectEntity(permission));
+		permission = fApproval.find(fbApproval.getClassPermission(),permission);
+	}
+	
+	public void deletePermission() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	{
+		logger.info(AbstractLogMessage.rmEntity(permission));
+		fApproval.rm(permission);
+		reset(ApprovalResetHandler.build().none().permission(true));
+		reloadPermissions();
 	}
 	
 	private void reloadTransitions()
@@ -275,7 +327,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void addTransition()
 	{
-		reset(false,false,true,true,true,false,false);
+		reset(ApprovalResetHandler.build().none().transistion(true));
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
 		transition = fbApproval.ejbTransition().build(stage,transitions);
 		transition.setName(efLang.createEmpty(localeCodes));
@@ -296,7 +348,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void selectTransition() throws UtilsNotFoundException
 	{
-		reset(false,false,false,true,true,true,true);
+		reset(ApprovalResetHandler.build().none());
 		logger.info(AbstractLogMessage.selectEntity(transition));
 		transition = fApproval.find(fbApproval.getClassTransition(),transition);
 		transition = efLang.persistMissingLangs(fApproval,localeCodes,transition);
@@ -310,19 +362,19 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.rmEntity(transition));
 		fApproval.rm(transition);
-		reset(false,false,true,true,true,false,false);
+		reset(ApprovalResetHandler.build().none().transistion(true));
 		reloadTransitions();
 	}
 	
 	private void reloadCommunications()
 	{
-		communications.clear();
+		reset(ApprovalResetHandler.build().none().communications(true));
 		communications.addAll(fApproval.allForParent(fbApproval.getClassCommunication(),transition));
 	}
 	
 	public void addCommunication()
 	{
-		reset(false,false,false,false,true,false,false);
+		reset(ApprovalResetHandler.build().none().communication(true));
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
 		communication = fbApproval.ejbCommunication().build(transition,communications);
 	}
@@ -338,7 +390,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void selectCommunication() throws UtilsNotFoundException
 	{
-		reset(false,false,false,false,false,false,false);
+		reset(ApprovalResetHandler.build().none());
 		logger.info(AbstractLogMessage.selectEntity(transition));
 		communication = fApproval.find(fbApproval.getClassCommunication(),communication);
 	}
@@ -347,20 +399,19 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.rmEntity(communication));
 		fApproval.rm(communication);
-		reset(false,false,false,true,true,false,false);
+		reset(ApprovalResetHandler.build().none().communication(true));
 		reloadCommunications();
 	}
 
-	
 	private void reloadActions()
 	{
-		actions.clear();
+		reset(ApprovalResetHandler.build().none().actions(true));
 		actions.addAll(fApproval.allForParent(fbApproval.getClassAction(),transition));
 	}
 	
 	public void addAction()
 	{
-		reset(false,false,false,false,false,false,true);
+		reset(ApprovalResetHandler.build().none().action(true));
 		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassAction()));
 		action = fbApproval.ejbAction().build(transition,actions);
 	}
@@ -395,7 +446,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.rmEntity(action));
 		fApproval.rm(action);
-		reset(false,false,false,false,false,true,true);
+		reset(ApprovalResetHandler.build().none().action(true));
 		reloadActions();
 	}
 	
@@ -444,4 +495,5 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	
 	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}
 	public void reorderStages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,stages);}
+	public void reorderPermissions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,permissions);}
 }

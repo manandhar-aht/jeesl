@@ -36,6 +36,28 @@
     	</s:langs>
     </s:translation>
     
+	<s:translation key="jeeslApprovalPermissions">
+    	<s:langs>
+    		<s:lang key="de" translation="Permissions"/>
+    		<s:lang key="en" translation="Permissions"/>
+    		<s:lang key="fr" translation="Permissions"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslApprovalPermission">
+    	<s:langs>
+    		<s:lang key="de" translation="Permission"/>
+    		<s:lang key="en" translation="Permission"/>
+    		<s:lang key="fr" translation="Permission"/>
+    	</s:langs>
+    </s:translation>
+ 	<s:translation key="jeeslApprovalPermissionType">
+    	<s:langs>
+    		<s:lang key="de" translation="Type"/>
+    		<s:lang key="en" translation="Type"/>
+    		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>
+       
 	<s:translation key="jeeslApprovalTransitions">
     	<s:langs>
     		<s:lang key="de" translation="Übergänge"/>

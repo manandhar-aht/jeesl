@@ -11,6 +11,8 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -38,21 +40,25 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 							SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 							RE extends JeeslRevisionEntity<L,D,?,?,RA>,
-							RA extends JeeslRevisionAttribute<L,D,RE,?,?>
+							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
+							AW extends JeeslApprovalWorkflow<AP>
 							>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowEngine.class);
 	
-	protected JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval;
+	private final JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval;
 	
-	protected JeeslApprovalProcess<L,D,AX> process;
-	
-	public JeeslWorkflowEngine()
+	protected JeeslApprovalProcess<L,D,AX> process; public JeeslApprovalProcess<L,D,AX> getProcess() {return process;} protected void setProcess(JeeslApprovalProcess<L,D,AX> process) {this.process = process;}
+
+	public JeeslWorkflowEngine(JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval)
 	{
-		
+		this.fApproval=fApproval;
 	}
 	
-	
+	public void preSave(JeeslWithWorkflow<AW> ejb)
+	{
+		logger.info("pre-Save "+ejb);
+	}
 	
 	
 }

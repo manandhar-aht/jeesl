@@ -15,5 +15,5 @@ public interface JeeslJobStatus <S extends UtilsStatus<S,L,D>,
 									L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 		extends Serializable,EjbPersistable,JeeslOptionRestDownload,EjbWithCodeGraphic<G>
 {
-	public static enum Code{queue,timeout,working,completed,error,failed};
+	public static enum Code{queue,timeout,working,completed,failed};
 }

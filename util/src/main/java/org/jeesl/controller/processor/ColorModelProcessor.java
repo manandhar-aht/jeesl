@@ -3,7 +3,6 @@ package org.jeesl.controller.processor;
 import java.awt.Color;
 
 public class ColorModelProcessor
-
 {
 	private double[] hsv;
 	private double[] rgb;

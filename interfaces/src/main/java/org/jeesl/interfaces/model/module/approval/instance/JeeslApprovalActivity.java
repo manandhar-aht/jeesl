@@ -30,4 +30,7 @@ public interface JeeslApprovalActivity <AT extends JeeslApprovalTransition<?,?,?
 	
 	USER getUser();
 	void setUser(USER user);
+	
+	String getRemark();
+	void setRemark(String remark);
 }

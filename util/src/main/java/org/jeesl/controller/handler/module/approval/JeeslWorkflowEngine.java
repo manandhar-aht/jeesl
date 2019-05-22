@@ -26,6 +26,8 @@ import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
+import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -62,15 +64,14 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
-	private final List<AC> communications;
+	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	
-	public List<AC> getCommunications() {
-		return communications;
-	}
+	private USER user;
 	protected AP process; public AP getProcess() {return process;} protected void setProcess(AP process) {this.process = process;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
 	private AY activity; public AY getActivity() {return activity;} public void setActivity(AY activity) {this.activity = activity;}
 	private AT transition; public AT getTransition() {return transition;}
+	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	
 	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
 								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval)
@@ -86,6 +87,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	public void create(JeeslWithWorkflow<AW> ejb, USER user)
 	{
+		this.user=user;
 		workflow = fbApproval.ejbWorkflow().build(process);
 	
 		AT transition = fApproval.fTransitionBegin(process);
@@ -98,19 +100,21 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		logger.info("pre-Save "+ejb);
 	}
 	
-	public <W extends JeeslWithWorkflow<AW>> void init(Class<W> cWith, W ejb)
+	public <W extends JeeslWithWorkflow<AW>> void init(Class<W> cWith, W ejb, USER user)
 	{
+		this.user=user;
 		if(debugOnInfo) {logger.info("Initialising for "+ejb.toString());}
 		try
 		{
 			workflow = fApproval.fWorkflow(cWith,ejb);
-			
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
 	
 	public void reloadWorkflow()
 	{
+		workflow = fApproval.find(fbApproval.getClassWorkflow(),workflow);
+		
 		transitions.clear();
 		transitions.addAll(fApproval.allForParent(fbApproval.getClassTransition(), workflow.getCurrentStage()));
 		
@@ -127,5 +131,23 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 		actions.clear();actions.addAll(fApproval.allForParent(fbApproval.getClassAction(),transition));
 		communications.clear();communications.addAll(fApproval.allForParent(fbApproval.getClassCommunication(),transition));
+	}
+	
+	public void performTransition() throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		logger.info("prepareTransition for "+transition.toString());
+		
+		workflow.setCurrentStage(transition.getDestination());
+		workflow = fApproval.save(workflow);
+		
+		activity = fbApproval.ejbActivity().build(workflow,transition,user);
+		activity.setRemark(remark);
+		activity = fApproval.save(activity);
+		
+		remark = null;
+		transition=null;
+		activity = null;
+		
+		reloadWorkflow();
 	}
 }

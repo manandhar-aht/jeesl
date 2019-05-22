@@ -13,6 +13,7 @@
 	<composite:interface >
 		<composite:attribute name="widgetVar" required="false" default="wvWorkflow"/>
 		<composite:attribute name="update" required="false"/>
+		<composite:attribute name="updateAfterConfirmimation" required="false"/>
 		<composite:attribute name="oncomplete" required="false"/>
 		<composite:attribute name="handler" required="true"/>
 		<composite:attribute name="label" required="false" default="Yes, remove permanently!"/>
@@ -52,6 +53,10 @@
 								<f:facet name="header"><h:outputText value="#{msg.jeeslApprovalTrasitionDestination}"/></f:facet>
 								<h:outputText value="#{a.transition.destination.name[localeCode].lang}" />
 							</p:column>
+							<p:column>
+								<f:facet name="header"><h:outputText value="#{msg.jeeslRemark}"/></f:facet>
+								<h:outputText value="#{a.remark}" />
+							</p:column>
 											
 						</p:dataTable>
 					</h:form>
@@ -69,7 +74,7 @@
 					<h:form id="fConfirmation">
 						<p:panel header="#{cc.attrs.handler.transition.name[localeCode].lang}" styleClass="jeeslPanel" rendered="#{not empty cc.attrs.handler.transition}">
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
-								<h:outputText value="#{msg.jeeslApprovalActions}"/>
+								<p:outputLabel value="#{msg.jeeslApprovalActions}"/>
 								<ui:fragment>
 									<ui:repeat var="a" value="#{cc.attrs.handler.actions}" >
 					                	<h:outputText value="#{a.bot.name[localeCode].lang}"/>
@@ -77,14 +82,22 @@
 										<h:outputText value="#{a.option.name[localeCode].lang}"/>  
 									</ui:repeat>
 								</ui:fragment>
-								<h:outputText value="#{msg.jeeslApprovalCommunications}"/>
+								<p:outputLabel value="#{msg.jeeslApprovalCommunications}"/>
 								<ui:fragment>
 									<ui:repeat var="c" value="#{cc.attrs.handler.communications}" >
-					                	<h:outputText value="#{c.role.category.name[localeCode].lang}"/>  
+					                	<h:outputText value="#{c.role.category.name[localeCode].lang}"/>
 										<h:outputText value="#{c.role.name[localeCode].lang}"/>
 										<h:outputText value="#{c.template.name[localeCode].lang}"/> 
 									</ui:repeat>
 								</ui:fragment>
+								<p:outputLabel value="#{msg.jeeslRemark}"/>
+								<jtp:inputRemark value="#{cc.attrs.handler.remark}"/>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="jeeslGrid80,jeeslGrid20">
+								<h:outputText value="Note"/>
+								<p:commandButton value="Confirm" type="button">
+									<p:ajax event="click" listener="#{cc.attrs.handler.performTransition()}" process="@form" update="#{cc.attrs.updateAfterConfirmimation}" oncomplete="PF('wvWorkflow').hide();"/>
+								</p:commandButton>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

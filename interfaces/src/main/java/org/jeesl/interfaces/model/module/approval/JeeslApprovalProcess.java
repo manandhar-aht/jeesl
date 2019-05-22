@@ -15,13 +15,13 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslApprovalProcess <L extends UtilsLang, D extends UtilsDescription,
-									CTX extends JeeslApprovalContext<CTX,L,D,?>
+									AX extends JeeslApprovalContext<AX,L,D,?>
 									
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithCode,EjbWithPosition,
 				EjbWithLang<L>,EjbWithDescription<D>
 {
-	CTX getContext();
-	void setContext(CTX context);
+	AX getContext();
+	void setContext(AX context);
 }

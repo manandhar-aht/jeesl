@@ -1,8 +1,10 @@
 package org.jeesl.interfaces.model.module.approval.instance;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -10,7 +12,9 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalWorkflow <AP extends JeeslApprovalProcess<?,?,?>
+public interface JeeslApprovalWorkflow <AP extends JeeslApprovalProcess<?,?,?>,
+										AS extends JeeslApprovalStage<?,?,AP>,
+										AY extends JeeslApprovalActivity<?,?>
 									
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
@@ -20,4 +24,10 @@ public interface JeeslApprovalWorkflow <AP extends JeeslApprovalProcess<?,?,?>
 	
 	AP getProcess();
 	void setProcess(AP process);
+	
+	AS getCurrentStage();
+	void setCurrentStage(AS currentStage);
+	
+	List<AY> getActivities();
+	void setActivities(List<AY> activities);
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+    
+	<composite:interface >
+		<composite:attribute name="widgetVar" required="false" default="wvWorkflow"/>
+		<composite:attribute name="update" required="false"/>
+		<composite:attribute name="oncomplete" required="false"/>
+		<composite:attribute name="handler" required="true"/>
+		<composite:attribute name="label" required="false" default="Yes, remove permanently!"/>
+	</composite:interface>
+
+	<composite:implementation>
+
+		<p:dialog id="dialog" header="#{cc.attrs.handler.workflow.process.context.name[localeCode].lang}: #{cc.attrs.handler.workflow.process.name[localeCode].lang}" widgetVar="#{cc.attrs.widgetVar}" modal="true" resizable="false">
+			<j:slot width="6">
+				<h:form id="fStages">
+					<p:dataTable var="a" value="#{cc.attrs.handler.activities}" draggableRows="false"
+							selection="#{cc.attrs.handler.activity}" selectionMode="single" rowKey="#{a.id}">
+						<f:facet name="header">
+							<j:dtHeader title="#{appLabelBean.labels['JeeBooking']['listOf'][localeCode].lang}">
+								
+							</j:dtHeader>
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{bookingBean.selectBooking()}" update=":grid"/>
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{msg.jeeslDate}"/></f:facet>
+							<jp:outputDate value="#{a.record}" withTime="true"/>  
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{msg.jeeslApprovalTrasitionSource}"/></f:facet>
+							<h:outputText value="#{a.transition.source.name[localeCode].lang}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{msg.jeeslApprovalTransition}"/></f:facet>
+							<h:outputText value="#{a.transition.name[localeCode].lang}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{msg.jeeslApprovalTrasitionDestination}"/></f:facet>
+							<h:outputText value="#{a.transition.destination.name[localeCode].lang}" />
+						</p:column>
+										
+					</p:dataTable>
+				</h:form>
+			</j:slot>
+			<j:slot width="5">
+				<h:form id="fAction">
+					<ui:repeat value="#{cc.attrs.handler.transitions}" var="t">
+	                	<p:commandButton value="#{t.name[localeCode].lang}" type="button">
+							<p:ajax event="click" update="#{cc.attrs.update}" listener="#{cc.attrs.handler.prepareTransition(t)}" process="@form"/>
+						</p:commandButton>
+					</ui:repeat>
+				</h:form>
+				
+			</j:slot>
+		</p:dialog>
+
+	</composite:implementation>
+</html>

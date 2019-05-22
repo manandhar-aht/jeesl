@@ -8,22 +8,22 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalTransitionFactory<S extends JeeslApprovalStage<?,?,?>,
-											T extends JeeslApprovalTransition<?,?,S,?>
+public class EjbApprovalTransitionFactory<AS extends JeeslApprovalStage<?,?,?>,
+											AT extends JeeslApprovalTransition<?,?,AS,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalTransitionFactory.class);
 	
-	final Class<T> cTransition;
+	final Class<AT> cTransition;
     
-	public EjbApprovalTransitionFactory(final Class<T> cTransition)
+	public EjbApprovalTransitionFactory(final Class<AT> cTransition)
 	{       
         this.cTransition = cTransition;
 	}
 	    
-	public T build(S source, List<T> list)
+	public AT build(AS source, List<AT> list)
 	{
-		T ejb = null;
+		AT ejb = null;
 		try
 		{
 			ejb = cTransition.newInstance();

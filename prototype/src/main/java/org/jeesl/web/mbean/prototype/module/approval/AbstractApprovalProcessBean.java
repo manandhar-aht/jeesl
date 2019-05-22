@@ -25,6 +25,8 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -59,18 +61,19 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 											SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
-											RA extends JeeslRevisionAttribute<L,D,RE,?,?>
-											>
+											RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
+											AW extends JeeslApprovalWorkflow<AP,AS,AY>,
+											AY extends JeeslApprovalActivity<AT,AW>>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractApprovalProcessBean.class);
 
-	private JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval;
+	private JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fApproval;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fbApproval;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -105,7 +108,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
-	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA> fbApproval,
+	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -137,7 +140,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslApprovalFacade<L,D,AX,AP,AS,AT,ATT,AC,MT,SR> fApproval,
+										JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);

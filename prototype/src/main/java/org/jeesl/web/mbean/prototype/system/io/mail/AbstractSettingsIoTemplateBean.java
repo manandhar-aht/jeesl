@@ -341,7 +341,6 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		catch (Exception e) {previewHeader="Error"; previewBody = "General Exception " +e.getMessage();}
     }
     
-	//*************************************************************************************
 	protected void reorderTemplates() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, fbTemplate.getClassTemplate(), templates);Collections.sort(templates, comparatorTemplate);}
 	protected void reorderTokens() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fTemplate, fbTemplate.getClassToken(), tokens);Collections.sort(tokens, comparatorToken);}
 	

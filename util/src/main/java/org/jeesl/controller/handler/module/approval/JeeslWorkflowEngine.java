@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
 import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
+import org.jeesl.interfaces.controller.processor.WorkflowRecipientResolver;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
@@ -47,7 +48,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							AB extends JeeslApprovalBot<AB,L,D,?>,
 							AO extends EjbWithId,
 							MT extends JeeslIoTemplate<L,D,?,?,?,?>,
-							SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
+							SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 							RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 							AW extends JeeslApprovalWorkflow<AP,AS,AY>,
@@ -62,11 +63,14 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval;
 	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
 		
+	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> communicator;
+	
 	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	
 	private USER user;
+	private JeeslWithWorkflow<AW> workflowOwner;
 	protected AP process; public AP getProcess() {return process;} protected void setProcess(AP process) {this.process = process;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
 	private AY activity; public AY getActivity() {return activity;} public void setActivity(AY activity) {this.activity = activity;}
@@ -74,7 +78,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	
 	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
-								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval)
+								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval,
+								WorkflowRecipientResolver<SR,AW,USER> recipientResolver)
 	{
 		this.fbApproval=fbApproval;
 		this.fApproval=fApproval;
@@ -83,10 +88,13 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		activities = new ArrayList<>();
 		actions = new ArrayList<>();
 		communications = new ArrayList<>();
+		
+		communicator = new JeeslWorkflowCommunicator<>(recipientResolver);
 	}
 	
 	public void create(JeeslWithWorkflow<AW> ejb, USER user)
 	{
+		workflowOwner = ejb;
 		this.user=user;
 		workflow = fbApproval.ejbWorkflow().build(process);
 	
@@ -102,6 +110,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	public <W extends JeeslWithWorkflow<AW>> void init(Class<W> cWith, W ejb, USER user)
 	{
+		workflowOwner = ejb;
 		this.user=user;
 		if(debugOnInfo) {logger.info("Initialising for "+ejb.toString());}
 		try
@@ -143,6 +152,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		activity = fbApproval.ejbActivity().build(workflow,transition,user);
 		activity.setRemark(remark);
 		activity = fApproval.save(activity);
+		
+		communicator.build(workflowOwner,communications);
 		
 		remark = null;
 		transition=null;

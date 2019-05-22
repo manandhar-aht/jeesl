@@ -22,6 +22,7 @@ import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,51 +49,49 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 							AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-							AY extends JeeslApprovalActivity<AT,AW>
+							AY extends JeeslApprovalActivity<AT,AW,USER>,
+							USER extends JeeslUser<SR>
 							>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowEngine.class);
 	
 	private final static boolean debugOnInfo = true;
 	
-	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fApproval;
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fbApproval;
+	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
+		
+	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
+	private final List<AA> actions; public List<AA> getActions() {return actions;}
+	private final List<AC> communications;
 	
+	public List<AC> getCommunications() {
+		return communications;
+	}
 	protected AP process; public AP getProcess() {return process;} protected void setProcess(AP process) {this.process = process;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
+	private AY activity; public AY getActivity() {return activity;} public void setActivity(AY activity) {this.activity = activity;}
+	private AT transition; public AT getTransition() {return transition;}
 	
-	private final List<AY> activities;
-	public List<AY> getActivities() {
-		return activities;
-	}
-	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
-	
-	private AY activity;
-	
-	public AY getActivity() {
-		return activity;
-	}
-	public void setActivity(AY activity) {
-		this.activity = activity;
-	}
-	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fbApproval,
-								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY> fApproval)
+	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
+								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval)
 	{
 		this.fbApproval=fbApproval;
 		this.fApproval=fApproval;
 		
 		transitions = new ArrayList<>();
 		activities = new ArrayList<>();
+		actions = new ArrayList<>();
+		communications = new ArrayList<>();
 	}
 	
-	public void create(JeeslWithWorkflow<AW> ejb)
+	public void create(JeeslWithWorkflow<AW> ejb, USER user)
 	{
 		workflow = fbApproval.ejbWorkflow().build(process);
 	
 		AT transition = fApproval.fTransitionBegin(process);
 		workflow.setCurrentStage(transition.getDestination());
 		
-		AY activity = fbApproval.ejbActivity().build(workflow,transition);
+		AY activity = fbApproval.ejbActivity().build(workflow,transition,user);
 		workflow.getActivities().add(activity);
 		
 		ejb.setWorkflow(workflow);
@@ -121,8 +120,12 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(debugOnInfo) {logger.info("reloadWorkflow: "+transitions.size());}
 	}
 	
-	public void prepareTransition(AT transition)
+	public void prepareTransition(AT t)
 	{
-		logger.info(transition.toString());
+		transition = fApproval.find(fbApproval.getClassTransition(), t);
+		logger.info("prepareTransition for "+transition.toString());
+		
+		actions.clear();actions.addAll(fApproval.allForParent(fbApproval.getClassAction(),transition));
+		communications.clear();communications.addAll(fApproval.allForParent(fbApproval.getClassCommunication(),transition));
 	}
 }

@@ -25,6 +25,7 @@ import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,8 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-									AY extends JeeslApprovalActivity<AT,AW>>
+									AY extends JeeslApprovalActivity<AT,AW,USER>,
+									USER extends JeeslUser<SR>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(ApprovalFactoryBuilder.class);
@@ -103,5 +105,5 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbApprovalCommunicationFactory<AT,AC,MT,SR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
 	public EjbApprovalActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
 	public EjbApprovalWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbApprovalWorkflowFactory<>(cWorkflow);}
-	public EjbApprovalActivityFactory<AT,AW,AY> ejbActivity() {return new EjbApprovalActivityFactory<>(cActivity);}
+	public EjbApprovalActivityFactory<AT,AW,AY,USER> ejbActivity() {return new EjbApprovalActivityFactory<>(cActivity);}
 }

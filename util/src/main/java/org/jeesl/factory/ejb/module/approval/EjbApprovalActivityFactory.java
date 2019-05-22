@@ -5,12 +5,14 @@ import java.util.Date;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbApprovalActivityFactory<AT extends JeeslApprovalTransition<?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,AY>,
-										AY extends JeeslApprovalActivity<AT,AW>
+										AY extends JeeslApprovalActivity<AT,AW,USER>,
+										USER extends JeeslUser<?>
 
 >
 {
@@ -23,7 +25,7 @@ public class EjbApprovalActivityFactory<AT extends JeeslApprovalTransition<?,?,?
         this.cActivity = cActivity;
 	}
 	    
-	public AY build(AW workflow, AT transition)
+	public AY build(AW workflow, AT transition, USER user)
 	{
 		AY ejb = null;
 		try
@@ -32,6 +34,7 @@ public class EjbApprovalActivityFactory<AT extends JeeslApprovalTransition<?,?,?
 			ejb.setWorkflow(workflow);
 			ejb.setTransition(transition);
 			ejb.setRecord(new Date());
+			ejb.setUser(user);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.module.approval.instance;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -12,8 +13,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslApprovalActivity <AT extends JeeslApprovalTransition<?,?,?,?>,
-										AW extends JeeslApprovalWorkflow<?,?,?>
-									
+										AW extends JeeslApprovalWorkflow<?,?,?>,
+										USER extends JeeslUser<?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithParentAttributeResolver,
@@ -26,4 +27,7 @@ public interface JeeslApprovalActivity <AT extends JeeslApprovalTransition<?,?,?
 	
 	AT getTransition();
 	void setTransition(AT transition);
+	
+	USER getUser();
+	void setUser(USER user);
 }

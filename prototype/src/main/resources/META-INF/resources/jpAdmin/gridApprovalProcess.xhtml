@@ -232,7 +232,7 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectAction()}" update=":#{cc.id}:sStage"/>
 							
 							<p:column rendered="true" headerText="#{msg.jeeslApprovalBot}">  
-								<h:outputText value="#{a.bot.name[localeCode].lang}"/>  
+								<h:outputText value="#{a.bot.name[localeCode].lang}"/>
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslRevisionEntity} - #{msg.jeeslRevisionAttribute}">  
 								<h:outputText value="#{a.entity.name[localeCode].lang}"/>
@@ -241,7 +241,7 @@
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslApprovalOption}">
 								<jtp:symbolizer value="#{a.option}" marginRight="5"/>
-								<h:outputText value="#{a.option.name[localeCode].lang}"/>  
+								<h:outputText value="#{a.option.name[localeCode].lang}"/>
 							</p:column>
 						</p:dataTable>
 					</h:form>
@@ -294,7 +294,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCommunication()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCommunication()}" update=":#{cc.id}:sStage"/>
 							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
-								<h:outputText value="#{c.template.name[localeCode].lang}"/>  
+								<h:outputText value="#{c.template.name[localeCode].lang}"/>
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslCategory}">  
 								<h:outputText value="#{c.role.category.name[localeCode].lang}"/>  

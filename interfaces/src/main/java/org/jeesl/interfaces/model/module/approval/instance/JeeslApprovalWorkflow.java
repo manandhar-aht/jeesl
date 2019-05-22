@@ -14,7 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalWorkflow <AP extends JeeslApprovalProcess<?,?,?>,
 										AS extends JeeslApprovalStage<?,?,AP>,
-										AY extends JeeslApprovalActivity<?,?>
+										AY extends JeeslApprovalActivity<?,?,?>
 									
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

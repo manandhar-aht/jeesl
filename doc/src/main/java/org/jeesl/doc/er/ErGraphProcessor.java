@@ -6,18 +6,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.persistence.MappedSuperclass;
-
-import net.sf.ahtutils.model.qualifier.EjbErNode;
-import net.sf.exlp.util.io.ClassUtil;
-import net.sf.exlp.util.io.dir.RecursiveFileFinder;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.jeesl.util.ReflectionUtil;
@@ -28,6 +21,10 @@ import org.metachart.xml.graph.Node;
 import org.metachart.xml.graph.Nodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.model.qualifier.EjbErNode;
+import net.sf.exlp.util.io.ClassUtil;
+import net.sf.exlp.util.io.dir.RecursiveFileFinder;
 
 public class ErGraphProcessor
 {
@@ -59,8 +56,7 @@ public class ErGraphProcessor
 	}
 	public void addPackages(String sEjbPackage, List<String> subset) throws IOException, ClassNotFoundException
 	{
-		Set<String> setSub = new HashSet<String>();
-		setSub.addAll(subset);
+		Set<String> setSub = new HashSet<String>(subset);
 		
 		File fPackage = new File(fBase,sEjbPackage);
 		RecursiveFileFinder finder = new RecursiveFileFinder(FileFilterUtils.suffixFileFilter(".java"));
@@ -115,14 +111,18 @@ public class ErGraphProcessor
 			node.setType(""+er.level());
 			
 			boolean add = false;
-			if(subSet.size()==0){add=true;}
-			else if (er.subset().length()>0)
+			if(subSet.isEmpty()){add=true;}
+			else
 			{
 				logger.trace("Subset available");
 				String[] items = er.subset().split(",");
 				for(String s : items)
 				{
-					if(subSet.contains(s)){add=true;}
+					if(subSet.contains(s))
+					{
+						logger.info(c.getName());
+						add=true;
+					}
 				}
 			}
 			

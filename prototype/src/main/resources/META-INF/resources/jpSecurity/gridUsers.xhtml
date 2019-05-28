@@ -36,11 +36,11 @@
 								selection="#{cc.attrs.bean.user}" selectionMode="single" 
 								paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}">
 							<f:facet name="header">
-								<aht:pfDataTableHeader title="#{msg.jeeslUsers}">
-									<aht:icon type="jeeslAdd" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
-								</aht:pfDataTableHeader>
+								<j:dtHeader title="#{msg.jeeslUsers}">
+									<j:icon type="jeeslAdd" listener="#{cc.attrs.bean.addUser()}" update=":#{cc.id}:sDetail"/>
+								</j:dtHeader>
 							</f:facet>
-							<p:ajax event="rowSelect" update=":#{cc.id}:sDetail" listener="#{cc.attrs.bean.selectUser}"/>
+							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectUser}" update=":#{cc.id}:sDetail"/>
 							<p:column rendered="#{cc.attrs.withRegistrationStatus}" styleClass="jeeslColumnCentered">
 								<jtp:symbolizer value="#{u.registration.status}"/>
 							</p:column>

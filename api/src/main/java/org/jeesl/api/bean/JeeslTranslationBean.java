@@ -11,4 +11,5 @@ public interface JeeslTranslationBean <L extends UtilsLang, D extends UtilsDescr
 	void ping();
 	List<String> getLangKeys();
 	String get(String localeCode, String translationKey);
+	List<LOC> getLocales();
 }

@@ -35,6 +35,14 @@
     		<s:lang key="fr" translation="Stage"/>
     	</s:langs>
     </s:translation>
+        <s:translation key="jeeslApprovalStageType">
+    	<s:langs>
+    		<s:lang key="de" translation="Type"/>
+    		<s:lang key="en" translation="Type"/>
+    		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>
+    
     
 	<s:translation key="jeeslApprovalPermissions">
     	<s:langs>

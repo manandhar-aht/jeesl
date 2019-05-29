@@ -28,4 +28,7 @@ public interface JeeslApprovalStage <L extends UtilsLang, D extends UtilsDescrip
 	
 	P getProcess();
 	void setProcess(P process);
+	
+	AST getType();
+	void setType(AST type);
 }

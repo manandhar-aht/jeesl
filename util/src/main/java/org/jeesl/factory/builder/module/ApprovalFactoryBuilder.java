@@ -61,6 +61,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AX> cContext; public Class<AX> getClassContext() {return cContext;}
 	private final Class<AP> cProcess; public Class<AP> getClassProcess() {return cProcess;}
 	private final Class<AS> cStage; public Class<AS> getClassStage() {return cStage;}
+	private final Class<AST> cStageType; public Class<AST> getClassStageType() {return cStageType;}
 	private final Class<ASP> cPermission; public Class<ASP> getClassPermission() {return cPermission;}
 	private final Class<APT> cPermissionType; public Class<APT> getClassPermissionType() {return cPermissionType;}
 	private final Class<AT> cTransition; public Class<AT> getClassTransition() {return cTransition;}
@@ -75,6 +76,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<AX> cContext,
 									final Class<AP> cProcess,
 									final Class<AS> cStage,
+									final Class<AST> cStageType,
 									final Class<ASP> cPermission,
 									final Class<APT> cPermissionType,
 									final Class<AT> cTransition,
@@ -89,6 +91,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cContext=cContext;
 		this.cProcess=cProcess;
 		this.cStage=cStage;
+		this.cStageType=cStageType;
 		this.cPermission=cPermission;
 		this.cPermissionType=cPermissionType;
 		this.cTransition=cTransition;

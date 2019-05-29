@@ -88,6 +88,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private final List<MT> templates; public List<MT> getTemplates() {return templates;}
 	private final List<SR> roles; public List<SR> getRoles() {return roles;}
 	private List<AS> stages; public List<AS> getStages() {return stages;} public void setStages(List<AS> stages) {this.stages = stages;}
+	private final List<AST> stageTypes; public List<AST> getStageTypes() {return stageTypes;}
 	private final List<ASP> permissions; public List<ASP> getPermissions() {return permissions;}
 	private final List<APT> permissionTypes; public List<APT> getPermissionTypes() {return permissionTypes;}
 	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
@@ -109,7 +110,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	private Class<EjbWithPosition> cOption;
 	private Long option; public Long getOption() {return option;} public void setOption(Long option) {this.option = option;}
 	
-	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;}
+	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;reloadStageSelectOne();}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
 	public AbstractApprovalProcessBean(final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
@@ -128,6 +129,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		
 		roles = new ArrayList<>();
 		templates = new ArrayList<>();
+		stageTypes = new ArrayList<>();
 		permissions = new ArrayList<>();
 		permissionTypes = new ArrayList<>();
 		transitions = new ArrayList<>();
@@ -151,6 +153,7 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 		this.fApproval=fApproval;
 		this.fRevision=fRevision;
 		
+		stageTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassStageType()));
 		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassTransitionType()));
 		permissionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassPermissionType()));
 		
@@ -264,9 +267,15 @@ public abstract class AbstractApprovalProcessBean <L extends UtilsLang, D extend
 	public void saveStage() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(stage));
-		stage.setProcess(fApproval.find(fbApproval.getClassProcess(), stage.getProcess()));
+		reloadStageSelectOne();
 		stage = fApproval.save(stage);
 		reloadStages();
+	}
+	
+	private void reloadStageSelectOne()
+	{
+		stage.setProcess(fApproval.find(fbApproval.getClassProcess(), stage.getProcess()));
+		if(stage.getType()!=null) {stage.setType(fApproval.find(fbApproval.getClassStageType(),stage.getType()));}
 	}
 	
 	public void selectStage() throws UtilsNotFoundException

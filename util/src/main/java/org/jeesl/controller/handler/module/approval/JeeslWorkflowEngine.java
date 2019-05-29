@@ -10,15 +10,16 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalPermissionType;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -38,7 +39,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 							AX extends JeeslApprovalContext<AX,L,D,?>,
 							AP extends JeeslApprovalProcess<L,D,AX>,
-							AS extends JeeslApprovalStage<L,D,AP>,
+							AS extends JeeslApprovalStage<L,D,AP,AST>,
+							AST extends JeeslApprovalStageType<AST,?,?,?>,
 							ASP extends JeeslApprovalStagePermission<AS,APT,SR>,
 							APT extends JeeslApprovalPermissionType<APT,L,D,?>,
 							AT extends JeeslApprovalTransition<L,D,AS,ATT>,
@@ -60,10 +62,10 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private final static boolean debugOnInfo = true;
 	
-	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval;
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
+	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
 		
-	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> communicator;
+	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> communicator;
 	
 	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
@@ -77,8 +79,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private AT transition; public AT getTransition() {return transition;}
 	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	
-	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
-								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval,
+	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
+								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval,
 								WorkflowRecipientResolver<SR,AW,USER> recipientResolver)
 	{
 		this.fbApproval=fbApproval;
@@ -104,7 +106,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		AY activity = fbApproval.ejbActivity().build(workflow,transition,user);
 		workflow.getActivities().add(activity);
 		
-		ejb.setWorkflow(workflow);
+//		ejb.setWorkflow(workflow);
 		logger.info("pre-Save "+ejb);
 	}
 	

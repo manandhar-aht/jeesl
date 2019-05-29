@@ -32,6 +32,11 @@ public class AbstractFeatureManagerBean <F extends JeeslFeature>
 		map = new HashMap<String,Boolean>();
 		realodFeatures();
 	}
+	
+	public boolean has(String code)
+	{
+		return (map.containsKey(code) && map.get(code));
+	}
 
 	@Override
 	public void realodFeatures()

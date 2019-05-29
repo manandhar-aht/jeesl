@@ -12,13 +12,11 @@ import java.util.List;
 
 public class BooleanProcessor extends BoolProcessingBaseVisitor
 {
-	@SuppressWarnings("unchecked")
 	public static Boolean and(Boolean a, Boolean b)
 	{
 		return a && b;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Boolean or(Boolean a, Boolean b)
 	{
 		return a || b;

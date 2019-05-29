@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalWorkflow <AP extends JeeslApprovalProcess<?,?,?>,
-										AS extends JeeslApprovalStage<?,?,AP>,
+										AS extends JeeslApprovalStage<?,?,AP,?>,
 										AY extends JeeslApprovalActivity<?,?,?>
 									
 									>

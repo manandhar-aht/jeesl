@@ -3,13 +3,13 @@ package org.jeesl.factory.ejb.module.approval;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalPermissionFactory<AS extends JeeslApprovalStage<?,?,?>,
+public class EjbApprovalPermissionFactory<AS extends JeeslApprovalStage<?,?,?,?>,
 											ASP extends JeeslApprovalStagePermission<AS,?,SR>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >

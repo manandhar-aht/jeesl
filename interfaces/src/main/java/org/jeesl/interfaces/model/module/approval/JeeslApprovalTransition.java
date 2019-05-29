@@ -2,6 +2,8 @@ package org.jeesl.interfaces.model.module.approval;
 
 import java.io.Serializable;
 
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -14,7 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslApprovalTransition <L extends UtilsLang, D extends UtilsDescription,
-									S extends JeeslApprovalStage<L,D,?>,
+									S extends JeeslApprovalStage<L,D,?,?>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

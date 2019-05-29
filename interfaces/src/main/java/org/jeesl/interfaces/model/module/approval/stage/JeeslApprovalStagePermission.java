@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval;
+package org.jeesl.interfaces.model.module.approval.stage;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalStagePermission <AS extends JeeslApprovalStage<?,?,?>,
+public interface JeeslApprovalStagePermission <AS extends JeeslApprovalStage<?,?,?,?>,
 									APT extends JeeslApprovalPermissionType<APT,?,?,?>,
 									MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 									>

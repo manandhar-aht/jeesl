@@ -16,15 +16,16 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalPermissionType;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -43,7 +44,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									AX extends JeeslApprovalContext<AX,L,D,?>,
 									AP extends JeeslApprovalProcess<L,D,AX>,
-									AS extends JeeslApprovalStage<L,D,AP>,
+									AS extends JeeslApprovalStage<L,D,AP,AST>,
+									AST extends JeeslApprovalStageType<AST,?,?,?>,
 									ASP extends JeeslApprovalStagePermission<AS,APT,SR>,
 									APT extends JeeslApprovalPermissionType<APT,L,D,?>,
 									AT extends JeeslApprovalTransition<L,D,AS,ATT>,
@@ -60,13 +62,13 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									AY extends JeeslApprovalActivity<AT,AW,USER>,
 									USER extends JeeslUser<SR>>
 					extends UtilsFacadeBean
-					implements JeeslApprovalFacade<L,D,LOC,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER>
+					implements JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslApprovalFacadeBean.class);
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
 	
-	public JeeslApprovalFacadeBean(EntityManager em, final ApprovalFactoryBuilder<L,D,AX,AP,AS,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval)
+	public JeeslApprovalFacadeBean(EntityManager em, final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;

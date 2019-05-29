@@ -4,26 +4,26 @@ import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbApprovalStageFactory<P extends JeeslApprovalProcess<?,?,?>,
-									S extends JeeslApprovalStage<?,?,P>
+									AS extends JeeslApprovalStage<?,?,P,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalStageFactory.class);
 	
-	final Class<S> cStage;
+	final Class<AS> cStage;
     
-	public EjbApprovalStageFactory(final Class<S> cStage)
+	public EjbApprovalStageFactory(final Class<AS> cStage)
 	{       
         this.cStage = cStage;
 	}
 	    
-	public S build(P process, List<S> list)
+	public AS build(P process, List<AS> list)
 	{
-		S ejb = null;
+		AS ejb = null;
 		try
 		{
 			ejb = cStage.newInstance();

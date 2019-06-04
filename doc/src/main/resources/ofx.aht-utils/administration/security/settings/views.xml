@@ -8,11 +8,10 @@
 	<ofx:title lang="en">Views and Actions</ofx:title>
 		
 	<ofx:paragraph>
-		Every <text:emphasis italic="true">view</text:emphasis> is assigned to a single category to allow for a better overview.
-		Choose a category and select the <text:emphasis italic="true">view</text:emphasis> you want to edit. The entries (Name/Description) on the right side are the editable items of the
-		current selected <text:emphasis italic="true">view</text:emphasis>.
-		Every linked action is provided by the developers and not editable by the \product\ system administrator. If you want to save <!-- funktioniert das Makro?-->
-		your current changes, press the save button on the upper right side. Every change takes effect after the edited user logs into the system again.
+		A <text:emphasis italic="true">view</text:emphasis> is a single page in the system and assigned to a category for better orientation.
+		The code should only be changed by the Developer, while he Administrator can modify the name and description for each view. 
+		If required, actions are defined by the Developer to allow fine granular permissions for each page.
+		
 	</ofx:paragraph>
 	
 	<ofx:include lang="en">en/section/admin/security/include/views</ofx:include>

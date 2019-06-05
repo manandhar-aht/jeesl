@@ -9,18 +9,18 @@ import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalActivityFactory<AT extends JeeslWorkflowTransition<?,?,?,?>,
+public class EjbWorkflowActivityFactory<AT extends JeeslWorkflowTransition<?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,AY>,
 										AY extends JeeslApprovalActivity<AT,AW,USER>,
 										USER extends JeeslUser<?>
 
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalActivityFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowActivityFactory.class);
 	
 	final Class<AY> cActivity;
     
-	public EjbApprovalActivityFactory(final Class<AY> cActivity)
+	public EjbWorkflowActivityFactory(final Class<AY> cActivity)
 	{       
         this.cActivity = cActivity;
 	}

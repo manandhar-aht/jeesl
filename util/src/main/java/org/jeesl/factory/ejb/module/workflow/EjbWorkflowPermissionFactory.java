@@ -9,16 +9,16 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
+public class EjbWorkflowPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
 											ASP extends JeeslWorkflowStagePermission<AS,?,SR>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalPermissionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowPermissionFactory.class);
 	
 	private final Class<ASP> cPermission;
     
-	public EjbApprovalPermissionFactory(final Class<ASP> cPermission)
+	public EjbWorkflowPermissionFactory(final Class<ASP> cPermission)
 	{       
         this.cPermission = cPermission;
 	}

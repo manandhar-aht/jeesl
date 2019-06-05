@@ -8,15 +8,15 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalStageFactory<P extends JeeslWorkflowProcess<?,?,?>,
+public class EjbWorkflowStageFactory<P extends JeeslWorkflowProcess<?,?,?>,
 									AS extends JeeslWorkflowStage<?,?,P,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalStageFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowStageFactory.class);
 	
 	final Class<AS> cStage;
     
-	public EjbApprovalStageFactory(final Class<AS> cStage)
+	public EjbWorkflowStageFactory(final Class<AS> cStage)
 	{       
         this.cStage = cStage;
 	}

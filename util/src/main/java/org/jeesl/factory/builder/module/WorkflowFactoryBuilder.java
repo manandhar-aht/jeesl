@@ -1,15 +1,15 @@
 package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalActionFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalActivityFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalCommunicationFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalLinkFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalPermissionFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalProcessFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalStageFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalTransitionFactory;
-import org.jeesl.factory.ejb.module.workflow.EjbApprovalWorkflowFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowActionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowActivityFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowCommunicationFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowLinkFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowPermissionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowProcessFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowStageFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowTransitionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbWorkflowFactory;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowCommunication;
@@ -109,13 +109,13 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cActivity=cActivity;
 	}
 	
-	public EjbApprovalProcessFactory<AP> ejbProcess() {return new EjbApprovalProcessFactory<>(cProcess);}
-	public EjbApprovalStageFactory<AP,AS> ejbStage() {return new EjbApprovalStageFactory<>(cStage);}
-	public EjbApprovalPermissionFactory<AS,ASP,SR> ejbPermission() {return new EjbApprovalPermissionFactory<>(cPermission);}
-	public EjbApprovalTransitionFactory<AS,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
-	public EjbApprovalCommunicationFactory<AT,AC,MT,SR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
-	public EjbApprovalActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
-	public EjbApprovalLinkFactory<RE,AL,AW> ejbLink() {return new EjbApprovalLinkFactory<>(cLink);}
-	public EjbApprovalWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbApprovalWorkflowFactory<>(cWorkflow);}
-	public EjbApprovalActivityFactory<AT,AW,AY,USER> ejbActivity() {return new EjbApprovalActivityFactory<>(cActivity);}
+	public EjbWorkflowProcessFactory<AP> ejbProcess() {return new EjbWorkflowProcessFactory<>(cProcess);}
+	public EjbWorkflowStageFactory<AP,AS> ejbStage() {return new EjbWorkflowStageFactory<>(cStage);}
+	public EjbWorkflowPermissionFactory<AS,ASP,SR> ejbPermission() {return new EjbWorkflowPermissionFactory<>(cPermission);}
+	public EjbWorkflowTransitionFactory<AS,AT> ejbTransition() {return new EjbWorkflowTransitionFactory<>(cTransition);}
+	public EjbWorkflowCommunicationFactory<AT,AC,MT,SR> ejbCommunication() {return new EjbWorkflowCommunicationFactory<>(cCommunication);}
+	public EjbWorkflowActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbWorkflowActionFactory<>(cAction);}
+	public EjbWorkflowLinkFactory<RE,AL,AW> ejbLink() {return new EjbWorkflowLinkFactory<>(cLink);}
+	public EjbWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbWorkflowFactory<>(cWorkflow);}
+	public EjbWorkflowActivityFactory<AT,AW,AY,USER> ejbActivity() {return new EjbWorkflowActivityFactory<>(cActivity);}
 }

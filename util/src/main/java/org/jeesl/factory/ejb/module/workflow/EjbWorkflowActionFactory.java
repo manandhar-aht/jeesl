@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbApprovalActionFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
+public class EjbWorkflowActionFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
 											AA extends JeeslWorkflowAction<T,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,?,?,?>,
 											AO extends EjbWithId,
@@ -21,11 +21,11 @@ public class EjbApprovalActionFactory<T extends JeeslWorkflowTransition<?,?,?,?>
 											RA extends JeeslRevisionAttribute<?,?,RE,?,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalActionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowActionFactory.class);
 	
 	final Class<AA> cAction;
     
-	public EjbApprovalActionFactory(final Class<AA> cAction)
+	public EjbWorkflowActionFactory(final Class<AA> cAction)
 	{       
         this.cAction = cAction;
 	}

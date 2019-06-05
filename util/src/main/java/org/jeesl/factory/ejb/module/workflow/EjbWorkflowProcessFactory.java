@@ -4,14 +4,14 @@ import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalProcessFactory<PROCESS extends JeeslWorkflowProcess<?,?,?>
+public class EjbWorkflowProcessFactory<PROCESS extends JeeslWorkflowProcess<?,?,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalProcessFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowProcessFactory.class);
 	
 	final Class<PROCESS> cProcess;
     
-	public EjbApprovalProcessFactory(final Class<PROCESS> cProcess)
+	public EjbWorkflowProcessFactory(final Class<PROCESS> cProcess)
 	{       
         this.cProcess = cProcess;
 	}

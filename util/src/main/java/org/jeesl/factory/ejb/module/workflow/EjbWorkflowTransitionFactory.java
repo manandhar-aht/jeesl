@@ -8,15 +8,15 @@ import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransi
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
+public class EjbWorkflowTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
 											AT extends JeeslWorkflowTransition<?,?,AS,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalTransitionFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowTransitionFactory.class);
 	
 	final Class<AT> cTransition;
     
-	public EjbApprovalTransitionFactory(final Class<AT> cTransition)
+	public EjbWorkflowTransitionFactory(final Class<AT> cTransition)
 	{       
         this.cTransition = cTransition;
 	}

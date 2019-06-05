@@ -10,17 +10,17 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalCommunicationFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
+public class EjbWorkflowCommunicationFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
 											C extends JeeslWorkflowCommunication<T,MT,MR>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
 											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbApprovalCommunicationFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowCommunicationFactory.class);
 	
 	final Class<C> cCommunication;
     
-	public EjbApprovalCommunicationFactory(final Class<C> cCommunication)
+	public EjbWorkflowCommunicationFactory(final Class<C> cCommunication)
 	{       
         this.cCommunication = cCommunication;
 	}

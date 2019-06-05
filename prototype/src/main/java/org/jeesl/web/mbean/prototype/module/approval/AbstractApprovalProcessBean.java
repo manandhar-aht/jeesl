@@ -8,7 +8,7 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.io.JeeslIoRevisionFacade;
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
-import org.jeesl.controller.handler.module.approval.WorkflowProcesslResetHandler;
+import org.jeesl.controller.handler.module.workflow.WorkflowProcesslResetHandler;
 import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;

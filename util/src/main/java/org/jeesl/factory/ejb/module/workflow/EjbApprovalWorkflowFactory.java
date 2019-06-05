@@ -1,13 +1,13 @@
 package org.jeesl.factory.ejb.module.workflow;
 
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalWorkflowFactory<AP extends JeeslApprovalProcess<?,?,?>,
-										AS extends JeeslApprovalStage<?,?,AP,?>,
+public class EjbApprovalWorkflowFactory<AP extends JeeslWorkflowProcess<?,?,?>,
+										AS extends JeeslWorkflowStage<?,?,AP,?>,
 										AW extends JeeslApprovalWorkflow<AP,AS,?>
 
 >

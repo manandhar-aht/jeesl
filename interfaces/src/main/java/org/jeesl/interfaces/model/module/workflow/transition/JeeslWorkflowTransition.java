@@ -2,7 +2,7 @@ package org.jeesl.interfaces.model.module.workflow.transition;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.system.with.attribute.EjbWithVisibleMigration;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -16,8 +16,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
-public interface JeeslApprovalTransition <L extends UtilsLang, D extends UtilsDescription,
-									S extends JeeslApprovalStage<L,D,?,?>,
+public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDescription,
+									S extends JeeslWorkflowStage<L,D,?,?>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

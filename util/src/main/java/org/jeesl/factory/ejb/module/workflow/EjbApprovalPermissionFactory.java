@@ -3,14 +3,14 @@ package org.jeesl.factory.ejb.module.workflow;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalPermissionFactory<AS extends JeeslApprovalStage<?,?,?,?>,
-											ASP extends JeeslApprovalStagePermission<AS,?,SR>,
+public class EjbApprovalPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
+											ASP extends JeeslWorkflowStagePermission<AS,?,SR>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >
 {

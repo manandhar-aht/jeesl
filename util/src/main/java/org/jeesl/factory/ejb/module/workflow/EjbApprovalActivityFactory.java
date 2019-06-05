@@ -4,12 +4,12 @@ import java.util.Date;
 
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalActivityFactory<AT extends JeeslApprovalTransition<?,?,?,?>,
+public class EjbApprovalActivityFactory<AT extends JeeslWorkflowTransition<?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,AY>,
 										AY extends JeeslApprovalActivity<AT,AW,USER>,
 										USER extends JeeslUser<?>

@@ -2,9 +2,9 @@ package org.jeesl.interfaces.model.module.workflow.action;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -13,10 +13,12 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalCommunication <T extends JeeslApprovalTransition<?,?,?,?>,
-											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
-											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
-									>
+public interface JeeslWorkflowAction <T extends JeeslWorkflowTransition<?,?,?,?>,
+										AB extends JeeslWorkflowBot<AB,?,?,?>,
+										AO extends EjbWithId,
+										RE extends JeeslRevisionEntity<?,?,?,?,RA>,
+										RA extends JeeslRevisionAttribute<?,?,RE,?,?>
+>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
 				
@@ -25,10 +27,16 @@ public interface JeeslApprovalCommunication <T extends JeeslApprovalTransition<?
 	
 	T getTransition();
 	void setTransition(T transition);
+
+	AB getBot();
+	void setBot(AB bot);
 	
-	MT getTemplate();
-	void setTemplate(MT template);
+	RE getEntity();
+	void setEntity(RE entity);
 	
-	MR getRole();
-	void setRole(MR role);
+	RA getAttribute();
+	void setAttribute(RA attribute);
+	
+	AO getOption();
+	void setOption(AO option);
 }

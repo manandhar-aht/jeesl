@@ -3,13 +3,13 @@ package org.jeesl.factory.ejb.module.workflow;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalStageFactory<P extends JeeslApprovalProcess<?,?,?>,
-									AS extends JeeslApprovalStage<?,?,P,?>
+public class EjbApprovalStageFactory<P extends JeeslWorkflowProcess<?,?,?>,
+									AS extends JeeslWorkflowStage<?,?,P,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalStageFactory.class);

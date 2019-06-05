@@ -2,7 +2,7 @@ package org.jeesl.interfaces.model.module.workflow.instance;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslApprovalActivity <AT extends JeeslApprovalTransition<?,?,?,?>,
+public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,?>,
 										USER extends JeeslUser<?>
 									>

@@ -3,19 +3,19 @@ package org.jeesl.controller.handler.module.workflow;
 import java.util.List;
 
 import org.jeesl.interfaces.controller.processor.WorkflowRecipientResolver;
-import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowCommunication;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
-import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -31,17 +31,17 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-										AX extends JeeslApprovalContext<AX,L,D,?>,
-										AP extends JeeslApprovalProcess<L,D,AX>,
-										AS extends JeeslApprovalStage<L,D,AP,AST>,
-										AST extends JeeslApprovalStageType<AST,?,?,?>,
-										ASP extends JeeslApprovalStagePermission<AS,APT,SR>,
-										APT extends JeeslApprovalPermissionType<APT,L,D,?>,
-										AT extends JeeslApprovalTransition<L,D,AS,ATT>,
+										AX extends JeeslWorkflowContext<AX,L,D,?>,
+										AP extends JeeslWorkflowProcess<L,D,AX>,
+										AS extends JeeslWorkflowStage<L,D,AP,AST>,
+										AST extends JeeslWorkflowStageType<AST,?,?,?>,
+										ASP extends JeeslWorkflowStagePermission<AS,APT,SR>,
+										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
+										AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslApprovalCommunication<AT,MT,SR>,
-										AA extends JeeslApprovalAction<AT,AB,AO,RE,RA>,
-										AB extends JeeslApprovalBot<AB,L,D,?>,
+										AC extends JeeslWorkflowCommunication<AT,MT,SR>,
+										AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,?,?>,
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,

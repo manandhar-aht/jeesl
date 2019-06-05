@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionCallback;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
-import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -19,8 +19,8 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class AbstractWorkflowActionHandler <AA extends JeeslApprovalAction<?,AB,AO,RE,RA>,
-										AB extends JeeslApprovalBot<AB,?,?,?>,
+public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
+										AB extends JeeslWorkflowBot<AB,?,?,?>,
 										AO extends EjbWithId,
 										RE extends JeeslRevisionEntity<?,?,?,?,RA>,
 										RA extends JeeslRevisionAttribute<?,?,RE,?,?>,

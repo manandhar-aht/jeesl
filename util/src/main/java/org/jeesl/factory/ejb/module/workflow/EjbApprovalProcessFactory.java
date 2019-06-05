@@ -1,10 +1,10 @@
 package org.jeesl.factory.ejb.module.workflow;
 
-import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalProcessFactory<PROCESS extends JeeslApprovalProcess<?,?,?>
+public class EjbApprovalProcessFactory<PROCESS extends JeeslWorkflowProcess<?,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalProcessFactory.class);

@@ -3,13 +3,13 @@ package org.jeesl.factory.ejb.module.workflow;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbApprovalTransitionFactory<AS extends JeeslApprovalStage<?,?,?,?>,
-											AT extends JeeslApprovalTransition<?,?,AS,?>
+public class EjbApprovalTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
+											AT extends JeeslWorkflowTransition<?,?,AS,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbApprovalTransitionFactory.class);
@@ -29,6 +29,7 @@ public class EjbApprovalTransitionFactory<AS extends JeeslApprovalStage<?,?,?,?>
 			ejb = cTransition.newInstance();
 			EjbPositionFactory.next(ejb,list);
 			ejb.setSource(source);
+			ejb.setVisible(true);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

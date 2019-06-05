@@ -11,8 +11,8 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalStagePermission <AS extends JeeslApprovalStage<?,?,?,?>,
-									APT extends JeeslApprovalPermissionType<APT,?,?,?>,
+public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?,?,?>,
+									APT extends JeeslWorkflowPermissionType<APT,?,?,?>,
 									MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

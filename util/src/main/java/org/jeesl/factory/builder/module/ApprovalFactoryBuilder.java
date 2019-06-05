@@ -1,15 +1,15 @@
 package org.jeesl.factory.builder.module;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalActionFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalActivityFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalCommunicationFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalLinkFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalPermissionFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalProcessFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalStageFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalTransitionFactory;
-import org.jeesl.factory.ejb.module.approval.EjbApprovalWorkflowFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalActionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalActivityFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalCommunicationFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalLinkFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalPermissionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalProcessFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalStageFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalTransitionFactory;
+import org.jeesl.factory.ejb.module.workflow.EjbApprovalWorkflowFactory;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;

@@ -1,4 +1,4 @@
-package org.jeesl.factory.ejb.module.approval;
+package org.jeesl.factory.ejb.module.workflow;
 
 import java.util.List;
 

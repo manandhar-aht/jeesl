@@ -10,7 +10,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.EjbWithRefId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalCorrelation <AW extends JeeslApprovalWorkflow<?,?,?>,
+public interface JeeslApprovalLink <AW extends JeeslApprovalWorkflow<?,?,?>,
 											RE extends JeeslRevisionEntity<?,?,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

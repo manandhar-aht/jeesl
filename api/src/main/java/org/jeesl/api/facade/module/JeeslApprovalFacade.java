@@ -8,6 +8,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
@@ -44,6 +45,7 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
+										AL extends JeeslApprovalLink<AW,RE>,
 										AW extends JeeslApprovalWorkflow<AP,AS,AY>,
 										AY extends JeeslApprovalActivity<AT,AW,USER>,
 										USER extends JeeslUser<SR>>

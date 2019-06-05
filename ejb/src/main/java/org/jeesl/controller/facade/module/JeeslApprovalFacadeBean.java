@@ -20,6 +20,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
@@ -58,17 +59,18 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
+									AL extends JeeslApprovalLink<AW,RE>,
 									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
 									AY extends JeeslApprovalActivity<AT,AW,USER>,
 									USER extends JeeslUser<SR>>
 					extends UtilsFacadeBean
-					implements JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER>
+					implements JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER>
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslApprovalFacadeBean.class);
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 	
-	public JeeslApprovalFacadeBean(EntityManager em, final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval)
+	public JeeslApprovalFacadeBean(EntityManager em, final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;

@@ -6,9 +6,5 @@ public interface JeeslWithWorkflow<AW extends JeeslApprovalWorkflow<?,?,?>> exte
 {
 	public static enum Attributes{workflow}
 	
-//	AW getWorkflow();
-//	void setWorkflow(AW workflow);
-	
-//	List<AW> getWorkflows();
-//	void setWorkflows(List<AW> workflows);
+	//This is a marker interface for all domain classes which have a workflow correlation
 }

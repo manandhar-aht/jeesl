@@ -14,6 +14,7 @@ import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
@@ -53,6 +54,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 							RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
+							AL extends JeeslApprovalLink<AW,RE>,
 							AW extends JeeslApprovalWorkflow<AP,AS,AY>,
 							AY extends JeeslApprovalActivity<AT,AW,USER>,
 							USER extends JeeslUser<SR>
@@ -62,8 +64,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private final static boolean debugOnInfo = true;
 	
-	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval;
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval;
+	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval;
+	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 		
 	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> communicator;
 	
@@ -79,8 +81,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private AT transition; public AT getTransition() {return transition;}
 	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	
-	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fbApproval,
-								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> fApproval,
+	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
 								WorkflowRecipientResolver<SR,AW,USER> recipientResolver)
 	{
 		this.fbApproval=fbApproval;

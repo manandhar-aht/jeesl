@@ -10,7 +10,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
-import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
+import org.jeesl.factory.builder.module.WorkflowFactoryBuilder;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
@@ -67,9 +67,9 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 {	
 	final static Logger logger = LoggerFactory.getLogger(JeeslApprovalFacadeBean.class);
 	
-	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 	
-	public JeeslApprovalFacadeBean(EntityManager em, final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval)
+	public JeeslApprovalFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;

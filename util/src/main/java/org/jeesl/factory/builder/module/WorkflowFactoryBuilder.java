@@ -36,7 +36,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
+public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 									AX extends JeeslApprovalContext<AX,L,D,?>,
 									AP extends JeeslApprovalProcess<L,D,AX>,
 									AS extends JeeslApprovalStage<L,D,AP,AST>,
@@ -59,7 +59,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									USER extends JeeslUser<SR>>
 				extends AbstractFactoryBuilder<L,D>
 {
-	final static Logger logger = LoggerFactory.getLogger(ApprovalFactoryBuilder.class);
+	final static Logger logger = LoggerFactory.getLogger(WorkflowFactoryBuilder.class);
 	
 	private final Class<AX> cContext; public Class<AX> getClassContext() {return cContext;}
 	private final Class<AP> cProcess; public Class<AP> getClassProcess() {return cProcess;}
@@ -76,7 +76,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AW> cWorkflow; public Class<AW> getClassWorkflow() {return cWorkflow;}
 	private final Class<AY> cActivity; public Class<AY> getClassActivity() {return cActivity;}
 	
-	public ApprovalFactoryBuilder(final Class<L> cL, final Class<D> cD,
+	public WorkflowFactoryBuilder(final Class<L> cL, final Class<D> cD,
 									final Class<AX> cContext,
 									final Class<AP> cProcess,
 									final Class<AS> cStage,

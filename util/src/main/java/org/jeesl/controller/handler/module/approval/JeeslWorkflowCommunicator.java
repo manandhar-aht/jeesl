@@ -3,20 +3,20 @@ package org.jeesl.controller.handler.module.approval;
 import java.util.List;
 
 import org.jeesl.interfaces.controller.processor.WorkflowRecipientResolver;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -54,26 +54,28 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowCommunicator.class);
 	
-	private final static boolean debugOnInfo = true;
-	
+	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
+
 	private final WorkflowRecipientResolver<SR,AW,USER> recipientResolver;
 	
 	public JeeslWorkflowCommunicator(WorkflowRecipientResolver<SR,AW,USER> recipientResolver)
 	{
 		this.recipientResolver=recipientResolver;
+		debugOnInfo = false;
 	}
 	
-	public void build(JeeslWithWorkflow<AW> workflowOwner, List<AC> communications)
+	public void build(JeeslWithWorkflow<AW> entity, List<AC> communications)
 	{
+		if(debugOnInfo) {logger.info("Buidling Messages for "+entity.toString());}
 		for(AC communication : communications)
 		{
-			build(workflowOwner,communication);
+			build(entity,communication);
 		}
 	}
 	
-	private void build(JeeslWithWorkflow<AW> workflowOwner, AC communication)
+	private void build(JeeslWithWorkflow<AW> entity, AC communication)
 	{
-		List<USER> recipients = recipientResolver.getRecipients(workflowOwner, communication.getRole());
-		logger.info("Building for "+recipients.size());
+		List<USER> recipients = recipientResolver.getRecipients(entity,communication.getRole());
+		if(debugOnInfo) {logger.info("Building for "+recipients.size());}
 	}
 }

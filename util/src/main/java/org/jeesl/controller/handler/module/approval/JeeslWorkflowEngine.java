@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
+import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
+import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
 import org.jeesl.interfaces.controller.processor.WorkflowRecipientResolver;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalLink;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -65,27 +67,35 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private final static boolean debugOnInfo = true;
 	
 	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval;
+	
 	private final ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 		
 	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AW,AY,USER> communicator;
+	private final JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler;
 	
 	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	
 	private USER user;
-	private JeeslWithWorkflow<AW> workflowOwner;
+	private JeeslWithWorkflow<AW> entity;
 	protected AP process; public AP getProcess() {return process;} protected void setProcess(AP process) {this.process = process;}
+	private AL link; public AL getLink() {return link;} public void setLink(AL link) {this.link = link;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
 	private AY activity; public AY getActivity() {return activity;} public void setActivity(AY activity) {this.activity = activity;}
 	private AT transition; public AT getTransition() {return transition;}
 	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	
 	public JeeslWorkflowEngine(ApprovalFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+								IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
-								WorkflowRecipientResolver<SR,AW,USER> recipientResolver)
+								WorkflowRecipientResolver<SR,AW,USER> recipientResolver,
+								JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler)
 	{
 		this.fbApproval=fbApproval;
+		this.fbRevision=fbRevision;
+		
 		this.fApproval=fApproval;
 		
 		transitions = new ArrayList<>();
@@ -94,11 +104,15 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		communications = new ArrayList<>();
 		
 		communicator = new JeeslWorkflowCommunicator<>(recipientResolver);
+		communicator.setDebugOnInfo(debugOnInfo);
+		
+		this.actionHandler=actionHandler;
+		actionHandler.setDebugOnInfo(debugOnInfo);
 	}
 	
-	public void create(JeeslWithWorkflow<AW> ejb, USER user)
+	public void buildWorkflow(USER user, JeeslWithWorkflow<AW> ejb)
 	{
-		workflowOwner = ejb;
+		entity = ejb;
 		this.user=user;
 		workflow = fbApproval.ejbWorkflow().build(process);
 	
@@ -108,20 +122,34 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		AY activity = fbApproval.ejbActivity().build(workflow,transition,user);
 		workflow.getActivities().add(activity);
 		
-//		ejb.setWorkflow(workflow);
-		logger.info("pre-Save "+ejb);
+		RE entity = null;
+		try {entity = fApproval.fByCode(fbRevision.getClassEntity(),ejb.getClass().getName());}
+		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		
+		link = fbApproval.ejbLink().build(entity,workflow,ejb);
+		if(debugOnInfo) {logger.info("Build: Workflow and Link");}
 	}
 	
-	public <W extends JeeslWithWorkflow<AW>> void init(Class<W> cWith, W ejb, USER user)
+	public <W extends JeeslWithWorkflow<AW>> void saveWorkflow(JeeslWithWorkflow<AW> ejb) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		workflowOwner = ejb;
+		entity=ejb;
+		workflow = fApproval.save(workflow);
+		link.setWorkflow(workflow);
+		link.setRefId(ejb.getId());
+		link = fApproval.save(link);
+		
+		if(debugOnInfo) {logger.info("Saved: Workflow and Link");}
+		
+	}
+	
+	public <W extends JeeslWithWorkflow<AW>> void selectEntity(USER user, W ejb) throws UtilsNotFoundException
+	{
+		if(debugOnInfo) {logger.info("Select: Workflow and Link");}
+		entity = ejb;
 		this.user=user;
-		if(debugOnInfo) {logger.info("Initialising for "+ejb.toString());}
-		try
-		{
-			workflow = fApproval.fWorkflow(cWith,ejb);
-		}
-		catch (UtilsNotFoundException e) {e.printStackTrace();}
+		
+		link = fApproval.fLink(process, ejb);
+		workflow = link.getWorkflow();
 	}
 	
 	public void reloadWorkflow()
@@ -144,20 +172,23 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 		actions.clear();actions.addAll(fApproval.allForParent(fbApproval.getClassAction(),transition));
 		communications.clear();communications.addAll(fApproval.allForParent(fbApproval.getClassCommunication(),transition));
+		if(debugOnInfo) {logger.info("Prepared "+fbApproval.getClassTransition().getSimpleName()+" to "+transition.toString()+": "+JeeslApprovalCommunication.class.getSimpleName()+":"+communications.size()+" "+JeeslApprovalAction.class.getSimpleName()+":"+actions.size());}
 	}
 	
 	public void performTransition() throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		logger.info("prepareTransition for "+transition.toString());
+		if(debugOnInfo) {logger.info("Perform "+fbApproval.getClassTransition()+" to "+transition.toString());}
 		
 		workflow.setCurrentStage(transition.getDestination());
 		workflow = fApproval.save(workflow);
+		
+		actionHandler.perform(entity,actions);
 		
 		activity = fbApproval.ejbActivity().build(workflow,transition,user);
 		activity.setRemark(remark);
 		activity = fApproval.save(activity);
 		
-		communicator.build(workflowOwner,communications);
+		communicator.build(entity,communications);
 		
 		remark = null;
 		transition=null;

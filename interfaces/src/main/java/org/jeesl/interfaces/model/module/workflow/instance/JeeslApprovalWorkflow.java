@@ -1,10 +1,10 @@
-package org.jeesl.interfaces.model.module.approval.instance;
+package org.jeesl.interfaces.model.module.workflow.instance;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;

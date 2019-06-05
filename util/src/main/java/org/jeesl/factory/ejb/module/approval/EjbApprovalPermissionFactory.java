@@ -3,8 +3,8 @@ package org.jeesl.factory.ejb.module.approval;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

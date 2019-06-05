@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval;
+package org.jeesl.interfaces.model.module.workflow.process;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslApprovalBot <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslApprovalContext <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 									extends Serializable,EjbPersistable,
 									EjbWithCode,UtilsStatusFixedCode,
 									JeeslOptionRestDescription,EjbWithCodeGraphic<G>,

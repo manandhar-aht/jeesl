@@ -3,9 +3,9 @@ package org.jeesl.factory.ejb.module.approval;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;

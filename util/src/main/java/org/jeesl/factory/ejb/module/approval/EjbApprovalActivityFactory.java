@@ -2,9 +2,9 @@ package org.jeesl.factory.ejb.module.approval;
 
 import java.util.Date;
 
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

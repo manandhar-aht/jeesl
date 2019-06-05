@@ -1,8 +1,9 @@
-package org.jeesl.interfaces.model.module.approval;
+package org.jeesl.interfaces.model.module.workflow.transition;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.system.with.attribute.EjbWithVisibleMigration;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -21,7 +22,8 @@ public interface JeeslApprovalTransition <L extends UtilsLang, D extends UtilsDe
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver,
-				EjbWithLang<L>,EjbWithDescription<D>
+				EjbWithLang<L>,EjbWithDescription<D>,
+				EjbWithVisibleMigration
 {
 	public static enum Attributes{source,destination}
 	
@@ -33,4 +35,5 @@ public interface JeeslApprovalTransition <L extends UtilsLang, D extends UtilsDe
 	
 	S getDestination();
 	void setDestination(S destination);
+	
 }

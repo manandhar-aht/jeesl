@@ -3,8 +3,8 @@ package org.jeesl.factory.ejb.module.approval;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;

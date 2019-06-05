@@ -1,20 +1,20 @@
 package org.jeesl.api.facade.module;
 
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalLink;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -52,5 +52,7 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 			extends UtilsFacade
 {	
 	AT fTransitionBegin(AP process);
-	<W extends JeeslWithWorkflow<AW>> AW fWorkflow(Class<W> cWith, W with) throws UtilsNotFoundException;
+	
+	<W extends JeeslWithWorkflow<AW>> AL fLink(AP process, W owner) throws UtilsNotFoundException;
+//	<W extends JeeslWithWorkflow<AW>> AW fWorkflow(Class<W> cWith, W with) throws UtilsNotFoundException;
 }

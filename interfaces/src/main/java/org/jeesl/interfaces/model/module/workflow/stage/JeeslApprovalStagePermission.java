@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval.stage;
+package org.jeesl.interfaces.model.module.workflow.stage;
 
 import java.io.Serializable;
 

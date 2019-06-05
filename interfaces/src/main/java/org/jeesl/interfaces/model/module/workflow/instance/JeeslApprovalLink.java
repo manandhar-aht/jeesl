@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval.instance;
+package org.jeesl.interfaces.model.module.workflow.instance;
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ public interface JeeslApprovalLink <AW extends JeeslApprovalWorkflow<?,?,?>,
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithRefId
 {
-	public static enum Attributes{workflow,entity}
+	public static enum Attributes{refId,workflow,entity}
 	
 	AW getWorkflow();
 	void setWorkflow(AW workflow);

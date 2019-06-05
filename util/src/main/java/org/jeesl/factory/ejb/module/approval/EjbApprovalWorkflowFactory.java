@@ -1,8 +1,8 @@
 package org.jeesl.factory.ejb.module.approval;
 
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

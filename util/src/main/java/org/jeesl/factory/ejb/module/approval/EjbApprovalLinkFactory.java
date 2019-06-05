@@ -1,7 +1,8 @@
 package org.jeesl.factory.ejb.module.approval;
 
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalLink;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class EjbApprovalLinkFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>,
         this.cLink = cLink;
 	}
 	    
-	public AL build(RE entity, AW workflow)
+	public AL build(RE entity, AW workflow, JeeslWithWorkflow<AW> object)
 	{
 		AL ejb = null;
 		try
@@ -28,6 +29,7 @@ public class EjbApprovalLinkFactory<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 			ejb = cLink.newInstance();
 			ejb.setEntity(entity);
 			ejb.setWorkflow(workflow);
+			ejb.setRefId(object.getId());
 		}
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}

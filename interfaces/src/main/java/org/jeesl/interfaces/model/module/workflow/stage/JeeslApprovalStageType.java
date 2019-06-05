@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval.stage;
+package org.jeesl.interfaces.model.module.workflow.stage;
 
 import java.io.Serializable;
 
@@ -14,12 +14,12 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslApprovalPermissionType <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslApprovalStageType <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
 									extends Serializable,EjbPersistable,
 									EjbWithCode,UtilsStatusFixedCode,
 									JeeslOptionRestDescription,JeeslOptionRestDownload,
 									EjbWithCodeGraphic<G>,
 									UtilsStatus<S,L,D>
 {
-	public enum Code{responsible}
+	public enum Code{start,intermediate,end}
 }

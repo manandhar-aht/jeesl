@@ -4,25 +4,26 @@ import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalActionFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalActivityFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalCommunicationFactory;
+import org.jeesl.factory.ejb.module.approval.EjbApprovalLinkFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalPermissionFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalProcessFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalStageFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalTransitionFactory;
 import org.jeesl.factory.ejb.module.approval.EjbApprovalWorkflowFactory;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalLink;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -71,6 +72,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AC> cCommunication; public Class<AC> getClassCommunication() {return cCommunication;}
 	private final Class<AA> cAction; public Class<AA> getClassAction() {return cAction;}
 	private final Class<AB> cBot; public Class<AB> getClassBot() {return cBot;}
+	private final Class<AL> cLink; public Class<AL> getClassLink() {return cLink;}
 	private final Class<AW> cWorkflow; public Class<AW> getClassWorkflow() {return cWorkflow;}
 	private final Class<AY> cActivity; public Class<AY> getClassActivity() {return cActivity;}
 	
@@ -86,6 +88,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<AC> cCommunication,
 									final Class<AA> cAction,
 									final Class<AB> cBot,
+									final Class<AL> cLink,
 									final Class<AW> cWorkflow,
 									final Class<AY> cActivity)
 	{
@@ -101,6 +104,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cCommunication=cCommunication;
 		this.cAction=cAction;
 		this.cBot=cBot;
+		this.cLink=cLink;
 		this.cWorkflow=cWorkflow;
 		this.cActivity=cActivity;
 	}
@@ -111,6 +115,7 @@ public class ApprovalFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbApprovalTransitionFactory<AS,AT> ejbTransition() {return new EjbApprovalTransitionFactory<>(cTransition);}
 	public EjbApprovalCommunicationFactory<AT,AC,MT,SR> ejbCommunication() {return new EjbApprovalCommunicationFactory<>(cCommunication);}
 	public EjbApprovalActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbApprovalActionFactory<>(cAction);}
+	public EjbApprovalLinkFactory<RE,AL,AW> ejbLink() {return new EjbApprovalLinkFactory<>(cLink);}
 	public EjbApprovalWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbApprovalWorkflowFactory<>(cWorkflow);}
 	public EjbApprovalActivityFactory<AT,AW,AY,USER> ejbActivity() {return new EjbApprovalActivityFactory<>(cActivity);}
 }

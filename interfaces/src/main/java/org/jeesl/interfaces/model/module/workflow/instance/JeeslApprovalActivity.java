@@ -1,8 +1,8 @@
-package org.jeesl.interfaces.model.module.approval.instance;
+package org.jeesl.interfaces.model.module.workflow.instance;
 
 import java.io.Serializable;
 
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;

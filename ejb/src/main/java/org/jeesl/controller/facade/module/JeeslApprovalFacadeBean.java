@@ -3,30 +3,29 @@ package org.jeesl.controller.facade.module;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.module.JeeslApprovalFacade;
 import org.jeesl.factory.builder.module.ApprovalFactoryBuilder;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalAction;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalBot;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalCommunication;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalContext;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalProcess;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransition;
-import org.jeesl.interfaces.model.module.approval.JeeslApprovalTransitionType;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalActivity;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalLink;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalPermissionType;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStage;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStagePermission;
-import org.jeesl.interfaces.model.module.approval.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalAction;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalBot;
+import org.jeesl.interfaces.model.module.workflow.action.JeeslApprovalCommunication;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalActivity;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalLink;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalContext;
+import org.jeesl.interfaces.model.module.workflow.process.JeeslApprovalProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalPermissionType;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStage;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStagePermission;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslApprovalStageType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransition;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
@@ -90,20 +89,33 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 	}
 
 	@Override
-	public <W extends JeeslWithWorkflow<AW>> AW fWorkflow(Class<W> cWith, W with) throws UtilsNotFoundException
+	public <W extends JeeslWithWorkflow<AW>> AL fLink(AP process, W owner) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<AW> cQ = cB.createQuery(fbApproval.getClassWorkflow());
-		Root<W> w = cQ.from(cWith);
+		CriteriaQuery<AL> cQ = cB.createQuery(fbApproval.getClassLink());
+		Root<AL> link = cQ.from(fbApproval.getClassLink());
 		
-		Path<AW> pWorkflow = w.get(JeeslWithWorkflow.Attributes.workflow.toString());
-		Path<Long> pId = w.get("id");
+		Join<AL,AW> jWorkflow = link.join(JeeslApprovalLink.Attributes.workflow.toString());
+		Path<AP> pProcess = jWorkflow.get(JeeslApprovalWorkflow.Attributes.process.toString());
+		Path<Long> pRefId = link.get(JeeslApprovalLink.Attributes.refId.toString());
 		
-		cQ.where(cB.equal(pId,with.getId()));
-		cQ.select(pWorkflow);
+		cQ.where(cB.and(cB.equal(pRefId,owner.getId()),cB.equal(pProcess,process)));
+		cQ.select(link);
 		
-		try	{return em.createQuery(cQ).getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("No Graphic found for status.id"+with);}
-		catch (NonUniqueResultException ex){throw new UtilsNotFoundException("Multiple Results for status.id"+with);}
+		List<AL> links = em.createQuery(cQ).getResultList();
+		
+		if(!links.isEmpty())
+		{
+			if(links.size()==1) {return links.get(0);}
+			else
+			{
+				logger.warn("NYI Multiple links");
+				return links.get(0);
+			}
+		}
+		else
+		{
+			{throw new UtilsNotFoundException("No "+fbApproval.getClassLink()+" found for "+owner);}
+		}
 	}
 }

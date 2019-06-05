@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.approval.instance;
+package org.jeesl.interfaces.model.module.workflow.instance;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 

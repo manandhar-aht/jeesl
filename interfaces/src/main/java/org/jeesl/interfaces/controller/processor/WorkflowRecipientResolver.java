@@ -3,8 +3,8 @@ package org.jeesl.interfaces.controller.processor;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.model.module.approval.instance.JeeslApprovalWorkflow;
-import org.jeesl.interfaces.model.module.approval.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
+import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 

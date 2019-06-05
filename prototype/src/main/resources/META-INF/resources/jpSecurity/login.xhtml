@@ -20,9 +20,9 @@
 		<p:panel header="#{msg.jeeslSecurityLogin}" styleClass="jeeslPanel">
 			<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 				<p:outputLabel for="name" value="#{msg.jeeslSecurityEmail}"/>
-				<h:inputText id="name" value="#{userBean.identity.loginName}"/>
+				<p:inputText id="name" value="#{userBean.identity.loginName}"/>
 				<p:outputLabel for="password" value="#{msg.jeeslSecurityPassword}"/>
-				<h:inputSecret id="password" value="#{userBean.identity.loginPassword}" redisplay="true"/>
+				<p:password id="password" value="#{userBean.identity.loginPassword}"/>
 				<h:outputText value=""/>
 				<p:commandButton id="cbLogin" value="#{msg.jeeslSecurityLoginButton}" action="#{userBean.login}"/>
 			</p:panelGrid>

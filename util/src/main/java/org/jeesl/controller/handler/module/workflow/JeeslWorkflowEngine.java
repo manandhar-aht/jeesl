@@ -196,4 +196,9 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 		reloadWorkflow();
 	}
+	
+	public void loadStages()
+	{
+		
+	}
 }

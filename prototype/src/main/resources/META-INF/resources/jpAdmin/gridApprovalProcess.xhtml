@@ -82,9 +82,10 @@
 							
 							<p:column rendered="true">  
 								<h:outputText value="#{s.position}"/>
-								<jtp:symbolizer value="#{s.type}" marginLeft="5"/>
+								
 							</p:column>
-							<p:column rendered="true" headerText="#{msg.jeeslName}">  
+							<p:column rendered="true" headerText="#{msg.jeeslName}">
+								<jtp:symbolizer value="#{s.type}" marginRight="5"/>
 								<h:outputText value="#{s.name[localeCode].lang}"/>  
 							</p:column>
 											

@@ -1,7 +1,5 @@
 package org.jeesl.interfaces.model.module.approval.instance;
 
-import java.util.List;
-
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslWithWorkflow<AW extends JeeslApprovalWorkflow<?,?,?>> extends EjbWithId

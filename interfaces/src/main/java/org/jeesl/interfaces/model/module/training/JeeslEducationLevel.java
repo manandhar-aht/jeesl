@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.module.edu;
+package org.jeesl.interfaces.model.module.training;
 
 import java.io.Serializable;
 

@@ -20,6 +20,7 @@ import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.json.db.tuple.t1.Json1TuplesFactory;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
@@ -90,7 +91,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public <T extends EjbWithId> BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsConstraintViolationException
 	{
-		try {return fBridge(cBridge, entityClass, ejb);}
+		try {return fBridge(entityClass, ejb);}
 		catch (UtilsNotFoundException ex)
 		{
 			if(efBridge==null){efBridge = new EjbTsBridgeFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cBridge);}
@@ -98,19 +99,33 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 			return this.persist(bridge);
 		}
 	}
-	@Override public <T extends EjbWithId> BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsNotFoundException
+	@Override public <T extends EjbWithId> BRIDGE fBridge(EC ec, T ejb) throws UtilsNotFoundException
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
-		CriteriaQuery<BRIDGE> cQ = cB.createQuery(cBridge);
-		Root<BRIDGE> from = cQ.from(cBridge);
+		CriteriaQuery<BRIDGE> cQ = cB.createQuery(fbTs.getClassBridge());
+		Root<BRIDGE> from = cQ.from(fbTs.getClassBridge());
 		
-		Path<EC> pClass = from.get("entityClass");
-		Path<Long> pRef = from.get("refId");
+		Path<EC> pClass = from.get(JeeslTsBridge.Attributes.entityClass.toString());
+		Path<Long> pRef = from.get(JeeslTsBridge.Attributes.refId.toString());
 		
 		CriteriaQuery<BRIDGE> select = cQ.select(from);
-		select.where(cB.equal(pClass, entityClass),cB.equal(pRef, ejb.getId()));
+		select.where(cB.equal(pClass, ec),cB.equal(pRef, ejb.getId()));
 		try	{return em.createQuery(select).getSingleResult();}
-		catch (NoResultException ex){throw new UtilsNotFoundException("No "+cBridge.getName()+" found for entityClass/refId");}
+		catch (NoResultException ex){throw new UtilsNotFoundException("No "+fbTs.getClassBridge().getName()+" found for entityClass/refId");}
+	}
+	
+	@Override public <T extends EjbWithId> List<BRIDGE> fBridges(EC ec, List<T> ejbs)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<BRIDGE> cQ = cB.createQuery(fbTs.getClassBridge());
+		Root<BRIDGE> from = cQ.from(fbTs.getClassBridge());
+		
+		Path<EC> pClass = from.get(JeeslTsBridge.Attributes.entityClass.toString());
+		Path<Long> pRef = from.get(JeeslTsBridge.Attributes.refId.toString());
+		
+		CriteriaQuery<BRIDGE> select = cQ.select(from);
+		select.where(cB.equal(pClass, ec),pRef.in(EjbIdFactory.toLongs(ejbs)));
+		return em.createQuery(select).getResultList();
 	}
 	
 	@Override public boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c)
@@ -129,6 +144,24 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 		Join<TS,BRIDGE> jBridge = ts.join(JeeslTimeSeries.Attributes.bridge.toString());
 		
 		predicates.add(jBridge.in(bridges));
+		
+		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
+		cQ.select(ts);
+		return em.createQuery(cQ).getResultList();
+	}
+	
+	@Override public List<TS> fTimeSeries(List<BRIDGE> bridges, List<SCOPE> scopes)
+	{
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<TS> cQ = cB.createQuery(fbTs.getClassTs());
+		
+		Root<TS> ts = cQ.from(fbTs.getClassTs());
+		Join<TS,BRIDGE> jBridge = ts.join(JeeslTimeSeries.Attributes.bridge.toString());
+		Join<TS,SCOPE> jScope = ts.join(JeeslTimeSeries.Attributes.scope.toString());
+		
+		predicates.add(jBridge.in(bridges));
+		predicates.add(jScope.in(scopes));
 		
 		cQ.where(cB.and(predicates.toArray(new Predicate[predicates.size()])));
 		cQ.select(ts);

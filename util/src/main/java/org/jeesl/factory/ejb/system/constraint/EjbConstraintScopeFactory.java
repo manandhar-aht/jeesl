@@ -1,6 +1,5 @@
 package org.jeesl.factory.ejb.system.constraint;
 
-import org.jeesl.api.facade.system.JeeslSystemConstraintFacade;
 import org.jeesl.controller.db.updater.JeeslDbDescriptionUpdater;
 import org.jeesl.controller.db.updater.JeeslDbLangUpdater;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;

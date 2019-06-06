@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
@@ -82,5 +83,16 @@ public class EjbTsBridgeFactory<L extends UtilsLang, D extends UtilsDescription,
 			list.add(bridge.getRefId());
 		}
 		return list;
+	}
+	
+	public <T extends EjbWithId> Map<T,BRIDGE> toMapEjbBridge(List<BRIDGE> bridges, List<T> ejbs)
+	{
+		Map<T,BRIDGE> map = new HashMap<T,BRIDGE>();
+		Map<Long,T> idMap = EjbIdFactory.toIdMap(ejbs);
+		for(BRIDGE bridge : bridges)
+		{
+			if(idMap.containsKey(bridge.getRefId())) {map.put(idMap.get(bridge.getRefId()),bridge);}
+		}
+		return map;
 	}
 }

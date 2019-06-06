@@ -47,12 +47,14 @@ public interface JeeslTsFacade <L extends UtilsLang,
 	List<SCOPE> findScopes(Class<SCOPE> cScope, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleScopes);
 	List<EC> findClasses(Class<EC> cClass, Class<CAT> cCategory, List<CAT> categories, boolean showInvisibleClasses);
 	
-	<T extends EjbWithId> BRIDGE fBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsNotFoundException;
+	<T extends EjbWithId> BRIDGE fBridge(EC entityClass, T ejb) throws UtilsNotFoundException;
 	<T extends EjbWithId> BRIDGE fcBridge(Class<BRIDGE> cBridge, EC entityClass, T ejb) throws UtilsConstraintViolationException;
+	<T extends EjbWithId> List<BRIDGE> fBridges(EC ec, List<T> ejbs);
 	
 	boolean isTimeSeriesAllowed(SCOPE scope, INT interval, EC c);
 	
 	List<TS> fTimeSeries(List<BRIDGE> bridges);
+	List<TS> fTimeSeries(List<BRIDGE> bridges, List<SCOPE> scopes);
 	List<TS> fTimeSeries(SCOPE scope, INT interval, EC entityClass);
 	TS fTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsNotFoundException;
 	TS fcTimeSeries(SCOPE scope, INT interval, BRIDGE bridge) throws UtilsConstraintViolationException;

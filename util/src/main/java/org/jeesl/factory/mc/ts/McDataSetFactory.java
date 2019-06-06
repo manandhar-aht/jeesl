@@ -96,7 +96,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 	
 	public <T extends EjbWithId> Ds multiPoint(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
 	{
-		BRIDGE bridge = fTs.fBridge(fbTs.getClassBridge(),entityClass,entity);
+		BRIDGE bridge = fTs.fBridge(entityClass,entity);
 		TS ts = fTs.fTimeSeries(scope,interval,bridge);
 		
 		List<MP> multiPoints = fTs.allForParent(fbTs.getClassMp(),scope);

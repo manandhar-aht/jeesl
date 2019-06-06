@@ -132,7 +132,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 		{
 			try
 			{
-				BRIDGE bridge = fTs.fBridge(fbTs.getClassBridge(), entityClass, t);
+				BRIDGE bridge = fTs.fBridge(entityClass, t);
 				TS ts = fTs.fTimeSeries(scope,interval,bridge);
 				List<DATA> datas = fTs.fData(workspace,ts,start,end);
 				process(t,datas);
@@ -150,7 +150,7 @@ public class TsYearlyDataHandler <L extends UtilsLang,
 		{
 			try
 			{
-				BRIDGE bridge = fTs.fBridge(fbTs.getClassBridge(), entityClass, t);
+				BRIDGE bridge = fTs.fBridge(entityClass,t);
 				TS ts = fTs.fTimeSeries(scope,interval,bridge);
 				List<DATA> datas = fTs.fData(workspace,ts,start,end);
 				process(t,datas);

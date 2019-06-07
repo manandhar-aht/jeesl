@@ -10,6 +10,7 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.with.EjbWithSize;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
+import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
@@ -19,7 +20,7 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 								TYPE extends JeeslFileType<TYPE,?,D,?>>
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithParentAttributeResolver,
-//					EjbWithPosition,
+					EjbWithPosition,
 					EjbWithCode,
 //					EjbWithName,
 					JeeslWithType<TYPE>,
@@ -27,9 +28,6 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 					EjbWithDescription<D>
 {
 	public enum Attributes{container,type}
-	
-	public Integer getPosition();
-	public void setPosition(Integer position);
 	
 	CONTAINER getContainer();
 	void setContainer(CONTAINER container);

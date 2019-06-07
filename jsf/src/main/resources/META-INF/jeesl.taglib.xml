@@ -41,6 +41,12 @@
             <component-type>org.jeesl.jsf.components.html.Li</component-type>
         </component>
     </tag>
+	<tag>
+        <tag-name>label</tag-name>
+        <component>
+            <component-type>org.jeesl.jsf.components.html.Label</component-type>
+        </component>
+    </tag>
 	
 	<tag>
         <tag-name>outputXpath</tag-name>

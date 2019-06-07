@@ -313,6 +313,9 @@ ul.aupHeadlineBreadcrumb,
 	padding: 3px 15px 3px 20px;
 }
 
+.jeeslSbFlatSelected > a {text-decoration: underline;}
+.jeeslSbFlat > label > a {color: white;}
+
 .aupStatusBarCalendar > .ui-inputfield{
 	background-color: transparent;
 	border: none;

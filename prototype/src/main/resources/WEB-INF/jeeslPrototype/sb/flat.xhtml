@@ -7,6 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
+	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
   	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
     xmlns:aup="http://ahtutils.sourceforge.net/prototype">
@@ -15,10 +16,13 @@
 
 	<ui:repeat var="var" value="#{handler.list}">
 		<aht:li>
-			<f:attribute name="styleClass" value="aupStatusBarLeft"/>
-			<label>
-				<h:outputText rendered="#{var.name[localeCode].lang}"/>
-			</label>
+			<f:attribute name="styleClass" value="aupStatusBarRight jeeslSbFlat"/>
+			<j:label styleClass="#{(handler.selection.id eq var.id) ? 'jeeslSbFlatSelected' : 'jeeslSbFlatUnSelected'}">
+				<p:commandLink>
+					<h:outputText value="#{var.name[localeCode].lang}"/>
+					<p:ajax event="click" listener="#{handler.selectSbSingle(var)}" update="#{update}"/>
+				</p:commandLink>
+			</j:label>
 		</aht:li>
 	</ui:repeat>
 	

@@ -129,14 +129,21 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	{	
 		if(typeUnknown!=null && fth!=null)
 		{
+			int i=0;
 			for(META meta : fFr.allForType(fbFr.getClassMeta(), typeUnknown))
 			{
 				String code = meta.getType().getCode();
 				fth.updateType(meta);
 				if(!code.contentEquals(meta.getType().getCode()))
 				{
+					i++;
 					try {fFr.save(meta);}
 					catch (UtilsConstraintViolationException | UtilsLockingException e) {e.printStackTrace();}
+				}
+				if(i==250)
+				{
+					logger.info("Breaking loop to prevent timeout");
+					break;
 				}
 			}
 		}

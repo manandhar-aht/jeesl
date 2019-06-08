@@ -112,12 +112,7 @@
         	<scope>test</scope>
         	<classifier>tests</classifier>
         </dependency>
-		<dependency>
-			<groupId>org.jeesl</groupId>
-			<artifactId>jeesl-entities</artifactId>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>

@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.util;
+package org.jeesl.client.model.ejb;
 
 import java.io.Serializable;
 import java.util.Date;

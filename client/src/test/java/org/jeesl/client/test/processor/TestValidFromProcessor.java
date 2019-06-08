@@ -1,11 +1,12 @@
-package net.sf.ahtutils.controller.processor;
+package org.jeesl.client.test.processor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.ahtutils.controller.processor.ValidFromProcessor;
 import net.sf.ahtutils.test.AbstractJeeslTest;
 
-import org.jeesl.model.ejb.util.ValidFrom;
+import org.jeesl.client.model.ejb.ValidFrom;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;

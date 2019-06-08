@@ -35,6 +35,14 @@
          	<groupId>org.jeesl</groupId>
          	<artifactId>jeesl-interfaces</artifactId>
          </dependency>
+         <dependency>
+         	<groupId>org.jeesl</groupId>
+         	<artifactId>jeesl-entities</artifactId>
+         </dependency>
+         <dependency>
+         	<groupId>org.jeesl</groupId>
+         	<artifactId>jeesl-util</artifactId>
+         </dependency>
          
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -66,6 +74,18 @@
 			<type>pom</type>
 			<scope>provided</scope>
 	  	</dependency>
+	  	
+	  	<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+         	<groupId>org.slf4j</groupId>
+         	<artifactId>slf4j-log4j12</artifactId>
+         	<type>jar</type>
+         	<scope>test</scope>
+         </dependency>
 	</dependencies>
 
     <build>

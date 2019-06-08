@@ -1,15 +1,14 @@
-package net.sf.ahtutils.test.model;
+package org.jeesl.client.test.processor;
 
 import java.io.File;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.client.model.ejb.DuplicateHashCodeFinder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import net.sf.ahtutils.model.DuplicateHashCodeFinder;
 
 public class TestHashCodeFinder
 {

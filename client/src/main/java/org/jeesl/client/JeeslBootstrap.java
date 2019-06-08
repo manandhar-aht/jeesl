@@ -1,4 +1,4 @@
-package net.sf.ahtutils.test;
+package org.jeesl.client;
 
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.util.config.ConfigLoader;
@@ -9,9 +9,9 @@ import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AhtUtilsEjbTestBootstrap
+public class JeeslBootstrap
 {
-	final static Logger logger = LoggerFactory.getLogger(AhtUtilsEjbTestBootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslBootstrap.class);
 	
 	public final static String xmlConfig = "config.ahtutils-ejb.test/ahtutils.xml";
 	

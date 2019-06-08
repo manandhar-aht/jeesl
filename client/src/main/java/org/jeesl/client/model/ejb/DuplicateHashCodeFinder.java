@@ -1,4 +1,4 @@
-package net.sf.ahtutils.model;
+package org.jeesl.client.model.ejb;
 
 import java.io.*;
 import java.util.*;

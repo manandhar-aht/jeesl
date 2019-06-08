@@ -1,4 +1,4 @@
-package net.sf.ahtutils.test.model.ejb.status;
+package org.jeesl.client.test.model.ejb.system.locale;
 
 import java.util.Random;
 
@@ -10,11 +10,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.test.model.ejb.status.cli.TstStatus;
-
 public class TestStatus
 {
-	final static Logger logger = LoggerFactory.getLogger(TstStatus.class);
+	final static Logger logger = LoggerFactory.getLogger(TestStatus.class);
 	
 	private Random rnd;
 	private String code;

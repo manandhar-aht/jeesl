@@ -236,13 +236,13 @@ public class JeeslSurveyAnalysisFacadeBean <L extends UtilsLang, D extends Utils
         {
             Object[] array = (Object[])o;
 
-        		JsonFlatFigure f = JsonFlatFigureFactory.build();
-        		f.setL1(((BigInteger)array[0]).longValue());										// ID Question
-        		f.setL2(((BigInteger)array[1]).longValue());										// ID Option
-        		f.setL3(((BigInteger)array[2]).longValue());										// Count
-        		if(efTool.withDomainQuery(tool)){f.setL4(((BigInteger)array[3]).longValue());}	// ID Path}
-        		
-        	 	result.getFigures().add(f);
+    		JsonFlatFigure f = JsonFlatFigureFactory.build();
+    		f.setL1(((BigInteger)array[0]).longValue());										// ID Question
+    		f.setL2(((BigInteger)array[1]).longValue());										// ID Option
+    		f.setL3(((BigInteger)array[2]).longValue());										// Count
+    		if(efTool.withDomainQuery(tool)){f.setL4(((BigInteger)array[3]).longValue());}	// ID Path}
+    		
+    	 	result.getFigures().add(f);
         }
         return result;
 	}

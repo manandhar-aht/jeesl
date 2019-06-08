@@ -8,7 +8,6 @@ import org.jeesl.api.bean.JeeslTranslationBean;
 import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
-import org.jeesl.controller.handler.sb.SbSingleHandler;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsBridgeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsClassFactory;
@@ -55,7 +54,7 @@ public abstract class AbstractAdminTsBean <L extends UtilsLang, D extends UtilsD
 									DATA extends JeeslTsData<TS,TRANSACTION,SAMPLE,WS>,
 									POINT extends JeeslTsDataPoint<DATA,MP>,
 									SAMPLE extends JeeslTsSample, 
-									USER extends EjbWithId, 
+									USER extends EjbWithId,
 									WS extends UtilsStatus<WS,L,D>,
 									QAF extends UtilsStatus<QAF,L,D>>
 					extends AbstractAdminBean<L,D>

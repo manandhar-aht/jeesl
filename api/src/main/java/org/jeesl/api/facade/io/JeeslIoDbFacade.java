@@ -25,8 +25,9 @@ public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription
 	FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException;
 	
 	String version();
-	long count(Class<?> c);
-	Map<Class<?>, Long> count(List<Class<?>> list);
+	long countExact(Class<?> c);
+	Map<Class<?>,Long> count(List<Class<?>> list);
+	long countEstimate(Class<?> c);
 	
 	Table connections(String userName);
 	

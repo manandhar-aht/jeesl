@@ -1,6 +1,7 @@
 
 package org.jeesl.controller.facade.system.io;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -11,8 +12,8 @@ import javax.persistence.Query;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
-import org.jeesl.factory.json.system.io.db.JsonDbPgStatQueryFactory;
 import org.jeesl.factory.json.system.io.db.JsonDbPgStatConnectionFactory;
+import org.jeesl.factory.json.system.io.db.JsonDbPgStatQueryFactory;
 import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbPgStatFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
@@ -66,12 +67,35 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		return (String)o;
 	}
 	
-	@Override public  long count(Class<?> cl)
+	@Override public long countExact(Class<?> c)
 	{
-		Query q = em.createQuery("select count(*) FROM "+ cl.getSimpleName());
+		Query q = em.createQuery("select count(*) FROM "+ c.getSimpleName());
 
 		Object o = q.getSingleResult();
 		return (Long)o;
+	}
+	
+	@Override public long countEstimate(Class<?> c)
+	{
+		if(c.getAnnotation(javax.persistence.Table.class)!=null)
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT CAST(reltuples AS BIGINT)");
+			sb.append(" FROM pg_class");
+			sb.append(" WHERE relname='").append(c.getAnnotation(javax.persistence.Table.class).name().toLowerCase()).append("';");
+			
+			Query q = em.createNativeQuery(sb.toString());
+			for(Object o : q.getResultList())
+	        {
+				BigInteger i = (BigInteger)o;
+	            return i.longValue();
+	        }
+		}
+		else
+		{
+			return -1;
+		}
+		return -1;
 	}
 	
 	@Override
@@ -80,7 +104,7 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		Map<Class<?>, Long> result = new Hashtable<Class<?>,Long>();
 		for(Class<?> c : list)
 		{
-			result.put(c,count(c));
+			result.put(c,countExact(c));
 		}
 		return result;
 	}

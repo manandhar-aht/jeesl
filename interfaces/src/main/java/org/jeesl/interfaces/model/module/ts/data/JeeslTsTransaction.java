@@ -15,8 +15,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslTsTransaction <SOURCE extends EjbWithLangDescription<?,?>, 
 								DATA extends JeeslTsData<?,?,?,?>,
-								USER extends EjbWithId
-								,CONTAINER extends JeeslFileContainer<?,?>
+								USER extends EjbWithId,
+								CONTAINER extends JeeslFileContainer<?,?>
 								>
 		extends Serializable,EjbWithId,EjbSaveable,EjbWithRecord,EjbRemoveable,EjbPersistable,
 					JeeslWithFileRepositoryContainer<CONTAINER>

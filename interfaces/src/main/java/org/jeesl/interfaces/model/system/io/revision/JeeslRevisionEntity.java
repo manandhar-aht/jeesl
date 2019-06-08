@@ -28,7 +28,7 @@ public interface JeeslRevisionEntity<L extends UtilsLang, D extends UtilsDescrip
 	RC getCategory();
 	void setCategory(RC category);
 	
-	Boolean isTimeseries();
+	Boolean getTimeseries();
 	void setTimeseries(Boolean timeseries);
 	
 	List<REM> getMaps();

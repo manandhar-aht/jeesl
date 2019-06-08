@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+    	<groupId>org.jeesl</groupId>
+        <artifactId>jeesl</artifactId>
+        <version>0.2.6-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jeesl-client</artifactId>
+    <packaging>jar</packaging>
+    <name>JEESL - Client</name>
+
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+	<dependencyManagement>
+		<dependencies>      	         
+			<dependency>
+				<groupId>org.jeesl</groupId>
+				<artifactId>jeesl-bom</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- JEESL -->
+		<dependency>
+         	<groupId>org.jeesl</groupId>
+         	<artifactId>jeesl-interfaces</artifactId>
+         </dependency>
+         
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>provided</scope>
+		</dependency>
+         
+         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+       <dependency>
+		   <groupId>org.jboss.spec</groupId>
+		   <artifactId>jboss-javaee-6.0</artifactId>
+		   <type>pom</type>
+		   <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-ejb-client-bom</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+	  	</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>${maven-ejb-plugin.version}</version>
+                <configuration>
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>versions-maven-plugin</artifactId>
+		        <configuration>
+					<rulesUri>${maven.ignore}</rulesUri>
+		        </configuration>
+			</plugin>
+        </plugins>
+    </build>
+
+</project>

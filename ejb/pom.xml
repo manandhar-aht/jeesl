@@ -64,11 +64,6 @@ Failed to collect dependencies at com.sun.xml.ws:policy:jar:2.2 -> woodstox:wstx
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-    	<dependency>
-         	<groupId>org.jeesl</groupId>
-         	<artifactId>jeesl-entities</artifactId>
-         	<scope>test</scope>
-         </dependency>
         
         <dependency>
             <groupId>org.hibernate</groupId>

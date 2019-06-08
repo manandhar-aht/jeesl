@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.system.status;
+package org.jeesl.client.model.ejb.system.locale;
 
 import java.io.Serializable;
 import java.util.Hashtable;

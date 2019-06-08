@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.system.status;
+package org.jeesl.client.model.ejb.system.locale;
 
 import java.io.Serializable;
 import java.util.Hashtable;
@@ -12,29 +12,38 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
+import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(name = "UtilsLang")
-@EjbErNode(name="Language",category="status",subset="status",level=3)
-public class Lang implements UtilsLang,EjbRemoveable,Serializable
+@EjbErNode(name="Description",category="status",subset="status",level=3)
+public class Description implements UtilsDescription,EjbRemoveable,Serializable
 {
 	public static final long serialVersionUID=1;
-	
+
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	public long getId() {return id;}
-	public void setId(long id) {this.id = id;}
 	
 	@NotNull
 	private String lkey;
-	public String getLkey() {return lkey;}
-	public void setLkey(String lkey) {this.lkey = lkey;}
 	
 	@NotNull
 	private String lang;
+	
+	private Boolean styled;
+	@Override public Boolean getStyled() {return styled;}
+	@Override public void setStyled(Boolean styled) {this.styled = styled;}
+	
+	// >>>>>>>>>>>>>>>>>>>>>Getters and Setters<<<<<<<<<<<<<<<<<<<
+	
+	public long getId() {return id;}
+	public void setId(long id) {this.id = id;}
+	
+	public String getLkey() {return lkey;}
+	public void setLkey(String lkey) {this.lkey = lkey;}
+	
 	public String getLang() {return lang;}
 	public void setLang(String name) {this.lang = name;}
 	
@@ -48,19 +57,19 @@ public class Lang implements UtilsLang,EjbRemoveable,Serializable
 		return sb.toString();
 	}
 	
-	public synchronized static Map<String,Lang> createMap(Lang... languages)
+	public synchronized static Map<String,Description> createMap(Description... languages)
 	{
-		Map<String,Lang> langMap = new Hashtable<String, Lang>();
-		for(Lang lang : languages)
+		Map<String,Description> langMap = new Hashtable<String, Description>();
+		for(Description lang : languages)
 		{
 			langMap.put(lang.getLkey(), lang);
 		}
 		return langMap;
 	}
 	
-	public synchronized static Lang create(String key, String lang)
+	public synchronized static Description create(String key, String lang)
 	{
-		Lang pl = new Lang();
+		Description pl = new Description();
 		pl.setLkey(key);
 		pl.setLang(lang);
 		return pl;

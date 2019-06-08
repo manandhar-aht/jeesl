@@ -1,10 +1,10 @@
-package net.sf.ahtutils.test.controller.factory;
+package org.jeesl.client.test.factory.ejb;
 
-import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.model.ejb.system.locale.Status;
+import org.jeesl.client.test.AbstractJeeslClientTest;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.system.status.Status;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +17,7 @@ import net.sf.ahtutils.xml.status.Descriptions;
 import net.sf.ahtutils.xml.status.Langs;
 import net.sf.exlp.util.io.LoggerInit;
 
-public class TestUtilsStatusEjbFactory extends AbstractJeeslUtilTest
+public class TestUtilsStatusEjbFactory extends AbstractJeeslClientTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestUtilsStatusEjbFactory.class);
 	

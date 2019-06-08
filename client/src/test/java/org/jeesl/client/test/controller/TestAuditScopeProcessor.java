@@ -1,19 +1,19 @@
-package net.sf.ahtutils.controller.audit;
+package org.jeesl.client.test.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jeesl.JeeslUtilTestBootstrap;
-import org.jeesl.model.ejb.system.security.SecurityAction;
-import org.jeesl.model.ejb.system.security.SecurityActionTemplate;
-import org.jeesl.model.ejb.system.security.SecurityCategory;
-import org.jeesl.model.ejb.system.security.SecurityRole;
-import org.jeesl.model.ejb.system.security.SecurityUsecase;
-import org.jeesl.model.ejb.system.security.SecurityView;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.user.User;
+import org.jeesl.client.JeeslBootstrap;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.model.ejb.system.security.SecurityAction;
+import org.jeesl.client.model.ejb.system.security.SecurityActionTemplate;
+import org.jeesl.client.model.ejb.system.security.SecurityCategory;
+import org.jeesl.client.model.ejb.system.security.SecurityRole;
+import org.jeesl.client.model.ejb.system.security.SecurityUsecase;
+import org.jeesl.client.model.ejb.system.security.SecurityView;
+import org.jeesl.client.model.ejb.user.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sf.ahtutils.controller.audit.AuditScopeProcessor;
 import net.sf.ahtutils.factory.xml.audit.XmlChangeFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionFactory;
 import net.sf.ahtutils.factory.xml.audit.XmlRevisionsFactory;
@@ -146,7 +147,7 @@ public class TestAuditScopeProcessor extends AbstractJeeslTest
 
     public static void main (String[] args) throws Exception
 	{
-		JeeslUtilTestBootstrap.init();
+    	JeeslBootstrap.init();
 		TestAuditScopeProcessor test = new TestAuditScopeProcessor();
 		
 //		test.init();test.nrOfScopes();

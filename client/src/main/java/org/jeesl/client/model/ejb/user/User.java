@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.user;
+package org.jeesl.client.model.ejb.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.jeesl.client.model.ejb.system.security.SecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
-import org.jeesl.model.ejb.system.security.SecurityRole;
 
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 

@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.system.security;
+package org.jeesl.client.model.ejb.system.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
@@ -19,21 +20,22 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.model.ejb.user.User;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
-@EjbErNode(name="Usecase",category="security",subset="security")
-
-public class SecurityUsecase implements JeeslSecurityUsecase<Lang,Description,SecurityCategory,SecurityRole,SecurityView,SecurityAction>
+@EjbErNode(name="Role",category="security",subset="security,ts")
+public class SecurityRole implements JeeslSecurityRole<Lang,Description,SecurityCategory,SecurityView,SecurityUsecase,SecurityAction,User>
 {
-	public static final long serialVersionUID=1;
+	public static enum Code {systemAht}
+	public static enum CodeRegion {regionalManager,regionalEditor}
 	
-	public static enum Code {test}
+	public static final long serialVersionUID=1;
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -45,12 +47,12 @@ public class SecurityUsecase implements JeeslSecurityUsecase<Lang,Description,Se
 	public SecurityCategory getCategory() {return category;}
 	public void setCategory(SecurityCategory category) {this.category = category;}
 	
+	@Override public String resolveParentAttribute() {return "category";}
+	
 	@NotNull
 	private String code;
-	public String getCode() {return code;}
-	public void setCode(String code) {this.code = code;}
-	
-	@Override public String resolveParentAttribute() {return "category";}
+	@Override public String getCode() {return code;}
+	@Override public void setCode(String code) {this.code = code;}
 	
 	private boolean visible;
 	@Override public boolean isVisible() {return visible;}
@@ -77,20 +79,38 @@ public class SecurityUsecase implements JeeslSecurityUsecase<Lang,Description,Se
 	public void setDescription(Map<String, Description> description) {this.description = description;}
 	
 	@ManyToMany(fetch=FetchType.EAGER)
+	private List<SecurityView> views;
+	public List<SecurityView> getViews() {if(views==null){views = new ArrayList<SecurityView>();}return views;}
+	public void setViews(List<SecurityView> views) {this.views = views;}
+	
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<SecurityAction> actions;
 	public List<SecurityAction> getActions() {if(actions==null){actions = new ArrayList<SecurityAction>();}return actions;}
 	public void setActions(List<SecurityAction> actions) {this.actions = actions;}
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	private List<SecurityView> views;
-	public List<SecurityView> getViews() {if(views==null){views = new ArrayList<SecurityView>();}return views;}
-	public void setViews(List<SecurityView> views) {this.views = views;}
+	private List<SecurityUsecase> usecases;
+	public List<SecurityUsecase> getUsecases() {if(usecases==null){usecases = new ArrayList<SecurityUsecase>();}return usecases;}
+	public void setUsecases(List<SecurityUsecase> usecases) {this.usecases = usecases;}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	private List<SecurityRole> roles;
-	@Override public List<SecurityRole> getRoles() {if(roles==null){roles = new ArrayList<SecurityRole>();}return roles;}
-	@Override public void setRoles(List<SecurityRole> roles) {this.roles = roles;}
+	@JoinTable(name = "User_SecurityRole")
+	private List<User> users;
+	public List<User> getUsers() {return users;}
+	public void setUsers(List<User> users) {this.users = users;}
+
 	
-	@Override public boolean equals(Object object){return (object instanceof SecurityUsecase) ? id == ((SecurityUsecase) object).getId() : (object == this);}
-	@Override public int hashCode() {return new HashCodeBuilder(17,53).append(id).toHashCode();}
+	@Override public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("[");
+		sb.append(SecurityRole.class.getSimpleName());
+		sb.append("-").append(id);
+		sb.append(" ").append(code);
+		sb.append("]");
+		return sb.toString();
+	}
+	
+	@Override public boolean equals(Object object){return (object instanceof SecurityRole) ? id == ((SecurityRole) object).getId() : (object == this);}
+	@Override public int hashCode() {return new HashCodeBuilder(17, 53).append(id).toHashCode();}
 }

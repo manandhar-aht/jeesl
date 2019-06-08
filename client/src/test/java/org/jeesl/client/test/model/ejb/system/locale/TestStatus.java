@@ -2,8 +2,8 @@ package org.jeesl.client.test.model.ejb.system.locale;
 
 import java.util.Random;
 
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.system.status.Status;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.model.ejb.system.locale.Status;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

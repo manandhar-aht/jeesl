@@ -1,23 +1,23 @@
-package org.jeesl.controller.processor;
+package org.jeesl.client.test.processor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.model.ejb.system.locale.Status;
+import org.jeesl.client.test.AbstractJeeslClientTest;
+import org.jeesl.controller.processor.IntersectionProcessor;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.system.status.Status;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestIntersectionProcessor extends AbstractJeeslUtilTest
+public class TestIntersectionProcessor extends AbstractJeeslClientTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestIntersectionProcessor.class);
 	

@@ -1,13 +1,13 @@
-package org.jeesl.model.ejb.system.symbol;
+package org.jeesl.client.model.ejb.system.graphic;
 
 import java.io.Serializable;
 
 import javax.persistence.ManyToOne;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
 
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;

@@ -1,16 +1,16 @@
-package net.sf.ahtutils.test.reflection;
+package org.jeesl.client.test.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.jeesl.model.ejb.system.status.Status;
+import org.jeesl.client.model.ejb.system.locale.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TstReflection 
+public class CliReflection 
 {
-	final static Logger logger = LoggerFactory.getLogger(TstReflection.class);
+	final static Logger logger = LoggerFactory.getLogger(CliReflection.class);
 	
 	public static void main(String args[])
     {

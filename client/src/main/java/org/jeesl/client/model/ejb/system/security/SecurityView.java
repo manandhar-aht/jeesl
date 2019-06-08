@@ -1,4 +1,4 @@
-package org.jeesl.model.ejb.system.security;
+package org.jeesl.client.model.ejb.system.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
 
 import net.sf.ahtutils.model.qualifier.EjbErNode;
 

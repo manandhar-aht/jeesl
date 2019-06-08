@@ -1,4 +1,4 @@
-package org.jeesl.factory.svg;
+package org.jeesl.client.test.factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,12 +10,13 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.FileUtils;
 import org.jeesl.AbstractJeeslUtilTest;
 import org.jeesl.JeeslUtilTestBootstrap;
-import org.jeesl.model.ejb.system.status.Description;
-import org.jeesl.model.ejb.system.status.Lang;
-import org.jeesl.model.ejb.system.symbol.Graphic;
-import org.jeesl.model.ejb.system.symbol.GraphicFigure;
-import org.jeesl.model.ejb.system.symbol.GraphicStyle;
-import org.jeesl.model.ejb.system.symbol.GraphicType;
+import org.jeesl.client.model.ejb.system.graphic.Graphic;
+import org.jeesl.client.model.ejb.system.graphic.GraphicFigure;
+import org.jeesl.client.model.ejb.system.graphic.GraphicStyle;
+import org.jeesl.client.model.ejb.system.graphic.GraphicType;
+import org.jeesl.client.model.ejb.system.locale.Description;
+import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

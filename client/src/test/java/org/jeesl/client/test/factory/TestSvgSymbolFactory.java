@@ -8,14 +8,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.commons.io.FileUtils;
-import org.jeesl.AbstractJeeslUtilTest;
-import org.jeesl.JeeslUtilTestBootstrap;
+import org.jeesl.client.JeeslBootstrap;
 import org.jeesl.client.model.ejb.system.graphic.Graphic;
 import org.jeesl.client.model.ejb.system.graphic.GraphicFigure;
 import org.jeesl.client.model.ejb.system.graphic.GraphicStyle;
 import org.jeesl.client.model.ejb.system.graphic.GraphicType;
 import org.jeesl.client.model.ejb.system.locale.Description;
 import org.jeesl.client.model.ejb.system.locale.Lang;
+import org.jeesl.client.test.AbstractJeeslClientTest;
 import org.jeesl.factory.svg.SvgSymbolFactory;
 import org.openfuxml.media.transcode.Svg2SvgTranscoder;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.test.AbstractJeeslTest;
 
-public class TestSvgSymbolFactory extends AbstractJeeslUtilTest
+public class TestSvgSymbolFactory extends AbstractJeeslClientTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestSvgSymbolFactory.class);
 
@@ -61,7 +61,7 @@ public class TestSvgSymbolFactory extends AbstractJeeslUtilTest
 	public static void main(String[] args) throws TranscoderException, IOException, ParserConfigurationException
 	{
 		AbstractJeeslTest.initTargetDirectory();
-		JeeslUtilTestBootstrap.init();
+		JeeslBootstrap.init();
 		TestSvgSymbolFactory test = new TestSvgSymbolFactory();
 		AbstractJeeslTest.initTargetDirectory();
 		

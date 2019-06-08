@@ -49,6 +49,8 @@
 			<artifactId>commons-lang</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+
          
          <dependency>
             <groupId>org.hibernate</groupId>
@@ -75,6 +77,11 @@
 			<scope>provided</scope>
 	  	</dependency>
 	  	
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-transcoder</artifactId>
+			<scope>test</scope>
+		</dependency>
 	  	<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

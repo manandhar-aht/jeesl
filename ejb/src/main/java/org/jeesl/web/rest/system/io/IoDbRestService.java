@@ -15,6 +15,8 @@ import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
 import org.slf4j.Logger;
@@ -25,17 +27,16 @@ import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 import net.sf.exlp.xml.io.File;
 
 public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
-							DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
-							FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
-							HOST extends UtilsStatus<HOST,L,D>,
-							STATUS extends UtilsStatus<STATUS,L,D>>
+							DUMP extends JeeslDbDump<FILE>,
+							FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
+							HOST extends JeeslDbHost<HOST,L,D,?>,
+							STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslDbDumpRest,JeeslDbRestExport,JeeslDbRestImport
 {
@@ -44,8 +45,8 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	private final JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
 	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
 	
-	private EjbIoDumpFactory<L,D,DUMP,FILE,HOST,STATUS> efDump;
-	private EjbDbDumpFileFactory<L,D,DUMP,FILE,HOST,STATUS> efDumpFile;
+	private EjbIoDumpFactory<DUMP> efDump;
+	private EjbDbDumpFileFactory<DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
 	public IoDbRestService(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb, IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb)

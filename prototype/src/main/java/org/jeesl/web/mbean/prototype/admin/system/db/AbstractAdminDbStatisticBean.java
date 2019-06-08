@@ -8,18 +8,19 @@ import java.util.Map;
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractAdminDbStatisticBean <L extends UtilsLang, D extends UtilsDescription,
-											DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
-											FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
-											HOST extends UtilsStatus<HOST,L,D>,
-											STATUS extends UtilsStatus<STATUS,L,D>> 
+											DUMP extends JeeslDbDump<FILE>,
+											FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
+											HOST extends JeeslDbHost<HOST,L,D,?>,
+											STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>> 
 implements Serializable
 {
 	private static final long serialVersionUID = 1L;

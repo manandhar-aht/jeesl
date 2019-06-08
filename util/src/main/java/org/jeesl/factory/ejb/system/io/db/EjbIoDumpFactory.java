@@ -3,19 +3,10 @@ package org.jeesl.factory.ejb.system.io.db;
 import java.util.Date;
 
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
-
-public class EjbIoDumpFactory<L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
-								FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
-								HOST extends UtilsStatus<HOST,L,D>,
-								STATUS extends UtilsStatus<STATUS,L,D>>
+public class EjbIoDumpFactory<DUMP extends JeeslDbDump<?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoDumpFactory.class);
 	

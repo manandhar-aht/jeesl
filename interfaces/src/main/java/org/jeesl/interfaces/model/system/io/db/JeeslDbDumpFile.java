@@ -1,16 +1,15 @@
 package org.jeesl.interfaces.model.system.io.db;
 
-import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
-import net.sf.ahtutils.interfaces.model.status.UtilsLang;
-import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import java.io.Serializable;
+
+import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslDbDumpFile<L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<L,D,DUMP,FILE,HOST,STATUS>,
-								FILE extends JeeslDbDumpFile<L,D,DUMP,FILE,HOST,STATUS>,
-								HOST extends UtilsStatus<HOST,L,D>,
-								STATUS extends UtilsStatus<STATUS,L,D>>
-					extends EjbWithId
+public interface JeeslDbDumpFile<DUMP extends JeeslDbDump<?>,
+								HOST extends JeeslDbHost<HOST,?,?,?>,
+								STATUS extends JeeslDbDumpStatus<STATUS,?,?,?>>
+					extends Serializable,EjbSaveable,EjbRemoveable,EjbWithId
 {
 	public static enum Attributes{dump,host,status}
 	public static enum Status{stored,flagged,deleted};

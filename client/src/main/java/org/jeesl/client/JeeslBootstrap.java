@@ -13,7 +13,7 @@ public class JeeslBootstrap
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslBootstrap.class);
 	
-	public final static String xmlConfig = "config.ahtutils-ejb.test/ahtutils.xml";
+	public final static String xmlConfig = "jeesl/client/config/jeesl.xml";
 	
 	public static Configuration init()
 	{
@@ -24,7 +24,7 @@ public class JeeslBootstrap
 	public static Configuration init(String configFile)
 	{
 		LoggerInit loggerInit = new LoggerInit("log4j.xml");
-		loggerInit.addAltPath("config.ahtutils-ejb.test");
+		loggerInit.addAltPath("jeesl/client/config");
 		loggerInit.init();
 						
 		try
@@ -38,5 +38,4 @@ public class JeeslBootstrap
 		
 		 return ConfigLoader.init();
 	}
-
 }

@@ -91,11 +91,6 @@
 		</dependency>
 	  	
 		<!-- Logging -->
-        <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -104,7 +99,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-	  	
+        <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<type>jar</type>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
@@ -120,12 +120,6 @@
             <artifactId>jeesl-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-         	<groupId>org.slf4j</groupId>
-         	<artifactId>slf4j-log4j12</artifactId>
-         	<type>jar</type>
-         	<scope>test</scope>
-         </dependency>
 	</dependencies>
 
     <build>

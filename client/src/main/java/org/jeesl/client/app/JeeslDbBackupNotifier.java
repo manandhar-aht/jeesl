@@ -16,7 +16,7 @@ import org.apache.commons.configuration.Configuration;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
+import org.jeesl.api.rest.system.io.db.JeeslIoDbRest;
 import org.jeesl.client.JeeslBootstrap;
 import org.jeesl.controller.processor.system.io.db.DatabaseBackupProcessor;
 import org.slf4j.Logger;
@@ -36,11 +36,12 @@ public class JeeslDbBackupNotifier
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslDbBackupNotifier.class);
 	
-	private static final String keyDumpDir = "db.dir.dump";
-	
 	private UtilsCliOption jco;
-	private Option oUrl;
+	private Option oUrl,oDirectory,oCode;
 
+	private String cfgUrl,cfgCode;
+	private File cfgDirectory;
+	
 	
 	public JeeslDbBackupNotifier()
 	{
@@ -53,7 +54,16 @@ public class JeeslDbBackupNotifier
 		jco.buildHelp();
 		jco.buildDebug();
         
-        oUrl = Option.builder("url").required(true).hasArg(true).argName("URL").desc("URL").build(); jco.getOptions().addOption(oUrl);
+        oUrl = Option.builder("url").required(true).hasArg(true).argName("URL").desc("URL Endpoint").build(); jco.getOptions().addOption(oUrl);
+        oDirectory = Option.builder("directory").required(true).hasArg(true).argName("DIR").desc("Directory").build(); jco.getOptions().addOption(oDirectory);
+        oCode = Option.builder("code").required(true).hasArg(true).argName("CODE").desc("Code (Indeifier) of storage server").build(); jco.getOptions().addOption(oCode);
+	}
+	
+	private void debugConfig()
+	{
+		logger.info("URL: "+cfgUrl);
+		logger.info("Directory: "+cfgDirectory.getAbsolutePath());
+		logger.info("Code: "+cfgCode);
 	}
 	
 	public void parseArguments(UtilsCliOption jco, String args[]) throws Exception
@@ -70,37 +80,40 @@ public class JeeslDbBackupNotifier
 		
 //		Configuration config = uOption.initConfig(line, MeisBootstrap.xmlConfig);
 	    
-		String url = line.getOptionValue(oUrl.getOpt());
+		cfgUrl = line.getOptionValue(oUrl.getOpt());
+		cfgDirectory = new File(line.getOptionValue(oDirectory.getOpt()));
+		cfgCode = line.getOptionValue(oCode.getOpt());
+		
+		debugConfig();
+		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgCode);
+		processor.upload();
 	}
 	
 	public void local()
 	{	
 		Configuration config = JeeslBootstrap.init();
 		
+		cfgUrl = config.getString(ConfigKey.netRestUrl);
+		cfgDirectory = new File(config.getString("dir.db.backup"));
+		cfgCode = "x";
 		
-		String url = config.getString(ConfigKey.netRestUrl);
-		File fDirectory = new File(config.getString("dir.db.backup"));
-		
-		logger.info("URL: "+url);
-		logger.info("Directory: "+fDirectory.getAbsolutePath());
-		
-		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(url),fDirectory,"x");
+		debugConfig();
+		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgCode);
 		processor.upload();
-		
 	}
 	
-	private JeeslDbDumpRest buildRest(String url)
+	private JeeslIoDbRest buildRest(String url)
 	{
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget restTarget = client.target(url);
-		return restTarget.proxy(JeeslDbDumpRest.class);
+		return restTarget.proxy(JeeslIoDbRest.class);
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException, UtilsConfigurationException, NamingException, ExlpConfigurationException
 	{
 		JeeslDbBackupNotifier notifier = new JeeslDbBackupNotifier();
-		notifier.local();
 		
+//		notifier.local();
 //		JaxbUtil.setNsPrefixMapper(new MeisNsPrefixMapper());
 		
 		UtilsCliOption jco = new UtilsCliOption(org.jeesl.Version.class.getPackage().getImplementationVersion());

@@ -9,8 +9,7 @@ import javax.ws.rs.core.MediaType;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 import net.sf.exlp.xml.io.Dir;
 
-@Path("/rest/db/backup")
-public interface JeeslDbDumpRest
+public interface JeeslIoDbRestInterface
 {	
 	@POST @Path("/upload") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate uploadDumps(Dir directory);

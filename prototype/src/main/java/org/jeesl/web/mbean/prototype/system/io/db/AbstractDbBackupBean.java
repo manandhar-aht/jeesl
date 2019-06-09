@@ -1,6 +1,7 @@
 package org.jeesl.web.mbean.prototype.system.io.db;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.util.comparator.ejb.RecordComparator;
+import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 										FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 										HOST extends JeeslDbHost<HOST,L,D,?>,
 										STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
+						extends AbstractAdminBean<L,D>
 						implements Serializable,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +45,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	
 	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb)
 	{
+		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;
 		sbDateHandler = new SbDateHandler(this);
 		sbDateHandler.setEnforceStartOfDay(true);
@@ -60,8 +65,9 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	}
 	
 	protected void refreshList()
-	{
-		dumps = fDb.inInterval(fbDb.getClassDump(),sbDateHandler.getDate1(),sbDateHandler.getDate2());
+	{		
+		dumps = fDb.inInterval(fbDb.getClassDump(),sbDateHandler.getDate1(),sbDateHandler.toDate2Plus1());
+		Collections.sort(dumps,new RecordComparator<DUMP>());
 		
 		mapFiles = new HashMap<DUMP,Map<HOST,FILE>>();
 		for(DUMP d : dumps)
@@ -72,7 +78,10 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 		List<FILE> files = fDb.all(fbDb.getClassFile());
 		for(FILE f : files)
 		{
-			mapFiles.get(f.getDump()).put(f.getHost(),f);
+			if(mapFiles.containsKey(f.getDump()))
+			{
+				mapFiles.get(f.getDump()).put(f.getHost(),f);
+			}
 		}
 		
 		logger.info(fbDb.getClassDump().getSimpleName()+": "+dumps.size());

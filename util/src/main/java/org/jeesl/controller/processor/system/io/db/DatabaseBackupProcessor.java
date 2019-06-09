@@ -2,7 +2,7 @@ package org.jeesl.controller.processor.system.io.db;
 
 import java.io.File;
 
-import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
+import org.jeesl.api.rest.system.io.db.JeeslIoDbRest;
 import org.jeesl.util.query.xml.FileQuery;
 import org.jeesl.util.query.xml.IoQuery;
 
@@ -12,11 +12,11 @@ import net.sf.exlp.xml.io.Dir;
 
 public class DatabaseBackupProcessor
 {
-	private final JeeslDbDumpRest rest;
+	private final JeeslIoDbRest rest;
 	private final File fDirectory;
 	private final String code;
 	
-	public DatabaseBackupProcessor(JeeslDbDumpRest rest, File fDirectory, String code)
+	public DatabaseBackupProcessor(JeeslIoDbRest rest, File fDirectory, String code)
 	{		
 		this.rest=rest;
 		this.fDirectory=fDirectory;

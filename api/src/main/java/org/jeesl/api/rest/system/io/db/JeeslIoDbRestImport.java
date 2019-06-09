@@ -11,7 +11,7 @@ import org.jeesl.model.xml.jeesl.Container;
 import net.sf.ahtutils.xml.aht.Aht;
 import net.sf.ahtutils.xml.sync.DataUpdate;
 
-public interface JeeslDbRestImport
+public interface JeeslIoDbRestImport
 {
 	@POST @Path("/system/db/activity/state") @Produces(MediaType.APPLICATION_XML) @Consumes(MediaType.APPLICATION_XML)
 	DataUpdate importSystemDbActivityState(Aht states);

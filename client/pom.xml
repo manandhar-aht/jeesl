@@ -78,6 +78,11 @@
         	<version>3.0.14.Final</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>3.0.14.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.1</version>
@@ -168,6 +173,22 @@
 		        <configuration>
 					<rulesUri>${maven.ignore}</rulesUri>
 		        </configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.chrisdchristo</groupId>
+				<artifactId>capsule-maven-plugin</artifactId>
+				<version>1.5.1</version>
+				<executions>
+					<execution>
+						<goals><goal>build</goal></goals>
+					</execution>
+				</executions>
+				<configuration>
+					<appClass>org.jeesl.client.app.JeeslDbBackupNotifier</appClass>
+					<fileName>JeeslDbBackupNotifier</fileName>
+					<fileDesc>-${project.version}</fileDesc>
+					<type>fat</type>
+				</configuration>
 			</plugin>
         </plugins>
     </build>

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
-import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
-import org.jeesl.api.rest.system.io.db.JeeslDbRestExport;
-import org.jeesl.api.rest.system.io.db.JeeslDbRestImport;
+import org.jeesl.api.rest.system.io.db.JeeslIoDbRestExport;
+import org.jeesl.api.rest.system.io.db.JeeslIoDbRestImport;
+import org.jeesl.api.rest.system.io.db.JeeslIoDbRestInterface;
 import org.jeesl.controller.monitor.DataUpdateTracker;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
@@ -38,7 +38,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							HOST extends JeeslDbHost<HOST,L,D,?>,
 							STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslDbDumpRest,JeeslDbRestExport,JeeslDbRestImport
+					implements JeeslIoDbRestInterface,JeeslIoDbRestExport,JeeslIoDbRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	

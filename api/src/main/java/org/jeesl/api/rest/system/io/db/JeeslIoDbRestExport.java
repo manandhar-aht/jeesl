@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.jeesl.model.xml.jeesl.Container;
 
-public interface JeeslDbRestExport
+public interface JeeslIoDbRestExport
 {
 //	@GET @Path("/system/db/activity/state") @Produces(MediaType.APPLICATION_XML)
 //	Container exportSystemDbActivityState();

@@ -64,27 +64,6 @@ public class AbstractAdminBean <L extends UtilsLang,D extends UtilsDescription> 
 		nnb = new NullNumberBinder();
 	}
 	
-	@Deprecated
-	public AbstractAdminBean()
-	{
-		debugOnInfo = false;
-		
-		hasDeveloperAction = true;
-		hasAdministratorAction = true;
-		hasTranslatorAction = true;
-		
-		uiAllowAdd = true;
-		uiAllowSave = true;
-		uiAllowRemove = true;
-		uiAllowReorder = true;
-		uiAllowCode = true;
-		
-		uiShowInvisible = true;
-		uiShowDocumentation = true;
-		
-		nnb = new NullNumberBinder();
-	}
-	
 	protected void initJeeslAdmin(JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		this.bTranslation=bTranslation;

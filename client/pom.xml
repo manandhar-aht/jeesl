@@ -51,6 +51,21 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.14.Final</version>
+			<exclusions>
+            	<exclusion>
+            		<artifactId>commons-logging</artifactId>
+            		<groupId>commons-logging</groupId>
+            	</exclusion>
+            	<exclusion>
+            		<artifactId>slf4j-simple</artifactId>
+            		<groupId>org.slf4j</groupId>
+            	</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
         	<groupId>org.jboss.resteasy</groupId>
         	<artifactId>resteasy-client</artifactId>
         	<version>3.0.14.Final</version>
@@ -74,12 +89,21 @@
 		   <type>pom</type>
 		   <scope>provided</scope>
 		</dependency>
+	  	
+		<!-- Logging -->
+        <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<type>jar</type>
+		</dependency>
 		<dependency>
-			<groupId>org.jboss.as</groupId>
-			<artifactId>jboss-as-ejb-client-bom</artifactId>
-			<type>pom</type>
-			<scope>provided</scope>
-	  	</dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 	  	
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>

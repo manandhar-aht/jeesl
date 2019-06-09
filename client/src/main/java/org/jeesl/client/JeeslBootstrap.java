@@ -29,7 +29,7 @@ public class JeeslBootstrap
 						
 		try
 		{
-			String cfn = ExlpCentralConfigPointer.getFile("ahtutils","ejb.test").getAbsolutePath();
+			String cfn = ExlpCentralConfigPointer.getFile("jeesl","client").getAbsolutePath();
 			ConfigLoader.add(cfn);
 			logger.info("Using additional config in: "+cfn );
 		}

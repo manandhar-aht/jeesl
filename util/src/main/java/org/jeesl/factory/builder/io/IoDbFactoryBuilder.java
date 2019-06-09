@@ -7,6 +7,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<FILE>,
+								SYSTEM extends JeeslIoSsiSystem,
+								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
 								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
@@ -36,6 +38,6 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 		this.cStatus=cStatus;
 	}
 	
-	public EjbIoDumpFactory<DUMP> dump(){return new EjbIoDumpFactory<>(cDump);}
+	public EjbIoDumpFactory<SYSTEM,DUMP> dump(){return new EjbIoDumpFactory<>(cDump);}
 	public EjbDbDumpFileFactory<DUMP,FILE,HOST,STATUS> file(){return new EjbDbDumpFileFactory<>(cFile);}
 }

@@ -20,6 +20,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
@@ -33,18 +34,19 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<FILE>,
+								SYSTEM extends JeeslIoSsiSystem,
+								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
 								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
-		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS>
+		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
-	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
 	
-	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb){this(em,fbDb,false);}
-	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb, boolean handleTransaction)
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb){this(em,fbDb,false);}
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb, boolean handleTransaction)
 	{
 		super(em,handleTransaction);
 		this.fbDb=fbDb;

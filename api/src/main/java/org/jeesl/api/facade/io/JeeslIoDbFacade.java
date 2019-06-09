@@ -7,6 +7,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.JsonFlatFigures;
 import org.openfuxml.content.table.Table;
 
@@ -16,7 +17,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription,
-								DUMP extends JeeslDbDump<FILE>,
+								SYSTEM extends JeeslIoSsiSystem,
+								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
 								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>

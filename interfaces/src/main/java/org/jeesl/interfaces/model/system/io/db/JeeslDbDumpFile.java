@@ -6,7 +6,7 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslDbDumpFile<DUMP extends JeeslDbDump<?>,
+public interface JeeslDbDumpFile<DUMP extends JeeslDbDump<?,?>,
 								HOST extends JeeslDbHost<HOST,?,?,?>,
 								STATUS extends JeeslDbDumpStatus<STATUS,?,?,?>>
 					extends Serializable,EjbSaveable,EjbRemoveable,EjbWithId

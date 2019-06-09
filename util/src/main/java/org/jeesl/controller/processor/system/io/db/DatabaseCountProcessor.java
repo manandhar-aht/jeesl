@@ -42,7 +42,7 @@ public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 	private final IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision;
 	private final TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs;
 	
-	private final JeeslIoDbFacade<?,?,?,?,?,?> fDb;
+	private final JeeslIoDbFacade<?,?,?,?,?,?,?> fDb;
 	private final JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs;
 	
 	private WS ws;
@@ -52,7 +52,7 @@ public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 	
 	public DatabaseCountProcessor(IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision,
 									TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs,
-									JeeslIoDbFacade<?,?,?,?,?,?> fDb,
+									JeeslIoDbFacade<?,?,?,?,?,?,?> fDb,
 									JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs)
 	{
 		this.fbRevision=fbRevision;

@@ -14,6 +14,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.util.comparator.ejb.RecordComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -24,18 +25,19 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-										DUMP extends JeeslDbDump<FILE>,
-										FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-										HOST extends JeeslDbHost<HOST,L,D,?>,
-										STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
+									SYSTEM extends JeeslIoSsiSystem,
+									DUMP extends JeeslDbDump<SYSTEM,FILE>,
+									FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
+									HOST extends JeeslDbHost<HOST,L,D,?>,
+									STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDbBackupBean.class);
 	
-	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
-	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
+	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 	
@@ -43,7 +45,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	private List<HOST> hosts; public List<HOST> getHosts() {return hosts;}
 	private Map<DUMP,Map<HOST,FILE>> mapFiles; public Map<DUMP, Map<HOST, FILE>> getMapFiles() {return mapFiles;}
 	
-	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb)
+	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;
@@ -52,7 +54,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 		sbDateHandler.initWeeksToNow(2);
 	}
 	
-	public void postConstructDbBackup(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb)
+	public void postConstructDbBackup(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb)
 	{
 		this.fDb=fDb;
 		hosts = fDb.allOrderedPositionVisible(fbDb.getClassHost());

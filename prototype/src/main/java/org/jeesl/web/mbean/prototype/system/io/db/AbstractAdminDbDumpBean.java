@@ -11,6 +11,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-										DUMP extends JeeslDbDump<FILE>,
+										SYSTEM extends JeeslIoSsiSystem,
+										DUMP extends JeeslDbDump<SYSTEM,FILE>,
 										FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 										HOST extends JeeslDbHost<HOST,L,D,?>,
 										STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
@@ -28,19 +30,19 @@ public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescrip
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractAdminDbDumpBean.class);
 	
-	private JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb;
-	private final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb;
+	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
 	
 	private List<DUMP> dumps; public List<DUMP> getDumps(){return dumps;}
 	private List<HOST> hosts; public List<HOST> getHosts() {return hosts;}
 	private Map<DUMP,Map<HOST,FILE>> mapFiles; public Map<DUMP, Map<HOST, FILE>> getMapFiles() {return mapFiles;}
 	
-	public AbstractAdminDbDumpBean(final IoDbFactoryBuilder<L,D,DUMP,FILE,HOST,STATUS> fbDb)
+	public AbstractAdminDbDumpBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb)
 	{
 		this.fbDb=fbDb;
 	}
 	
-	public void initSuper(JeeslIoDbFacade<L,D,DUMP,FILE,HOST,STATUS> fDb)
+	public void initSuper(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb)
 	{
 		this.fDb=fDb;
 		refreshList();

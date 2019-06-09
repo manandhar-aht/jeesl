@@ -7,7 +7,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbDbDumpFileFactory<DUMP extends JeeslDbDump<FILE>,
+public class EjbDbDumpFileFactory<DUMP extends JeeslDbDump<?,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,?,?,?>,
 								STATUS extends JeeslDbDumpStatus<STATUS,?,?,?>>

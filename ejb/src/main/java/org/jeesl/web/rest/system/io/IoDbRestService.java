@@ -10,6 +10,7 @@ import org.jeesl.api.rest.system.io.db.JeeslIoDbRestImport;
 import org.jeesl.api.rest.system.io.db.JeeslIoDbRestInterface;
 import org.jeesl.controller.monitor.DataUpdateTracker;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
+import org.jeesl.factory.builder.io.IoSsiFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.db.EjbDbDumpFileFactory;
 import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
@@ -44,18 +45,29 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbRestService.class);
 	
-	private final JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb;
 	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
+	private final IoSsiFactoryBuilder<L,D,SYSTEM,?,?,?,?> fbSsi;
+	
+	private final JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb;
 	
 	private EjbIoDumpFactory<SYSTEM,DUMP> efDump;
 	private EjbDbDumpFileFactory<DUMP,FILE,HOST,STATUS> efDumpFile;
 	private EjbStatusFactory<HOST,L,D> efHost; 
 	
-	public IoDbRestService(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb, IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb)
+	private final SYSTEM system;
+	
+	public IoDbRestService(IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb,
+							IoSsiFactoryBuilder<L,D,SYSTEM,?,?,?,?> fbSsi,
+							JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb,
+							
+							SYSTEM system)
 	{
 		super(fDb,fbDb.getClassL(),fbDb.getClassD());
-		this.fDb = fDb;
 		this.fbDb=fbDb;
+		this.fbSsi=fbSsi;
+		this.fDb = fDb;
+		
+		this.system=system;
 		
 		efHost = EjbStatusFactory.createFactory(fbDb.getClassHost(),fbDb.getClassL(),fbDb.getClassD());
 		
@@ -96,8 +108,13 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 			try{eDump = fDb.fByName(fbDb.getClassDump(), xFile.getName());}
 			catch (UtilsNotFoundException e)
 			{
-				try{eDump = fDb.persist(efDump.build(xFile));}
+				try
+				{
+					eDump = fDb.persist(efDump.build(system,xFile));
+					if(directory.isSetClassifier()) {eDump.setSystem(fDb.fByCode(fbSsi.getClassSystem(), directory.getClassifier()));}
+				}
 				catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
+				catch (UtilsNotFoundException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
 			}
 			FILE eFile;
 			try {eFile = fDb.fDumpFile(eDump,eHost);}
@@ -119,7 +136,6 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		for(FILE f : new ArrayList<FILE>(setExisting))
 		{
-			
 			try
 			{
 				f.setStatus(eStatusDeleted);

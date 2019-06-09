@@ -19,17 +19,18 @@ public class EjbIoDumpFactory<SYSTEM extends JeeslIoSsiSystem,
         this.cDumpFile = cDumpFile;
 	}
 	
-	public DUMP build(net.sf.exlp.xml.io.File file)
+	public DUMP build(SYSTEM system, net.sf.exlp.xml.io.File file)
 	{
-		return build(file.getName(),file.getSize(),file.getLastModifed().toGregorianCalendar().getTime());
+		return build(system,file.getName(),file.getSize(),file.getLastModifed().toGregorianCalendar().getTime());
     }
 	
-	public DUMP build(String name, long size, Date record)
+	public DUMP build(SYSTEM system, String name, long size, Date record)
 	{
 		DUMP ejb = null;
 		try
 		{
 			 ejb = cDumpFile.newInstance();
+			 ejb.setSystem(system);
 			 ejb.setName(name);
 			 ejb.setSize(size);
 			 ejb.setRecord(record);

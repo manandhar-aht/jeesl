@@ -18,6 +18,9 @@ public interface JeeslDbDump<SYSTEM extends JeeslIoSsiSystem,
 {
 	public static enum Attributes{record};
 	
+	SYSTEM getSystem();
+	void setSystem(SYSTEM system);
+	
 	long getSize();
 	void setSize(long size);
 	

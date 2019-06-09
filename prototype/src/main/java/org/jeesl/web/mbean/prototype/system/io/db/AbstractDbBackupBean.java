@@ -68,6 +68,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	{		
 		dumps = fDb.inInterval(fbDb.getClassDump(),sbDateHandler.getDate1(),sbDateHandler.toDate2Plus1());
 		Collections.sort(dumps,new RecordComparator<DUMP>());
+		Collections.reverse(dumps);
 		
 		mapFiles = new HashMap<DUMP,Map<HOST,FILE>>();
 		for(DUMP d : dumps)

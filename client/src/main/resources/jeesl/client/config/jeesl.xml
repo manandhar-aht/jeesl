@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<net>
+        <rest>
+            <url>http://localhost:8080/jeesl</url>
+        </rest>
+	</net>
+</config>

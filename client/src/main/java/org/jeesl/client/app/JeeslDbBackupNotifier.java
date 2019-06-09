@@ -16,7 +16,7 @@ import org.apache.commons.configuration.Configuration;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-import org.jeesl.api.rest.system.io.JeeslIoDbRest;
+import org.jeesl.api.rest.system.io.db.JeeslDbDumpRest;
 import org.jeesl.client.JeeslBootstrap;
 import org.jeesl.controller.processor.system.io.db.DatabaseBackupProcessor;
 import org.slf4j.Logger;
@@ -89,11 +89,11 @@ public class JeeslDbBackupNotifier
 		
 	}
 	
-	private JeeslIoDbRest buildRest(String url)
+	private JeeslDbDumpRest buildRest(String url)
 	{
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget restTarget = client.target(url);
-		return restTarget.proxy(JeeslIoDbRest.class);
+		return restTarget.proxy(JeeslDbDumpRest.class);
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException, UtilsConfigurationException, NamingException, ExlpConfigurationException

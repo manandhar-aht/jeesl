@@ -49,7 +49,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.jeesl</groupId>
-				<artifactId>jeesl-entities</artifactId>
+				<artifactId>jeesl-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

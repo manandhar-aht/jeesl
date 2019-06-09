@@ -37,10 +37,6 @@
          </dependency>
          <dependency>
          	<groupId>org.jeesl</groupId>
-         	<artifactId>jeesl-entities</artifactId>
-         </dependency>
-         <dependency>
-         	<groupId>org.jeesl</groupId>
          	<artifactId>jeesl-util</artifactId>
          </dependency>
          

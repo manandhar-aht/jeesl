@@ -161,8 +161,11 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Required for XmlMailFactory from jeesl-mail -->
-        <dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>        
+        <dependency> <!-- Required for XmlMailFactory from jeesl-mail -->
             <groupId>jmimemagic</groupId>
             <artifactId>jmimemagic</artifactId>
             <scope>compile</scope>

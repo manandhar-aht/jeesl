@@ -43,10 +43,6 @@
          	<groupId>org.jeesl</groupId>
          	<artifactId>jeesl-api</artifactId>
          </dependency>
-         		<dependency>
-         	<groupId>org.jeesl</groupId>
-         	<artifactId>jeesl-mail</artifactId>
-         </dependency>
         
         <!-- Commons -->
 		<dependency>

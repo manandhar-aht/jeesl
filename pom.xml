@@ -17,7 +17,6 @@
 		<module>doc</module>
 		<module>ejb</module>
 		<module>util</module>
-		<module>mail</module>
 		<module>report</module>
 		<module>rengine</module>
 		<module>monitor</module>

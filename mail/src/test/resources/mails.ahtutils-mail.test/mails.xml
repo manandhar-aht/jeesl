@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<m:mails xmlns:m="http://ahtutils.aht-group.com/mail" dir="mails.ahtutils-mail.test/ftl">
-	<m:mail code="test" dir="test">
-		<m:template lang="de" type="txt"  file="test.ftl"/>
-        <example>src/test/resources/data/xml/mail/tipp/tippsSubmitted.xml</example>
-	</m:mail>
-</m:mails>

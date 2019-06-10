@@ -1,4 +1,4 @@
-package org.jeesl.mail.smtp;
+package org.jeesl.mail;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -7,22 +7,23 @@ import java.util.Random;
 import javax.activation.MimetypesFileTypeMap;
 import javax.mail.MessagingException;
 
-import net.sf.ahtutils.exception.processing.UtilsMailException;
-import net.sf.ahtutils.exception.processing.UtilsProcessingException;
-import net.sf.exlp.interfaces.util.ConfigKey;
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.apache.commons.configuration.Configuration;
+import org.jeesl.JeeslBootstrap;
 import org.jeesl.factory.xml.system.io.mail.XmlAttachmentFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlHeaderFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
-import org.jeesl.mail.JeeslMailTestBootstrap;
 import org.jeesl.mail.freemarker.FreemarkerEngine;
+import org.jeesl.mail.smtp.XmlMailSender;
 import org.jeesl.model.xml.system.io.mail.Header;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Mails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.exception.processing.UtilsMailException;
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
+import net.sf.exlp.interfaces.util.ConfigKey;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class CliXmlMailer
 {
@@ -78,7 +79,7 @@ public class CliXmlMailer
 	
 	public static void main (String[] args) throws Exception
 	{
-		Configuration config = JeeslMailTestBootstrap.init();
+		Configuration config = JeeslBootstrap.init();
 		
 		CliXmlMailer cli = new CliXmlMailer(config);
 		cli.tlsAuthenticate();

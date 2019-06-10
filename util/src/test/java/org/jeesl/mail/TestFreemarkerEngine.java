@@ -1,12 +1,11 @@
-package org.jeesl.mail.freemarker;
+package org.jeesl.mail;
 
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sf.ahtutils.exception.processing.UtilsDeveloperException;
-
-import org.jeesl.mail.AbstractJeeslMailTest;
+import org.jeesl.AbstractJeeslUtilTest;
+import org.jeesl.mail.freemarker.FreemarkerEngine;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Mails;
 import org.jeesl.model.xml.system.io.mail.Template;
@@ -20,8 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import freemarker.template.TemplateException;
+import net.sf.ahtutils.exception.processing.UtilsDeveloperException;
 
-public class TestFreemarkerEngine extends AbstractJeeslMailTest
+public class TestFreemarkerEngine extends AbstractJeeslUtilTest
 {
 	final static Logger logger = LoggerFactory.getLogger(TestFreemarkerEngine.class);
 	

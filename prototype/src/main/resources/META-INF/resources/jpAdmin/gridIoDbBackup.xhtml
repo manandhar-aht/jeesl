@@ -23,13 +23,13 @@
 					<p:dataTable var="d" value="#{cc.attrs.bean.dumps}">
 						<p:columnGroup type="header">
 							<p:row>
-								<p:column colspan="3" headerText="#{msg.jeeslIoDbDumps}" />
-								<p:column colspan="#{cc.attrs.bean.hosts.size()}" headerText="#{msg.jeeslIoDbDumpStorageLocations}" />
+								<p:column colspan="3" headerText="#{msg.jeeslIoDbBackups}" />
+								<p:column colspan="#{cc.attrs.bean.hosts.size()}" headerText="#{msg.jeeslIoDbBackupStorageLocations}" />
 							</p:row>
 							<p:row>
-								<p:column colspan="1" headerText="#{msg.aupDbDumpDateModified}"/>
-								<p:column colspan="1" headerText="#{msg.aupDbDumpSize}"/>
-								<p:column colspan="1" headerText="#{msg.aupDbDumpName}"/>
+								<p:column colspan="1" headerText="#{msg.jeeslIoDbBackDateModified}"/>
+								<p:column colspan="1" headerText="#{msg.jeeslIoDbBackupSize}"/>
+								<p:column colspan="1" headerText="#{msg.jeeslIoDbBackupName}"/>
 								<p:columns var="h" value="#{cc.attrs.bean.hosts}" styleClass="jeeslCenter">
 					            	<f:facet name="header"><h:outputText value="#{h.name[localeCode].lang}" /></f:facet>
 								</p:columns>

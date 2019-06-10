@@ -55,8 +55,8 @@ public class JeeslDbBackupNotifier
 		jco.buildDebug();
         
         oUrl = Option.builder("url").required(true).hasArg(true).argName("URL").desc("URL Endpoint").build(); jco.getOptions().addOption(oUrl);
-        oDirectory = Option.builder("directory").required(true).hasArg(true).argName("DIR").desc("Directory").build(); jco.getOptions().addOption(oDirectory);
-        oCode = Option.builder("code").required(true).hasArg(true).argName("CODE").desc("Code (Indeifier) of storage server").build(); jco.getOptions().addOption(oCode);
+        oDirectory = Option.builder("dir").required(true).hasArg(true).argName("DIR").desc("Directory with .sql files").build(); jco.getOptions().addOption(oDirectory);
+        oCode = Option.builder("code").required(true).hasArg(true).argName("CODE").desc("Code (Identifer) of storage server").build(); jco.getOptions().addOption(oCode);
 	}
 	
 	private void debugConfig()

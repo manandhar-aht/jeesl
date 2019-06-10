@@ -45,6 +45,8 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	private List<HOST> hosts; public List<HOST> getHosts() {return hosts;}
 	private Map<DUMP,Map<HOST,FILE>> mapFiles; public Map<DUMP, Map<HOST, FILE>> getMapFiles() {return mapFiles;}
 	
+	private SYSTEM system;
+	
 	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
@@ -54,9 +56,11 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 		sbDateHandler.initWeeksToNow(2);
 	}
 	
-	public void postConstructDbBackup(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb)
+	public void postConstructDbBackup(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb, SYSTEM system)
 	{
 		this.fDb=fDb;
+		this.system=system;
+		
 		hosts = fDb.allOrderedPositionVisible(fbDb.getClassHost());
 		refreshList(); 
 	}

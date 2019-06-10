@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.jeesl.model.xml.system.io.mail.Mails;
 
-public interface JeeslIoMailRestSpooler
+public interface JeeslIoMailRestInterface
 {
 	@GET @Path("/queue/grab") @Produces(MediaType.APPLICATION_XML)
 	Mails spool();

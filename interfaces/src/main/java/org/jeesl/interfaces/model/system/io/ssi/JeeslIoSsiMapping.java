@@ -1,5 +1,7 @@
 package org.jeesl.interfaces.model.system.io.ssi;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -8,7 +10,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoSsiMapping <SYSTEM extends JeeslIoSsiSystem,
 									ENTITY extends JeeslRevisionEntity<?,?,?,?,?>>
-		extends EjbWithId,EjbSaveable,EjbRemoveable
+		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable
 {	
 	public enum Attributes {entity,json}
 	

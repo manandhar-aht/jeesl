@@ -43,6 +43,10 @@
          	<groupId>org.jeesl</groupId>
          	<artifactId>jeesl-api</artifactId>
          </dependency>
+         		<dependency>
+         	<groupId>org.jeesl</groupId>
+         	<artifactId>jeesl-mail</artifactId>
+         </dependency>
         
         <!-- Commons -->
 		<dependency>
@@ -174,23 +178,34 @@
 					<rulesUri>${maven.ignore}</rulesUri>
 		        </configuration>
 			</plugin>
-			<plugin>
+ 			<plugin>
 				<groupId>com.github.chrisdchristo</groupId>
 				<artifactId>capsule-maven-plugin</artifactId>
 				<version>1.5.1</version>
 				<executions>
 					<execution>
+						<id>capsule-backupnotifier</id>
 						<goals><goal>build</goal></goals>
+						<configuration>
+							<appClass>org.jeesl.client.app.JeeslDbBackupNotifier</appClass>
+							<fileName>JeeslDbBackupNotifier</fileName>
+							<fileDesc>-${project.version}</fileDesc>
+							<type>fat</type>
+						</configuration>
+					</execution>
+					<execution>
+						<id>capsule-mailspooler</id>
+						<goals><goal>build</goal></goals>
+						<configuration>
+							<appClass>org.jeesl.client.app.JeeslMailSpooler</appClass>
+							<fileName>JeeslMailSpooler</fileName>
+							<fileDesc>-${project.version}</fileDesc>
+							<type>fat</type>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<appClass>org.jeesl.client.app.JeeslDbBackupNotifier</appClass>
-					<fileName>JeeslDbBackupNotifier</fileName>
-					<fileDesc>-${project.version}</fileDesc>
-					<type>fat</type>
-				</configuration>
 			</plugin>
-        </plugins>
+		</plugins>
     </build>
 
 </project>

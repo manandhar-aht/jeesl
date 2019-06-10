@@ -8,7 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestExport;
 import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestImport;
-import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestSpooler;
+import org.jeesl.api.rest.system.io.mail.JeeslIoMailRestInterface;
 import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
@@ -35,7 +35,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 								STATUS extends UtilsStatus<STATUS,L,D>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractJeeslRestService<L,D>
-					implements JeeslIoMailRestExport,JeeslIoMailRestImport,JeeslIoMailRestSpooler
+					implements JeeslIoMailRestInterface,JeeslIoMailRestExport,JeeslIoMailRestImport
 {
 	final static Logger logger = LoggerFactory.getLogger(IoMailRestService.class);
 	

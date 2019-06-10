@@ -1,4 +1,4 @@
-package org.jeesl.controller.mail;
+package org.jeesl.mail;
 
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
@@ -40,8 +40,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	protected final JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate;
 	protected final JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail;
 	
-//	protected final FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
-	
+
 	protected TEMPLATE template;
 	protected MAILCAT categoryMail;
 	protected EmailAddress mailFrom;

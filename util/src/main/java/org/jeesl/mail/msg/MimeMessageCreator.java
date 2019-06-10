@@ -1,4 +1,4 @@
-package org.jeesl.mail;
+package org.jeesl.mail.msg;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.jeesl.mail.processor.mail.msg;
+package org.jeesl.mail.msg;
 
 import javax.mail.MessagingException;
 import javax.mail.Multipart;

@@ -1,15 +1,16 @@
-package org.jeesl.mail.imap;
+package org.jeesl.util.mail.imap;
 
 import javax.mail.MessagingException;
 
-import net.sf.exlp.interfaces.util.ConfigKey;
-import net.sf.exlp.util.xml.JaxbUtil;
-
 import org.apache.commons.configuration.Configuration;
-import org.jeesl.mail.JeeslMailTestBootstrap;
+import org.jeesl.JeeslBootstrap;
+import org.jeesl.mail.imap.XmlImapStore;
 import org.jeesl.model.xml.system.io.mail.Mails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.exlp.interfaces.util.ConfigKey;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class CliXmlImapStore
 {
@@ -34,7 +35,7 @@ public class CliXmlImapStore
 	
 	public static void main(String[] args) throws Exception
 	{
-		Configuration config = JeeslMailTestBootstrap.init();
+		Configuration config = JeeslBootstrap.init();
 		XmlImapStore xmlImapStore = new XmlImapStore(config.getString(ConfigKey.netImapHost));
 		xmlImapStore.authenticate(config.getString(ConfigKey.netImapUser), config.getString(ConfigKey.netImapPwd));
 		

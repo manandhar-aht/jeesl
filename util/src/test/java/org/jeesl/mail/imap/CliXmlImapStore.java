@@ -1,4 +1,4 @@
-package org.jeesl.util.mail.imap;
+package org.jeesl.mail.imap;
 
 import javax.mail.MessagingException;
 

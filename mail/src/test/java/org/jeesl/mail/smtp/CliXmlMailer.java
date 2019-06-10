@@ -17,7 +17,6 @@ import org.jeesl.factory.xml.system.io.mail.XmlAttachmentFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlHeaderFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.mail.JeeslMailTestBootstrap;
-import org.jeesl.mail.XmlMailSender;
 import org.jeesl.mail.freemarker.FreemarkerEngine;
 import org.jeesl.model.xml.system.io.mail.Header;
 import org.jeesl.model.xml.system.io.mail.Mail;

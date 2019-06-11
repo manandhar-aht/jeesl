@@ -49,7 +49,8 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	
 	protected String subjectPreifx;
 	
-	public AbstractJeeslMail(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate, JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail)
+	public AbstractJeeslMail(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate,
+							JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail)
 	{
 		this.fTemplate=fTemplate;
 		this.fMail=fMail;
@@ -58,7 +59,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 		mails = XmlMailsFactory.build();
 	}
 	
-	protected void spool(Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
+	public void spool(Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException
 	{
 		fMail.queueMail(categoryMail,null,mail);
 		logger.info("Spooled");

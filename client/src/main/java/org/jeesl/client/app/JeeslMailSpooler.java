@@ -1,10 +1,10 @@
 package org.jeesl.client.app;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.mail.MessagingException;
 import javax.naming.NamingException;
 
 import org.apache.commons.cli.CommandLine;
@@ -34,6 +34,7 @@ import net.sf.ahtutils.util.cli.UtilsCliOption;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.interfaces.util.ConfigKey;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class JeeslMailSpooler
 {
@@ -80,8 +81,7 @@ public class JeeslMailSpooler
 		buildRest(cfgUrl);
 		buildSmtp(cfgSmtp);
 		
-		Mails mails = rest.spool();
-		logger.info("Size: "+mails.getMail().size());
+		spooler();
 	}
 	
 	private void createOptions()
@@ -130,6 +130,7 @@ public class JeeslMailSpooler
 			{
 				queue = spool();
 				if(queue==0){sleepMs = 60*1000;}
+				logger.info("Queue:"+queue+" Sleeping:"+sleepMs);
 			}
 			catch (Exception e1) {sleepMs = 60*1000;}
 			try{Thread.sleep(sleepMs);}catch (InterruptedException e) {e.printStackTrace();}
@@ -142,12 +143,13 @@ public class JeeslMailSpooler
 		for(Mail mail : mails.getMail())
 		{
 			logger.info(TxtMailFactory.debug(mail));
-//			try
-//			{
-//				smtp.send(mail);
-//				rest.confirm(mail.getId());
-//			}
-//			catch (MessagingException e) {e.printStackTrace();}
+			JaxbUtil.info(mail);
+			try
+			{
+				smtp.send(mail);
+				rest.confirm(mail.getId());
+			}
+			catch (MessagingException e) {e.printStackTrace();}
 		}
 		if(mails.isSetQueue()){return mails.getQueue();}
 		else {return Integer.MAX_VALUE;}

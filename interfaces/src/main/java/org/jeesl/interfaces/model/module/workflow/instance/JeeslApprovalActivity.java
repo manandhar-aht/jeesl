@@ -33,4 +33,7 @@ public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?
 	
 	String getRemark();
 	void setRemark(String remark);
+	
+	String getScreenSignature();
+	void setScreenSignature(String screenSignature);
 }

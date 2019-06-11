@@ -30,9 +30,11 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
+import org.jeesl.interfaces.model.system.security.user.JeeslSimpleUser;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -59,7 +61,8 @@ public abstract class AbstractWorkflowDashboardBean <L extends UtilsLang, D exte
 											AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,L,D,?>,
 											AO extends EjbWithId,
-											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
+											MT extends JeeslIoTemplate<L,D,?,?,MD,?>,
+											MD extends JeeslIoTemplateDefinition<D,?,MT>,
 											SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 											RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
@@ -81,7 +84,7 @@ public abstract class AbstractWorkflowDashboardBean <L extends UtilsLang, D exte
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
 	
-	JeeslWorkflowEngine<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> wfEngine;
+	JeeslWorkflowEngine<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,MD,SR,RE,RA,AL,AW,AY,USER> wfEngine;
 	
 	private final SbSingleHandler<AX> sbhContext; public SbSingleHandler<AX> getSbhContext() {return sbhContext;}
 	private final SbSingleHandler<AP> sbhProcess; public SbSingleHandler<AP> getSbhProcess() {return sbhProcess;}
@@ -110,7 +113,7 @@ public abstract class AbstractWorkflowDashboardBean <L extends UtilsLang, D exte
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
 										JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fWorkflow,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision,
-										JeeslWorkflowEngine<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> wfEngine)
+										JeeslWorkflowEngine<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,MD,SR,RE,RA,AL,AW,AY,USER> wfEngine)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fWorkflow=fWorkflow;

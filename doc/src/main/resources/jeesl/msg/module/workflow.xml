@@ -94,13 +94,21 @@
     		<s:lang key="fr" translation="Destination"/>
     	</s:langs>
     </s:translation>
-  	<s:translation key="jeeslApprovalTrasitionType">
+  	<s:translation key="jeeslWorkflowTrasitionType">
     	<s:langs>
     		<s:lang key="de" translation="Typ"/>
     		<s:lang key="en" translation="Type"/>
     		<s:lang key="fr" translation="Type"/>
     	</s:langs>
-    </s:translation>  
+    </s:translation>
+	<s:translation key="jeeslWorkflowTrasitionSignatureScreen">
+    	<s:langs>
+    		<s:lang key="de" translation="Bildschirm Unterschrift"/>
+    		<s:lang key="en" translation="Screen Signature"/>
+    		<s:lang key="fr" translation="Screen Signature"/>
+    	</s:langs>
+    </s:translation>
+    
     <s:translation key="jeeslApprovalCommunications">
     	<s:langs>
     		<s:lang key="de" translation="Nachrichten"/>
@@ -150,6 +158,13 @@
     		<s:lang key="de" translation="Option"/>
     		<s:lang key="en" translation="Option"/>
     		<s:lang key="fr" translation="Option"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslWorkflowSignature">
+    	<s:langs>
+    		<s:lang key="de" translation="Unterschrift"/>
+    		<s:lang key="en" translation="Signature"/>
+    		<s:lang key="fr" translation="Signature"/>
     	</s:langs>
     </s:translation>
     

@@ -186,7 +186,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTransitions()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTransition()}" update=":#{cc.id}:sStage"/>
 							
-							<p:column>  
+							<p:column styleClass="jeeslCenter">  
 								<jtp:symbolizer value="#{t.type}"/>  
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslName}">
@@ -206,7 +206,7 @@
 								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveTransition()}" update=":#{cc.id}:rStage" rendered="#{cc.attrs.bean.editTransition}"/>
 								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteTransition()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.transition.id gt 0) and cc.attrs.bean.editTransition}"/>
 							</f:facet>
-							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.jeeslApprovalTrasitionSource}"/>
 								<h:outputText value="#{cc.attrs.bean.transition.source.name[localeCode].lang}" />
 								
@@ -216,11 +216,14 @@
 								</p:selectOneMenu>
 								<h:outputText value="#{cc.attrs.bean.transition.destination.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
 								
-								<p:outputLabel value="#{msg.jeeslApprovalTrasitionType}"/>
+								<p:outputLabel value="#{msg.jeeslWorkflowTrasitionType}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.transition.type}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editTransition}">
 									<f:selectItems value="#{cc.attrs.bean.transitionTypes}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 								</p:selectOneMenu>
 								<h:outputText value="#{cc.attrs.bean.transition.type.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
+								
+								<p:outputLabel value="#{msg.jeeslWorkflowTrasitionSignatureScreen}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.transition.screenSignature}" disabled="#{not cc.attrs.bean.editTransition}"/>
 								
 								<p:outputLabel value="#{msg.jeeslName}" rendered="#{not cc.attrs.bean.editTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.transition.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
@@ -304,14 +307,14 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderCommunication()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectCommunication()}" update=":#{cc.id}:sStage"/>
-							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
-								<h:outputText value="#{c.template.name[localeCode].lang}"/>
-							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslCategory}">  
 								<h:outputText value="#{c.role.category.name[localeCode].lang}"/>  
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslSecurityRole}">  
 								<h:outputText value="#{c.role.name[localeCode].lang}"/>  
+							</p:column>
+							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
+								<h:outputText value="#{c.template.name[localeCode].lang}"/>
 							</p:column>
 						</p:dataTable>
 					</h:form>
@@ -326,15 +329,16 @@
 								<p:outputLabel value="#{msg.jeeslApprovalTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.communication.transition.name[localeCode].lang}" />
 								
-								<p:outputLabel value="#{msg.jeeslApprovalCommunicationTemplate}"/>
-								<p:selectOneMenu value="#{cc.attrs.bean.communication.template}" effect="fade" autoWidth="false">
-									<f:selectItems value="#{cc.attrs.bean.templates}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
-								</p:selectOneMenu>
-								
 								<p:outputLabel value="#{msg.jeeslSecurityRole}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.communication.role}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
 								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslApprovalCommunicationTemplate}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.communication.template}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.templates}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
+								</p:selectOneMenu>
+									
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

@@ -52,7 +52,7 @@ public class JeeslMsgBuilder
 	public static final String financePeriod = "jeesl/msg/finance/period.xml";
 	
 	//Modules
-	public static final String mApproval = "jeesl/msg/module/approval.xml";
+	public static final String mWorkflow = "jeesl/msg/module/workflow.xml";
 	public static final String mTimeseries = "jeesl/msg/module/timeseries.xml";
 	public static final String mSurvey = "jeesl/msg/module/survey.xml";
 	public static final String mBb = "jeesl/msg/module/bb.xml";

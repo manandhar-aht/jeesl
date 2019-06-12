@@ -3,6 +3,7 @@ package org.jeesl.interfaces.controller;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -25,7 +26,7 @@ public interface JeeslCmsRenderer <L extends UtilsLang,D extends UtilsDescriptio
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>,
+								MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 								FC extends JeeslFileContainer<?,?>
 								>
 {

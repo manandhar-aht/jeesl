@@ -6,8 +6,10 @@ import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsElementFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsFactory;
 import org.jeesl.factory.ejb.system.io.cms.EjbIoCmsSectionFactory;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsCategory;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -20,7 +22,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-								CAT extends UtilsStatus<CAT,L,D>,
+								CAT extends JeeslIoCmsCategory<L,D,CAT,?>,
 								CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 								V extends JeeslIoCmsVisiblity,
 								S extends JeeslIoCmsSection<L,S>,
@@ -28,7 +30,7 @@ public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>,
+								MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 								FC extends JeeslFileContainer<?,FM>,
 								FM extends JeeslFileMeta<D,FC,?>
 								>

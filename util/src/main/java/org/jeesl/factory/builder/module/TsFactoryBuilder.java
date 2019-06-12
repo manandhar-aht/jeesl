@@ -112,10 +112,7 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 		return new EjbTsTransactionFactory<L,D,CAT,SCOPE,UNIT,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,SAMPLE,USER,WS,QAF>(cTransaction);
 	}
 	
-	public EjbTsDataFactory<TS,TRANSACTION,DATA,WS> data()
-	{
-		return new EjbTsDataFactory<TS,TRANSACTION,DATA,WS>(cData);
-	}
+	public EjbTsDataFactory<TS,TRANSACTION,DATA,WS> data() {return new EjbTsDataFactory<TS,TRANSACTION,DATA,WS>(cData);}
 	
 	public EjbTsDataPointFactory<MP,DATA,POINT> ejbDataPoint()
 	{

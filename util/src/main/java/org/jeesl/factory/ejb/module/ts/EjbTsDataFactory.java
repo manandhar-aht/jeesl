@@ -1,6 +1,9 @@
 package org.jeesl.factory.ejb.module.ts;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
@@ -52,5 +55,12 @@ public class EjbTsDataFactory<TS extends JeeslTimeSeries<?,?,?>,
 		catch (InstantiationException e) {e.printStackTrace();}
 		catch (IllegalAccessException e) {e.printStackTrace();}
 		return ejb;
+	}
+	
+	public Set<Date> toSetDate(List<DATA> list)
+	{
+		Set<Date> set = new HashSet<Date>();
+		for(DATA d : list ) {set.add(d.getRecord());}
+		return set;
 	}
 }

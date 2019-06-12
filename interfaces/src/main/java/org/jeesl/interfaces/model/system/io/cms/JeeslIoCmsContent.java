@@ -11,7 +11,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoCmsContent<V extends JeeslIoCmsVisiblity,
 								E extends JeeslIoCmsElement<V,?,?,?,?,?>,
-								MT extends UtilsStatus<MT,?,?>>
+								MT extends JeeslIoCmsMarkupType<?,?,MT,?>>
 		extends Serializable,EjbPersistable,
 					EjbWithId,EjbSaveable,EjbRemoveable,EjbWithParentAttributeResolver
 {	

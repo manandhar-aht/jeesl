@@ -11,6 +11,7 @@ import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -39,7 +40,7 @@ public abstract class AbstractCmsRenderer <L extends UtilsLang,D extends UtilsDe
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>,
+								MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 								FS extends JeeslFileStorage<L,D,?>,
 								FC extends JeeslFileContainer<FS,?>,
 								FM extends JeeslFileMeta<D,FC,?>

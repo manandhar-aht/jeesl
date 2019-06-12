@@ -22,6 +22,7 @@ import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
 import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsCategory;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
@@ -52,7 +53,7 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 import net.sf.exlp.util.io.StringUtil;
 
 public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-										CAT extends UtilsStatus<CAT,L,D>,
+										CAT extends JeeslIoCmsCategory<L,D,CAT,?>,
 										CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 										V extends JeeslIoCmsVisiblity,
 										S extends JeeslIoCmsSection<L,S>,
@@ -60,7 +61,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 										EC extends UtilsStatus<EC,L,D>,
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<V,E,MT>,
-										MT extends UtilsStatus<MT,L,D>,
+										MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 										FS extends JeeslFileStorage<L,D,?>,
 										FC extends JeeslFileContainer<FS,FM>,
 										FM extends JeeslFileMeta<D,FC,?>

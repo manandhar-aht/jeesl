@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.api.facade.module.JeeslTsFacade;
+import org.jeesl.controller.processor.module.ts.AbstractTimeSeriesProcessor;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
@@ -34,44 +35,28 @@ public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 									EC extends JeeslTsEntityClass<?,?,?>,
 									INT extends UtilsStatus<INT,?,?>,
 									DATA extends JeeslTsData<TS,TRANSACTION,?,WS>,
-									WS extends UtilsStatus<WS,?,?>
->
+									WS extends UtilsStatus<WS,?,?>>
+	extends AbstractTimeSeriesProcessor<SCOPE,TS,TRANSACTION,BRIDGE,EC,INT,DATA,WS>
 {
 	final static Logger logger = LoggerFactory.getLogger(DatabaseCountProcessor.class);
 	
 	private final IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision;
-	private final TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs;
-	
+		
 	private final JeeslIoDbFacade<?,?,?,?,?,?,?> fDb;
-	private final JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs;
-	
-	private WS ws;
-	private SCOPE scope;
-	private INT interval;
-	private EC ec;
 	
 	public DatabaseCountProcessor(IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision,
 									TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs,
 									JeeslIoDbFacade<?,?,?,?,?,?,?> fDb,
 									JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs)
 	{
+		super(fbTs,fTs);
 		this.fbRevision=fbRevision;
-		this.fbTs=fbTs;
 		this.fDb=fDb;
-		this.fTs=fTs;
 	}
 	
-	public void init(WS ws, SCOPE scope, INT interval, EC ec)
+	public void count() throws IllegalStateException
 	{
-		this.ws=ws;
-		this.scope=scope;
-		this.interval=interval;
-		this.ec=ec;
-	}
-	
-	public void count()
-	{
-		
+		if(!isInitialized()) {throw new IllegalStateException(this.getClass().getSimpleName()+" is not fully initialized");}
 		List<RE> listAll = fDb.all(fbRevision.getClassEntity());
 		List<RE> listTs = new ArrayList<RE>();
 		
@@ -84,7 +69,7 @@ public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 				boolean active = BooleanComparator.active(entity.getTimeseries());
 				boolean table = c.getAnnotation(Table.class)!=null;
 				
-				if(active){listTs.add(entity);}
+				if(active && table){listTs.add(entity);}
 			}
 			catch (ClassNotFoundException e) {e.printStackTrace();}
 		}
@@ -118,7 +103,7 @@ public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 		BRIDGE bridge = fTs.fcBridge(fbTs.getClassBridge(),ec,entity);
 		TS ts = fTs.fcTimeSeries(scope,interval,bridge);
 		Long count = fDb.countEstimate(c);
-		DATA data = fbTs.data().build(ws, ts, transaction, date, count.doubleValue());
+		DATA data = efData.build(ws, ts, transaction, date, count.doubleValue());
 		data = fTs.save(data);
 		logger.info(entity.getCode()+" "+c.getAnnotation(Table.class).name()+" "+count);
 	}

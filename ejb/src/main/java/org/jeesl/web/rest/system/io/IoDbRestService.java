@@ -59,7 +59,6 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	public IoDbRestService(IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb,
 							IoSsiFactoryBuilder<L,D,SYSTEM,?,?,?,?> fbSsi,
 							JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb,
-							
 							SYSTEM system)
 	{
 		super(fDb,fbDb.getClassL(),fbDb.getClassD());

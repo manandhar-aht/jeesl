@@ -8,6 +8,7 @@ import org.jeesl.api.facade.io.JeeslIoCmsFacade;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -28,7 +29,7 @@ public class JeeslIoCmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 									EC extends UtilsStatus<EC,L,D>,
 									ET extends UtilsStatus<ET,L,D>,
 									C extends JeeslIoCmsContent<V,E,MT>,
-									MT extends UtilsStatus<MT,L,D>,
+									MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 									FC extends JeeslFileContainer<?,?>,
 									LOC extends UtilsStatus<LOC,L,D>>
 					extends UtilsFacadeBean

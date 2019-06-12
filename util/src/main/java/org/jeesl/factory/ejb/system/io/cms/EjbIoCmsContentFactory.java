@@ -2,6 +2,7 @@ package org.jeesl.factory.ejb.system.io.cms;
 
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class EjbIoCmsContentFactory<LOC extends UtilsStatus<LOC,?,?>,
 									E extends JeeslIoCmsElement<?,?,?,?,C,?>,
 									C extends JeeslIoCmsContent<?,E,MT>,
-									MT extends UtilsStatus<MT,?,?>>
+									MT extends JeeslIoCmsMarkupType<?,?,MT,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsContentFactory.class);
 	

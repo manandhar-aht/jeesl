@@ -6,6 +6,7 @@ import java.util.List;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.cms.JeeslWithCms;
@@ -25,7 +26,7 @@ public class EjbIoCmsFactory <L extends UtilsLang,D extends UtilsDescription,
 								EC extends UtilsStatus<EC,L,D>,
 								ET extends UtilsStatus<ET,L,D>,
 								C extends JeeslIoCmsContent<V,E,MT>,
-								MT extends UtilsStatus<MT,L,D>,
+								MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 								LOC extends UtilsStatus<LOC,L,D>>
 {
 	//TODO @tk reduce

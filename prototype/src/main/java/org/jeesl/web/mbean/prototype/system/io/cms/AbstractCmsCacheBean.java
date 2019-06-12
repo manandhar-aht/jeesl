@@ -11,8 +11,10 @@ import org.jeesl.controller.provider.GenericLocaleProvider;
 import org.jeesl.factory.builder.io.IoCmsFactoryBuilder;
 import org.jeesl.interfaces.controller.JeeslCmsRenderer;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCms;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsCategory;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsContent;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsElement;
+import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsMarkupType;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsSection;
 import org.jeesl.interfaces.model.system.io.cms.JeeslIoCmsVisiblity;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -30,7 +32,7 @@ import net.sf.exlp.util.io.StringUtil;
 import net.sf.exlp.util.xml.JaxbUtil;
 
 public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
-										CAT extends UtilsStatus<CAT,L,D>,
+										CAT extends JeeslIoCmsCategory<L,D,CAT,?>,
 										CMS extends JeeslIoCms<L,D,CAT,S,LOC>,
 										V extends JeeslIoCmsVisiblity,
 										S extends JeeslIoCmsSection<L,S>,
@@ -38,7 +40,7 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 										EC extends UtilsStatus<EC,L,D>,
 										ET extends UtilsStatus<ET,L,D>,
 										C extends JeeslIoCmsContent<V,E,MT>,
-										MT extends UtilsStatus<MT,L,D>,
+										MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 										FC extends JeeslFileContainer<?,FM>,
 										FM extends JeeslFileMeta<D,FC,?>
 										>

@@ -17,5 +17,5 @@ public interface JeeslTsInterval <S extends UtilsStatus<S,L,D>, L extends UtilsL
 //								JeeslOptionRestDownload,EjbWithCodeGraphic<G>,
 								UtilsStatus<S,L,D>
 {	
-	public enum Code{minute,minute10,day}
+	public enum Code{irregular,minute,minute10,day}
 }

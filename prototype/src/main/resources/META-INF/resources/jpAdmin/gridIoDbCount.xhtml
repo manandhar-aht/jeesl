@@ -4,16 +4,22 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://www.jeesl.org/jsf"
+	xmlns:jp="http://jsf.jeesl.org/prototype"
+	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 	
 	<composite:interface>
-
+		<composite:attribute name="bean" required="true"/>
 	</composite:interface>
 	
 	<composite:implementation>
-		<p:dataTable var="cl" value="#{adminDbStatisticBean.list}">
+		<jp:grid id="grid">
+			<j:row>
+				<j:slot id="sCriterias" width="12">
+					<p:dataTable var="cl" value="#{adminDbStatisticBean.list}">
             <p:column headerText="#{msg.aupDbTable}">  
 				<h:outputText value="#{cl.simpleName}" />  
             </p:column>
@@ -21,5 +27,8 @@
 				<h:outputText value="#{adminDbStatisticBean.map[cl]}" />  
             </p:column>
        	</p:dataTable>
+				</j:slot>
+			</j:row>
+	    </jp:grid>
 	</composite:implementation>
 </html>

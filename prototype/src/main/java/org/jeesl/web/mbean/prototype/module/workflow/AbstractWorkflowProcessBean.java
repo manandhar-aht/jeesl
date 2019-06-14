@@ -76,10 +76,10 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractWorkflowProcessBean.class);
 
-	private JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval;
+	private JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -121,7 +121,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
-		this.fbApproval=fbApproval;
+		this.fbWorkflow=fbApproval;
 		this.fbRevision=fbRevision;
 		this.fbSecurity=fbSecurity;
 		this.fbTemplate=fbTemplate;
@@ -152,21 +152,21 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
-		this.fApproval=fApproval;
+		this.fWorkflow=fApproval;
 		this.fRevision=fRevision;
 		
-		stageTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassStageType()));
-		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassTransitionType()));
-		permissionTypes.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassPermissionType()));
+		stageTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassStageType()));
+		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassTransitionType()));
+		permissionTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassPermissionType()));
 		
-		bots.addAll(fApproval.allOrderedPositionVisible(fbApproval.getClassBot()));
+		bots.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
 		initPageSettings();
 		
 		reloadProcesses();
 		if(sbhProcess.isSelected())
 		{
-			process = fApproval.find(fbApproval.getClassProcess(),sbhProcess.getSelection());
+			process = fApproval.find(fbWorkflow.getClassProcess(),sbhProcess.getSelection());
 			reloadStages();
 		}
 	}
@@ -175,12 +175,12 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	protected void initPageSettings()
 	{
-		templates.addAll(fApproval.all(fbTemplate.getClassTemplate()));
-		roles.addAll(fApproval.allOrderedPositionVisible(fbSecurity.getClassRole()));
+		templates.addAll(fWorkflow.all(fbTemplate.getClassTemplate()));
+		roles.addAll(fWorkflow.allOrderedPositionVisible(fbSecurity.getClassRole()));
 		
-		sbhContext.setList(fApproval.allOrderedPositionVisible(fbApproval.getClassContext()));
+		sbhContext.setList(fWorkflow.allOrderedPositionVisible(fbWorkflow.getClassContext()));
 		sbhContext.setDefault();
-		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbApproval.getClassContext(), sbhContext.getList()));}
+		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbWorkflow.getClassContext(), sbhContext.getList()));}
 	}
 	
 	public void cancelPermission() {reset(WorkflowProcesslResetHandler.build().none().permission(true));}
@@ -205,26 +205,26 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		if(item instanceof JeeslWorkflowContext) {reloadProcesses();}
 		else if(item instanceof JeeslWorkflowProcess)
 		{
-			process = fApproval.find(fbApproval.getClassProcess(),sbhProcess.getSelection());
+			process = fWorkflow.find(fbWorkflow.getClassProcess(),sbhProcess.getSelection());
 			reloadStages();
 		}
 	}
 	
 	public void reloadProcesses()
 	{
-		sbhProcess.update(fApproval.all(fbApproval.getClassProcess()),sbhProcess.getSelection());
-		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbApproval.getClassProcess(), sbhProcess.getList(),sbhContext.getSelection()));}
+		sbhProcess.update(fWorkflow.all(fbWorkflow.getClassProcess()),sbhProcess.getSelection());
+		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbWorkflow.getClassProcess(), sbhProcess.getList(),sbhContext.getSelection()));}
 	}
 	
 	public void reloadStages()
 	{
-		stages = fApproval.allForParent(fbApproval.getClassStage(), process);
+		stages = fWorkflow.allForParent(fbWorkflow.getClassStage(), process);
 	}
 
 	public void addProcess() throws UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassProcess()));
-		process = fbApproval.ejbProcess().build();
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassProcess()));
+		process = fbWorkflow.ejbProcess().build();
 		process.setName(efLang.createEmpty(localeCodes));
 		process.setDescription(efDescription.createEmpty(localeCodes));
 		process.setContext(sbhContext.getSelection());
@@ -233,24 +233,24 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void selectProcess() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(process));
-		process = fApproval.find(fbApproval.getClassProcess(), process);
-		process = efLang.persistMissingLangs(fApproval,localeCodes,process);
-		process = efDescription.persistMissingLangs(fApproval,localeCodes,process);
+		process = fWorkflow.find(fbWorkflow.getClassProcess(), process);
+		process = efLang.persistMissingLangs(fWorkflow,localeCodes,process);
+		process = efDescription.persistMissingLangs(fWorkflow,localeCodes,process);
 		reloadStages();
 	}
 	
 	public void saveProcess() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(process));
-		process.setContext(fApproval.find(fbApproval.getClassContext(), process.getContext()));
-		process = fApproval.save(process);
+		process.setContext(fWorkflow.find(fbWorkflow.getClassContext(), process.getContext()));
+		process = fWorkflow.save(process);
 		reloadProcesses();
 	}
 	
 	public void deleteProcess() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(process));
-		fApproval.rm(process);
+		fWorkflow.rm(process);
 		reset(WorkflowProcesslResetHandler.build().all());
 		reloadProcesses();
 	}
@@ -258,8 +258,8 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void addStage()
 	{
 		reset(WorkflowProcesslResetHandler.build().all());
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassProcess()));
-		stage = fbApproval.ejbStage().build(process,stages);
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassProcess()));
+		stage = fbWorkflow.ejbStage().build(process,stages);
 		stage.setName(efLang.createEmpty(localeCodes));
 		stage.setDescription(efDescription.createEmpty(localeCodes));
 		stage.setProcess(process);
@@ -270,23 +270,23 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	{
 		logger.info(AbstractLogMessage.saveEntity(stage));
 		reloadStageSelectOne();
-		stage = fApproval.save(stage);
+		stage = fWorkflow.save(stage);
 		reloadStages();
 	}
 	
 	private void reloadStageSelectOne()
 	{
-		stage.setProcess(fApproval.find(fbApproval.getClassProcess(), stage.getProcess()));
-		if(stage.getType()!=null) {stage.setType(fApproval.find(fbApproval.getClassStageType(),stage.getType()));}
+		stage.setProcess(fWorkflow.find(fbWorkflow.getClassProcess(), stage.getProcess()));
+		if(stage.getType()!=null) {stage.setType(fWorkflow.find(fbWorkflow.getClassStageType(),stage.getType()));}
 	}
 	
 	public void selectStage() throws UtilsNotFoundException
 	{
 		reset(WorkflowProcesslResetHandler.build().all().stage(false));
 		logger.info(AbstractLogMessage.selectEntity(stage));
-		stage = fApproval.find(fbApproval.getClassStage(), stage);
-		stage = efLang.persistMissingLangs(fApproval,localeCodes,stage);
-		stage = efDescription.persistMissingLangs(fApproval,localeCodes,stage);
+		stage = fWorkflow.find(fbWorkflow.getClassStage(), stage);
+		stage = efLang.persistMissingLangs(fWorkflow,localeCodes,stage);
+		stage = efDescription.persistMissingLangs(fWorkflow,localeCodes,stage);
 		editStage = false;
 		reloadTransitions();
 		reloadPermissions();
@@ -295,7 +295,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void deleteStage() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(stage));
-		fApproval.rm(stage);
+		fWorkflow.rm(stage);
 		reset(WorkflowProcesslResetHandler.build().all());
 		reloadStages();
 	}
@@ -303,22 +303,22 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private void reloadPermissions()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().permissions(true));
-		permissions.addAll(fApproval.allForParent(fbApproval.getClassPermission(),stage));
+		permissions.addAll(fWorkflow.allForParent(fbWorkflow.getClassPermission(),stage));
 	}
 	
 	public void addPermission()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().permission(true));
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassPermission()));
-		permission = fbApproval.ejbPermission().build(stage,permissions);
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassPermission()));
+		permission = fbWorkflow.ejbPermission().build(stage,permissions);
 	}
 	
 	public void savePermission() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(permission));
-		permission.setRole(fApproval.find(fbSecurity.getClassRole(), permission.getRole()));
-		permission.setType(fApproval.find(fbApproval.getClassPermissionType(), permission.getType()));
-		permission = fApproval.save(permission);
+		permission.setRole(fWorkflow.find(fbSecurity.getClassRole(), permission.getRole()));
+		permission.setType(fWorkflow.find(fbWorkflow.getClassPermissionType(), permission.getType()));
+		permission = fWorkflow.save(permission);
 		reloadPermissions();
 	}
 	
@@ -326,13 +326,13 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	{
 		reset(WorkflowProcesslResetHandler.build().none());
 		logger.info(AbstractLogMessage.selectEntity(permission));
-		permission = fApproval.find(fbApproval.getClassPermission(),permission);
+		permission = fWorkflow.find(fbWorkflow.getClassPermission(),permission);
 	}
 	
 	public void deletePermission() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(permission));
-		fApproval.rm(permission);
+		fWorkflow.rm(permission);
 		reset(WorkflowProcesslResetHandler.build().none().permission(true));
 		reloadPermissions();
 	}
@@ -340,14 +340,14 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private void reloadTransitions()
 	{
 		transitions.clear();
-		transitions.addAll(fApproval.allForParent(fbApproval.getClassTransition(), stage));
+		transitions.addAll(fWorkflow.allForParent(fbWorkflow.getClassTransition(), stage));
 	}
 	
 	public void addTransition()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().transistion(true));
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
-		transition = fbApproval.ejbTransition().build(stage,transitions);
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassTransition()));
+		transition = fbWorkflow.ejbTransition().build(stage,transitions);
 		transition.setName(efLang.createEmpty(localeCodes));
 		transition.setDescription(efDescription.createEmpty(localeCodes));
 		editTransition = true;
@@ -356,9 +356,9 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void saveTransition() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(transition));
-		transition.setDestination(fApproval.find(fbApproval.getClassStage(), transition.getDestination()));
-		transition.setType((fApproval.find(fbApproval.getClassTransitionType(), transition.getType())));
-		transition = fApproval.save(transition);
+		transition.setDestination(fWorkflow.find(fbWorkflow.getClassStage(), transition.getDestination()));
+		transition.setType((fWorkflow.find(fbWorkflow.getClassTransitionType(), transition.getType())));
+		transition = fWorkflow.save(transition);
 		reloadTransitions();
 		reloadActions();
 		reloadCommunications();
@@ -368,9 +368,9 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	{
 		reset(WorkflowProcesslResetHandler.build().none().action(true).actions(true).communication(true).communications(true));
 		logger.info(AbstractLogMessage.selectEntity(transition));
-		transition = fApproval.find(fbApproval.getClassTransition(),transition);
-		transition = efLang.persistMissingLangs(fApproval,localeCodes,transition);
-		transition = efDescription.persistMissingLangs(fApproval,localeCodes,transition);
+		transition = fWorkflow.find(fbWorkflow.getClassTransition(),transition);
+		transition = efLang.persistMissingLangs(fWorkflow,localeCodes,transition);
+		transition = efDescription.persistMissingLangs(fWorkflow,localeCodes,transition);
 		editTransition = false;
 		reloadActions();
 		reloadCommunications();
@@ -379,7 +379,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void deleteTransition() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(transition));
-		fApproval.rm(transition);
+		fWorkflow.rm(transition);
 		reset(WorkflowProcesslResetHandler.build().none().transistion(true));
 		reloadTransitions();
 	}
@@ -387,22 +387,22 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private void reloadCommunications()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().communications(true));
-		communications.addAll(fApproval.allForParent(fbApproval.getClassCommunication(),transition));
+		communications.addAll(fWorkflow.allForParent(fbWorkflow.getClassCommunication(),transition));
 	}
 	
 	public void addCommunication()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().communication(true));
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassTransition()));
-		communication = fbApproval.ejbCommunication().build(transition,communications);
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassTransition()));
+		communication = fbWorkflow.ejbCommunication().build(transition,communications);
 	}
 	
 	public void saveCommunication() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(transition));
-		communication.setTemplate(fApproval.find(fbTemplate.getClassTemplate(), communication.getTemplate()));
-		communication.setRole(fApproval.find(fbSecurity.getClassRole(), communication.getRole()));
-		communication = fApproval.save(communication);
+		communication.setTemplate(fWorkflow.find(fbTemplate.getClassTemplate(), communication.getTemplate()));
+		communication.setRole(fWorkflow.find(fbSecurity.getClassRole(), communication.getRole()));
+		communication = fWorkflow.save(communication);
 		reloadCommunications();
 	}
 	
@@ -410,13 +410,13 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	{
 		reset(WorkflowProcesslResetHandler.build().none());
 		logger.info(AbstractLogMessage.selectEntity(transition));
-		communication = fApproval.find(fbApproval.getClassCommunication(),communication);
+		communication = fWorkflow.find(fbWorkflow.getClassCommunication(),communication);
 	}
 	
 	public void deleteCommunication() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(communication));
-		fApproval.rm(communication);
+		fWorkflow.rm(communication);
 		reset(WorkflowProcesslResetHandler.build().none().communication(true));
 		reloadCommunications();
 	}
@@ -424,46 +424,49 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private void reloadActions()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().actions(true));
-		actions.addAll(fApproval.allForParent(fbApproval.getClassAction(),transition));
+		actions.addAll(fWorkflow.allForParent(fbWorkflow.getClassAction(),transition));
 	}
 	
 	public void addAction()
 	{
 		reset(WorkflowProcesslResetHandler.build().none().action(true));
-		logger.info(AbstractLogMessage.addEntity(fbApproval.getClassAction()));
-		action = fbApproval.ejbAction().build(transition,actions);
+		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassAction()));
+		action = fbWorkflow.ejbAction().build(transition,actions);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.saveEntity(action));
-		action.setBot(fApproval.find(fbApproval.getClassBot(), action.getBot()));
+		action.setBot(fWorkflow.find(fbWorkflow.getClassBot(), action.getBot()));
 		
-		if(action.getEntity()!=null) {action.setEntity(fApproval.find(fbRevision.getClassEntity(),action.getEntity()));}
+		if(action.getEntity()!=null) {action.setEntity(fWorkflow.find(fbRevision.getClassEntity(),action.getEntity()));}
 		if(action.getAttribute()!=null)
 		{
-			action.setAttribute(fApproval.find(fbRevision.getClassAttribute(),action.getAttribute()));
+			action.setAttribute(fWorkflow.find(fbRevision.getClassAttribute(),action.getAttribute()));
+			
+			if(debugOnInfo) {logger.info("cOption!=null?"+(cOption!=null));}
+			
 			logger.info("Saving option:"+option+" for "+cOption.getName());
-			AO id = (AO)fApproval.find(cOption,option);
+			AO id = (AO)fWorkflow.find(cOption,option);
 			action.setOption(id);
 		}	
 		
-		action = fApproval.save(action);
+		action = fWorkflow.save(action);
 		reloadActions();
 	}
 	
 	public void selectAction() throws UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.selectEntity(action));
-		action = fApproval.find(fbApproval.getClassAction(),action);
+		action = fWorkflow.find(fbWorkflow.getClassAction(),action);
 		changeEntity();
 	}
 	
 	public void deleteAction() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		logger.info(AbstractLogMessage.rmEntity(action));
-		fApproval.rm(action);
+		fWorkflow.rm(action);
 		reset(WorkflowProcesslResetHandler.build().none().action(true));
 		reloadActions();
 	}
@@ -475,7 +478,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		if(action.getEntity()==null) {action.setAttribute(null);}
 		else
 		{
-			action.setEntity(fApproval.find(fbRevision.getClassEntity(),action.getEntity()));
+			action.setEntity(fWorkflow.find(fbRevision.getClassEntity(),action.getEntity()));
 			action.setEntity(fRevision.load(fbRevision.getClassEntity(),action.getEntity()));
 			attributes.addAll(action.getEntity().getAttributes());
 			
@@ -502,7 +505,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		{
 			logger.info("The following attribute is selected: "+action.getAttribute().toString());
 			logger.info("Now checking for a entity, is there something? "+(action.getAttribute().getEntity()!=null));
-			action.setAttribute(fApproval.find(fbRevision.getClassAttribute(),action.getAttribute()));
+			action.setAttribute(fWorkflow.find(fbRevision.getClassAttribute(),action.getAttribute()));
 			logger.info("After find, is there something? "+(action.getAttribute().getEntity()!=null));
 		}
 		
@@ -512,7 +515,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 			try
 			{
 				cOption = (Class<EjbWithPosition>)Class.forName(action.getAttribute().getEntity().getCode()).asSubclass(EjbWithPosition.class);
-				options.addAll(fApproval.allOrderedPosition(cOption));
+				options.addAll(fWorkflow.allOrderedPosition(cOption));
 			}
 			catch (ClassNotFoundException e) {e.printStackTrace();}
 			logger.info("Options: "+options.size());
@@ -521,7 +524,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		}
 	}
 	
-	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,sbhProcess.getList());}
-	public void reorderStages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,stages);}
-	public void reorderPermissions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fApproval,permissions);}
+	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,sbhProcess.getList());}
+	public void reorderStages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,stages);}
+	public void reorderPermissions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,permissions);}
 }

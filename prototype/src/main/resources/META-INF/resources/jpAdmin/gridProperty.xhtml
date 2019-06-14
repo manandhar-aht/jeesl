@@ -26,13 +26,13 @@
 							<f:facet name="header"><aht:pfDataTableHeader title="#{msg.jeeslProperties}"/></f:facet>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sProperties :#{cc.id}:sProperty" listener="#{cc.attrs.bean.selectProperty}"/>  
 				            <p:column headerText="#{msg.jeeslCategory}">  
-									<h:outputText value="#{p.category.name[localeCode].lang}" />  
+								<h:outputText value="#{p.category.name[localeCode].lang}" />  
 				            </p:column>
 				            <p:column headerText="#{msg.jeeslPropertyKey}">  
-									<h:outputText value="#{p.key}" />  
+								<h:outputText value="#{p.key}" />  
 				            </p:column>
 				            <p:column headerText="#{msg.jeeslPropertyValue}">  
-								<h:outputText value="#{of:abbreviate(p.value, 40)}" />  
+								<h:outputText value="#{of:abbreviate(p.value, 40)}"/>
 				            </p:column>
 						</p:dataTable>
 					</h:form>

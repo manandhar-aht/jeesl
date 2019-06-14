@@ -6,6 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
 	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:aht="http://ahtutils.sourceforge.net/jsf"
 	xmlns:aup="http://ahtutils.sourceforge.net/prototype"
@@ -78,7 +79,7 @@
 							</p:column>
 							<p:column>
 					             <f:facet name="header">#{msg.jeeslCode}</f:facet>  
-					             <h:outputText value="#{s.code}" />
+					             <h:outputText value="#{of:abbreviate(s.code,15)}"/>
 							</p:column>
 							<p:column>  
 					             <f:facet name="header">#{msg.aupTranslation}</f:facet>  

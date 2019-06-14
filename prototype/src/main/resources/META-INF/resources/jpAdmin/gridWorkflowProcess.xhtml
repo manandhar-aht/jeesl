@@ -274,9 +274,10 @@
 								<p:outputLabel value="#{msg.jeeslApprovalBot}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.action.bot}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.bots}" var="b" itemLabel="#{b.name[localeCode].lang}" itemValue="#{b}"/>
+									
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<p:panelGrid id="pgEntity" columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+							<p:panelGrid id="pgEntity" columns="2" columnClasses="jeeslGrid20,jeeslGrid80" >
 								<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.action.entity}" effect="fade" autoWidth="false">
 									<f:selectItem itemLabel="--"/>

@@ -2,6 +2,7 @@ package org.jeesl.controller.handler.module.workflow;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionCallback;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
+import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
 public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,?,?,?>,
@@ -52,12 +54,13 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 	{
 		if(debugOnInfo) {logger.info("Perform "+action.toString());}
 		
-		if(action.getBot().getCode().contentEquals("status")) {performStatusUpdate(entity,action);}
+		if(action.getBot().getCode().contentEquals("statusUpdate")) {statusUpdate(entity,action);}
+		else if(action.getBot().getCode().contentEquals("appendRandomInt")) {appendRandomInt(entity,action);}
 		else {logger.warn("Unknown Bot");}
 		
 	}
 	
-	private <W extends JeeslWithWorkflow<AW>> void performStatusUpdate(JeeslWithWorkflow<AW> entity, AA action)
+	private <W extends JeeslWithWorkflow<AW>> void statusUpdate(JeeslWithWorkflow<AW> entity, AA action)
 	{
 		try
 		{
@@ -67,5 +70,16 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private <W extends JeeslWithWorkflow<AW>> void appendRandomInt(JeeslWithWorkflow<AW> entity, AA action)
+	{
+		if(entity instanceof EjbWithName)
+		{
+			Random rnd = new Random();
+			EjbWithName ejb = (EjbWithName)entity;
+			ejb.setName(ejb.getName()+" "+rnd.nextInt(10));
+		}
+		
 	}
 }

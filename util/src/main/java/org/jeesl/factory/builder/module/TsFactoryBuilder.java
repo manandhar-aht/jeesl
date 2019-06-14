@@ -12,7 +12,7 @@ import org.jeesl.factory.ejb.module.ts.EjbTsFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsMutliPointFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsScopeFactory;
 import org.jeesl.factory.ejb.module.ts.EjbTsTransactionFactory;
-import org.jeesl.factory.mc.ts.McDataSetFactory;
+import org.jeesl.factory.mc.ts.McTimeSeriesFactory;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
@@ -129,9 +129,9 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 		return new EjbTsMutliPointFactory<L,D,CAT,SCOPE,ST,UNIT,MP,EC,INT>(cMp);
 	}
 	
-	public McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS> metaChart(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs)
+	public McTimeSeriesFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS> metaChart(JeeslTsFacade<L,D,CAT,SCOPE,ST,UNIT,MP,TS,TRANSACTION,SOURCE,BRIDGE,EC,INT,DATA,POINT,SAMPLE,USER,WS,QAF> fTs)
 	{
-		return new McDataSetFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS>(this,fTs);
+		return new McTimeSeriesFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS>(this,fTs);
 	}
 	
 	public Comparator<SCOPE> cmpScope(TsScopeComparator.Type type)

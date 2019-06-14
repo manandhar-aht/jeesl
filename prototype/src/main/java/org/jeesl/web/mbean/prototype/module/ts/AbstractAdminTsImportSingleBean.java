@@ -20,7 +20,7 @@ import org.jeesl.api.bean.msg.JeeslFacesMessageBean;
 import org.jeesl.api.controller.ImportStrategy;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
-import org.jeesl.factory.mc.ts.McDataSetFactory;
+import org.jeesl.factory.mc.ts.McTimeSeriesFactory;
 import org.jeesl.factory.xml.module.ts.XmlDataFactory;
 import org.jeesl.factory.xml.module.ts.XmlTimeSeriesFactory;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
@@ -234,7 +234,7 @@ public class AbstractAdminTsImportSingleBean <L extends UtilsLang, D extends Uti
 		entities = new ArrayList<EjbWithId>();
 		mapLabels = new HashMap<EjbWithId,String>();
 		
-		chartDs = McDataSetFactory.build2(timeSeries);
+		chartDs = McTimeSeriesFactory.build2(timeSeries);
 		try
 		{
 			Class<EjbWithId> c = (Class<EjbWithId>)Class.forName(clas.getCode()).asSubclass(EjbWithId.class);

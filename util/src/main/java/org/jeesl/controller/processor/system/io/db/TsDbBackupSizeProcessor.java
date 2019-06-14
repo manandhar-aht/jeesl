@@ -10,37 +10,45 @@ import org.jeesl.controller.processor.module.ts.AbstractTimeSeriesProcessor;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
+import org.metachart.xml.chart.Chart;
+import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
+import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.xml.io.Dir;
 import net.sf.exlp.xml.io.File;
 
-public class DatabaseBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
+public class TsDbBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
 									DUMP extends JeeslDbDump<SYSTEM,?>,
 									SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
+									MP extends JeeslTsMultiPoint<?,?,SCOPE,?>,
 									TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 									TRANSACTION extends JeeslTsTransaction<?,DATA,?,?>,
 									BRIDGE extends JeeslTsBridge<EC>,
 									EC extends JeeslTsEntityClass<?,?,?>,
 									INT extends UtilsStatus<INT,?,?>,
 									DATA extends JeeslTsData<TS,TRANSACTION,?,WS>,
+									POINT extends JeeslTsDataPoint<DATA,MP>,
 									WS extends UtilsStatus<WS,?,?>>
-	extends AbstractTimeSeriesProcessor<SCOPE,TS,TRANSACTION,BRIDGE,EC,INT,DATA,WS>
+	extends AbstractTimeSeriesProcessor<SCOPE,MP,TS,TRANSACTION,BRIDGE,EC,INT,DATA,POINT,WS>
 {
-	final static Logger logger = LoggerFactory.getLogger(DatabaseBackupSizeProcessor.class);
+	final static Logger logger = LoggerFactory.getLogger(TsDbBackupSizeProcessor.class);
 	
-	public DatabaseBackupSizeProcessor(TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs,
-									JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs)
+	public TsDbBackupSizeProcessor(TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs,
+									JeeslTsFacade<?,?,?,SCOPE,?,?,MP,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fTs)
 	{
 		super(fbTs,fTs);
 	}
@@ -51,7 +59,7 @@ public class DatabaseBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
 		{
 			try
 			{
-				TS ts = getTs(system);
+				TS ts = fcTs(system);
 				Set<Date> set = efData.toSetDate(fTs.fData(ws,ts));
 				List<DATA> add = new ArrayList<>();
 				for(File xFile : xDirectory.getFile())
@@ -72,7 +80,7 @@ public class DatabaseBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
 	{
 		try
 		{
-			TS ts = getTs(system);
+			TS ts = fcTs(system);
 			Set<Date> set = efData.toSetDate(fTs.fData(ws,ts));
 			List<DATA> add = new ArrayList<>();
 			for(DUMP dump : dumps)
@@ -86,13 +94,7 @@ public class DatabaseBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
 		}
 		catch (UtilsConstraintViolationException | UtilsLockingException e) {e.printStackTrace();}
 	}
-	
-	private TS getTs(SYSTEM system) throws UtilsConstraintViolationException
-	{
-		BRIDGE bridge = fTs.fcBridge(fbTs.getClassBridge(),ec,system);
-		return fTs.fcTimeSeries(scope,interval,bridge);
-	}
-	
+		
 	private void add(List<DATA> add) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		if(!add.isEmpty())
@@ -106,5 +108,17 @@ public class DatabaseBackupSizeProcessor<SYSTEM extends JeeslIoSsiSystem,
 			}
 			fTs.save(add);
 		}
+	}
+	
+	public Chart build(String localeCode, Date begin, Date end, SYSTEM system) 
+	{
+		Chart chart = mfTs.build(localeCode);
+		chart.setSubtitle(null);
+		try
+		{
+			chart.setDs(mfTs.singleData(localeCode,system,begin,end));
+		}
+		catch (UtilsNotFoundException e) {}
+		return chart;
 	}
 }

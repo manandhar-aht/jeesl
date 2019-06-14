@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.util.comparator.ejb.RecordComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.metachart.xml.chart.Chart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,8 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
-	
+	protected Chart chart; public Chart getChart() {return chart;}
+
 	private List<DUMP> dumps; public List<DUMP> getDumps(){return dumps;}
 	private List<HOST> hosts; public List<HOST> getHosts() {return hosts;}
 	private Map<DUMP,Map<HOST,FILE>> mapFiles; public Map<DUMP, Map<HOST, FILE>> getMapFiles() {return mapFiles;}

@@ -13,9 +13,11 @@ import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
+import org.jeesl.interfaces.model.module.ts.core.JeeslTsMultiPoint;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsScope;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
+import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsTransaction;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
@@ -27,27 +29,29 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class DatabaseCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
+public class TsDbCountProcessor<RE extends JeeslRevisionEntity<?,?,?,?,?>,
 									SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
+									MP extends JeeslTsMultiPoint<?,?,SCOPE,?>,
 									TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 									TRANSACTION extends JeeslTsTransaction<?,DATA,?,?>,
 									BRIDGE extends JeeslTsBridge<EC>,
 									EC extends JeeslTsEntityClass<?,?,?>,
 									INT extends UtilsStatus<INT,?,?>,
 									DATA extends JeeslTsData<TS,TRANSACTION,?,WS>,
+									POINT extends JeeslTsDataPoint<DATA,MP>,
 									WS extends UtilsStatus<WS,?,?>>
-	extends AbstractTimeSeriesProcessor<SCOPE,TS,TRANSACTION,BRIDGE,EC,INT,DATA,WS>
+	extends AbstractTimeSeriesProcessor<SCOPE,MP,TS,TRANSACTION,BRIDGE,EC,INT,DATA,POINT,WS>
 {
-	final static Logger logger = LoggerFactory.getLogger(DatabaseCountProcessor.class);
+	final static Logger logger = LoggerFactory.getLogger(TsDbCountProcessor.class);
 	
 	private final IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision;
 		
 	private final JeeslIoDbFacade<?,?,?,?,?,?,?> fDb;
 	
-	public DatabaseCountProcessor(IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision,
-									TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs,
+	public TsDbCountProcessor(IoRevisionFactoryBuilder<?,?,?,?,?,?,?,RE,?,?,?,?> fbRevision,
+									TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs,
 									JeeslIoDbFacade<?,?,?,?,?,?,?> fDb,
-									JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs)
+									JeeslTsFacade<?,?,?,SCOPE,?,?,MP,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fTs)
 	{
 		super(fbTs,fTs);
 		this.fbRevision=fbRevision;

@@ -15,6 +15,11 @@ import org.jeesl.interfaces.model.module.ts.data.JeeslTsBridge;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsData;
 import org.jeesl.interfaces.model.module.ts.data.JeeslTsDataPoint;
 import org.jeesl.model.xml.module.ts.TimeSeries;
+import org.metachart.factory.xml.chart.XmlChartFactory;
+import org.metachart.factory.xml.chart.XmlDataFactory;
+import org.metachart.factory.xml.chart.XmlSubtitleFactory;
+import org.metachart.factory.xml.chart.XmlTitleFactory;
+import org.metachart.xml.chart.Chart;
 import org.metachart.xml.chart.Data;
 import org.metachart.xml.chart.Ds;
 import org.slf4j.Logger;
@@ -25,7 +30,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.exlp.util.DateUtil;
 
-public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
+public class McTimeSeriesFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 								MP extends JeeslTsMultiPoint<?,?,SCOPE,?>,
 								TS extends JeeslTimeSeries<SCOPE,BRIDGE,INT>,
 								BRIDGE extends JeeslTsBridge<EC>,
@@ -35,7 +40,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 								POINT extends JeeslTsDataPoint<DATA,MP>,
 								WS extends UtilsStatus<WS,?,?>>
 {
-	final static Logger logger = LoggerFactory.getLogger(McDataSetFactory.class);
+	final static Logger logger = LoggerFactory.getLogger(McTimeSeriesFactory.class);
 	
 	private final JeeslTsFacade<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fTs;
 	
@@ -47,7 +52,7 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 	private INT interval; public INT getInterval() {return interval;} public void setInterval(INT interval) {this.interval = interval;}
 	private WS workspace; public WS getWorkspace() {return workspace;} public void setWorkspace(WS workspace) {this.workspace = workspace;}
 	
-	public McDataSetFactory(TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs,
+	public McTimeSeriesFactory(TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs,
 							   JeeslTsFacade<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fTs)
 	{
 		this.fbTs=fbTs;
@@ -61,6 +66,13 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 	public <E extends Enum<E>> void initInterval(E interval) throws UtilsNotFoundException {this.interval = fTs.fByCode(fbTs.getClassInterval(), interval);}
 	public <E extends Enum<E>> void initWorkspace(E workspace) throws UtilsNotFoundException {this.workspace = fTs.fByCode(fbTs.getClassWorkspace(), workspace);}
 
+	public Chart build(String localeCode) 
+	{
+		Chart chart = XmlChartFactory.build();
+		chart.setTitle(XmlTitleFactory.build(scope.getName().get(localeCode).getLang()));
+		chart.setSubtitle(XmlSubtitleFactory.build("Interval: "+interval.getName().get(localeCode).getLang()));
+		return chart;
+	}
 		
 	public Ds build2(List<DATA> datas)
 	{
@@ -94,6 +106,20 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		return ds;	
 	}
 	
+	public <T extends EjbWithId> Ds singleData(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
+	{
+		BRIDGE bridge = fTs.fBridge(entityClass,entity);
+		TS ts = fTs.fTimeSeries(scope,interval,bridge);
+		List<DATA> datas = fTs.fData(workspace,ts,from,to);
+		
+		Ds xml = new Ds();
+		for(DATA d : datas)
+		{
+			xml.getData().add(XmlDataFactory.build(d.getValue(),d.getRecord()));
+		}
+		return xml;
+	}
+	
 	public <T extends EjbWithId> Ds multiPoint(String localeCode, T entity, Date from, Date to) throws UtilsNotFoundException
 	{
 		BRIDGE bridge = fTs.fBridge(entityClass,entity);
@@ -107,10 +133,8 @@ public class McDataSetFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		for(MP mp : mapMp.keySet())
 		{
 			List<POINT> l = mapMp.get(mp);
-//			logger.info(mp.toString() + " "+l.size());
 		}
 		
-//		logger.info("Data: "+datas.size()+" Points: "+points.size());
 		
 		Ds xml = new Ds();
 		for(MP mp : multiPoints)

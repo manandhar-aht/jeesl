@@ -18,6 +18,7 @@ import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowContext;
 import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowModificationLevel;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionType;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
@@ -52,8 +53,9 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										AP extends JeeslWorkflowProcess<L,D,AX>,
 										AS extends JeeslWorkflowStage<L,D,AP,AST>,
 										AST extends JeeslWorkflowStageType<AST,?,?,?>,
-										ASP extends JeeslWorkflowStagePermission<AS,APT,SR>,
+										ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
+										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 										AC extends JeeslWorkflowCommunication<AT,MT,SR>,

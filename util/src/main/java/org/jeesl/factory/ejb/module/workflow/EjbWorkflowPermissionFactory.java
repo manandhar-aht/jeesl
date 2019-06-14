@@ -3,6 +3,7 @@ package org.jeesl.factory.ejb.module.workflow;
 import java.util.List;
 
 import org.jeesl.factory.ejb.util.EjbPositionFactory;
+import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowModificationLevel;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -10,22 +11,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbWorkflowPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
-											ASP extends JeeslWorkflowStagePermission<AS,?,SR>,
+											WSP extends JeeslWorkflowStagePermission<AS,?,WML,SR>,
+											WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowPermissionFactory.class);
 	
-	private final Class<ASP> cPermission;
+	private final Class<WSP> cPermission;
     
-	public EjbWorkflowPermissionFactory(final Class<ASP> cPermission)
+	public EjbWorkflowPermissionFactory(final Class<WSP> cPermission)
 	{       
         this.cPermission = cPermission;
 	}
 	    
-	public ASP build(AS stage, List<ASP> list)
+	public WSP build(AS stage, List<WSP> list)
 	{
-		ASP ejb = null;
+		WSP ejb = null;
 		try
 		{
 			ejb = cPermission.newInstance();

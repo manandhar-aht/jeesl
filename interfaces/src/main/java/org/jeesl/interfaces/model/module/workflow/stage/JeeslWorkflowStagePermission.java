@@ -13,7 +13,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?,?,?>,
 									APT extends JeeslWorkflowPermissionType<APT,?,?,?>,
-									MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
+									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
+									SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
@@ -26,6 +27,6 @@ public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?
 	APT getType();
 	void setType(APT type);
 	
-	MR getRole();
-	void setRole(MR role);
+	SR getRole();
+	void setRole(SR role);
 }

@@ -366,7 +366,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	public void selectTransition() throws UtilsNotFoundException
 	{
-		reset(WorkflowProcesslResetHandler.build().none());
+		reset(WorkflowProcesslResetHandler.build().none().action(true).actions(true).communication(true).communications(true));
 		logger.info(AbstractLogMessage.selectEntity(transition));
 		transition = fApproval.find(fbApproval.getClassTransition(),transition);
 		transition = efLang.persistMissingLangs(fApproval,localeCodes,transition);
@@ -495,7 +495,17 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	@SuppressWarnings("unchecked")
 	public void changeAttribute()
 	{
+		logger.info(AbstractLogMessage.selectOneMenuChange(action.getAttribute()));
 		options.clear();
+		
+		if(action.getAttribute()!=null)
+		{
+			logger.info("The following attribute is selected: "+action.getAttribute().toString());
+			logger.info("Now checking for a entity, is there something? "+(action.getAttribute().getEntity()!=null));
+			action.setAttribute(fApproval.find(fbRevision.getClassAttribute(),action.getAttribute()));
+			logger.info("After find, is there something? "+(action.getAttribute().getEntity()!=null));
+		}
+		
 		if(action.getAttribute()!=null && action.getAttribute().getEntity()!=null)
 		{
 			logger.info("Evaluating "+action.getAttribute().getEntity().getCode());

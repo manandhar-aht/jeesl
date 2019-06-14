@@ -266,6 +266,7 @@
 								<j:icon type="jeeslSave"   listener="#{cc.attrs.bean.saveAction()}" update=":#{cc.id}:rStage"/>
 								<j:icon type="jeeslDelete" listener="#{cc.attrs.bean.deleteAction()}" update=":#{cc.id}:rStage" rendered="#{(cc.attrs.bean.action.id gt 0)}"/>
 							</f:facet>
+							<p:messages redisplay="false" severity="warn,error" showSummary="false" showDetail="true" closable="true"/>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslApprovalTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.action.transition.name[localeCode].lang}" />

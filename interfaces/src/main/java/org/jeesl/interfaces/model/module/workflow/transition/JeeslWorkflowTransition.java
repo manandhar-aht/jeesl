@@ -3,7 +3,6 @@ package org.jeesl.interfaces.model.module.workflow.transition;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
-import org.jeesl.interfaces.model.system.with.attribute.EjbWithVisibleMigration;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -15,6 +14,7 @@ import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithDescription;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
+import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDescription,
 									S extends JeeslWorkflowStage<L,D,?,?>,
@@ -23,7 +23,7 @@ public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDe
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver,
 				EjbWithLang<L>,EjbWithDescription<D>,
-				EjbWithVisibleMigration
+				EjbWithVisible
 {
 	public static enum Attributes{source,destination}
 	

@@ -165,7 +165,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		entity = ejb;
 		this.user=user;
 		
-		link = fApproval.fLink(process, ejb);
+		link = fApproval.fLink(process,ejb);
 		workflow = link.getWorkflow();
 	}
 	

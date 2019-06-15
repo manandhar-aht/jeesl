@@ -69,6 +69,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AST> cStageType; public Class<AST> getClassStageType() {return cStageType;}
 	private final Class<ASP> cPermission; public Class<ASP> getClassPermission() {return cPermission;}
 	private final Class<APT> cPermissionType; public Class<APT> getClassPermissionType() {return cPermissionType;}
+	private final Class<WML> cModificationLevel; public Class<WML> getClassModificationLevel() {return cModificationLevel;}
 	private final Class<AT> cTransition; public Class<AT> getClassTransition() {return cTransition;}
 	private final Class<ATT> cTransitionType; public Class<ATT> getClassTransitionType() {return cTransitionType;}
 	private final Class<AC> cCommunication; public Class<AC> getClassCommunication() {return cCommunication;}
@@ -85,6 +86,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<AST> cStageType,
 									final Class<ASP> cPermission,
 									final Class<APT> cPermissionType,
+									final Class<WML> cModificationLevel,
 									final Class<AT> cTransition,
 									final Class<ATT> cTransitionType,
 									final Class<AC> cCommunication,
@@ -101,6 +103,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 		this.cStageType=cStageType;
 		this.cPermission=cPermission;
 		this.cPermissionType=cPermissionType;
+		this.cModificationLevel=cModificationLevel;
 		this.cTransition=cTransition;
 		this.cTransitionType=cTransitionType;
 		this.cCommunication=cCommunication;

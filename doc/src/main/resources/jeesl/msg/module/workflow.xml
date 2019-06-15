@@ -58,11 +58,18 @@
     		<s:lang key="fr" translation="Permission"/>
     	</s:langs>
     </s:translation>
- 	<s:translation key="jeeslApprovalPermissionType">
+ 	<s:translation key="jeeslWorkflowPermissionType">
     	<s:langs>
     		<s:lang key="de" translation="Type"/>
     		<s:lang key="en" translation="Type"/>
     		<s:lang key="fr" translation="Type"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslWorkflowModificationLevel">
+    	<s:langs>
+    		<s:lang key="de" translation="Änderungsstufe"/>
+    		<s:lang key="en" translation="Modification Level"/>
+    		<s:lang key="fr" translation="Modification Level"/>
     	</s:langs>
     </s:translation>
        

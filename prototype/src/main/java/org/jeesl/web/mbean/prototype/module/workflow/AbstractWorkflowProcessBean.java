@@ -95,6 +95,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final List<AST> stageTypes; public List<AST> getStageTypes() {return stageTypes;}
 	private final List<ASP> permissions; public List<ASP> getPermissions() {return permissions;}
 	private final List<APT> permissionTypes; public List<APT> getPermissionTypes() {return permissionTypes;}
+	private final List<WML> modificationLevels; public List<WML> getModificationLevels() {return modificationLevels;}
 	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<ATT> transitionTypes; public List<ATT> getTransitionTypes() {return transitionTypes;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
@@ -136,6 +137,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		stageTypes = new ArrayList<>();
 		permissions = new ArrayList<>();
 		permissionTypes = new ArrayList<>();
+		modificationLevels = new ArrayList<>();
 		transitions = new ArrayList<>();
 		transitionTypes = new ArrayList<>();
 		communications = new ArrayList<>();
@@ -160,6 +162,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		stageTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassStageType()));
 		transitionTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassTransitionType()));
 		permissionTypes.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassPermissionType()));
+		modificationLevels.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassModificationLevel()));
 		
 		bots.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
@@ -320,6 +323,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		logger.info(AbstractLogMessage.saveEntity(permission));
 		permission.setRole(fWorkflow.find(fbSecurity.getClassRole(), permission.getRole()));
 		permission.setType(fWorkflow.find(fbWorkflow.getClassPermissionType(), permission.getType()));
+		permission.setModificationLevel(fWorkflow.find(fbWorkflow.getClassModificationLevel(), permission.getModificationLevel()));
 		permission = fWorkflow.save(permission);
 		reloadPermissions();
 	}

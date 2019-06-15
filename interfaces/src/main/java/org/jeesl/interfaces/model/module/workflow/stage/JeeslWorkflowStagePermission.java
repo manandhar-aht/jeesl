@@ -29,4 +29,7 @@ public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?
 	
 	SR getRole();
 	void setRole(SR role);
+	
+	WML getModificationLevel();
+	void setModificationLevel(WML modificationLevel);
 }

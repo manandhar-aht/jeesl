@@ -2,6 +2,8 @@ package org.jeesl.web.mbean.prototype.module.workflow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jeesl.api.bean.JeeslTranslationBean;
@@ -28,13 +30,14 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionT
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,6 +121,9 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private boolean editStage; public boolean isEditStage() {return editStage;} public void toggleEditStage() {editStage=!editStage;reloadStageSelectOne();}
 	private boolean editTransition; public boolean isEditTransition() {return editTransition;} public void toggleEditTransition() {editTransition=!editTransition;}
 
+	private final Comparator<SR> cpRole;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
@@ -149,6 +155,8 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		
 		editStage = false;
 		editTransition = false;
+		
+		cpRole = (new SecurityRoleComparator()).factory(SecurityRoleComparator.Type.position);
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
@@ -167,6 +175,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		bots.addAll(fApproval.allOrderedPositionVisible(fbWorkflow.getClassBot()));
 		try{initEntities();} catch (UtilsNotFoundException e) {e.printStackTrace();}
 		initPageSettings();
+		Collections.sort(roles,cpRole);
 		
 		reloadProcesses();
 		if(sbhProcess.isSelected())
@@ -364,6 +373,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		logger.info(AbstractLogMessage.saveEntity(transition));
 		transition.setDestination(fWorkflow.find(fbWorkflow.getClassStage(), transition.getDestination()));
 		transition.setType((fWorkflow.find(fbWorkflow.getClassTransitionType(), transition.getType())));
+		if(transition.getRole()!=null) {transition.setRole(fWorkflow.find(fbSecurity.getClassRole(),transition.getRole()));}
 		transition = fWorkflow.save(transition);
 		reloadTransitions();
 		reloadActions();

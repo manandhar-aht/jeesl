@@ -108,7 +108,7 @@ public class AbstractAdminSecurityBean <L extends UtilsLang, D extends UtilsDesc
 		efAction = fbSecurity.ejbAction();
 		efTemplate = fbSecurity.ejbTemplate();
 		
-		comparatorRole = (new SecurityRoleComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityRoleComparator.Type.position);
+		comparatorRole = (new SecurityRoleComparator<C,R>()).factory(SecurityRoleComparator.Type.position);
 		comparatorView = (new SecurityViewComparator<V>()).factory(SecurityViewComparator.Type.position);
 		comparatorUsecase = (new SecurityUsecaseComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityUsecaseComparator.Type.position);
 		comparatorAction = (new SecurityActionComparator<L,D,C,R,V,U,A,AT,USER>()).factory(SecurityActionComparator.Type.position);

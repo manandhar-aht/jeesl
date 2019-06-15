@@ -171,7 +171,7 @@
 								
 								<p:outputLabel value="#{msg.jeeslSecurityRole}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.permission.role}" effect="fade" autoWidth="false">
-									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
+									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.position}.#{r.position} #{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
 								</p:selectOneMenu>
 								
 								<p:outputLabel value="#{msg.jeeslWorkflowModificationLevel}"/>
@@ -194,7 +194,7 @@
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderTransitions()}" update="@form"/>
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTransition()}" update=":#{cc.id}:sStage"/>
 							
-							<p:column styleClass="jeeslCenter">  
+							<p:column styleClass="jeeslCenter">
 								<jtp:symbolizer value="#{t.type}"/>  
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslName}">
@@ -202,6 +202,9 @@
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslApprovalTrasitionDestination}">  
 								<h:outputText value="#{t.destination.name[localeCode].lang}"/>  
+							</p:column>
+							<p:column styleClass="jeeslCenter">
+								<h:graphicImage rendered="#{not empty t.role}" library="jeeslPrototypeGfx" name="12/sb/roles.png"/>
 							</p:column>
 											
 						</p:dataTable>
@@ -238,6 +241,12 @@
 								
 								<p:outputLabel value="#{msg.jeeslDescription}" rendered="#{not cc.attrs.bean.editTransition}"/>
 								<h:outputText value="#{cc.attrs.bean.transition.description[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
+								
+								<p:outputLabel value="#{msg.jeeslSecurityRole}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.transition.role}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editTransition}">
+									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.position}.#{r.position} #{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
+								</p:selectOneMenu>
+								<h:outputText value="#{cc.attrs.bean.transition.role.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>
 							</p:panelGrid>
 							<aht:tabTranslationEditor value="#{cc.attrs.bean.transition}" keys="#{cc.attrs.localeKeys}" withDescription="true" rendered="#{cc.attrs.bean.editTransition}"/>
 						</p:panel>

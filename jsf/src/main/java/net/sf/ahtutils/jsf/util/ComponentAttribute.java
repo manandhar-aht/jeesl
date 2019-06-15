@@ -22,7 +22,7 @@ public class ComponentAttribute
 	}
 	
 	public static <E extends Enum<E>> boolean getBoolean(E attribute, boolean defaultValue, FacesContext context, UIComponent component) {return getBoolean(attribute.toString(), defaultValue, context, component);}
-	public static boolean getBoolean(String attribute, boolean defaultValue, FacesContext context, UIComponent component)
+	private static boolean getBoolean(String attribute, boolean defaultValue, FacesContext context, UIComponent component)
 	{
 		String value = get(attribute,null,context,component);
 		if(value==null){value=""+defaultValue;}
@@ -139,16 +139,16 @@ public class ComponentAttribute
 		return t;
 	}
 	
-	public static boolean available(String attribute, FacesContext context, UIComponent component)
+	public static <E extends Enum<E>> boolean available(E attribute, FacesContext context, UIComponent component)
 	{
-		if(component.getAttributes().containsKey(attribute))
+		if(component.getAttributes().containsKey(attribute.toString()))
 		{
 //			logger.info(attribute+" is a Attribute");
 			return true;
 		} 
 		else
 		{
-			ValueExpression ve = component.getValueExpression(attribute);
+			ValueExpression ve = component.getValueExpression(attribute.toString());
 			if(ve!=null)
 			{
 //				logger.info(attribute+" is a ValueExpression");

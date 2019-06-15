@@ -34,7 +34,7 @@ public class Security extends UIPanel
 	{
 		
 		boolean accessGranted = false;
-		boolean accessGrantedAttribute = ComponentAttribute.getBoolean(Properties.allow.toString(),true,context,this);
+		boolean accessGrantedAttribute = ComponentAttribute.getBoolean(Properties.allow,true,context,this);
 		try
 		{
 			ValueExpression ve = this.getValueExpression(Properties.handler.toString());

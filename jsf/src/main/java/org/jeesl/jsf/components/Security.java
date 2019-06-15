@@ -8,18 +8,19 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIPanel;
 import javax.faces.context.FacesContext;
 
-import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
-import net.sf.ahtutils.jsf.util.ComponentAttribute;
-
 import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
+import org.jeesl.interfaces.web.JeeslJsfWorkflowHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.jsf.util.ComponentAttribute;
 
 @FacesComponent("org.jeesl.jsf.components.Security")
 public class Security extends UIPanel
 {
 	final static Logger logger = LoggerFactory.getLogger(Security.class);
-	private static enum Properties {action,handler,allow}
+	private static enum Properties {action,handler,allow,workflow}
 	private static enum Facets {denied}
 	
 	@Override public boolean getRendersChildren(){return true;}
@@ -29,15 +30,23 @@ public class Security extends UIPanel
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		
 		boolean accessGranted = false;
-		boolean accessGrantedAttribute = ComponentAttribute.getBoolean(Properties.allow.toString(),true,context,this);
+		boolean workflowAllow = true;
+		
+		if(ComponentAttribute.available(Properties.workflow,context,this))
+		{
+			JeeslJsfWorkflowHandler wfh = (JeeslJsfWorkflowHandler)ComponentAttribute.getObject(Properties.workflow,null,context,this);
+			workflowAllow = wfh.isAllowEntityModifications();
+		}
+		
+		
+		
+		boolean accessGrantedAttribute = ComponentAttribute.getBoolean(Properties.allow,true,context,this);
 		try
 		{
 			ValueExpression ve = this.getValueExpression(Properties.handler.toString());
 			if(ve==null){throw new UtilsNotFoundException("");}
-			JeeslJsfSecurityHandler handler = (JeeslJsfSecurityHandler)ve.getValue(context.getELContext());
-			
+			JeeslJsfSecurityHandler<?,?,?,?,?,?> handler = (JeeslJsfSecurityHandler<?,?,?,?,?,?>)ve.getValue(context.getELContext());
 			
 			String action = ComponentAttribute.get(Properties.action.toString(),context,this);
 			accessGranted = (handler.allow(action) && accessGrantedAttribute);
@@ -46,8 +55,10 @@ public class Security extends UIPanel
 		{
 			accessGranted = accessGrantedAttribute;
 		}
+		
+		
 			
-		if(accessGranted)
+		if(accessGranted && workflowAllow)
 		{
 			for(UIComponent uic : this.getChildren())
 			{

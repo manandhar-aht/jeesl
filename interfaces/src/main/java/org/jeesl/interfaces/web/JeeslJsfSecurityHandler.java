@@ -23,6 +23,7 @@ public interface JeeslJsfSecurityHandler <R extends JeeslSecurityRole<?,?,?,V,U,
 	List<R> getRoles();
 	
 	Map<R,Boolean> getMapHasRole();
+	boolean hasRole(R role);
 	
 	<E extends Enum<E>> boolean allowSuffixCode(E actionCode);
 	boolean allow(String actionCode);

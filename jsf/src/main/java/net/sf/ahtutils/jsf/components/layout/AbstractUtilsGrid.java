@@ -89,7 +89,7 @@ public class AbstractUtilsGrid extends UIPanel
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		if(ComponentAttribute.getBoolean(Properties.renderChildren.toString(), true, context, this))
+		if(ComponentAttribute.getBoolean(Properties.renderChildren,true,context,this))
 		{
 			for(UIComponent uic : this.getChildren())
 			{

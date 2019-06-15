@@ -60,7 +60,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	protected TxtSecurityActionFactory<L,D,C,R,V,U,A,AT,USER> txtAction;
 	protected Comparator<A> comparatorAction;
 	
-	protected Map<R,Boolean> mapHasRole;public Map<R,Boolean> getMapHasRole() {return mapHasRole;}
+	protected Map<R,Boolean> mapHasRole; @Override public Map<R,Boolean> getMapHasRole() {return mapHasRole;}
 	protected final Map<String,Boolean> mapAllow; public Map<String,Boolean> getMapAllow(){return mapAllow;}
 	
 	protected boolean noActions; public boolean isNoActions() {return noActions;}
@@ -141,9 +141,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	
 	protected void update()
 	{
-
-		clear();
-		
+		clear();	
 		if(debugOnInfo) {logger.info("Checking Assignment of "+view.getActions()+" "+fbSecurity.getClassAction().getSimpleName()+" for user");}
 		for(A action : view.getActions())
 		{
@@ -151,7 +149,6 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			if(identity!=null){allow=identity.hasAction(action.toCode());}
 			addActionWithSecurity(action,allow);
 		}
-		
 		checkIcon();
 	}
 	
@@ -200,7 +197,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 //		return true;
 	}
 	
-	public boolean hasRole(R role) {return mapHasRole.containsKey(role) && mapHasRole.get(role);}
+	@Override public boolean hasRole(R role) {return mapHasRole.containsKey(role) && mapHasRole.get(role);}
 	
 	protected boolean hasDomainRole(A action, Collection<R> staffRoles)
 	{
@@ -268,5 +265,18 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 				logger.info("\tAR\t"+area.toString());
 			}
 		}
+	}
+	
+	protected void updateActionsForDomainRoles(List<R> staffRoles)
+	{
+		for(A action : view.getActions())
+		{
+			boolean allowSystem = identity.hasAction(action.toCode());
+			boolean allowDomain = hasDomainRole(action,staffRoles);
+
+			boolean allow = allowSystem || allowDomain;
+			addActionWithSecurity(action, allow);
+		}
+		checkIcon();
 	}
 }

@@ -40,15 +40,15 @@ public class Row extends UIPanel
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException
 	{
-		boolean rChildren = ComponentAttribute.getBoolean(Properties.renderChildren.toString(), true, context, this);
+		boolean rChildren = ComponentAttribute.getBoolean(Properties.renderChildren, true, context, this);
 		
-		if(rChildren && ComponentAttribute.available(Properties.renderChildrenIfEjb.toString(),context,this))
+		if(rChildren && ComponentAttribute.available(Properties.renderChildrenIfEjb,context,this))
 		{
 			EjbWithId ejb = ComponentAttribute.getObject(EjbWithId.class,Properties.renderChildrenIfEjb.toString(),context,this);
 			if(ejb==null){rChildren=false;}
 		}
 		
-		if(rChildren && ComponentAttribute.available(Properties.renderChildrenIfEjbPersisted.toString(),context,this))
+		if(rChildren && ComponentAttribute.available(Properties.renderChildrenIfEjbPersisted,context,this))
 		{
 			EjbWithId ejb = ComponentAttribute.getObject(EjbWithId.class,Properties.renderChildrenIfEjbPersisted.toString(),context,this);
 			if(ejb==null){rChildren=false;}

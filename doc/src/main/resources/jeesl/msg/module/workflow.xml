@@ -130,11 +130,18 @@
     		<s:lang key="fr" translation="Communication"/>
     	</s:langs>
     </s:translation>
-    <s:translation key="jeeslApprovalCommunicationTemplate">
+    <s:translation key="jeeslWorkflowCommunicationTemplate">
     	<s:langs>
     		<s:lang key="de" translation="Vorlage"/>
     		<s:lang key="en" translation="Template"/>
     		<s:lang key="fr" translation="Template"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslWorkflowCommunicationScope">
+    	<s:langs>
+    		<s:lang key="de" translation="Bereich"/>
+    		<s:lang key="en" translation="Scope"/>
+    		<s:lang key="fr" translation="Scope"/>
     	</s:langs>
     </s:translation>
     

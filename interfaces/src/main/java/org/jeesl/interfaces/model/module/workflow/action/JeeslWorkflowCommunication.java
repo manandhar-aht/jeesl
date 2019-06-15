@@ -34,6 +34,6 @@ public interface JeeslWorkflowCommunication <T extends JeeslWorkflowTransition<?
 	SR getRole();
 	void setRole(SR role);
 	
-//	RE getScope();
-//	void setScope(RE scope);
+	RE getScope();
+	void setScope(RE scope);
 }

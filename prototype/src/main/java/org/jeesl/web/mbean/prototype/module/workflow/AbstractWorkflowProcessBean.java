@@ -105,6 +105,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AB> bots; public List<AB> getBots() {return bots;}
 	protected final List<RE> entities; public List<RE> getEntities() {return entities;}
+	protected final List<RE> scopes; public List<RE> getScopes() {return scopes;}
 	private final List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	private final List<EjbWithId> options; public List<EjbWithId> getOptions() {return options;}
 	
@@ -150,6 +151,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		actions = new ArrayList<>();
 		bots = new ArrayList<>();
 		entities = new ArrayList<>();
+		scopes = new ArrayList<>();
 		attributes = new ArrayList<>();
 		options = new ArrayList<>();
 		
@@ -418,6 +420,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		logger.info(AbstractLogMessage.saveEntity(transition));
 		communication.setTemplate(fWorkflow.find(fbTemplate.getClassTemplate(), communication.getTemplate()));
 		communication.setRole(fWorkflow.find(fbSecurity.getClassRole(), communication.getRole()));
+		communication.setScope(fWorkflow.find(fbRevision.getClassEntity(), communication.getScope()));
 		communication = fWorkflow.save(communication);
 		reloadCommunications();
 	}

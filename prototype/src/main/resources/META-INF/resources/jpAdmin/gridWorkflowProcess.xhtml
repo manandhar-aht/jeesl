@@ -333,7 +333,10 @@
 							<p:column rendered="true" headerText="#{msg.jeeslSecurityRole}">  
 								<h:outputText value="#{c.role.name[localeCode].lang}"/>  
 							</p:column>
-							<p:column rendered="true" headerText="#{msg.jeeslApprovalCommunicationTemplate}">  
+							<p:column rendered="true" headerText="#{msg.jeeslWorkflowCommunicationScope}">  
+								<h:outputText value="#{c.scope.name[localeCode].lang}"/>
+							</p:column>
+							<p:column rendered="true" headerText="#{msg.jeeslWorkflowCommunicationTemplate}">  
 								<h:outputText value="#{c.template.name[localeCode].lang}"/>
 							</p:column>
 						</p:dataTable>
@@ -354,11 +357,15 @@
 									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
 								</p:selectOneMenu>
 								
-								<p:outputLabel value="#{msg.jeeslApprovalCommunicationTemplate}"/>
+								<p:outputLabel value="#{msg.jeeslWorkflowCommunicationScope}"/>
+								<p:selectOneMenu value="#{cc.attrs.bean.communication.scope}" effect="fade" autoWidth="false">
+									<f:selectItems value="#{cc.attrs.bean.scopes}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="#{msg.jeeslWorkflowCommunicationTemplate}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.communication.template}" effect="fade" autoWidth="false">
 									<f:selectItems value="#{cc.attrs.bean.templates}" var="t" itemLabel="#{t.name[localeCode].lang}" itemValue="#{t}"/>
 								</p:selectOneMenu>
-									
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

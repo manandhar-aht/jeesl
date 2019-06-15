@@ -9,7 +9,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.jeesl.api.facade.module.JeeslApprovalFacade;
+import org.jeesl.api.facade.module.JeeslWorkflowFacade;
 import org.jeesl.factory.builder.module.WorkflowFactoryBuilder;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
@@ -42,7 +42,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									AX extends JeeslWorkflowContext<AX,L,D,?>,
 									AP extends JeeslWorkflowProcess<L,D,AX>,
 									AS extends JeeslWorkflowStage<L,D,AP,AST>,
@@ -65,13 +65,13 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									AY extends JeeslApprovalActivity<AT,AW,USER>,
 									USER extends JeeslUser<SR>>
 					extends UtilsFacadeBean
-					implements JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER>
+					implements JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER>
 {	
-	final static Logger logger = LoggerFactory.getLogger(JeeslApprovalFacadeBean.class);
+	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowFacadeBean.class);
 	
 	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 	
-	public JeeslApprovalFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval)
+	public JeeslWorkflowFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;

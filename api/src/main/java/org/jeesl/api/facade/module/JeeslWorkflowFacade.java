@@ -29,7 +29,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
+public interface JeeslWorkflowFacade <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										AX extends JeeslWorkflowContext<AX,L,D,?>,
 										AP extends JeeslWorkflowProcess<L,D,AX>,
 										AS extends JeeslWorkflowStage<L,D,AP,AST>,

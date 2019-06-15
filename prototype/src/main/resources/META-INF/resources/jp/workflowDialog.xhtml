@@ -27,7 +27,8 @@
 				<j:slot width="6">
 					<h:form id="fStages">
 						<p:dataTable var="a" value="#{cc.attrs.handler.activities}" draggableRows="false"
-								selection="#{cc.attrs.handler.activity}" selectionMode="single" rowKey="#{a.id}">
+								selection="#{cc.attrs.handler.activity}" selectionMode="single" rowKey="#{a.id}"
+								 rows="10" paginator="true" paginatorPosition="#{appSettingsBean.paginatorPosition}" paginatorTemplate="#{appSettingsBean.paginatorTemplate}">
 							<f:facet name="header">
 								<j:dtHeader title="#{msg.jeeslWorkflowHistory}">
 									
@@ -72,11 +73,9 @@
 				<j:slot width="6">
 					<h:form id="fTools">
 						<p:panel header="#{cc.attrs.handler.workflow.currentStage.name[localeCode].lang}" styleClass="jeeslPanel">
-							<ui:repeat value="#{cc.attrs.handler.transitions}" var="t">
-			                	<p:commandButton value="#{t.name[localeCode].lang}" type="button">
-									<p:ajax event="click" listener="#{cc.attrs.handler.prepareTransition(t)}" process="@form" update="#{cc.attrs.update}" oncomplete="PF('wvWorkflow').show();"/>
-								</p:commandButton>
-							</ui:repeat>
+							<p:panelGrid columns="1" columnClasses="jeeslGrid100">
+								<jp:workflowAction handler="#{cc.attrs.handler}" update="#{cc.attrs.update}" oncomplete="PF('wvWorkflow').show();"/>
+							</p:panelGrid>
 						</p:panel>
 					</h:form>
 					<h:form id="fConfirmation">

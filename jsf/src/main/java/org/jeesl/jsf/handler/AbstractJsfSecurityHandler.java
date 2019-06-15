@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.handler.security;
+package org.jeesl.jsf.handler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,8 +69,9 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 	protected boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
 	public AbstractJsfSecurityHandler(SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,?,USER> fbSecurity,
-									I identity, JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity,
-									String pageCode, Class<V> cV)
+									I identity,
+									JeeslSecurityFacade<L,D,C,R,V,U,A,AT,?,USER> fSecurity,
+									String pageCode)
 	{
 		this.fbSecurity=fbSecurity;
 		this.identity=identity;
@@ -94,12 +95,11 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		
 		try
 		{
-			view = fSecurity.fByCode(cV, pageCode);
-			view = fSecurity.load(cV, view);
+			view = fSecurity.fByCode(fbSecurity.getClassView(),pageCode);
+			view = fSecurity.load(fbSecurity.getClassView(), view);
 
 			roles = fSecurity.rolesForView(view);
 			noRoles = roles.size()==0;
-			update();
 		}
 		catch (UtilsNotFoundException e) {e.printStackTrace();}
 	}
@@ -139,10 +139,12 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		update();
 	}
 	
-	private void update()
+	protected void update()
 	{
-//		logger.info("AllowedActions:");
+
 		clear();
+		
+		if(debugOnInfo) {logger.info("Checking Assignment of "+view.getActions()+" "+fbSecurity.getClassAction().getSimpleName()+" for user");}
 		for(A action : view.getActions())
 		{
 			boolean allow = false;
@@ -160,10 +162,28 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 		
 		mapAllow.clear();
 		mapHasRole.clear();
+		
+		if(debugOnInfo) {logger.info("Checking Assignment of "+roles.size()+" "+fbSecurity.getClassRole().getSimpleName()+" for user");}
 		for(R r : roles)
 		{
-			if(identity!=null){mapHasRole.put(r, identity.hasRole(r.getCode()));}
-			else{mapHasRole.put(r,false);}
+			StringBuilder sb = null;
+			if(debugOnInfo)
+			{
+				sb = new StringBuilder();
+				sb.append("\t").append(r.getCode()).append(": ");
+			}
+			if(identity!=null)
+			{
+				boolean b = identity.hasRole(r.getCode());
+				if(debugOnInfo) {sb.append(b);}
+				mapHasRole.put(r,b);
+			}
+			else
+			{
+				if(debugOnInfo) {sb.append(" false (identity is null)");}
+				mapHasRole.put(r,false);
+			}
+			if(debugOnInfo) {logger.info(sb.toString());}
 		}
 	}
 

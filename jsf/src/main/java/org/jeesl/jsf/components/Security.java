@@ -24,10 +24,7 @@ public class Security extends UIPanel
 	
 	@Override public boolean getRendersChildren(){return true;}
 	
-	private Boolean renderChilds;
-	
-	public Boolean getRenderChilds() {return renderChilds;}
-	public void setRenderChilds(Boolean renderChilds) {this.renderChilds = renderChilds;}
+	private Boolean renderChilds; public Boolean getRenderChilds() {return renderChilds;} public void setRenderChilds(Boolean renderChilds) {this.renderChilds = renderChilds;}
 	
 	@Override
 	public void encodeChildren(FacesContext context) throws IOException

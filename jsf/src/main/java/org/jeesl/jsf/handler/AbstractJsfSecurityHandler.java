@@ -39,7 +39,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 													AR extends JeeslSecurityArea<L,D,V>,
 													USER extends JeeslUser<R>,
 													I extends JeeslIdentity<R,V,U,A,USER>>
-								implements JeeslJsfSecurityHandler<L,D,C,R,V,U,A,AT,AR,USER>
+								implements JeeslJsfSecurityHandler<R,V,U,A,AR,USER>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJsfSecurityHandler.class);
 	public static final long serialVersionUID=1;

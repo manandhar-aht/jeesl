@@ -63,7 +63,7 @@
 								<f:facet name="header"><h:outputText value="#{msg.jeeslRemark}"/></f:facet>
 								<h:outputText value="#{a.remark}" />
 							</p:column>
-							<p:column>
+							<p:column rendered="#{cc.attrs.handler.historyWithSignature}">
 								<f:facet name="header"><h:outputText value="#{msg.jeeslWorkflowSignature}"/></f:facet>
 								<o:graphicImage value="#{cc.attrs.handler.mapSignature[a]}" dataURI="true" rendered="#{not empty cc.attrs.handler.mapSignature[a]}"/>
 							</p:column>			

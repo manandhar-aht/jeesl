@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public class EjbWorkflowActionFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
+public class EjbWorkflowActionFactory<T extends JeeslWorkflowTransition<?,?,?,?,?>,
 											AA extends JeeslWorkflowAction<T,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,?,?,?>,
 											AO extends EjbWithId,

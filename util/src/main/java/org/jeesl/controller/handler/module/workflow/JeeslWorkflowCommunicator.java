@@ -56,10 +56,10 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-										AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
+										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<AT,MT,SR>,
-										AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+										AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,MD,?>,
@@ -68,7 +68,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 										AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-										AY extends JeeslApprovalActivity<AT,AW,USER>,
+										AY extends JeeslApprovalActivity<WT,AW,USER>,
 										USER extends JeeslUser<SR>
 										>
 {
@@ -77,7 +77,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
 	private final JeeslWorkflowMessageHandler<SR,MT,MD,AW,USER> messageHandler;
-	private final FtlWorkflowModelFactory<L,D,AS,AT,AY,USER> fmFactory;
+	private final FtlWorkflowModelFactory<L,D,AS,WT,AY,USER> fmFactory;
 	
 	private Configuration templateConfig;
 	

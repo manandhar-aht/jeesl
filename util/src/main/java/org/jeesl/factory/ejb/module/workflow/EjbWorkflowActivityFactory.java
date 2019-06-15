@@ -9,9 +9,9 @@ import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbWorkflowActivityFactory<AT extends JeeslWorkflowTransition<?,?,?,?>,
+public class EjbWorkflowActivityFactory<WT extends JeeslWorkflowTransition<?,?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,AY>,
-										AY extends JeeslApprovalActivity<AT,AW,USER>,
+										AY extends JeeslApprovalActivity<WT,AW,USER>,
 										USER extends JeeslUser<?>
 
 >
@@ -25,7 +25,7 @@ public class EjbWorkflowActivityFactory<AT extends JeeslWorkflowTransition<?,?,?
         this.cActivity = cActivity;
 	}
 	    
-	public AY build(AW workflow, AT transition, USER user)
+	public AY build(AW workflow, WT transition, USER user)
 	{
 		AY ejb = null;
 		try

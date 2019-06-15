@@ -10,10 +10,10 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbWorkflowCommunicationFactory<T extends JeeslWorkflowTransition<?,?,?,?>,
-											C extends JeeslWorkflowCommunication<T,MT,MR>,
+public class EjbWorkflowCommunicationFactory<WT extends JeeslWorkflowTransition<?,?,?,?,SR>,
+											C extends JeeslWorkflowCommunication<WT,MT,SR>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
-											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
+											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowCommunicationFactory.class);
@@ -25,7 +25,7 @@ public class EjbWorkflowCommunicationFactory<T extends JeeslWorkflowTransition<?
         this.cCommunication = cCommunication;
 	}
 	    
-	public C build(T transition, List<C> list)
+	public C build(WT transition, List<C> list)
 	{
 		C ejb = null;
 		try

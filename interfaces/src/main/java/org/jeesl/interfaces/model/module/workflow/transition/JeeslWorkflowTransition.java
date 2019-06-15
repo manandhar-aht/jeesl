@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.module.workflow.transition;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
+import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -18,7 +19,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithVisible;
 
 public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDescription,
 									S extends JeeslWorkflowStage<L,D,?,?>,
-									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>
+									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+									SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver,
@@ -38,4 +40,7 @@ public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDe
 	
 	Boolean getScreenSignature();
 	void setScreenSignature(Boolean screenSignature);
+	
+	SR getRole();
+	void setRole(SR role);
 }

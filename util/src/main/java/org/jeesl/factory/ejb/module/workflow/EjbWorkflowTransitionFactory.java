@@ -9,21 +9,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbWorkflowTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
-											AT extends JeeslWorkflowTransition<?,?,AS,?>
+											WT extends JeeslWorkflowTransition<?,?,AS,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowTransitionFactory.class);
 	
-	final Class<AT> cTransition;
+	final Class<WT> cTransition;
     
-	public EjbWorkflowTransitionFactory(final Class<AT> cTransition)
+	public EjbWorkflowTransitionFactory(final Class<WT> cTransition)
 	{       
         this.cTransition = cTransition;
 	}
 	    
-	public AT build(AS source, List<AT> list)
+	public WT build(AS source, List<WT> list)
 	{
-		AT ejb = null;
+		WT ejb = null;
 		try
 		{
 			ejb = cTransition.newInstance();

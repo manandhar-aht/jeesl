@@ -37,10 +37,10 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 										ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-										AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
+										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<AT,MT,SR>,
-										AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+										AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,?,?>,
@@ -49,11 +49,11 @@ public interface JeeslApprovalFacade <L extends UtilsLang, D extends UtilsDescri
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 										AL extends JeeslApprovalLink<AW,RE>,
 										AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-										AY extends JeeslApprovalActivity<AT,AW,USER>,
+										AY extends JeeslApprovalActivity<WT,AW,USER>,
 										USER extends JeeslUser<SR>>
 			extends UtilsFacade
 {	
-	AT fTransitionBegin(AP process);
+	WT fTransitionBegin(AP process);
 	
 	<W extends JeeslWithWorkflow<AW>> AL fLink(AP process, W owner) throws UtilsNotFoundException;
 //	<W extends JeeslWithWorkflow<AW>> AW fWorkflow(Class<W> cWith, W with) throws UtilsNotFoundException;

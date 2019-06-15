@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
-public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?,?>,
+public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,?>,
 										USER extends JeeslUser<?>
 									>

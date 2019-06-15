@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslWorkflowCommunication <T extends JeeslWorkflowTransition<?,?,?,?>,
+public interface JeeslWorkflowCommunication <T extends JeeslWorkflowTransition<?,?,?,?,?>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
 											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
 									>

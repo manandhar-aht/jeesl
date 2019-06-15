@@ -50,7 +50,7 @@ public class JeeslApprovalFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 									APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-									AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
+									AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 									AC extends JeeslWorkflowCommunication<AT,MT,SR>,
 									AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,

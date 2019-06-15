@@ -15,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class FtlWorkflowModelFactory <L extends UtilsLang, D extends UtilsDescription,
 										AS extends JeeslWorkflowStage<L,D,?,?>,
-										AT extends JeeslWorkflowTransition<L,D,AS,?>,
+										AT extends JeeslWorkflowTransition<L,D,AS,?,?>,
 										AY extends JeeslApprovalActivity<AT,?,USER>,
 										USER extends JeeslUser<?>
 >

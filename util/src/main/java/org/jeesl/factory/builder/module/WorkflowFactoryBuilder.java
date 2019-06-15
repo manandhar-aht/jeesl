@@ -45,10 +45,10 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 									APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-									AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
+									WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-									AC extends JeeslWorkflowCommunication<AT,MT,SR>,
-									AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+									AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+									AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 									AB extends JeeslWorkflowBot<AB,L,D,?>,
 									AO extends EjbWithId,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
@@ -57,7 +57,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 									AL extends JeeslApprovalLink<AW,RE>,
 									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-									AY extends JeeslApprovalActivity<AT,AW,USER>,
+									AY extends JeeslApprovalActivity<WT,AW,USER>,
 									USER extends JeeslUser<SR>>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -70,7 +70,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<ASP> cPermission; public Class<ASP> getClassPermission() {return cPermission;}
 	private final Class<APT> cPermissionType; public Class<APT> getClassPermissionType() {return cPermissionType;}
 	private final Class<WML> cModificationLevel; public Class<WML> getClassModificationLevel() {return cModificationLevel;}
-	private final Class<AT> cTransition; public Class<AT> getClassTransition() {return cTransition;}
+	private final Class<WT> cTransition; public Class<WT> getClassTransition() {return cTransition;}
 	private final Class<ATT> cTransitionType; public Class<ATT> getClassTransitionType() {return cTransitionType;}
 	private final Class<AC> cCommunication; public Class<AC> getClassCommunication() {return cCommunication;}
 	private final Class<AA> cAction; public Class<AA> getClassAction() {return cAction;}
@@ -87,7 +87,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<ASP> cPermission,
 									final Class<APT> cPermissionType,
 									final Class<WML> cModificationLevel,
-									final Class<AT> cTransition,
+									final Class<WT> cTransition,
 									final Class<ATT> cTransitionType,
 									final Class<AC> cCommunication,
 									final Class<AA> cAction,
@@ -117,10 +117,10 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbWorkflowProcessFactory<AP> ejbProcess() {return new EjbWorkflowProcessFactory<>(cProcess);}
 	public EjbWorkflowStageFactory<AP,AS> ejbStage() {return new EjbWorkflowStageFactory<>(cStage);}
 	public EjbWorkflowPermissionFactory<AS,ASP,WML,SR> ejbPermission() {return new EjbWorkflowPermissionFactory<>(cPermission);}
-	public EjbWorkflowTransitionFactory<AS,AT> ejbTransition() {return new EjbWorkflowTransitionFactory<>(cTransition);}
-	public EjbWorkflowCommunicationFactory<AT,AC,MT,SR> ejbCommunication() {return new EjbWorkflowCommunicationFactory<>(cCommunication);}
-	public EjbWorkflowActionFactory<AT,AA,AB,AO,RE,RA> ejbAction() {return new EjbWorkflowActionFactory<>(cAction);}
+	public EjbWorkflowTransitionFactory<AS,WT> ejbTransition() {return new EjbWorkflowTransitionFactory<>(cTransition);}
+	public EjbWorkflowCommunicationFactory<WT,AC,MT,SR> ejbCommunication() {return new EjbWorkflowCommunicationFactory<>(cCommunication);}
+	public EjbWorkflowActionFactory<WT,AA,AB,AO,RE,RA> ejbAction() {return new EjbWorkflowActionFactory<>(cAction);}
 	public EjbWorkflowLinkFactory<RE,AL,AW> ejbLink() {return new EjbWorkflowLinkFactory<>(cLink);}
 	public EjbWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbWorkflowFactory<>(cWorkflow);}
-	public EjbWorkflowActivityFactory<AT,AW,AY,USER> ejbActivity() {return new EjbWorkflowActivityFactory<>(cActivity);}
+	public EjbWorkflowActivityFactory<WT,AW,AY,USER> ejbActivity() {return new EjbWorkflowActivityFactory<>(cActivity);}
 }

@@ -54,10 +54,10 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 							APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 							WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-							AT extends JeeslWorkflowTransition<L,D,AS,ATT>,
+							WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 							ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-							AC extends JeeslWorkflowCommunication<AT,MT,SR>,
-							AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+							AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+							AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 							AB extends JeeslWorkflowBot<AB,L,D,?>,
 							AO extends EjbWithId,
 							MT extends JeeslIoTemplate<L,D,?,?,MD,?>,
@@ -67,7 +67,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 							AL extends JeeslApprovalLink<AW,RE>,
 							AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-							AY extends JeeslApprovalActivity<AT,AW,USER>,
+							AY extends JeeslApprovalActivity<WT,AW,USER>,
 							USER extends JeeslUser<SR>
 							>
 {
@@ -75,17 +75,18 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private final static boolean debugOnInfo = true;
 	
-	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval;
+	private final JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 		
-	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MD,SR,RE,RA,AW,AY,USER> communicator;
+	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MD,SR,RE,RA,AW,AY,USER> communicator;
 	private final JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler;
 	
 	private final Map<AY,byte[]> mapSignature; public Map<AY, byte[]> getMapSignature() {return mapSignature;}
 	
-	private final List<AY> activities; public List<AY> getActivities() {return activities;} private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
+	private final List<AY> activities; public List<AY> getActivities() {return activities;}
+	private final List<WT> transitions; public List<WT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
 	
@@ -95,13 +96,13 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private AL link; public AL getLink() {return link;} public void setLink(AL link) {this.link = link;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
 	private AY activity; public AY getActivity() {return activity;} public void setActivity(AY activity) {this.activity = activity;}
-	private AT transition; public AT getTransition() {return transition;}
+	private WT transition; public WT getTransition() {return transition;}
 	private String remark; public String getRemark() {return remark;} public void setRemark(String remark) {this.remark = remark;}
 	private String screenSignature; public String getScreenSignature() {return screenSignature;}public void setScreenSignature(String screenSignature) {this.screenSignature = screenSignature;}
 	
-	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
 								IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
-								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
+								JeeslApprovalFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
 								JeeslWorkflowMessageHandler<SR,MT,MD,AW,USER> recipientResolver,
 								JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler)
 	{
@@ -135,7 +136,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		this.user=user;
 		workflow = fbApproval.ejbWorkflow().build(process);
 	
-		AT transition = fApproval.fTransitionBegin(process);
+		WT transition = fApproval.fTransitionBegin(process);
 		workflow.setCurrentStage(transition.getDestination());
 		
 		AY activity = fbApproval.ejbActivity().build(workflow,transition,user);
@@ -203,7 +204,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(debugOnInfo) {logger.info("reloadWorkflow: "+transitions.size());}
 	}
 	
-	public void prepareTransition(AT t)
+	public void prepareTransition(WT t)
 	{
 		transition = fApproval.find(fbApproval.getClassTransition(), t);
 		logger.info("prepareTransition for "+transition.toString());

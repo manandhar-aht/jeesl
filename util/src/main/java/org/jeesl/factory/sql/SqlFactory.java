@@ -2,6 +2,8 @@ package org.jeesl.factory.sql;
 
 import java.util.List;
 
+import javax.persistence.Table;
+
 import org.jeesl.util.query.sql.JeeslSqlQuery;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
@@ -28,6 +30,15 @@ public class SqlFactory
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(item).append(".").append(attribute.toString());
+		return sb.toString();
+	}
+	
+	public static <T extends EjbWithId> String delete(Class<T> c)
+	{
+		if(c.getAnnotation(Table.class)==null) {throw new RuntimeException("Not a @Table)");}
+		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM ");
+		sb.append(c.getAnnotation(Table.class).name());
 		return sb.toString();
 	}
 	

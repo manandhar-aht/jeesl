@@ -6,14 +6,16 @@ import org.jeesl.factory.ejb.util.EjbPositionFactory;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowCommunication;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbWorkflowCommunicationFactory<WT extends JeeslWorkflowTransition<?,?,?,?,SR>,
-											C extends JeeslWorkflowCommunication<WT,MT,SR>,
+											C extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
-											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>
+											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>,
+											RE extends JeeslRevisionEntity<?,?,?,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowCommunicationFactory.class);

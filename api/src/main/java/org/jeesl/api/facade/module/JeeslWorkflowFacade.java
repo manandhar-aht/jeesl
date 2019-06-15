@@ -39,7 +39,7 @@ public interface JeeslWorkflowFacade <L extends UtilsLang, D extends UtilsDescri
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+										AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,

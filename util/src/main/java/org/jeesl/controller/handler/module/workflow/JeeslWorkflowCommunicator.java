@@ -58,7 +58,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+										AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
@@ -121,7 +121,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 		Template templateHeader = new Template("name",definition.getHeader().get("en").getLang(),templateConfig);
 		Template templateBody = new Template("name",definition.getDescription().get("en").getLang(),templateConfig);
 		
-		List<USER> recipients = messageHandler.getRecipients(entity,communication.getRole());
+		List<USER> recipients = messageHandler.getRecipients(entity,communication.getRole(),activity.getWorkflow());
 		if(debugOnInfo) {logger.info("Building for "+recipients.size());}
 		Mails mails = XmlMailsFactory.build();
 		for(USER user : recipients)

@@ -59,7 +59,7 @@ public abstract class AbstractWorkflowDashboardBean <L extends UtilsLang, D exte
 											WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-											AC extends JeeslWorkflowCommunication<AT,MT,SR>,
+											AC extends JeeslWorkflowCommunication<AT,MT,SR,RE>,
 											AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,L,D,?>,
 											AO extends EjbWithId,

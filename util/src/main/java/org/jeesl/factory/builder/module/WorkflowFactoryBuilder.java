@@ -47,7 +47,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 									WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-									AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+									AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 									AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 									AB extends JeeslWorkflowBot<AB,L,D,?>,
 									AO extends EjbWithId,
@@ -118,7 +118,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbWorkflowStageFactory<AP,AS> ejbStage() {return new EjbWorkflowStageFactory<>(cStage);}
 	public EjbWorkflowPermissionFactory<AS,ASP,WML,SR> ejbPermission() {return new EjbWorkflowPermissionFactory<>(cPermission);}
 	public EjbWorkflowTransitionFactory<AS,WT> ejbTransition() {return new EjbWorkflowTransitionFactory<>(cTransition);}
-	public EjbWorkflowCommunicationFactory<WT,AC,MT,SR> ejbCommunication() {return new EjbWorkflowCommunicationFactory<>(cCommunication);}
+	public EjbWorkflowCommunicationFactory<WT,AC,MT,SR,RE> ejbCommunication() {return new EjbWorkflowCommunicationFactory<>(cCommunication);}
 	public EjbWorkflowActionFactory<WT,AA,AB,AO,RE,RA> ejbAction() {return new EjbWorkflowActionFactory<>(cAction);}
 	public EjbWorkflowLinkFactory<RE,AL,AW> ejbLink() {return new EjbWorkflowLinkFactory<>(cLink);}
 	public EjbWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbWorkflowFactory<>(cWorkflow);}

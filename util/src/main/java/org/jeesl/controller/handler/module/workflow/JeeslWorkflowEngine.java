@@ -62,7 +62,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 							WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 							ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-							AC extends JeeslWorkflowCommunication<WT,MT,SR>,
+							AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 							AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 							AB extends JeeslWorkflowBot<AB,L,D,?>,
 							AO extends EjbWithId,
@@ -212,12 +212,12 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 			boolean wspIsResponsible = wsp.getType().getCode().contentEquals(JeeslWorkflowPermissionType.Code.responsible.toString());
 			boolean userHasRole = security.hasRole(wsp.getRole());
 			boolean wspIsFullAllow = wsp.getModificationLevel().getCode().contentEquals(JeeslWorkflowModificationLevel.Code.full.toString());
-			if(wspIsResponsible && userHasRole) {hasResponsibleRole=true;}
-			if(wspIsFullAllow && userHasRole) {allowEntityModifications=true;}
+			hasResponsibleRole = wspIsResponsible && userHasRole;
+			allowEntityModifications = wspIsFullAllow && userHasRole;
 			if(debugOnInfo) {logger.info("\t"+wsp.getPosition()+" "+wsp.getRole().getCode()+":"+userHasRole+" "+JeeslWorkflowPermissionType.Code.responsible+":"+wspIsResponsible+" "+JeeslWorkflowModificationLevel.Code.full+":"+wspIsFullAllow);}
 		}
 		
-		if(hasResponsibleRole && EjbIdFactory.isSaved(entity))
+		if(EjbIdFactory.isSaved(entity))
 		{
 			List<WT> availableTransitions = fWorkflow.allForParent(fbWorkflow.getClassTransition(), workflow.getCurrentStage());
 			if(debugOnInfo) {logger.info("Checking "+availableTransitions.size()+" "+fbWorkflow.getClassTransition().getSimpleName());}
@@ -227,19 +227,20 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 				if(debugOnInfo){sb = new StringBuilder();sb.append("\tChecking "+fbWorkflow.getClassTransition().getSimpleName()+" "+t.getPosition());}
 				if(t.getRole()==null)
 				{
-					if(debugOnInfo) {sb.append(" has no special role, adding");}
-					transitions.add(t);
+					if(debugOnInfo) {sb.append(" has no special role, adding if responsible?"+hasResponsibleRole);}
+					if(hasResponsibleRole) {transitions.add(t);}
 				}
 				else
 				{
-					boolean userHasRole = security.hasRole(t.getRole());
-					if(debugOnInfo) {sb.append(" has special role ").append(t.getRole().getCode()).append(" user:").append(userHasRole);}
-					if(userHasRole) {transitions.add(t);}
+					boolean hasSpecialRole = security.hasRole(t.getRole());
+					if(debugOnInfo) {sb.append(" has special role ").append(t.getRole().getCode()).append(" user:").append(hasSpecialRole);}
+					if(hasSpecialRole) {transitions.add(t);}
 				}
 				if(debugOnInfo) {logger.info(sb.toString());}
 				
 			}
 		}
+		else if(debugOnInfo) {logger.info("Not Checking Transitions because etiher hasResponsibleRole:"+hasResponsibleRole+" or isSaved"+EjbIdFactory.isSaved(entity));}
 		
 		activities.clear();
 		if(EjbIdFactory.isSaved(workflow)){activities.addAll(fWorkflow.allForParent(fbWorkflow.getClassActivity(), workflow));}

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -15,7 +16,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslWorkflowCommunication <T extends JeeslWorkflowTransition<?,?,?,?,?>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
-											MR extends JeeslSecurityRole<?,?,?,?,?,?,?>
+											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>,
+											RE extends JeeslRevisionEntity<?,?,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
@@ -29,6 +31,9 @@ public interface JeeslWorkflowCommunication <T extends JeeslWorkflowTransition<?
 	MT getTemplate();
 	void setTemplate(MT template);
 	
-	MR getRole();
-	void setRole(MR role);
+	SR getRole();
+	void setRole(SR role);
+	
+//	RE getScope();
+//	void setScope(RE scope);
 }

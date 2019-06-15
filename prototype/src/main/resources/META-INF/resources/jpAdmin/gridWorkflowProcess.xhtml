@@ -244,6 +244,7 @@
 								
 								<p:outputLabel value="#{msg.jeeslSecurityRole}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.transition.role}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editTransition}">
+									<f:selectItem itemLabel="--"/>
 									<f:selectItems value="#{cc.attrs.bean.roles}" var="r" itemLabel="#{r.category.position}.#{r.position} #{r.category.name[localeCode].lang} - #{r.name[localeCode].lang}" itemValue="#{r}"/>
 								</p:selectOneMenu>
 								<h:outputText value="#{cc.attrs.bean.transition.role.name[localeCode].lang}" rendered="#{not cc.attrs.bean.editTransition}"/>

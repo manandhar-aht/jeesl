@@ -2,7 +2,6 @@ package org.jeesl.interfaces.controller.handler.module.workflow;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
@@ -19,15 +18,14 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 public interface JeeslWorkflowMessageHandler<ROLE extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 											MT extends JeeslIoTemplate<?,?,?,?,MD,?>,
 											MD extends JeeslIoTemplateDefinition<?,?,MT>,
-										   AW extends JeeslApprovalWorkflow<?,?,?>,
-										   USER extends JeeslUser<ROLE>>
+											WF extends JeeslApprovalWorkflow<?,?,?>,
+											USER extends JeeslUser<ROLE>>
 							extends Serializable
 {
-	List<USER> getRecipients(JeeslWithWorkflow<AW> workflowOwner, ROLE role);
+	List<USER> getRecipients(JeeslWithWorkflow<WF> workflowOwner, ROLE role, WF workflow);
 	EmailAddress buildEmail(USER user);
 	String localeCode(USER user);
 	void spool(Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;
 	
 	List<MD> getDefinitions(MT template);
- 	Map<String,Object> buildModel(MT template, USER user);
 }

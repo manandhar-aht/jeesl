@@ -1,16 +1,19 @@
 package org.jeesl.interfaces.model.system.security.util;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslStaff<R extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 							USER extends JeeslUser<R>,
 							D1 extends EjbWithId, D2 extends EjbWithId>
-			extends EjbWithId,EjbSaveable,EjbRemoveable
+			extends Serializable,EjbWithId,EjbPersistable,EjbSaveable,EjbRemoveable
 {
 	public enum Attributes {role,user,domain};
 	

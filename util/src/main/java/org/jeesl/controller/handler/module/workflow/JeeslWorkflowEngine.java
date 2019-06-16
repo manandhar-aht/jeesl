@@ -62,7 +62,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 							WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 							ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-							AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
+							WC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 							AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 							AB extends JeeslWorkflowBot<AB,L,D,?>,
 							AO extends EjbWithId,
@@ -84,13 +84,13 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;}
 	
-	private final JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fWorkflow;
+	private final JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fWorkflow;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fbWorkflow;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fbWorkflow;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	
 	private JeeslJsfSecurityHandler<SR,?,?,?,?,USER> security;
-	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,AC,AA,AB,AO,MT,MD,SR,RE,RA,AW,WY,USER> communicator;
+	private final JeeslWorkflowCommunicator<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MD,SR,RE,RA,AW,WY,USER> communicator;
 	private final JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler;
 	
 	private final Comparator<WY> cpActivity;
@@ -100,7 +100,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private final List<WY> activities; public List<WY> getActivities() {return activities;}
 	private final List<WT> transitions; public List<WT> getTransitions() {return transitions;}
 	private final List<AA> actions; public List<AA> getActions() {return actions;}
-	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
+	private final List<WC> communications; public List<WC> getCommunications() {return communications;}
 	
 	private USER user;
 	private JeeslWithWorkflow<AW> entity;
@@ -115,10 +115,10 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private boolean historyWithSignature; public boolean isHistoryWithSignature() {return historyWithSignature;}
 	private boolean allowEntityModifications; @Override public boolean isAllowEntityModifications() {return allowEntityModifications;}
 	
-	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fbWorkflow,
+	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fbWorkflow,
 								IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
-								JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fWorkflow,
-								JeeslWorkflowMessageHandler<SR,MT,MD,AW,USER> recipientResolver,
+								JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,SR,RE,RA,AL,AW,WY,USER> fWorkflow,
+								JeeslWorkflowMessageHandler<WC,SR,RE,MT,MD,AW,WY,USER> recipientResolver,
 								JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW> actionHandler)
 	{
 		this.fbWorkflow=fbWorkflow;

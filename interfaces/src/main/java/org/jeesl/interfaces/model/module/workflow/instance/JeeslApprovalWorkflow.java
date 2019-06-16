@@ -12,9 +12,9 @@ import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslApprovalWorkflow <AP extends JeeslWorkflowProcess<?,?,?>,
-										AS extends JeeslWorkflowStage<?,?,AP,?>,
-										AY extends JeeslApprovalActivity<?,?,?>
+public interface JeeslApprovalWorkflow <WP extends JeeslWorkflowProcess<?,?,?>,
+										WS extends JeeslWorkflowStage<?,?,WP,?>,
+										WY extends JeeslApprovalActivity<?,?,?>
 									
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
@@ -22,12 +22,12 @@ public interface JeeslApprovalWorkflow <AP extends JeeslWorkflowProcess<?,?,?>,
 {
 	public static enum Attributes{process}
 	
-	AP getProcess();
-	void setProcess(AP process);
+	WP getProcess();
+	void setProcess(WP process);
 	
-	AS getCurrentStage();
-	void setCurrentStage(AS currentStage);
+	WS getCurrentStage();
+	void setCurrentStage(WS currentStage);
 	
-	List<AY> getActivities();
-	void setActivities(List<AY> activities);
+	List<WY> getActivities();
+	void setActivities(List<WY> activities);
 }

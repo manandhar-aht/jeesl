@@ -428,7 +428,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void selectCommunication() throws UtilsNotFoundException
 	{
 		reset(WorkflowProcesslResetHandler.build().none());
-		logger.info(AbstractLogMessage.selectEntity(transition));
+		logger.info(AbstractLogMessage.selectEntity(communication));
 		communication = fWorkflow.find(fbWorkflow.getClassCommunication(),communication);
 	}
 	

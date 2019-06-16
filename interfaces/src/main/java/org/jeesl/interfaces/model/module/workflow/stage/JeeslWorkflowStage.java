@@ -17,7 +17,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslWorkflowStage <L extends UtilsLang, D extends UtilsDescription,
-									P extends JeeslWorkflowProcess<L,D,?>,
+									WP extends JeeslWorkflowProcess<L,D,?>,
 									AST extends JeeslWorkflowStageType<AST,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
@@ -26,8 +26,8 @@ public interface JeeslWorkflowStage <L extends UtilsLang, D extends UtilsDescrip
 {
 	public static enum Attributes{process}
 	
-	P getProcess();
-	void setProcess(P process);
+	WP getProcess();
+	void setProcess(WP process);
 	
 	AST getType();
 	void setType(AST type);

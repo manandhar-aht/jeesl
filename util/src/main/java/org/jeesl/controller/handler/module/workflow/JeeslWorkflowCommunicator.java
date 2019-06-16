@@ -2,6 +2,7 @@ package org.jeesl.controller.handler.module.workflow;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,16 +50,16 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-										AX extends JeeslWorkflowContext<AX,L,D,?>,
-										AP extends JeeslWorkflowProcess<L,D,AX>,
-										AS extends JeeslWorkflowStage<L,D,AP,AST>,
+										WX extends JeeslWorkflowContext<WX,L,D,?>,
+										WP extends JeeslWorkflowProcess<L,D,WX>,
+										AS extends JeeslWorkflowStage<L,D,WP,AST>,
 										AST extends JeeslWorkflowStageType<AST,?,?,?>,
 										ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
+										WC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
@@ -67,8 +68,8 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
-										AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-										AY extends JeeslApprovalActivity<WT,AW,USER>,
+										WF extends JeeslApprovalWorkflow<WP,AS,WY>,
+										WY extends JeeslApprovalActivity<WT,WF,USER>,
 										USER extends JeeslUser<SR>
 										>
 {
@@ -76,13 +77,13 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 	
 	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
-	private final JeeslWorkflowMessageHandler<SR,MT,MD,AW,USER> messageHandler;
-	private final FtlWorkflowModelFactory<L,D,AS,WT,AY,USER> fmFactory;
+	private final JeeslWorkflowMessageHandler<WC,SR,RE,MT,MD,WF,WY,USER> messageHandler;
+	private final FtlWorkflowModelFactory<L,D,WP,AS,WT,WF,WY,USER> fmFactory;
 	
 	private Configuration templateConfig;
 	
 	
-	public JeeslWorkflowCommunicator(JeeslWorkflowMessageHandler<SR,MT,MD,AW,USER> messageHandler)
+	public JeeslWorkflowCommunicator(JeeslWorkflowMessageHandler<WC,SR,RE,MT,MD,WF,WY,USER> messageHandler)
 	{
 		this.messageHandler=messageHandler;
 		fmFactory = new FtlWorkflowModelFactory<>();
@@ -90,18 +91,17 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 		debugOnInfo = false;
 	}
 	
-	public void build(AY activity, JeeslWithWorkflow<AW> entity, List<AC> communications)
+	public void build(WY activity, JeeslWithWorkflow<WF> entity, List<WC> communications)
 	{
 		if(debugOnInfo) {logger.info("Buidling Messages for "+entity.toString());}
 		Mails mails = XmlMailsFactory.build();
-		for(AC communication : communications)
+		for(WC communication : communications)
 		{
-			try {
+			try
+			{
 				mails.getMail().addAll(build(activity, entity,communication).getMail());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			catch (IOException e) {e.printStackTrace();}
 		}
 		for(Mail mail : mails.getMail())
 		{
@@ -113,48 +113,66 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 		}
 	}
 	
-	private Mails build(AY activity, JeeslWithWorkflow<AW> entity, AC communication) throws IOException
+	private Mails build(WY activity, JeeslWithWorkflow<WF> entity, WC communication) throws IOException
 	{
 		List<MD> definitions = messageHandler.getDefinitions(communication.getTemplate());
 		MD definition = definitions.get(0);
 		
-		Template templateHeader = new Template("name",definition.getHeader().get("en").getLang(),templateConfig);
-		Template templateBody = new Template("name",definition.getDescription().get("en").getLang(),templateConfig);
+		Map<String,Template> templates = new HashMap<>();
+		for(String key : definition.getHeader().keySet())
+		{
+			String txt = definition.getHeader().get(key).getLang();
+			if(txt!=null && txt.trim().length()>0) {templates.put("h:"+key, new Template("header-"+key,txt,templateConfig));}
+		}
+		for(String key : definition.getDescription().keySet())
+		{
+			String txt = definition.getDescription().get(key).getLang();
+			if(txt!=null && txt.trim().length()>0) {templates.put("b:"+key, new Template("body-"+key,txt,templateConfig));}
+		}
 		
-		List<USER> recipients = messageHandler.getRecipients(entity,communication.getRole(),activity.getWorkflow());
+		List<USER> recipients = messageHandler.getRecipients(entity,activity,communication);
 		if(debugOnInfo) {logger.info("Building for "+recipients.size());}
 		Mails mails = XmlMailsFactory.build();
 		for(USER user : recipients)
 		{
 			try
 			{
-				mails.getMail().add(build(activity,entity,user,communication.getTemplate(),templateHeader,templateBody));
+				String localeCode = messageHandler.localeCode(user);
+				mails.getMail().add(build(activity,entity,communication,user,templates,localeCode));
 			}
-			catch (TemplateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			catch (TemplateException e) {e.printStackTrace();}
 		}
 		return mails;
 	}
 	
-	private Mail build(AY activity, JeeslWithWorkflow<AW> entity, USER user, MT template, Template templateHeader, Template templateBody) throws TemplateException, IOException
+	private Mail build(WY activity, JeeslWithWorkflow<WF> entity,  WC communication, USER user,  Map<String,Template> templates, String localeCode) throws TemplateException, IOException
 	{
-		Map<String,Object> model = fmFactory.build(activity,user);
-		model.put("workflowInitiatorEmail", messageHandler.buildEmail(activity.getUser()).getEmail());
+		Map<String,Object> model = fmFactory.build(localeCode,activity,user);
+		model.put("wfInitiatorEmail", messageHandler.recipientEmail(activity.getUser()).getEmail());
+		messageHandler.completeModel(entity,activity,communication,localeCode,model);
+		fmFactory.debug(model);
 		
-//				messageHandler.buildModel(template,user);
+		Template templateHeader = null;
+		if(templates.containsKey("h:"+localeCode)) {templateHeader = templates.get("h:"+localeCode);}
+		else {templateHeader = templates.get("h:en");}
+		
+		Template templateBody = null;
+		if(templates.containsKey("b:"+localeCode)) {templateBody = templates.get("b:"+localeCode);}
+		else {templateBody = templates.get("b:en");}
 		
 		StringWriter swHeader = new StringWriter();
-		templateHeader.process(model,swHeader);
+		if(templateHeader!=null) {templateHeader.process(model,swHeader);}
+		else {swHeader.append("TEMPLATE MISSING");}
 		swHeader.flush();
 		
 		StringWriter swBody = new StringWriter();
-		templateBody.process(model, swBody);
+		if(templateBody!=null) {templateBody.process(model, swBody);}
+		else {swBody.append("Please contact administrators");}
 		swBody.flush();
 		
-		EmailAddress to = messageHandler.buildEmail(user);
-		Header header = XmlHeaderFactory.build(swHeader.toString(),to,to);
+		EmailAddress from = messageHandler.senderEmail(activity);
+		EmailAddress to = messageHandler.recipientEmail(user);
+		Header header = XmlHeaderFactory.build(messageHandler.headerPrefix()+""+swHeader.toString(),from,to);
 
 		return XmlMailFactory.build(header,swBody.toString());
 	}

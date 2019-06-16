@@ -44,7 +44,7 @@ public class JeeslMailSpooler
 	private TextMailSender smtp;
 	
 	private UtilsCliOption jco;
-	private Option oUrl,oDirectory,oCode;
+	private Option oUrl,oSmtp;
 
 	private String cfgUrl,cfgSmtp;
 	
@@ -81,7 +81,18 @@ public class JeeslMailSpooler
 		buildRest(cfgUrl);
 		buildSmtp(cfgSmtp);
 		
-		spooler();
+//		spooler();
+		localShow(false);
+	}
+	
+	public void localShow(boolean confirm)
+	{
+		Mails mails = rest.spool();
+		for(Mail mail : mails.getMail())
+		{
+			JaxbUtil.info(mail);
+			if(confirm) {rest.confirm(mail.getId());}
+		}
 	}
 	
 	private void createOptions()
@@ -90,13 +101,13 @@ public class JeeslMailSpooler
 		jco.buildDebug();
         
         oUrl = Option.builder("url").required(true).hasArg(true).argName("URL").desc("URL Endpoint").build(); jco.getOptions().addOption(oUrl);
+        oSmtp = Option.builder("smtp").required(true).hasArg(true).argName("HOST").desc("SMTP HOST (at the moment, without auth").build(); jco.getOptions().addOption(oSmtp);
 	}
 	
 	private void debugConfig()
 	{
 		logger.info("URL: "+cfgUrl);
 		logger.info("SMTP: "+cfgSmtp);
-//		logger.info("Code: "+cfgCode);
 	}
 	
 	public void parseArguments(UtilsCliOption jco, String args[]) throws Exception
@@ -104,7 +115,6 @@ public class JeeslMailSpooler
 		this.jco = jco;
 		
 		createOptions();
-		
 		CommandLineParser parser = new DefaultParser();
 		CommandLine line = parser.parse(jco.getOptions() , args); 
 	     
@@ -114,10 +124,12 @@ public class JeeslMailSpooler
 //		Configuration config = uOption.initConfig(line, MeisBootstrap.xmlConfig);
 	    
 		cfgUrl = line.getOptionValue(oUrl.getOpt());
+		cfgSmtp = line.getOptionValue(oSmtp.getOpt());
 		
-//		debugConfig();
-//		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgCode);
-//		processor.upload();
+		debugConfig();
+		buildRest(cfgUrl);
+		buildSmtp(cfgSmtp);
+		spooler();
 	}
 	
 	public void spooler()
@@ -159,9 +171,7 @@ public class JeeslMailSpooler
 	{
 		JeeslMailSpooler notifier = new JeeslMailSpooler();
 		
-		notifier.local();
-		
-		System.exit(-1);
+//		notifier.local(); System.exit(-1);
 		
 		UtilsCliOption jco = new UtilsCliOption(org.jeesl.Version.class.getPackage().getImplementationVersion());
 		jco.setLog4jPaths("jeesl/client/config");

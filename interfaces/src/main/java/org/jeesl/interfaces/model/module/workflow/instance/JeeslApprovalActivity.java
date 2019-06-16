@@ -13,7 +13,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?,?,?>,
-										AW extends JeeslApprovalWorkflow<?,?,?>,
+										WF extends JeeslApprovalWorkflow<?,?,?>,
 										USER extends JeeslUser<?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
@@ -22,8 +22,8 @@ public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?
 {
 	public static enum Attributes{workflow}
 	
-	AW getWorkflow();
-	void setWorkflow(AW workflow);
+	WF getWorkflow();
+	void setWorkflow(WF workflow);
 	
 	AT getTransition();
 	void setTransition(AT transition);

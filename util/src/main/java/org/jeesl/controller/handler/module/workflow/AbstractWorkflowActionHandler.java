@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionCallback;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
@@ -41,7 +43,7 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		debugOnInfo = false;
 	}
 	
-	@Override public <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<AA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	@Override public <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<AA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
 	{
 		if(debugOnInfo) {logger.info("Performing Actions "+entity.toString());}
 		for(AA action : actions)
@@ -51,7 +53,7 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		callback.workflowCallbackAfterActionsPerformed();
 	}
 	
-	protected <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, AA action) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	protected <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, AA action) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
 	{
 		if(debugOnInfo) {logger.info("Perform "+action.toString());}
 		

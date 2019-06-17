@@ -20,6 +20,8 @@ import net.sf.ahtutils.jsf.util.ComponentAttribute;
 public class Security extends UIPanel
 {
 	final static Logger logger = LoggerFactory.getLogger(Security.class);
+	private boolean debugOnInfo = false;
+	
 	private static enum Properties {action,handler,allow,workflow}
 	private static enum Facets {denied}
 	
@@ -33,12 +35,21 @@ public class Security extends UIPanel
 		boolean accessGranted = false;
 		boolean workflowAllow = true;
 		
+		
 		if(ComponentAttribute.available(Properties.workflow,context,this))
 		{
+			
 			JeeslJsfWorkflowHandler wfh = (JeeslJsfWorkflowHandler)ComponentAttribute.getObject(Properties.workflow,null,context,this);
 			workflowAllow = wfh.isAllowEntityModifications();
+			if(debugOnInfo) {logger.info(JeeslJsfWorkflowHandler.class.getSimpleName()+" evaluated workflowAllow:"+workflowAllow);}
 		}
-		
+//		ValueExpression veWorkflow = this.getValueExpression(Properties.workflow.toString());
+//		if(veWorkflow!=null)
+//		{
+//			JeeslJsfWorkflowHandler wfh = (JeeslJsfWorkflowHandler)veWorkflow.getValue(context.getELContext());
+//			
+//			workflowAllow = wfh.isAllowEntityModifications();
+//		}
 		
 		
 		boolean accessGrantedAttribute = ComponentAttribute.getBoolean(Properties.allow,true,context,this);
@@ -50,13 +61,15 @@ public class Security extends UIPanel
 			
 			String action = ComponentAttribute.get(Properties.action.toString(),context,this);
 			accessGranted = (handler.allow(action) && accessGrantedAttribute);
+			if(debugOnInfo) {logger.info(JeeslJsfSecurityHandler.class.getSimpleName()+" evaluated accessGranted:"+accessGranted);}
 		}
 		catch (UtilsNotFoundException e)
 		{
 			accessGranted = accessGrantedAttribute;
+			if(debugOnInfo) {logger.info("No "+JeeslJsfSecurityHandler.class.getSimpleName()+", so accessGranted:"+accessGranted);}
 		}
 		
-		
+		if(debugOnInfo) {logger.info("Final: accessGranted:"+accessGranted+" workflowAllow:"+workflowAllow);}
 			
 		if(accessGranted && workflowAllow)
 		{

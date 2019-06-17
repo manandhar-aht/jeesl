@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeesl.api.facade.module.JeeslWorkflowFacade;
+import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.module.WorkflowFactoryBuilder;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
@@ -47,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
+import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -197,6 +199,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 		link = fWorkflow.fLink(process,ejb);
 		workflow = link.getWorkflow();
+		reloadWorkflow(false);
 	}
 	
 	public void reloadWorkflow() {reloadWorkflow(true);}
@@ -226,20 +229,23 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 			for(WT t : availableTransitions)
 			{
 				StringBuilder sb = null;
-				if(debugOnInfo){sb = new StringBuilder();sb.append("\tChecking "+fbWorkflow.getClassTransition().getSimpleName()+" "+t.getPosition());}
-				if(t.getRole()==null)
+				if(debugOnInfo){sb = new StringBuilder();sb.append("\tChecking "+fbWorkflow.getClassTransition().getSimpleName()+" "+t.getPosition()+" visible:"+t.isVisible());}
+				if(t.isVisible())
 				{
-					if(debugOnInfo) {sb.append(" has no special role, adding if responsible?"+hasResponsibleRole);}
-					if(hasResponsibleRole) {transitions.add(t);}
-				}
-				else
-				{
-					boolean hasSpecialRole = security.hasRole(t.getRole());
-					if(debugOnInfo) {sb.append(" has special role ").append(t.getRole().getCode()).append(" user:").append(hasSpecialRole);}
-					if(hasSpecialRole) {transitions.add(t);}
+					
+					if(t.getRole()==null)
+					{
+						if(debugOnInfo) {sb.append(" has no special role, adding if responsible?"+hasResponsibleRole);}
+						if(hasResponsibleRole) {transitions.add(t);}
+					}
+					else
+					{
+						boolean hasSpecialRole = security.hasRole(t.getRole());
+						if(debugOnInfo) {sb.append(" has special role ").append(t.getRole().getCode()).append(" user:").append(hasSpecialRole);}
+						if(hasSpecialRole) {transitions.add(t);}
+					}
 				}
 				if(debugOnInfo) {logger.info(sb.toString());}
-				
 			}
 		}
 		else if(debugOnInfo) {logger.info("Not Checking Transitions because etiher hasResponsibleRole:"+hasResponsibleRole+" or isSaved"+EjbIdFactory.isSaved(entity));}
@@ -269,7 +275,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(debugOnInfo) {logger.info("reloadWorkflow: "+transitions.size()+" "+fbWorkflow.getClassTransition().getSimpleName());}
 	}
 	
-	public void prepareTransition(WT t, boolean autoPerform) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void prepareTransition(WT t, boolean autoPerform) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
 	{
 		transition = fWorkflow.find(fbWorkflow.getClassTransition(),t);
 		logger.info("prepareTransition for "+transition.toString());
@@ -283,7 +289,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(autoPerform) {performTransition();}
 	}
 	
-	public void performTransition() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
+	public void performTransition() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
 	{
 		if(debugOnInfo) {logger.info("Perform "+fbWorkflow.getClassTransition().getSimpleName()+" to "+transition.toString());}
 		

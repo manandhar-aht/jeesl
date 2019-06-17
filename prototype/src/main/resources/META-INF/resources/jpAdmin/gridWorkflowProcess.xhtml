@@ -195,7 +195,8 @@
 							<p:ajax event="rowSelect" listener="#{cc.attrs.bean.selectTransition()}" update=":#{cc.id}:sStage"/>
 							
 							<p:column styleClass="jeeslCenter">
-								<jtp:symbolizer value="#{t.type}"/>  
+								<h:graphicImage rendered="#{not t.visible}" name="12/ui/status/ghost.png"  library="jeeslPrototypeGfx"/>
+								<jtp:symbolizer rendered="#{t.visible}" value="#{t.type}"/>  
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslName}">
 								<h:outputText value="#{t.name[localeCode].lang}"/>
@@ -220,6 +221,9 @@
 							<p:panelGrid columns="2" columnClasses="jeeslGrid30,jeeslGrid70">
 								<p:outputLabel value="#{msg.jeeslApprovalTrasitionSource}"/>
 								<h:outputText value="#{cc.attrs.bean.transition.source.name[localeCode].lang}" />
+								
+								<p:outputLabel value="#{msg.jeeslVisible}"/>
+								<p:selectBooleanCheckbox value="#{cc.attrs.bean.transition.visible}" disabled="#{not cc.attrs.bean.editTransition}"/>
 								
 								<p:outputLabel value="#{msg.jeeslApprovalTrasitionDestination}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.transition.destination}" effect="fade" autoWidth="false" rendered="#{cc.attrs.bean.editTransition}">

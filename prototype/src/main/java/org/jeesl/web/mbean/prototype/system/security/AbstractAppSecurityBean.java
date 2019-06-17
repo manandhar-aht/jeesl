@@ -1,6 +1,8 @@
 package org.jeesl.web.mbean.prototype.system.security;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityTemplat
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityUsecase;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityView;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
+import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +59,8 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	private final Map<R,List<A>> mapActionsByRole;
 	private final Map<U,List<A>> mapActionsByUsecase;
 	
+	private final Comparator<R> cpRole;
+	
 	private boolean debugOnInfo; protected void setDebugOnInfo(boolean log) {debugOnInfo = log;}
 
 	public AbstractAppSecurityBean(final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,M,AR,USER> fbSecurity)
@@ -75,6 +80,8 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		mapActionsByUsecase = new HashMap<U,List<A>>();
 		
 		debugOnInfo = false;
+		
+		cpRole = (new SecurityRoleComparator<C,R>()).factory(SecurityRoleComparator.Type.position);
 	}
 	
 	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
@@ -145,7 +152,9 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	{
 		if(!mapRoles.containsKey(view))
 		{
-			mapRoles.put(view,fSecurity.rolesForView(view));
+			List<R> list = fSecurity.rolesForView(view);
+			Collections.sort(list,cpRole);
+			mapRoles.put(view,list);
 		}
 		return mapRoles.get(view);
 	}

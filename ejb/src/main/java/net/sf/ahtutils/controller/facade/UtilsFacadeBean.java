@@ -508,7 +508,11 @@ public class UtilsFacadeBean implements UtilsFacade
 		{
 			if(e.getCause() instanceof org.hibernate.exception.ConstraintViolationException)
 			{
-				throw new UtilsConstraintViolationException("Delete Referential Integrity check failed for "+o.getClass().getSimpleName()+". Object may be used somewhere else: "+o);
+				StringBuilder sb = new StringBuilder();
+				sb.append("Referential Integrity Check failed for delete operation.");
+				sb.append(" Object: ").append(o.getClass().getSimpleName());
+				sb.append(" (").append(o.toString()).append(")");
+				throw new UtilsConstraintViolationException(sb.toString());
 			}
 			throw(e);
 		}

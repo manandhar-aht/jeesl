@@ -17,7 +17,7 @@
 
 		<aup:statusBarItem orientation="left" childs="#{cc.attrs.handler.roles}">
 			<aup:sbCheckmark value="#{cc.attrs.handler.mapHasRole[var]}"/>
-			<h:outputText value="#{var.name[userBean.localeCode].lang}"/>
+			<h:outputText value="#{var.category.name[localeCode].lang}: #{var.name[localeCode].lang}"/>
 			<f:facet name="label">
 				<h:graphicImage rendered="#{cc.attrs.handler.noRoles}" library="jeeslPrototypeGfx" name="12/sb/roles-grey.png" id="sbGiSecurityGrey"/>
 				<h:graphicImage rendered="#{not cc.attrs.handler.noRoles}" library="jeeslPrototypeGfx" name="12/sb/roles.png"/>

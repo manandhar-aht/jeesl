@@ -21,5 +21,5 @@ public interface JeeslApprovalTransitionType <S extends UtilsStatus<S,L,D>, L ex
 									EjbWithCodeGraphic<G>,
 									UtilsStatus<S,L,D>
 {
-	public static enum Code{user,rest};
+	public static enum Code{user,rest,auto,migration};
 }

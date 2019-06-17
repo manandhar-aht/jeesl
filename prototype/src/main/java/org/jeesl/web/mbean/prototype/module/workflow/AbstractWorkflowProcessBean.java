@@ -544,6 +544,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	}
 	
 	public void reorderProcesses() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,sbhProcess.getList());}
+	public void reorderTransitions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,transitions);}
 	public void reorderStages() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,stages);}
 	public void reorderPermissions() throws UtilsConstraintViolationException, UtilsLockingException {PositionListReorderer.reorder(fWorkflow,permissions);}
 }

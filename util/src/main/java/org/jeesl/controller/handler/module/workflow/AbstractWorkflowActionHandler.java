@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
+import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
@@ -40,22 +41,23 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		debugOnInfo = false;
 	}
 	
-	public <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<AA> actions) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<AA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo) {logger.info("Performing Actions "+entity.toString());}
 		for(AA action : actions)
 		{
 			perform(entity,action);
 		}
-		callback.callbackAfterActionsPerformed();
+		callback.workflowCallbackAfterActionsPerformed();
 	}
 	
-	protected <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, AA action)
+	protected <W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, AA action) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
 		if(debugOnInfo) {logger.info("Perform "+action.toString());}
 		
 		if(action.getBot().getCode().contentEquals("statusUpdate")) {statusUpdate(entity,action);}
 		else if(action.getBot().getCode().contentEquals("appendRandomInt")) {appendRandomInt(entity,action);}
+		else if(action.getBot().getCode().contentEquals("callbackCommand")) {callback.workflowCallback("test");}
 		else {logger.warn("Unknown Bot");}
 		
 	}

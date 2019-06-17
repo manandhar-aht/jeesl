@@ -22,6 +22,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
 import org.openfuxml.factory.xml.table.XmlTableFactory;
@@ -141,6 +142,17 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		Table table = XmlTableFactory.build(fileds,data);
 		
 		return table;
+	}
+	
+	@Override
+	public List<JsonPostgresReplication> postgresReplicationInfo()
+	{
+		List<JsonPostgresReplication> list = new ArrayList<>();
+		
+		JsonPostgresReplication r1 = new JsonPostgresReplication();r1.setId(1);list.add(r1);
+		JsonPostgresReplication r2 = new JsonPostgresReplication();r1.setId(2);list.add(r2);
+		
+		return list;
 	}
 	
 	@Override public JsonFlatFigures dbConnections(String dbName)

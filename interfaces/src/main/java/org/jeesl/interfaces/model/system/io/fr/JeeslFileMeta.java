@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.system.io.fr;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;

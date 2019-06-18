@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.with.status;
+package org.jeesl.interfaces.model.with.status;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

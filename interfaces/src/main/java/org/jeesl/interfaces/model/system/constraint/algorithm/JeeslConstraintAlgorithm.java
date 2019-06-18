@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.system.constraint.algorithm;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -20,7 +20,7 @@ public interface JeeslConstraintAlgorithm<L extends UtilsLang, D extends UtilsDe
 									>
 			extends Serializable,EjbSaveable,EjbRemoveable,
 					EjbWithId,EjbWithCode,
-					JeeslWithCategory<L,D,CATEGORY>,
+					JeeslWithCategory<CATEGORY>,
 					EjbWithPosition,EjbWithPositionParent,
 					EjbWithLangDescription<L,D>
 {

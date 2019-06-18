@@ -1,7 +1,7 @@
 package org.jeesl.interfaces.model.system.constraint;
 
-import org.jeesl.interfaces.model.system.with.status.JeeslWithLevel;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.status.JeeslWithLevel;
+import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -27,7 +27,7 @@ public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription
 					EjbWithParentAttributeResolver,
 					EjbWithLangDescription<L,D>,
 					JeeslWithType<TYPE>,
-					JeeslWithLevel<L,D,LEVEL>
+					JeeslWithLevel<LEVEL>
 {
 	public static enum Attributes{scope,code};
 	

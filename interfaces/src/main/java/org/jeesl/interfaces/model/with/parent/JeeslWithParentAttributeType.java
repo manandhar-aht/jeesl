@@ -1,6 +1,6 @@
 package org.jeesl.interfaces.model.with.parent;
 
-import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
+import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;

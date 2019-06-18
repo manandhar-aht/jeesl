@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.system.io.cms;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -19,7 +19,7 @@ public interface JeeslIoCms<L extends UtilsLang,D extends UtilsDescription,
 								S extends JeeslIoCmsSection<L,S>,
 								LOC extends UtilsStatus<LOC,L,D>>
 		extends Serializable,EjbWithId,
-				EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<L,D,CAT>
+				EjbSaveable,EjbRemoveable,EjbWithPosition,EjbWithLang<L>,JeeslWithCategory<CAT>
 {	
 	public enum Attributes{category,position}
 	

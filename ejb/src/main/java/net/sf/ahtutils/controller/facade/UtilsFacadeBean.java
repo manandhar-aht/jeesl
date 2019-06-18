@@ -22,12 +22,12 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
+import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
+import org.jeesl.interfaces.model.with.status.JeeslWithType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -529,7 +529,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		return typedQuery.getResultList();
 	}
 	
-	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<L, D, C>> List<W> allForCategory(Class<W> w, C category)
+	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<C>> List<W> allForCategory(Class<W> w, C category)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<W> cQ = cB.createQuery(w);

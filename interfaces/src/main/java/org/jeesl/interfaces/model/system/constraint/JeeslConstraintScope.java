@@ -3,7 +3,7 @@ package org.jeesl.interfaces.model.system.constraint;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
@@ -24,7 +24,7 @@ public interface JeeslConstraintScope<L extends UtilsLang, D extends UtilsDescri
 									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
 			extends Serializable,EjbPersistable,EjbWithPosition,EjbWithId,EjbWithCode,
 					EjbSaveable,EjbRemoveable,
-					JeeslWithCategory<L,D,CATEGORY>,
+					JeeslWithCategory<CATEGORY>,
 					EjbWithPositionParent,
 					EjbWithLangDescription<L,D>
 {

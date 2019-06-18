@@ -12,11 +12,11 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
+import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

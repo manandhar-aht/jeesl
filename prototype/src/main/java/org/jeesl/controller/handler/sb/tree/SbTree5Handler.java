@@ -90,12 +90,12 @@ public class SbTree5Handler <L1 extends EjbWithId, L2 extends EjbWithId, L3 exte
 	{
 		if(debugOnInfo) {logger.info("cascade5 "+ejb.getClass().getSimpleName()+": ["+ejb.toString()+"] "+TreeUpdateParameter.class.getSimpleName()+": ["+tup.toString()+"]");}
 		this.l5=ejb;
-		store5.storeTreeLevel5(ejb);
+		if(store5!=null) {store5.storeTreeLevel5(ejb);}
 		clearL6List();
 		if(tup.isFillParent()) {cascade4(getParentForL5(l5),tup.copy().selectChild(false).callback(false));}
 		if(tup.isFillChilds()) {fillL6List();}
 		if(tup.isSelectChild()) {selectDefaultL6(tup.copy().fillParent(false).callback(false));}
-		if(tup.isCallback()) {callback.sbTreeSelected();}
+		if(tup.isCallback() && callback!=null) {callback.sbTreeSelected();}
 //		if(hup.isFireEvent()) {fireEvent();}
 	}
 	

@@ -23,11 +23,11 @@ import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithCategory;
-import org.jeesl.interfaces.model.system.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.system.with.status.JeeslWithType;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
+import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -571,7 +571,7 @@ public class UtilsFacadeBean implements UtilsFacade
 		CriteriaQuery<W> cQ = cB.createQuery(w);
 		Root<W> root = cQ.from(w);
 
-		Path<S> pStatus = root.get(JeeslWithStatus.attributeStatus);
+		Path<S> pStatus = root.get(JeeslWithStatus.attribute);
 
 		CriteriaQuery<W> select = cQ.select(root);
 		select.where(cB.equal(pStatus,status));
@@ -726,7 +726,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	    
 	    if(status!=null && !status.isEmpty())
 	    {
-	    	Join<T,STATUS> jStatus = root.join(JeeslWithStatus.attributeStatus);
+	    	Join<T,STATUS> jStatus = root.join(JeeslWithStatus.attribute);
 	    	predicates.add(jStatus.in(status));
 	    }
 	    

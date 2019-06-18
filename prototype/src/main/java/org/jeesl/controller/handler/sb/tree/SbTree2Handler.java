@@ -90,12 +90,12 @@ public class SbTree2Handler <L1 extends EjbWithId, L2 extends EjbWithId> extends
 	{
 		if(debugOnInfo) {logger.info("cascade2 "+ejb.getClass().getSimpleName()+": ["+ejb.toString()+"] "+TreeUpdateParameter.class.getSimpleName()+": ["+tup.toString()+"]");}
 		this.l2=ejb;
-		store2.storeTreeLevel2(ejb);
+		if(store2!=null) {store2.storeTreeLevel2(ejb);}
 		clearL3List();
 		if(tup.isFillParent()) {cascade1(getParentForL2(l2),tup.copy().selectChild(false).callback(false));}
 		if(tup.isFillChilds()) {fillL3List();}
 		if(tup.isSelectChild()) {selectDefaultL3(tup.copy().fillParent(false).callback(false));}
-		if(tup.isCallback()) {callback.sbTreeSelected();}
+		if(tup.isCallback() && callback!=null) {callback.sbTreeSelected();}
 //		if(hup.isFireEvent()) {fireEvent();}
 	}
 	

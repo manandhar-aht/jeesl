@@ -131,7 +131,7 @@
                             <p:panelGrid columns="2" columnClasses="auPwg30,auPwg70" styleClass="auCleanPanelGrid">
                                 <p:outputLabel for="popup" value="#{msg.aupDate}"/>
                                 <p:calendar id="popup" value="#{cc.attrs.bean.date}" pattern="dd-MM-yyyy" required="true"/>
-                                <p:outputLabel value="#{msg.jeeslValue}" />
+                                <p:outputLabel value="#{cc.attrs.bean.data.timeSeries.scope.unit.name[localeCode].lang}" />
                                 <p:inputText value="#{cc.attrs.bean.value}" autocomplete="off" required="true"/>
                             </p:panelGrid>
                             

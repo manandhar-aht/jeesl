@@ -8,10 +8,15 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
+import org.jeesl.interfaces.model.util.date.EjbWithTimeline;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFrom;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFromUntil;
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithContext;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
@@ -23,10 +28,6 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbEquals;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbMergeable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -68,6 +69,7 @@ public interface UtilsFacade  extends UtilsIdFacade
 	<T extends EjbWithType> List<T> allForType(Class<T> c, String type);
 	
 	//Category,Type,Status ...
+	<C extends UtilsStatus<C,?,?>, W extends JeeslWithContext<C>> List<W> allForContext(Class<W> w, C context);
 	<L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C,L,D>, W extends JeeslWithCategory<C>> List<W> allForCategory(Class<W> w, C category);
 	<L extends UtilsLang, D extends UtilsDescription, T extends UtilsStatus<T,L,D>, W extends JeeslWithType<T>> List<W> allForType(Class<W> w, T type);
 	<L extends UtilsLang, D extends UtilsDescription, S extends UtilsStatus<S,L,D>, W extends JeeslWithStatus<S>> List<W> allForStatus(Class<W> w, S status);

@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.date;
+package org.jeesl.interfaces.model.util.date;
 
 public interface EntityWithMonth extends EntityWithDate
 {

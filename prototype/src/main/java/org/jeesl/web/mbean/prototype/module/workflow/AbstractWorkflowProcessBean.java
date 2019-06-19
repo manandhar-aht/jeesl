@@ -55,8 +55,8 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											AX extends JeeslWorkflowContext<AX,L,D,?>,
-											AP extends JeeslWorkflowProcess<L,D,AX>,
-											AS extends JeeslWorkflowStage<L,D,AP,AST>,
+											WP extends JeeslWorkflowProcess<L,D,AX>,
+											AS extends JeeslWorkflowStage<L,D,WP,AST>,
 											AST extends JeeslWorkflowStageType<AST,?,?,?>,
 											ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 											APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
@@ -72,7 +72,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 											RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 											AL extends JeeslApprovalLink<AW,RE>,
-											AW extends JeeslApprovalWorkflow<AP,AS,AY>,
+											AW extends JeeslApprovalWorkflow<WP,AS,AY>,
 											AY extends JeeslApprovalActivity<AT,AW,USER>,
 											USER extends JeeslUser<SR>>
 				extends AbstractAdminBean<L,D>
@@ -81,20 +81,20 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractWorkflowProcessBean.class);
 
-	private JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
+	private JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
+	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
 	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
 	
 	private final SbSingleHandler<AX> sbhContext; public SbSingleHandler<AX> getSbhContext() {return sbhContext;}
-	private final SbSingleHandler<AP> sbhProcess; public SbSingleHandler<AP> getSbhProcess() {return sbhProcess;}
+	private final SbSingleHandler<WP> sbhProcess; public SbSingleHandler<WP> getSbhProcess() {return sbhProcess;}
 	
 	private final List<MT> templates; public List<MT> getTemplates() {return templates;}
 	private final List<SR> roles; public List<SR> getRoles() {return roles;}
-	private List<AS> stages; public List<AS> getStages() {return stages;} public void setStages(List<AS> stages) {this.stages = stages;}
+	private final List<AS> stages; public List<AS> getStages() {return stages;}
 	private final List<AST> stageTypes; public List<AST> getStageTypes() {return stageTypes;}
 	private final List<ASP> permissions; public List<ASP> getPermissions() {return permissions;}
 	private final List<APT> permissionTypes; public List<APT> getPermissionTypes() {return permissionTypes;}
@@ -109,7 +109,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final List<RA> attributes; public List<RA> getAttributes() {return attributes;}
 	private final List<EjbWithId> options; public List<EjbWithId> getOptions() {return options;}
 	
-	protected AP process; public AP getProcess() {return process;} public void setProcess(AP process) {this.process = process;}
+	protected WP process; public WP getProcess() {return process;} public void setProcess(WP process) {this.process = process;}
 	private AS stage; public AS getStage() {return stage;} public void setStage(AS stage) {this.stage = stage;}
 	private ASP permission; public ASP getPermission() {return permission;} public void setPermission(ASP permission) {this.permission = permission;}
 	private AT transition; public AT getTransition() {return transition;} public void setTransition(AT transition) {this.transition = transition;}
@@ -125,7 +125,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final Comparator<SR> cpRole;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
@@ -137,9 +137,10 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		this.fbTemplate=fbTemplate;
 		
 		sbhContext = new SbSingleHandler<AX>(fbApproval.getClassContext(),this);
-		sbhProcess = new SbSingleHandler<AP>(fbApproval.getClassProcess(),this);
+		sbhProcess = new SbSingleHandler<WP>(fbApproval.getClassProcess(),this);
 		
 		roles = new ArrayList<>();
+		stages = new ArrayList<>();
 		templates = new ArrayList<>();
 		stageTypes = new ArrayList<>();
 		permissions = new ArrayList<>();
@@ -162,7 +163,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
+										JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,SR,RE,RA,AL,AW,AY,USER> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
@@ -196,6 +197,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		
 		sbhContext.setList(fWorkflow.allOrderedPositionVisible(fbWorkflow.getClassContext()));
 		sbhContext.setDefault();
+		
 		if(debugOnInfo) {logger.info(AbstractLogMessage.reloaded(fbWorkflow.getClassContext(), sbhContext.getList()));}
 	}
 	
@@ -204,6 +206,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public void cancelAction() {reset(WorkflowProcesslResetHandler.build().none().action(true));}
 	private void reset(WorkflowProcesslResetHandler arh)
 	{
+		if(arh.isStages()) {stages.clear();}
 		if(arh.isStage()) {stage=null;}
 		if(arh.isPermissions()) {permissions.clear();;}
 		if(arh.isPermission()) {permission=null;}
@@ -218,7 +221,13 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	@Override
 	public void selectSbSingle(EjbWithId item) throws UtilsLockingException, UtilsConstraintViolationException
 	{
-		if(item instanceof JeeslWorkflowContext) {reloadProcesses();}
+		reset(WorkflowProcesslResetHandler.build().all());
+		if(item instanceof JeeslWorkflowContext) 
+		{
+			reloadProcesses();
+			sbhProcess.setSelection(null);
+			sbhProcess.silentCallback();
+		}
 		else if(item instanceof JeeslWorkflowProcess)
 		{
 			process = fWorkflow.find(fbWorkflow.getClassProcess(),sbhProcess.getSelection());
@@ -228,13 +237,14 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	public void reloadProcesses()
 	{
-		sbhProcess.update(fWorkflow.all(fbWorkflow.getClassProcess()),sbhProcess.getSelection());
+		sbhProcess.update(fWorkflow.allForContext(fbWorkflow.getClassProcess(),sbhContext.getSelection()));
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(fbWorkflow.getClassProcess(), sbhProcess.getList(),sbhContext.getSelection()));}
 	}
 	
 	public void reloadStages()
 	{
-		stages = fWorkflow.allForParent(fbWorkflow.getClassStage(), process);
+		stages.clear();
+		stages.addAll(fWorkflow.allForParent(fbWorkflow.getClassStage(),process));
 	}
 
 	public void addProcess() throws UtilsNotFoundException

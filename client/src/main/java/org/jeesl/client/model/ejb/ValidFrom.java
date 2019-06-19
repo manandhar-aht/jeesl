@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFrom;
 
 @Entity
 @Table(name = "UtilsValidFrom")

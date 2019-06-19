@@ -22,10 +22,16 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
+import org.jeesl.interfaces.model.util.date.EjbWithTimeline;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFrom;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFromUntil;
+import org.jeesl.interfaces.model.util.date.EjbWithValidUntil;
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithContext;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.with.status.JeeslWithType;
 import org.slf4j.Logger;
@@ -40,11 +46,6 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbEquals;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbMergeable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidUntil;
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -529,6 +530,24 @@ public class UtilsFacadeBean implements UtilsFacade
 		return typedQuery.getResultList();
 	}
 	
+	
+	@Override public <C extends UtilsStatus<C,?,?>, W extends JeeslWithContext<C>> List<W> allForContext(Class<W> w, C context)
+	{
+		CriteriaBuilder cB = em.getCriteriaBuilder();
+		CriteriaQuery<W> cQ = cB.createQuery(w);
+		Root<W> root = cQ.from(w);
+
+		Path<C> pCategory = root.get(JeeslWithContext.attributeContext);
+
+		CriteriaQuery<W> select = cQ.select(root);
+		select.where(cB.equal(pCategory,context));
+		
+	    if(EjbWithPosition.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithPosition.attributePosition)));}
+	    else if(EjbWithRecord.class.isAssignableFrom(w)){select.orderBy(cB.asc(root.get(EjbWithRecord.attributeRecord)));}
+
+		TypedQuery<W> tQ = em.createQuery(select);
+		return tQ.getResultList();
+	}
 	@Override public <L extends UtilsLang, D extends UtilsDescription, C extends UtilsStatus<C, L, D>, W extends JeeslWithCategory<C>> List<W> allForCategory(Class<W> w, C category)
 	{
 		CriteriaBuilder cB = em.getCriteriaBuilder();
@@ -1250,5 +1269,6 @@ public class UtilsFacadeBean implements UtilsFacade
 		try	{return q.getSingleResult().getId();}
 		catch (NoResultException ex){return 0;}
 	}
+	
 	
 }

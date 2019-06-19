@@ -7,6 +7,7 @@ public class WorkflowProcesslResetHandler
 {
 	final static Logger logger = LoggerFactory.getLogger(WorkflowProcesslResetHandler.class);
 	
+	private boolean stages; public boolean isStages() {return stages;} public WorkflowProcesslResetHandler stages(boolean stages) {this.stages = stages;return this;}
 	private boolean stage; public boolean isStage() {return stage;} public WorkflowProcesslResetHandler stage(boolean stage) {this.stage = stage;return this;}
 
 	private boolean permissions; public boolean isPermissions() {return permissions;} public WorkflowProcesslResetHandler permissions(boolean permissions) {this.permissions = permissions;return this;}
@@ -30,6 +31,7 @@ public class WorkflowProcesslResetHandler
 	
 	public WorkflowProcesslResetHandler all()
 	{
+		stages = true;
 		stage = true;
 		permissions = true;
 		permission = true;
@@ -44,6 +46,7 @@ public class WorkflowProcesslResetHandler
 	
 	public WorkflowProcesslResetHandler none()
 	{
+		stages = false;
 		stage = false;
 		permissions = false;
 		permission = false;

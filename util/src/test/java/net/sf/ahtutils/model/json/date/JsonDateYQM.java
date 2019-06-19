@@ -1,8 +1,8 @@
 package net.sf.ahtutils.model.json.date;
 
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.date.EntityWithMonth;
-import net.sf.ahtutils.interfaces.model.date.EntityWithQuarter;
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
+import org.jeesl.interfaces.model.util.date.EntityWithMonth;
+import org.jeesl.interfaces.model.util.date.EntityWithQuarter;
 
 public class JsonDateYQM implements EjbWithYear,EntityWithQuarter,EntityWithMonth
 {

@@ -18,13 +18,6 @@ import net.sf.ahtutils.xml.access.Group;
 
 public interface AhtAclFacade extends UtilsFacade
 {	
-	<L extends UtilsLang,
-	 D extends UtilsDescription, 
-	 CU extends UtilsAclCategoryUsecase<L,D,CU,U>,
-	 CR extends UtilsAclCategoryGroup<L,D,CU,CR,U,R>,
-	 U extends UtilsAclView<L,D,CU,U>,
-	 R extends UtilsAclGroup<L,D,CU,CR,U,R>>
-	List<R> fAclRoles(Class<R> type, List<Group> lRoles) throws UtilsNotFoundException;
 	
 	@Deprecated// ERP-275
 	<L extends UtilsLang,

@@ -1,6 +1,6 @@
 package net.sf.ahtutils.model.json.date;
 
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
 
 public class JsonDateY implements EjbWithYear
 {

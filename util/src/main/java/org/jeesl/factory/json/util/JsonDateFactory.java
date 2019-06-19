@@ -2,16 +2,15 @@ package org.jeesl.factory.json.util;
 
 import java.util.Date;
 
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
+import org.jeesl.interfaces.model.util.date.EntityWithDate;
+import org.jeesl.interfaces.model.util.date.EntityWithDay;
+import org.jeesl.interfaces.model.util.date.EntityWithMonth;
+import org.jeesl.interfaces.model.util.date.EntityWithQuarter;
+import org.jeesl.interfaces.model.util.date.EntityWithWeek;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
-import net.sf.ahtutils.interfaces.model.date.EntityWithDate;
-import net.sf.ahtutils.interfaces.model.date.EntityWithDay;
-import net.sf.ahtutils.interfaces.model.date.EntityWithMonth;
-import net.sf.ahtutils.interfaces.model.date.EntityWithQuarter;
-import net.sf.ahtutils.interfaces.model.date.EntityWithWeek;
 
 public class JsonDateFactory
 {

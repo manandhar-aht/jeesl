@@ -8,10 +8,15 @@ import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicFigure;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.system.with.code.EjbWithNrString;
+import org.jeesl.interfaces.model.util.date.EjbWithTimeline;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFrom;
+import org.jeesl.interfaces.model.util.date.EjbWithValidFromUntil;
+import org.jeesl.interfaces.model.util.date.EjbWithYear;
 import org.jeesl.interfaces.model.with.EjbWithValidFromAndParent;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeStatus;
 import org.jeesl.interfaces.model.with.parent.JeeslWithParentAttributeType;
 import org.jeesl.interfaces.model.with.status.JeeslWithCategory;
+import org.jeesl.interfaces.model.with.status.JeeslWithContext;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.with.status.JeeslWithType;
 import org.slf4j.Logger;
@@ -26,10 +31,6 @@ import net.sf.ahtutils.interfaces.model.behaviour.EjbEquals;
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbMergeable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
-import net.sf.ahtutils.interfaces.model.date.EjbWithTimeline;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFrom;
-import net.sf.ahtutils.interfaces.model.date.EjbWithValidFromUntil;
-import net.sf.ahtutils.interfaces.model.date.EjbWithYear;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -536,4 +537,7 @@ public class AbstractDummyFacade implements UtilsFacade
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override public <C extends UtilsStatus<C,?,?>, W extends JeeslWithContext<C>> List<W> allForContext(Class<W> w, C category) {return null;}
+
 }

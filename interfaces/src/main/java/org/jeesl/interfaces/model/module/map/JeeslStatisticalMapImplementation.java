@@ -5,16 +5,17 @@ import java.io.Serializable;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslStatisticalMapImplementation<MAP extends JeeslStatisticalMap<?,?>,
 													STATUS extends JeeslStatisticMapStatus<?,?,STATUS,?>,
 													LEVEL extends JeeslLocationLevel<?,?,LEVEL,?>>
 						extends Serializable,EjbSaveable,
-								EjbWithId,
+								EjbWithId,EjbWithParentAttributeResolver,
 								JeeslWithStatus<STATUS>
 {	
-	public enum Attributes{}
+	public enum Attributes{map}
 	
 	MAP getMap();
 	void setMap(MAP map);

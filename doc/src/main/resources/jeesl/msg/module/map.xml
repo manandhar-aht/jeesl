@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<s:translations xmlns:s="http://ahtutils.aht-group.com/status">
+	<s:translation key="jeeslMapStatisticalMaps">
+    	<s:langs>
+    		<s:lang key="de" translation="Statistische Karten"/>
+    		<s:lang key="en" translation="Statistical Maps"/>
+    		<s:lang key="fr" translation="Statistical Maps"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslMapStatisticalMap">
+    	<s:langs>
+    		<s:lang key="de" translation="Statistische Karte"/>
+    		<s:lang key="en" translation="Statistical Map"/>
+    		<s:lang key="fr" translation="Statistical Map"/>
+    	</s:langs>
+    </s:translation>
+ 	<s:translation key="jeeslMapImplementations">
+    	<s:langs>
+    		<s:lang key="de" translation="Implementierungen"/>
+    		<s:lang key="en" translation="Implementations"/>
+    		<s:lang key="fr" translation="Implementations"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslMapImplementation">
+    	<s:langs>
+    		<s:lang key="de" translation="Implementierung"/>
+    		<s:lang key="en" translation="Implementation"/>
+    		<s:lang key="fr" translation="Implementation"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslMapImplementationStatus">
+    	<s:langs>
+    		<s:lang key="de" translation="Status"/>
+    		<s:lang key="en" translation="Status"/>
+    		<s:lang key="fr" translation="Status"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslMapImplementationLevel">
+    	<s:langs>
+    		<s:lang key="de" translation="Stufe"/>
+    		<s:lang key="en" translation="Level"/>
+    		<s:lang key="fr" translation="Level"/>
+    	</s:langs>
+    </s:translation>
+</s:translations>

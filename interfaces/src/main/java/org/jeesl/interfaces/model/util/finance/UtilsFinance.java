@@ -1,4 +1,4 @@
-package net.sf.ahtutils.interfaces.model.finance;
+package org.jeesl.interfaces.model.util.finance;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 

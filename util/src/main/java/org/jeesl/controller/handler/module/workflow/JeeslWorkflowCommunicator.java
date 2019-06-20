@@ -28,7 +28,7 @@ import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransi
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
-import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateType;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -65,7 +65,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,MD,?>,
-										MC extends JeeslTemplateType<L,D,MC,?>,
+										MC extends JeeslTemplateChannel<L,D,MC,?>,
 										MD extends JeeslIoTemplateDefinition<D,MC,MT>,
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,

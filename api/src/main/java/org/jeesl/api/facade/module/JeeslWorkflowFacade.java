@@ -17,6 +17,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateType;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -39,11 +40,12 @@ public interface JeeslWorkflowFacade <L extends UtilsLang, D extends UtilsDescri
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										AC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
+										AC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,?,?>,
+										MC extends JeeslTemplateType<L,D,MC,?>,
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,?>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,

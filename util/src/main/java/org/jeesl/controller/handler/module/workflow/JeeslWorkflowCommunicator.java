@@ -28,6 +28,7 @@ import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransi
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateType;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
@@ -59,12 +60,13 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-										WC extends JeeslWorkflowCommunication<WT,MT,SR,RE>,
+										WC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,
 										AO extends EjbWithId,
 										MT extends JeeslIoTemplate<L,D,?,?,MD,?>,
-										MD extends JeeslIoTemplateDefinition<D,?,MT>,
+										MC extends JeeslTemplateType<L,D,MC,?>,
+										MD extends JeeslIoTemplateDefinition<D,MC,MT>,
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
@@ -77,13 +79,13 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 	
 	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
-	private final JeeslWorkflowMessageHandler<WC,SR,RE,MT,MD,WF,WY,USER> messageHandler;
+	private final JeeslWorkflowMessageHandler<WC,SR,RE,MT,MC,MD,WF,WY,USER> messageHandler;
 	private final FtlWorkflowModelFactory<L,D,WP,AS,WT,WF,WY,USER> fmFactory;
 	
 	private Configuration templateConfig;
 	
 	
-	public JeeslWorkflowCommunicator(JeeslWorkflowMessageHandler<WC,SR,RE,MT,MD,WF,WY,USER> messageHandler)
+	public JeeslWorkflowCommunicator(JeeslWorkflowMessageHandler<WC,SR,RE,MT,MC,MD,WF,WY,USER> messageHandler)
 	{
 		this.messageHandler=messageHandler;
 		fmFactory = new FtlWorkflowModelFactory<>();

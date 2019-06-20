@@ -19,14 +19,14 @@ import net.sf.ahtutils.xml.access.Group;
 public interface AhtAclFacade extends UtilsFacade
 {	
 	
-	@Deprecated// ERP-275
-	<L extends UtilsLang,
-	 D extends UtilsDescription, 
-	 CU extends UtilsAclCategoryUsecase<L,D,CU,U>,
-	 CR extends UtilsAclCategoryGroup<L,D,CU,CR,U,R>,
-	 U extends UtilsAclView<L,D,CU,U>,
-	 R extends UtilsAclGroup<L,D,CU,CR,U,R>>
-	Set<String> findUsecaseCodesForRoles(List<R> roles);
+//	@Deprecated// ERP-275
+//	<L extends UtilsLang,
+//	 D extends UtilsDescription, 
+//	 CU extends UtilsAclCategoryUsecase<L,D,CU,U>,
+//	 CR extends UtilsAclCategoryGroup<L,D,CU,CR,U,R>,
+//	 U extends UtilsAclView<L,D,CU,U>,
+//	 R extends UtilsAclGroup<L,D,CU,CR,U,R>>
+//	Set<String> findUsecaseCodesForRoles(List<R> roles);
 	
 	<L extends UtilsLang,
 	 D extends UtilsDescription, 

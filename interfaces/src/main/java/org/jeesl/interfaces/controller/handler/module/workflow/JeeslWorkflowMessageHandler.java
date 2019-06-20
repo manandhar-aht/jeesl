@@ -10,6 +10,7 @@ import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
+import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateType;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
 import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
@@ -19,11 +20,12 @@ import org.jeesl.model.xml.system.io.mail.Mail;
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
-public interface JeeslWorkflowMessageHandler<WC extends JeeslWorkflowCommunication<?,MT,SR,RE>,
+public interface JeeslWorkflowMessageHandler<WC extends JeeslWorkflowCommunication<?,MT,MC,SR,RE>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,USER>,
 											RE extends JeeslRevisionEntity<?,?,?,?,?>,
 											MT extends JeeslIoTemplate<?,?,?,?,MD,?>,
-											MD extends JeeslIoTemplateDefinition<?,?,MT>,
+											MC extends JeeslTemplateType<?,?,MC,?>,
+											MD extends JeeslIoTemplateDefinition<?,MC,MT>,
 											WF extends JeeslApprovalWorkflow<?,?,?>,
 											WY extends JeeslApprovalActivity<?,WF,USER>,
 											USER extends JeeslUser<SR>>

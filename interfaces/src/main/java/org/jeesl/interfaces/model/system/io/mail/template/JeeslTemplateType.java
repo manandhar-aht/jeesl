@@ -13,13 +13,13 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslTemplateType <S extends UtilsStatus<S,L,D>,
-									L extends UtilsLang,
-									D extends UtilsDescription,
+public interface JeeslTemplateType <L extends UtilsLang, D extends UtilsDescription,
+									S extends UtilsStatus<S,L,D>,
 									G extends JeeslGraphic<L,D,G,?,?,?>>
 					extends Serializable,EjbPersistable,
+							UtilsStatusFixedCode,
 							JeeslOptionRestDescription,JeeslOptionRestDownload,
-							EjbWithCodeGraphic<G>,UtilsStatusFixedCode	
+							EjbWithCodeGraphic<G>,UtilsStatus<S,L,D>
 {	
 	public static enum Code{sms,email,box};
 }

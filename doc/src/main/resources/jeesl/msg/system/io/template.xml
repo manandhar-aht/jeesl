@@ -49,12 +49,18 @@
 			<lang key="fr" translation="Preview" />
 		</langs>
 	</translation>
-		<translation key="jeeslTemplateExample">
+	<translation key="jeeslTemplateExample">
 		<langs>
 			<lang key="de" translation="Beispiel" />
 			<lang key="en" translation="Example" />
 			<lang key="fr" translation="Example" />
 		</langs>
 	</translation>
-	
+	<translation key="jeeslTemplateChannel">
+		<langs>
+			<lang key="de" translation="Kanal" />
+			<lang key="en" translation="Channel" />
+			<lang key="fr" translation="Channel" />
+		</langs>
+	</translation>
 </translations>

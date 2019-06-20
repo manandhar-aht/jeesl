@@ -87,13 +87,14 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
 	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
-	private final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate;
+	private final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
 	
 	private final SbSingleHandler<AX> sbhContext; public SbSingleHandler<AX> getSbhContext() {return sbhContext;}
 	private final SbSingleHandler<WP> sbhProcess; public SbSingleHandler<WP> getSbhProcess() {return sbhProcess;}
 	
+	private final List<MC> channels; public List<MC> getChannels() {return channels;}
 	private final List<MT> templates; public List<MT> getTemplates() {return templates;}
 	private final List<SR> roles; public List<SR> getRoles() {return roles;}
 	private final List<AS> stages; public List<AS> getStages() {return stages;}
@@ -130,7 +131,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
-											final IoTemplateFactoryBuilder<L,D,?,?,MT,?,?,?,?> fbTemplate)
+											final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbWorkflow=fbApproval;
@@ -141,6 +142,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		sbhContext = new SbSingleHandler<AX>(fbApproval.getClassContext(),this);
 		sbhProcess = new SbSingleHandler<WP>(fbApproval.getClassProcess(),this);
 		
+		channels = new ArrayList<>();
 		roles = new ArrayList<>();
 		stages = new ArrayList<>();
 		templates = new ArrayList<>();
@@ -194,6 +196,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	protected void initPageSettings()
 	{
+		channels.addAll(fWorkflow.allOrderedPositionVisible(fbTemplate.getClassType()));
 		templates.addAll(fWorkflow.all(fbTemplate.getClassTemplate()));
 		roles.addAll(fWorkflow.allOrderedPositionVisible(fbSecurity.getClassRole()));
 		
@@ -310,7 +313,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	public void selectStage() throws UtilsNotFoundException
 	{
-		reset(WorkflowProcesslResetHandler.build().all().stage(false));
+		reset(WorkflowProcesslResetHandler.build().all().stages(false).stage(false));
 		logger.info(AbstractLogMessage.selectEntity(stage));
 		stage = fWorkflow.find(fbWorkflow.getClassStage(), stage);
 		stage = efLang.persistMissingLangs(fWorkflow,localeCodes,stage);
@@ -433,6 +436,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		communication.setTemplate(fWorkflow.find(fbTemplate.getClassTemplate(), communication.getTemplate()));
 		communication.setRole(fWorkflow.find(fbSecurity.getClassRole(), communication.getRole()));
 		communication.setScope(fWorkflow.find(fbRevision.getClassEntity(), communication.getScope()));
+		communication.setChannel(fWorkflow.find(fbTemplate.getClassType(), communication.getChannel()));
 		communication = fWorkflow.save(communication);
 		reloadCommunications();
 	}

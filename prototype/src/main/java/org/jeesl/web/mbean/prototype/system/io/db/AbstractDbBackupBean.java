@@ -38,7 +38,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	final static Logger logger = LoggerFactory.getLogger(AbstractDbBackupBean.class);
 	
 	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,DF,DH,DS> fDb;
-	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS> fbDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS,?,?,?> fbDb;
 	
 	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 	protected Chart chart; public Chart getChart() {return chart;}
@@ -49,7 +49,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 	
 	private SYSTEM system;
 	
-	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS> fbDb)
+	public AbstractDbBackupBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS,?,?,?> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;

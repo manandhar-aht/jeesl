@@ -32,13 +32,13 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	final static Logger logger = LoggerFactory.getLogger(AbstractDbReplicationBean.class);
 	
 	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,DS> fDb;
-	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS> fbDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS,?,?,?> fbDb;
 	
 //	protected Chart chart; public Chart getChart() {return chart;}
 
 	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
 	
-	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS> fbDb)
+	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS,?,?,?> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;

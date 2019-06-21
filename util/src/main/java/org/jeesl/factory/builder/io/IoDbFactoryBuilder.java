@@ -23,10 +23,10 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								DF extends JeeslDbDumpFile<DUMP,DH,DS>,
 								DH extends JeeslDbDumpHost<L,D,DH,?>,
 								DS extends JeeslDbDumpStatus<L,D,DS,?>
-//,
-//								RI extends JeeslDbReplicationInfo<L,D,RI,?>,
-//								RS extends JeeslDbReplicationState<L,D,RS,?>,
-//								RY extends JeeslDbReplicationSync<L,D,RY,?>
+,
+								RI extends JeeslDbReplicationInfo<L,D,RI,?>,
+								RS extends JeeslDbReplicationState<L,D,RS,?>,
+								RY extends JeeslDbReplicationSync<L,D,RY,?>
 >
 			extends AbstractFactoryBuilder<L,D>
 {

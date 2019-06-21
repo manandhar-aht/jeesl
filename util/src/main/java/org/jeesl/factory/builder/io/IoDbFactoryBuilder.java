@@ -21,7 +21,7 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								SYSTEM extends JeeslIoSsiSystem,
 								DUMP extends JeeslDbDump<SYSTEM,DF>,
 								DF extends JeeslDbDumpFile<DUMP,DH,DS>,
-								DH extends JeeslDbDumpHost<DH,L,D,?>,
+								DH extends JeeslDbDumpHost<L,D,DH,?>,
 								DS extends JeeslDbDumpStatus<L,D,DS,?>
 //,
 //								RI extends JeeslDbReplicationInfo<L,D,RI,?>,

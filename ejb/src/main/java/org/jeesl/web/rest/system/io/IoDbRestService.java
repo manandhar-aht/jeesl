@@ -38,7 +38,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							SYSTEM extends JeeslIoSsiSystem,
 							DUMP extends JeeslDbDump<SYSTEM,FILE>,
 							FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-							HOST extends JeeslDbDumpHost<HOST,L,D,?>,
+							HOST extends JeeslDbDumpHost<L,D,HOST,?>,
 							STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslIoDbRestInterface,JeeslIoDbRestExport,JeeslIoDbRestImport

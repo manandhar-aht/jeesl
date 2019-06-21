@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class EjbDbDumpFileFactory<DUMP extends JeeslDbDump<?,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-								HOST extends JeeslDbDumpHost<HOST,?,?,?>,
+								HOST extends JeeslDbDumpHost<?,?,HOST,?>,
 								STATUS extends JeeslDbDumpStatus<?,?,STATUS,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbDbDumpFileFactory.class);

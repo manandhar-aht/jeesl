@@ -69,7 +69,8 @@ public class TsFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
 	private final Class<POINT> cPoint;  public Class<POINT> getClassPoint() {return cPoint;}
 	private final Class<WS> cWs; public Class<WS> getClassWorkspace() {return cWs;}
 	
-	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<CAT> cCategory, final Class<SCOPE> cScope,
+	public TsFactoryBuilder(final Class<L> cL, final Class<D> cD,
+							final Class<CAT> cCategory, final Class<SCOPE> cScope,
 							final Class<ST> cScopeType, final Class<UNIT> cUnit, final Class<MP> cMp,
 							final Class<TS> cTs, final Class<TRANSACTION> cTransaction, final Class<SOURCE> cSource, final Class<BRIDGE> cBridge, final Class<EC> cEc, final Class<INT> cInt,
 							final Class<DATA> cData, final Class<POINT> cPoint,

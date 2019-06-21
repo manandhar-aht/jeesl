@@ -20,5 +20,5 @@ public interface JeeslMenuBean<L extends UtilsLang, D extends UtilsDescription,
 								USER extends JeeslUser<R>,
 								I extends JeeslIdentity<R,V,U,A,USER>>
 {	
-	
+	void updateLocale(String localeCode);
 }

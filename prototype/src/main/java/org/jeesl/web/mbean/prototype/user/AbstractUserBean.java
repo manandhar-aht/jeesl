@@ -79,6 +79,7 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		else if(localeCode.equals("kin")){locale = new Locale.Builder().setLanguage("rw").setRegion("RW").build();}
 		
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+		bMenu.updateLocale(localeCode);
 		localeChanged();
 	}
 	protected void localeChanged() {}

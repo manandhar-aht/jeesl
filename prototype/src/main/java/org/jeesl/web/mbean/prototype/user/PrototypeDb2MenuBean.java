@@ -97,6 +97,12 @@ public class PrototypeDb2MenuBean <L extends UtilsLang, D extends UtilsDescripti
 		reset();
 	}
 	
+	@Override public void updateLocale(String localeCode)
+	{
+		this.localeCode=localeCode;
+		reset();
+	}
+	
 	public void reset()
 	{
 		if(debugOnInfo) {logger.info("Resettings Menu");}

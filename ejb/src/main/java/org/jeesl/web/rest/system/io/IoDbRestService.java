@@ -17,7 +17,7 @@ import org.jeesl.factory.ejb.system.status.EjbStatusFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.web.rest.AbstractJeeslRestService;
@@ -38,7 +38,7 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 							SYSTEM extends JeeslIoSsiSystem,
 							DUMP extends JeeslDbDump<SYSTEM,FILE>,
 							FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-							HOST extends JeeslDbHost<HOST,L,D,?>,
+							HOST extends JeeslDbDumpHost<HOST,L,D,?>,
 							STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslIoDbRestInterface,JeeslIoDbRestExport,JeeslIoDbRestImport

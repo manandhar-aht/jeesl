@@ -10,7 +10,7 @@ import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescrip
 										SYSTEM extends JeeslIoSsiSystem,
 										DUMP extends JeeslDbDump<SYSTEM,FILE>,
 										FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-										HOST extends JeeslDbHost<HOST,L,D,?>,
+										HOST extends JeeslDbDumpHost<HOST,L,D,?>,
 										STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 						implements Serializable
 {

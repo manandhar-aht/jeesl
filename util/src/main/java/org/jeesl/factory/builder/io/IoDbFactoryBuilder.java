@@ -6,7 +6,10 @@ import org.jeesl.factory.ejb.system.io.db.EjbIoDumpFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationInfo;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationState;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationSync;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,20 +19,26 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								SYSTEM extends JeeslIoSsiSystem,
-								DUMP extends JeeslDbDump<SYSTEM,FILE>,
-								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-								HOST extends JeeslDbHost<HOST,L,D,?>,
-								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
+								DUMP extends JeeslDbDump<SYSTEM,DF>,
+								DF extends JeeslDbDumpFile<DUMP,DH,DS>,
+								DH extends JeeslDbDumpHost<DH,L,D,?>,
+								DS extends JeeslDbDumpStatus<L,D,DS,?>
+//,
+//								RI extends JeeslDbReplicationInfo<L,D,RI,?>,
+//								RS extends JeeslDbReplicationState<L,D,RS,?>,
+//								RY extends JeeslDbReplicationSync<L,D,RY,?>
+>
 			extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbFactoryBuilder.class);
 	
 	private final Class<DUMP> cDump; public Class<DUMP> getClassDump(){return cDump;}
-	private final Class<FILE> cFile; public Class<FILE> getClassFile(){return cFile;}
-	private final Class<HOST> cHost; public Class<HOST> getClassHost(){return cHost;}
-	private final Class<STATUS> cStatus; public Class<STATUS> getClassStatus(){return cStatus;}
+	private final Class<DF> cFile; public Class<DF> getClassFile(){return cFile;}
+	private final Class<DH> cHost; public Class<DH> getClassHost(){return cHost;}
+	private final Class<DS> cStatus; public Class<DS> getClassStatus(){return cStatus;}
 	
-	public IoDbFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<DUMP> cDump, final Class<FILE> cFile, final Class<HOST> cHost, final Class<STATUS> cStatus)
+	public IoDbFactoryBuilder(final Class<L> cL, final Class<D> cD,
+							final Class<DUMP> cDump, final Class<DF> cFile, final Class<DH> cHost, final Class<DS> cStatus)
 	{
 		super(cL,cD);
 		this.cDump = cDump;
@@ -39,5 +48,5 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public EjbIoDumpFactory<SYSTEM,DUMP> dump(){return new EjbIoDumpFactory<>(cDump);}
-	public EjbDbDumpFileFactory<DUMP,FILE,HOST,STATUS> file(){return new EjbDbDumpFileFactory<>(cFile);}
+	public EjbDbDumpFileFactory<DUMP,DF,DH,DS> file(){return new EjbDbDumpFileFactory<>(cFile);}
 }

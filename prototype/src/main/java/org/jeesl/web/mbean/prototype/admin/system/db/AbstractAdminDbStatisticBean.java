@@ -9,7 +9,7 @@ import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class AbstractAdminDbStatisticBean <L extends UtilsLang, D extends UtilsD
 											SYSTEM extends JeeslIoSsiSystem,
 											DUMP extends JeeslDbDump<SYSTEM,FILE>,
 											FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-											HOST extends JeeslDbHost<HOST,L,D,?>,
+											HOST extends JeeslDbDumpHost<HOST,L,D,?>,
 											STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>> 
 implements Serializable
 {

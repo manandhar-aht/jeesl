@@ -13,7 +13,7 @@ import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.util.comparator.ejb.RecordComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -29,7 +29,7 @@ public class AbstractDbBackupBean <L extends UtilsLang,D extends UtilsDescriptio
 									SYSTEM extends JeeslIoSsiSystem,
 									DUMP extends JeeslDbDump<SYSTEM,FILE>,
 									FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-									HOST extends JeeslDbHost<HOST,L,D,?>,
+									HOST extends JeeslDbDumpHost<HOST,L,D,?>,
 									STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable,SbDateIntervalSelection

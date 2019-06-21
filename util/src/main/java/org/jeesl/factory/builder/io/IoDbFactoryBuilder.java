@@ -33,9 +33,9 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	final static Logger logger = LoggerFactory.getLogger(IoDbFactoryBuilder.class);
 	
 	private final Class<DUMP> cDump; public Class<DUMP> getClassDump(){return cDump;}
-	private final Class<DF> cFile; public Class<DF> getClassFile(){return cFile;}
-	private final Class<DH> cHost; public Class<DH> getClassHost(){return cHost;}
-	private final Class<DS> cStatus; public Class<DS> getClassStatus(){return cStatus;}
+	private final Class<DF> cFile; public Class<DF> getClassDumpFile(){return cFile;}
+	private final Class<DH> cHost; public Class<DH> getClassDumpHost(){return cHost;}
+	private final Class<DS> cStatus; public Class<DS> getClassDumpStatus(){return cStatus;}
 	
 	public IoDbFactoryBuilder(final Class<L> cL, final Class<D> cD,
 							final Class<DUMP> cDump, final Class<DF> cFile, final Class<DH> cHost, final Class<DS> cStatus)
@@ -48,5 +48,5 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	public EjbIoDumpFactory<SYSTEM,DUMP> dump(){return new EjbIoDumpFactory<>(cDump);}
-	public EjbDbDumpFileFactory<DUMP,DF,DH,DS> file(){return new EjbDbDumpFileFactory<>(cFile);}
+	public EjbDbDumpFileFactory<DUMP,DF,DH,DS> dumpFile(){return new EjbDbDumpFileFactory<>(cFile);}
 }

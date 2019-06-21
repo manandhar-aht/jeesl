@@ -57,12 +57,12 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 	
 	@Override public List<FILE> fDumpFiles(HOST host) 
 	{
-		return this.allForParent(fbDb.getClassFile(),JeeslDbDumpFile.Attributes.host.toString(), host);
+		return this.allForParent(fbDb.getClassDumpFile(),JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
 	@Override public FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException
 	{
-		return this.oneForParents(fbDb.getClassFile(), JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
+		return this.oneForParents(fbDb.getClassDumpFile(), JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
 	@Override public String version()

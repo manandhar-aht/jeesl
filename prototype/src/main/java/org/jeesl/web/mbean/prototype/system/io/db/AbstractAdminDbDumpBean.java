@@ -51,7 +51,7 @@ public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescrip
 	protected void refreshList()
 	{
 		dumps = fDb.allOrdered(fbDb.getClassDump(),JeeslDbDump.Attributes.record.toString(),false);
-		hosts = fDb.allOrderedPositionVisible(fbDb.getClassHost());
+		hosts = fDb.allOrderedPositionVisible(fbDb.getClassDumpHost());
 		
 		mapFiles = new HashMap<DUMP,Map<HOST,FILE>>();
 		for(DUMP d : dumps)
@@ -59,14 +59,14 @@ public class AbstractAdminDbDumpBean <L extends UtilsLang,D extends UtilsDescrip
 			mapFiles.put(d,new HashMap<HOST,FILE>());
 		}
 		
-		List<FILE> files = fDb.all(fbDb.getClassFile());
+		List<FILE> files = fDb.all(fbDb.getClassDumpFile());
 		for(FILE f : files)
 		{
 			mapFiles.get(f.getDump()).put(f.getHost(),f);
 		}
 		
 		logger.info(fbDb.getClassDump().getSimpleName()+": "+dumps.size());
-		logger.info(fbDb.getClassHost().getSimpleName()+": "+hosts.size());
-		logger.info(fbDb.getClassFile().getSimpleName()+": "+files.size());
+		logger.info(fbDb.getClassDumpHost().getSimpleName()+": "+hosts.size());
+		logger.info(fbDb.getClassDumpFile().getSimpleName()+": "+files.size());
 	}
 }

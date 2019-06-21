@@ -22,24 +22,23 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 									SYSTEM extends JeeslIoSsiSystem,
 									DUMP extends JeeslDbDump<SYSTEM,FILE>,
-									FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
+									FILE extends JeeslDbDumpFile<DUMP,HOST,DS>,
 									HOST extends JeeslDbDumpHost<L,D,HOST,?>,
-									STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
+									DS extends JeeslDbDumpStatus<L,D,DS,?>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDbReplicationBean.class);
 	
-	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb;
-	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;
+	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,DS> fDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS> fbDb;
 	
-//	private SbDateHandler sbDateHandler; public SbDateHandler getSbDateHandler() {return sbDateHandler;}
 //	protected Chart chart; public Chart getChart() {return chart;}
 
 	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
 	
-	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb)
+	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;
@@ -48,7 +47,7 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 //		sbDateHandler.initWeeksToNow(2);
 	}
 	
-	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fDb)
+	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,DS> fDb)
 	{
 		this.fDb=fDb;
 		refreshList(); 

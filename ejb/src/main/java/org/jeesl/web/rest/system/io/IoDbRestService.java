@@ -68,14 +68,14 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		this.system=system;
 		
-		efHost = EjbStatusFactory.createFactory(fbDb.getClassHost(),fbDb.getClassL(),fbDb.getClassD());
+		efHost = EjbStatusFactory.createFactory(fbDb.getClassDumpHost(),fbDb.getClassL(),fbDb.getClassD());
 		
 		efDump = fbDb.dump();
-		efDumpFile = fbDb.file();
+		efDumpFile = fbDb.dumpFile();
 	}
 	
 //	@Override public Container exportSystemDbActivityState() {return xfContainer.build(fDb.allOrderedPosition(cCategory));}
-	@Override public Container exportSystemIoDbDumpStatus() {return xfContainer.build(fDb.allOrderedPosition(fbDb.getClassStatus()));}
+	@Override public Container exportSystemIoDbDumpStatus() {return xfContainer.build(fDb.allOrderedPosition(fbDb.getClassDumpStatus()));}
 	
 	@Override public DataUpdate uploadDumps(Dir directory)
 	{
@@ -86,13 +86,13 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 		
 		try
 		{
-			eStatusStored = fDb.fByCode(fbDb.getClassStatus(),JeeslDbDumpFile.Status.stored);
-			eStatusDeleted = fDb.fByCode(fbDb.getClassStatus(),JeeslDbDumpFile.Status.deleted);
+			eStatusStored = fDb.fByCode(fbDb.getClassDumpStatus(),JeeslDbDumpFile.Status.stored);
+			eStatusDeleted = fDb.fByCode(fbDb.getClassDumpStatus(),JeeslDbDumpFile.Status.deleted);
 		}
 		catch (UtilsNotFoundException e) {dut.fail(e, true);return dut.toDataUpdate();}
 		
 		HOST eHost;
-		try{eHost = fDb.fByCode(fbDb.getClassHost(), directory.getCode());}
+		try{eHost = fDb.fByCode(fbDb.getClassDumpHost(), directory.getCode());}
 		catch (UtilsNotFoundException e)
 		{
 			try{eHost = fDb.persist(efHost.create(directory.getCode()));}
@@ -148,5 +148,5 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 	}
 	
 	@Override public DataUpdate importSystemDbActivityState(Aht states){logger.warn("NYI importSystemDbActivityState");return new DataUpdate();}
-	@Override public DataUpdate importSystemIoDbDumpStatus(Container container){return importStatus(fbDb.getClassStatus(),container,null);}
+	@Override public DataUpdate importSystemIoDbDumpStatus(Container container){return importStatus(fbDb.getClassDumpStatus(),container,null);}
 }

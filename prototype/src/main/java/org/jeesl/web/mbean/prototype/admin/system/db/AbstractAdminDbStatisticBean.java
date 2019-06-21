@@ -22,7 +22,7 @@ public class AbstractAdminDbStatisticBean <L extends UtilsLang, D extends UtilsD
 											DUMP extends JeeslDbDump<SYSTEM,FILE>,
 											FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 											HOST extends JeeslDbHost<HOST,L,D,?>,
-											STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>> 
+											STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>> 
 implements Serializable
 {
 	private static final long serialVersionUID = 1L;

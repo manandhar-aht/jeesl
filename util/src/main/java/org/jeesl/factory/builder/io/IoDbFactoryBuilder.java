@@ -19,7 +19,7 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
-								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
+								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 			extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoDbFactoryBuilder.class);

@@ -22,7 +22,7 @@ public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription
 								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
-								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
+								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 		extends UtilsFacade
 {
 	List<FILE> fDumpFiles(HOST host);

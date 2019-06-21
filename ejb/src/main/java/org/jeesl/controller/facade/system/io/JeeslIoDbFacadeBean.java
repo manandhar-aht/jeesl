@@ -39,9 +39,11 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 								DUMP extends JeeslDbDump<SYSTEM,FILE>,
 								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
 								HOST extends JeeslDbHost<HOST,L,D,?>,
-								STATUS extends JeeslDbDumpStatus<STATUS,L,D,?>>
+								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
 		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS>
 {
+	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
 	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS> fbDb;

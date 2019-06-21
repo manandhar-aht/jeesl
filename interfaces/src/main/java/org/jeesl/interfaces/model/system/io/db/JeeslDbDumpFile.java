@@ -8,7 +8,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslDbDumpFile<DUMP extends JeeslDbDump<?,?>,
 								HOST extends JeeslDbHost<HOST,?,?,?>,
-								STATUS extends JeeslDbDumpStatus<STATUS,?,?,?>>
+								STATUS extends JeeslDbDumpStatus<?,?,STATUS,?>>
 					extends Serializable,EjbSaveable,EjbRemoveable,EjbWithId
 {
 	public static enum Attributes{dump,host,status}

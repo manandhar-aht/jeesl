@@ -1,14 +1,16 @@
 package org.jeesl.web.mbean.prototype.system.io.db;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeesl.api.facade.io.JeeslIoDbFacade;
 import org.jeesl.factory.builder.io.IoDbFactoryBuilder;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
+import org.jeesl.factory.ejb.util.EjbCodeFactory;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationInfo;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationState;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationSync;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -21,35 +23,40 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 									SYSTEM extends JeeslIoSsiSystem,
-									DUMP extends JeeslDbDump<SYSTEM,FILE>,
-									FILE extends JeeslDbDumpFile<DUMP,HOST,DS>,
-									HOST extends JeeslDbDumpHost<L,D,HOST,?>,
-									DS extends JeeslDbDumpStatus<L,D,DS,?>>
+									RI extends JeeslDbReplicationInfo<L,D,RI,?>,
+									RS extends JeeslDbReplicationState<L,D,RS,?>,
+									RY extends JeeslDbReplicationSync<L,D,RY,?>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractDbReplicationBean.class);
 	
-	private JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,DS> fDb;
-	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS,?,?,?> fbDb;
+	private JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb;
 	
+	private final Map<String,RS> mapState;
+	private final Map<String,RY> mapSync;
 //	protected Chart chart; public Chart getChart() {return chart;}
 
 	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
 	
-	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,DS,?,?,?> fbDb)
+	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;
-//		sbDateHandler = new SbDateHandler(this);
-//		sbDateHandler.setEnforceStartOfDay(true);
-//		sbDateHandler.initWeeksToNow(2);
+
+		mapState = new HashMap<>();
+		mapSync = new HashMap<>();
 	}
 	
-	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,DS> fDb)
+	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb)
 	{
 		this.fDb=fDb;
+		
+		mapState.putAll(EjbCodeFactory.toMapCode(fDb.allOrderedPositionVisible(fbDb.getClassReplicationState())));
+		mapSync.putAll(EjbCodeFactory.toMapCode(fDb.allOrderedPositionVisible(fbDb.getClassReplicationSync())));
+		
 		refreshList(); 
 	}
 	

@@ -36,15 +36,25 @@ public class IoDbFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 	private final Class<DF> cFile; public Class<DF> getClassDumpFile(){return cFile;}
 	private final Class<DH> cHost; public Class<DH> getClassDumpHost(){return cHost;}
 	private final Class<DS> cStatus; public Class<DS> getClassDumpStatus(){return cStatus;}
+	private final Class<RI> cReplicationInfo; public Class<RI> getClassReplicationInfo() {return cReplicationInfo;}
+	private final Class<RS> cReplicationState; public Class<RS> getClassReplicationState() {return cReplicationState;}
+	private final Class<RY> cReplicationSync; public Class<RY> getClassReplicationSync() {return cReplicationSync;}
 	
 	public IoDbFactoryBuilder(final Class<L> cL, final Class<D> cD,
-							final Class<DUMP> cDump, final Class<DF> cFile, final Class<DH> cHost, final Class<DS> cStatus)
+							final Class<DUMP> cDump, final Class<DF> cFile, final Class<DH> cHost, final Class<DS> cStatus,
+							final Class<RI> cReplicationInfo, final Class<RS> cReplicationState, final Class<RY> cReplicationSync)
 	{
 		super(cL,cD);
+		
 		this.cDump = cDump;
 		this.cFile=cFile;
 		this.cHost=cHost;
 		this.cStatus=cStatus;
+		
+		this.cReplicationInfo=cReplicationInfo;
+		this.cReplicationState=cReplicationState;
+		this.cReplicationSync=cReplicationSync;
+		
 	}
 	
 	public EjbIoDumpFactory<SYSTEM,DUMP> dump(){return new EjbIoDumpFactory<>(cDump);}

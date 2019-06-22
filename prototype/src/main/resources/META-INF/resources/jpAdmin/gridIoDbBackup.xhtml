@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:mc="http://www.metachart.org/chart"
+	xmlns:mc="http://www.metachart.org"
+	xmlns:mcc="http://www.metachart.org/chart"
 	xmlns:j="http://www.jeesl.org/jsf"
 	xmlns:jp="http://jsf.jeesl.org/prototype"
 	xmlns:jtp="http://jsf.jeesl.org/prototype/tag"
@@ -21,19 +22,17 @@
 		<jp:grid id="grid">
 			<j:row>
 				<j:slot rendered="#{not empty cc.attrs.bean.chart}">
-					<mc:chart id="chart" type="line" zoomType="x" height="300">
+					<mcc:chart id="chart" type="line" zoomType="x" height="300">
 		                <mc:title value="#{cc.attrs.bean.chart.title.label}"/>
-		                <mc:subTitle value="#{cc.attrs.bean.chart.subtitle.label}"/>
-		                <mc:axis code="x" type="datetime"><mc:title value="Date"/></mc:axis>
-		                <mc:axis code="y" min="0"><mc:title value="Size"/></mc:axis>
-		                <mc:tooltip shared="true"/>
-		                <mc:plotOptions type="line" marker="false"/>
-		                <mc:series>
-		                	<mc:ds value="#{cc.attrs.bean.chart.ds}"/>
-		                </mc:series>
-		            </mc:chart>
+		                <mcc:axis code="x" type="datetime"><mc:title value="Date"/></mcc:axis>
+		                <mcc:axis code="y" min="0"><mc:title value="Size"/></mcc:axis>
+		                <mcc:tooltip shared="true"/>
+		                <mcc:plotOptions type="line" marker="false"/>
+		                <mcc:series>
+		                	<mcc:ds value="#{cc.attrs.bean.chart.ds}"/>
+		                </mcc:series>
+		            </mcc:chart>
 	            </j:slot>
-			
 				<j:slot id="sCriterias" width="12">
 					<p:dataTable var="d" value="#{cc.attrs.bean.dumps}">
 						<p:columnGroup type="header">

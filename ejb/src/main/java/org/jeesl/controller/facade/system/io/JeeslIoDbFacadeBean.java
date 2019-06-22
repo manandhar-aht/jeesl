@@ -36,31 +36,31 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription,
 								SYSTEM extends JeeslIoSsiSystem,
-								DUMP extends JeeslDbDump<SYSTEM,FILE>,
-								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-								HOST extends JeeslDbDumpHost<L,D,HOST,?>,
-								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
-		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,SYSTEM,DUMP,FILE,HOST,STATUS>
+								DUMP extends JeeslDbDump<SYSTEM,DF>,
+								DF extends JeeslDbDumpFile<DUMP,DH,DS>,
+								DH extends JeeslDbDumpHost<L,D,DH,?>,
+								DS extends JeeslDbDumpStatus<L,D,DS,?>>
+		extends UtilsFacadeBean implements JeeslIoDbFacade<L,D,SYSTEM,DUMP,DF,DH,DS>
 {
 	private static final long serialVersionUID = 1L;
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDbFacadeBean.class);
 	
-	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS,?,?,?> fbDb;
+	private final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS,?,?,?> fbDb;
 	
-	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS,?,?,?> fbDb){this(em,fbDb,false);}
-	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,FILE,HOST,STATUS,?,?,?> fbDb, boolean handleTransaction)
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS,?,?,?> fbDb){this(em,fbDb,false);}
+	public JeeslIoDbFacadeBean(EntityManager em, final IoDbFactoryBuilder<L,D,SYSTEM,DUMP,DF,DH,DS,?,?,?> fbDb, boolean handleTransaction)
 	{
 		super(em,handleTransaction);
 		this.fbDb=fbDb;
 	}
 	
-	@Override public List<FILE> fDumpFiles(HOST host) 
+	@Override public List<DF> fDumpFiles(DH host) 
 	{
 		return this.allForParent(fbDb.getClassDumpFile(),JeeslDbDumpFile.Attributes.host.toString(), host);
 	}
 	
-	@Override public FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException
+	@Override public DF fDumpFile(DUMP dump, DH host) throws UtilsNotFoundException
 	{
 		return this.oneForParents(fbDb.getClassDumpFile(), JeeslDbDumpFile.Attributes.dump.toString(), dump, JeeslDbDumpFile.Attributes.host.toString(), host);
 	}

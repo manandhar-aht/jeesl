@@ -19,14 +19,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
 public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription,
 								SYSTEM extends JeeslIoSsiSystem,
-								DUMP extends JeeslDbDump<SYSTEM,FILE>,
-								FILE extends JeeslDbDumpFile<DUMP,HOST,STATUS>,
-								HOST extends JeeslDbDumpHost<L,D,HOST,?>,
-								STATUS extends JeeslDbDumpStatus<L,D,STATUS,?>>
+								DUMP extends JeeslDbDump<SYSTEM,DF>,
+								DF extends JeeslDbDumpFile<DUMP,DH,DS>,
+								DH extends JeeslDbDumpHost<L,D,DH,?>,
+								DS extends JeeslDbDumpStatus<L,D,DS,?>>
 		extends UtilsFacade
 {
-	List<FILE> fDumpFiles(HOST host);
-	FILE fDumpFile(DUMP dump, HOST host) throws UtilsNotFoundException;
+	List<DF> fDumpFiles(DH host);
+	DF fDumpFile(DUMP dump, DH host) throws UtilsNotFoundException;
 	
 	String version();
 	long countExact(Class<?> c);

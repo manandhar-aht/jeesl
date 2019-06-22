@@ -109,8 +109,10 @@ public class IoDbRestService<L extends UtilsLang,D extends UtilsDescription,
 			{
 				try
 				{
-					eDump = fDb.persist(efDump.build(system,xFile));
+					eDump = efDump.build(system,xFile);
 					if(directory.isSetClassifier()) {eDump.setSystem(fDb.fByCode(fbSsi.getClassSystem(), directory.getClassifier()));}
+					eDump = fDb.persist(eDump);
+					
 				}
 				catch (UtilsConstraintViolationException e1) {dut.fail(e1, true);return dut.toDataUpdate();}
 				catch (UtilsNotFoundException e1) {dut.fail(e1, true);return dut.toDataUpdate();}

@@ -10,8 +10,9 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class StatusFactoryBuilder<L extends UtilsLang, D extends UtilsDescription,
-								LOC extends UtilsStatus<LOC,L,D>>
+public class StatusFactoryBuilder<L extends UtilsLang,
+									D extends UtilsDescription,
+									LOC extends UtilsStatus<LOC,L,D>>
 	extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(StatusFactoryBuilder.class);

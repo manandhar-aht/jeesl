@@ -47,6 +47,7 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 	protected JeeslIdentity<R,V,U,A,USER> identity;
 	
 	protected String ipAddress;
+	protected String sessionId;
 	protected String localeCode;
 	
 	protected AbstractUserBean(StatusFactoryBuilder<L,D,?> fbStatus)
@@ -67,8 +68,7 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		this.bMenu=bMenu;
 	}
 	
-	//TODO final should be used, but EAP6 throwing an error
-	public void setLocale(String localeCode)// throws UtilsConstraintViolationException, UtilsLockingException
+	public void setLocale(String localeCode)
 	{
 		this.localeCode=localeCode;
 		
@@ -79,7 +79,7 @@ public abstract class AbstractUserBean <L extends UtilsLang, D extends UtilsDesc
 		else if(localeCode.equals("kin")){locale = new Locale.Builder().setLanguage("rw").setRegion("RW").build();}
 		
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-		bMenu.updateLocale(localeCode);
+		if(bMenu!=null) {bMenu.updateLocale(localeCode);}
 		localeChanged();
 	}
 	protected void localeChanged() {}

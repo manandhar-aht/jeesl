@@ -3,6 +3,7 @@ package org.jeesl.controller.processor.module.ts;
 import org.jeesl.api.facade.module.JeeslTsFacade;
 import org.jeesl.factory.builder.module.TsFactoryBuilder;
 import org.jeesl.factory.ejb.module.ts.EjbTsDataFactory;
+import org.jeesl.factory.ejb.module.ts.EjbTsDataPointFactory;
 import org.jeesl.factory.mc.ts.McTimeSeriesFactory;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTimeSeries;
 import org.jeesl.interfaces.model.module.ts.core.JeeslTsEntityClass;
@@ -34,12 +35,13 @@ public class AbstractTimeSeriesProcessor<SCOPE extends JeeslTsScope<?,?,?,?,?,EC
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractTimeSeriesProcessor.class);
 	
-	protected final TsFactoryBuilder<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fbTs;
+	protected final TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs;
 	
 	protected final JeeslTsFacade<?,?,?,SCOPE,?,?,?,TS,TRANSACTION,?,BRIDGE,EC,INT,DATA,?,?,?,WS,?> fTs;
 	
 	protected final McTimeSeriesFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS> mfTs;
 	protected final EjbTsDataFactory<TS,TRANSACTION,DATA,WS> efData;
+	protected final EjbTsDataPointFactory<MP,DATA,POINT> efPoint;
 	
 	protected WS ws;
 	protected SCOPE scope;
@@ -53,6 +55,7 @@ public class AbstractTimeSeriesProcessor<SCOPE extends JeeslTsScope<?,?,?,?,?,EC
 		this.fTs=fTs;
 		mfTs = new McTimeSeriesFactory<SCOPE,MP,TS,BRIDGE,EC,INT,DATA,POINT,WS>(fbTs,fTs);
 		efData = fbTs.data();
+		efPoint = fbTs.ejbDataPoint();
 	}
 	
 	public <EWS extends Enum<EWS>, ESC extends Enum<ESC>, EIN extends Enum<EIN>> void init(EWS ews, ESC esc, EIN ein, Class<?> c)

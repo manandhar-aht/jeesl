@@ -42,6 +42,8 @@ public class McTimeSeriesFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 {
 	final static Logger logger = LoggerFactory.getLogger(McTimeSeriesFactory.class);
 	
+	private final boolean debugOnInfo = false;
+	
 	private final JeeslTsFacade<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fTs;
 	
 	private final TsFactoryBuilder<?,?,?,SCOPE,?,?,MP,TS,?,?,BRIDGE,EC,INT,DATA,POINT,?,?,WS,?> fbTs;
@@ -130,19 +132,20 @@ public class McTimeSeriesFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 		List<POINT> points = fTs.fPoints(workspace,ts,from,to);
 		Map<MP,List<POINT>> mapMp = efPoint.toMapMultiPoint(points);
 		
-		for(MP mp : mapMp.keySet())
+		if(debugOnInfo)
 		{
-			List<POINT> l = mapMp.get(mp);
+			logger.info("Datas: "+datas.size());
+			logger.info("Points: "+points.size());
 		}
-		
 		
 		Ds xml = new Ds();
 		for(MP mp : multiPoints)
 		{
 			if(mp.getVisible() && mapMp.containsKey(mp))
 			{
+				if(debugOnInfo) {logger.info("MP: "+mp.getCode());}
 				Map<DATA,POINT> mapData = efPoint.toMapDataUnique(mapMp.get(mp));
-//				logger.info("MAP-data: "+mapData.size());
+				if(debugOnInfo) {logger.info("\t mapData.size():"+mapData.size());}
 				Ds ds = new Ds();
 				ds.setLabel(mp.getName().get(localeCode).getLang());
 				for(DATA data : datas)
@@ -150,7 +153,7 @@ public class McTimeSeriesFactory <SCOPE extends JeeslTsScope<?,?,?,?,?,EC,INT>,
 					Data d = new Data();
 					d.setRecord(DateUtil.toXmlGc(data.getRecord()));
 					POINT p = mapData.get(data);
-//					logger.info("P: "+(p!=null) + " "+mapData.containsKey(data));
+					if(debugOnInfo) {logger.info("P: "+(p!=null) + " "+mapData.containsKey(data));}
 					
 					if(p!=null) {d.setY(p.getValue());}
 					ds.getData().add(d);

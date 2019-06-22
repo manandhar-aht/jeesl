@@ -31,15 +31,16 @@ import net.sf.ahtutils.util.cli.UtilsCliOption;
 import net.sf.exlp.exception.ExlpConfigurationException;
 import net.sf.exlp.exception.ExlpUnsupportedOsException;
 import net.sf.exlp.interfaces.util.ConfigKey;
+import net.sf.exlp.util.xml.JaxbUtil;
 
 public class JeeslDbBackupNotifier
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslDbBackupNotifier.class);
 	
 	private UtilsCliOption jco;
-	private Option oUrl,oDirectory,oCode;
+	private Option oUrl,oDirectory,oHost,oSystem;
 
-	private String cfgUrl,cfgCode;
+	private String cfgUrl,cfgHost,cfgSystem;
 	private File cfgDirectory;
 	
 	
@@ -61,10 +62,11 @@ public class JeeslDbBackupNotifier
 		
 		cfgUrl = config.getString(ConfigKey.netRestUrl);
 		cfgDirectory = new File(config.getString("dir.db.backup"));
-		cfgCode = "x";
+		cfgHost = "x";
+		cfgSystem = "jeesl";
 		
 		debugConfig();
-		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgCode);
+		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgHost,cfgSystem);
 		processor.upload();
 	}
 	
@@ -75,14 +77,16 @@ public class JeeslDbBackupNotifier
         
         oUrl = Option.builder("url").required(true).hasArg(true).argName("URL").desc("URL Endpoint").build(); jco.getOptions().addOption(oUrl);
         oDirectory = Option.builder("dir").required(true).hasArg(true).argName("DIR").desc("Directory with .sql files").build(); jco.getOptions().addOption(oDirectory);
-        oCode = Option.builder("code").required(true).hasArg(true).argName("CODE").desc("Code (Identifer) of storage server").build(); jco.getOptions().addOption(oCode);
+        oHost = Option.builder("host").required(true).hasArg(true).argName("host").desc("Host identifier of storage server").build(); jco.getOptions().addOption(oHost);
+        oSystem = Option.builder("system").required(true).hasArg(true).argName("SYSTEM").desc("System identifier").build(); jco.getOptions().addOption(oHost);
 	}
 	
 	private void debugConfig()
 	{
 		logger.info("URL: "+cfgUrl);
 		logger.info("Directory: "+cfgDirectory.getAbsolutePath());
-		logger.info("Code: "+cfgCode);
+		logger.info("Host: "+cfgHost);
+		logger.info("System: "+cfgSystem);
 	}
 	
 	public void parseArguments(UtilsCliOption jco, String args[]) throws Exception
@@ -101,10 +105,11 @@ public class JeeslDbBackupNotifier
 	    
 		cfgUrl = line.getOptionValue(oUrl.getOpt());
 		cfgDirectory = new File(line.getOptionValue(oDirectory.getOpt()));
-		cfgCode = line.getOptionValue(oCode.getOpt());
+		cfgHost = line.getOptionValue(oHost.getOpt());
+		cfgSystem = line.getOptionValue(oSystem.getOpt());
 		
 		debugConfig();
-		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgCode);
+		DatabaseBackupProcessor processor = new DatabaseBackupProcessor(buildRest(cfgUrl),cfgDirectory,cfgHost,cfgSystem);
 		processor.upload();
 	}
 	
@@ -112,8 +117,7 @@ public class JeeslDbBackupNotifier
 	{
 		JeeslDbBackupNotifier notifier = new JeeslDbBackupNotifier();
 		
-//		notifier.local();
-//		JaxbUtil.setNsPrefixMapper(new MeisNsPrefixMapper());
+		notifier.local(); System.exit(0);
 		
 		UtilsCliOption jco = new UtilsCliOption(org.jeesl.Version.class.getPackage().getImplementationVersion());
 		jco.setLog4jPaths("jeesl/client/config");

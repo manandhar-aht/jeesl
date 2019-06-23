@@ -1,9 +1,12 @@
 package org.jeesl.interfaces.model.system.constraint;
 
+import java.io.Serializable;
+
 import org.jeesl.interfaces.model.with.status.JeeslWithLevel;
 import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
+import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
@@ -21,8 +24,10 @@ public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription
 									LEVEL extends UtilsStatus<LEVEL,L,D>,
 									TYPE extends UtilsStatus<TYPE,L,D>,
 									RESOLUTION extends JeeslConstraintResolution<L,D,SCOPE,CATEGORY,CONSTRAINT,LEVEL,TYPE,RESOLUTION>>
-			extends EjbWithId,EjbWithNonUniqueCode,
-					EjbSaveable,EjbRemoveable,
+			extends Serializable,EjbWithId,
+					EjbRemoveable,EjbPersistable,EjbSaveable,
+					EjbWithNonUniqueCode,
+					
 					EjbWithPosition,
 					EjbWithParentAttributeResolver,
 					EjbWithLangDescription<L,D>,

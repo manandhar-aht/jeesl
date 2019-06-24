@@ -39,4 +39,7 @@ public interface JeeslWorkflowAction <T extends JeeslWorkflowTransition<?,?,?,?,
 	
 	AO getOption();
 	void setOption(AO option);
+	
+	String getCommand();
+	void setCommand(String command);
 }

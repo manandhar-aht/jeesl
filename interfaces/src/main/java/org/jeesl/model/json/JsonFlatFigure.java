@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;

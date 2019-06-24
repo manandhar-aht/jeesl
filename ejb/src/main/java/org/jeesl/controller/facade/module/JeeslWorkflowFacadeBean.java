@@ -51,10 +51,10 @@ public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 									APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-									AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
+									WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 									ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
-									AC extends JeeslWorkflowCommunication<AT,MT,MC,SR,RE>,
-									AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+									AC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
+									AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 									AB extends JeeslWorkflowBot<AB,L,D,?>,
 									AO extends EjbWithId,
 									MT extends JeeslIoTemplate<L,D,?,?,?,?>,
@@ -64,30 +64,35 @@ public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 									AL extends JeeslApprovalLink<AW,RE>,
 									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-									AY extends JeeslApprovalActivity<AT,AW,USER>,
+									AY extends JeeslApprovalActivity<WT,AW,USER>,
 									USER extends JeeslUser<SR>>
 					extends UtilsFacadeBean
-					implements JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER>
+					implements JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER>
 {	
+	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowFacadeBean.class);
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval;
 	
-	public JeeslWorkflowFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval)
+	public JeeslWorkflowFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;
 	}
 
 	@Override
-	public AT fTransitionBegin(AP process)
+	public WT fTransitionBegin(AP process)
 	{
 		logger.warn("Optimisation required here!!");
 		List<AS> stages = this.allForParent(fbApproval.getClassStage(), process);
 		if(!stages.isEmpty())
 		{
-			List<AT> transitions = this.allForParent(fbApproval.getClassTransition(), stages.get(0));
-			if(!transitions.isEmpty()) {return transitions.get(0);}
+			List<WT> transitions = this.allForParent(fbApproval.getClassTransition(), stages.get(0));
+			for(WT t : transitions)
+			{
+				if(!t.getType().getCode().equals(JeeslApprovalTransitionType.Code.migration.toString())) {return t;}
+			}
 		}
 		return null;
 	}

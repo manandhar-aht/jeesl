@@ -288,7 +288,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	
 	public void addStage()
 	{
-		reset(WorkflowProcesslResetHandler.build().all());
+		reset(WorkflowProcesslResetHandler.build().all().stages(false));
 		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassProcess()));
 		stage = fbWorkflow.ejbStage().build(process,stages);
 		stage.setName(efLang.createEmpty(localeCodes));

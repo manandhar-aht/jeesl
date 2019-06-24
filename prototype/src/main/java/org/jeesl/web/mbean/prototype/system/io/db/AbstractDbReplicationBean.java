@@ -12,6 +12,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationInfo;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationState;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationSync;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
+import org.jeesl.model.json.db.tuple.replication.JsonPostgresConnection;
 import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	private final Map<String,RY> mapSync;
 //	protected Chart chart; public Chart getChart() {return chart;}
 
-	private Table replications; public Table getReplications() {return replications;}
+	private List<JsonPostgresConnection> replications; public List<JsonPostgresConnection> getReplications() {return replications;}
 	
 	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb)
 	{
@@ -73,6 +74,6 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	protected void refreshList()
 	{		
 		//replications = fDb.postgresReplicationInfo();
-		replications = fDb.replicationConnections();
+		replications = fDb.postgresConnections("jeesl");
 	}
 }

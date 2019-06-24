@@ -18,10 +18,11 @@ import org.jeesl.factory.json.system.io.report.JsonFlatFiguresFactory;
 import org.jeesl.factory.sql.system.db.SqlDbPgStatFactory;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDump;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpFile;
-import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
+import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.db.tuple.replication.JsonPostgresConnection;
 import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.jsoup.helper.StringUtil;
 import org.openfuxml.content.table.Table;
@@ -146,31 +147,31 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		return table;
 	}
 	
-	public Table replicationConnections()
+	public List<JsonPostgresConnection> postgresConnections(String dbName)
 	{
 		List<String> fileds = new ArrayList<String>();
 		fileds.add("pid");
 		fileds.add("state");
-		fileds.add("cast (client_addr as text)");
-		fileds.add("sync_state");
+		fileds.add("xact_start");
+		fileds.add("query");
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT "+StringUtil.join(fileds, ","));
-		sb.append(" FROM pg_stat_replication");
+		sb.append(" FROM pg_stat_activity");
+		sb.append(" WHERE datname='"+dbName+"'");
 		logger.info(sb.toString());
 		
 		
-		List<Object[]> data = new ArrayList<Object[]>();
+		List<JsonPostgresConnection> list = new ArrayList<>();
 		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
 		{
 			Object[] array = (Object[])o;
-			data.add(array);
+			
+			
 			debugDataTypes(array);
 		}
-		
-		Table table = XmlTableFactory.build(fileds,data);
 	
-		return table;
+		return list;
 	}
 	
 	@Override

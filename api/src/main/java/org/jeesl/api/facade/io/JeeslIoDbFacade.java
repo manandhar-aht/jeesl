@@ -9,6 +9,7 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpStatus;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbDumpHost;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.JsonFlatFigures;
+import org.jeesl.model.json.db.tuple.replication.JsonPostgresConnection;
 import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.openfuxml.content.table.Table;
 
@@ -36,7 +37,7 @@ public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription
 	Table connections(String userName);
 	
 	List<JsonPostgresReplication> postgresReplicationInfo();
-	Table replicationConnections();
+	List<JsonPostgresConnection> postgresConnections(String dbName);
 	JsonFlatFigures dbConnections(String dbName);
 	JsonFlatFigures dbQueries(String dbName);
 

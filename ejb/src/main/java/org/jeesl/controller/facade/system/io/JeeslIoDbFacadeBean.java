@@ -146,13 +146,68 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		return table;
 	}
 	
+	public Table replicationConnections()
+	{
+		List<String> fileds = new ArrayList<String>();
+		fileds.add("pid");
+		fileds.add("state");
+		fileds.add("cast (client_addr as text)");
+		fileds.add("sync_state");
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "+StringUtil.join(fileds, ","));
+		sb.append(" FROM pg_stat_replication");
+		logger.info(sb.toString());
+		
+		
+		List<Object[]> data = new ArrayList<Object[]>();
+		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
+		{
+			Object[] array = (Object[])o;
+			data.add(array);
+			debugDataTypes(array);
+		}
+		
+		Table table = XmlTableFactory.build(fileds,data);
+	
+		return table;
+	}
+	
 	@Override
 	public List<JsonPostgresReplication> postgresReplicationInfo()
 	{
-		List<JsonPostgresReplication> list = new ArrayList<>();
+		List<String> fileds = new ArrayList<String>();
+		fileds.add("*");
+		fileds.add("state::char(12)");
+		fileds.add("extract('milliseconds' from write_lag) as wl");
+		fileds.add("extract('milliseconds' from flush_lag) as fl");
+		fileds.add("extract('milliseconds' from replay_lag) as rl");
 		
-		JsonPostgresReplication r1 = new JsonPostgresReplication();r1.setId(1);list.add(r1);
-		JsonPostgresReplication r2 = new JsonPostgresReplication();r1.setId(2);list.add(r2);
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "+StringUtil.join(fileds, ", "));
+		sb.append(" FROM pg_stat_replication");
+		logger.info(sb.toString());
+		
+		
+		List<JsonPostgresReplication> list = new ArrayList<>();
+		List<Object[]> data = new ArrayList<Object[]>();
+		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
+		{
+			Object[] array = (Object[])o;
+			data.add(array);
+			debugDataTypes(array);
+			
+			JsonPostgresReplication r = new JsonPostgresReplication();
+			r.setId((Integer)array[0]);
+			r.setState(array[1].toString());
+//			r.setClient_addr(array[2].toString());
+//			r.setSync_state(array[3].toString());
+			
+//			if (array[2]!=null) {r.setWrite_lag((Long)array[2]);} else {r.setWrite_lag(0);}
+//			if (array[3]!=null) {r.setFlush_lag((Long)array[3]);} else {r.setFlush_lag(0);}
+//			if (array[4]!=null) {r.setReplay_lag((Long)array[4]);} else {r.setReplay_lag(0);}
+			list.add(r);
+		}
 		
 		return list;
 	}

@@ -17,6 +17,8 @@ import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.openfuxml.content.table.Table;
+
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
@@ -35,25 +37,33 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	private JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb;
 	private final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb;
 	
+	private final Map<String,RI> mapInfo;
+	public Map<String, RI> getMapInfo() {
+		return mapInfo;
+	}
+
 	private final Map<String,RS> mapState;
 	private final Map<String,RY> mapSync;
 //	protected Chart chart; public Chart getChart() {return chart;}
 
-	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
+	private Table replications; public Table getReplications() {return replications;}
 	
 	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb)
 	{
 		super(fbDb.getClassL(),fbDb.getClassD());
 		this.fbDb=fbDb;
 
+		mapInfo = new HashMap<>();
 		mapState = new HashMap<>();
 		mapSync = new HashMap<>();
+
 	}
 	
 	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb)
 	{
 		this.fDb=fDb;
 		
+		mapInfo.putAll(EjbCodeFactory.toMapCode(fDb.allOrderedPositionVisible(fbDb.getClassReplicationInfo())));
 		mapState.putAll(EjbCodeFactory.toMapCode(fDb.allOrderedPositionVisible(fbDb.getClassReplicationState())));
 		mapSync.putAll(EjbCodeFactory.toMapCode(fDb.allOrderedPositionVisible(fbDb.getClassReplicationSync())));
 		
@@ -62,6 +72,7 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected void refreshList()
 	{		
-		replications = fDb.postgresReplicationInfo();
+		//replications = fDb.postgresReplicationInfo();
+		replications = fDb.replicationConnections();
 	}
 }

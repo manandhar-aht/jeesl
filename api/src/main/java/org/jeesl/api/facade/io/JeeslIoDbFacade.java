@@ -36,7 +36,8 @@ public interface JeeslIoDbFacade <L extends UtilsLang,D extends UtilsDescription
 	Table connections(String userName);
 	
 	List<JsonPostgresReplication> postgresReplicationInfo();
-	
+	Table replicationConnections();
 	JsonFlatFigures dbConnections(String dbName);
 	JsonFlatFigures dbQueries(String dbName);
+
 }

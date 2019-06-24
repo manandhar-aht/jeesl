@@ -161,12 +161,14 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		sb.append(" WHERE datname='"+dbName+"'");
 		logger.info(sb.toString());
 		
-		
 		List<JsonPostgresConnection> list = new ArrayList<>();
 		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
 		{
 			Object[] array = (Object[])o;
-			
+			JsonPostgresConnection json = new JsonPostgresConnection();
+			json.setId(((Integer)array[0]).longValue());
+			json.setState(((String)array[1]).toString());
+			list.add(json);
 			
 			debugDataTypes(array);
 		}

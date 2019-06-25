@@ -30,8 +30,22 @@
 							<f:facet name="header"><h:outputText value="#{cc.attrs.bean.mapInfo['state'].name[localeCode].lang}"/></f:facet>
 							<h:outputText value="#{r.state}"/>
 						</p:column>
-						
-
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{cc.attrs.bean.mapInfo['client_addr'].name[localeCode].lang}"/></f:facet>
+							<h:outputText value="#{r.clientAddr}"/>
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{cc.attrs.bean.mapInfo['write_lag'].name[localeCode].lang}"/></f:facet>
+							<h:outputText value="#{r.writeLag}"/>
+						</p:column>					
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{cc.attrs.bean.mapInfo['flush_lag'].name[localeCode].lang}"/></f:facet>
+							<h:outputText value="#{r.flushLag}"/>
+						</p:column>				
+						<p:column>
+							<f:facet name="header"><h:outputText value="#{cc.attrs.bean.mapInfo['replay_lag'].name[localeCode].lang}"/></f:facet>
+							<h:outputText value="#{r.replayLag}"/>
+						</p:column>									
 			       	</p:dataTable>
 				</j:slot>
 			</j:row>

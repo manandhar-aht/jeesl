@@ -47,7 +47,7 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	private final Map<String,RY> mapSync;
 //	protected Chart chart; public Chart getChart() {return chart;}
 
-	private List<JsonPostgresConnection> replications; public List<JsonPostgresConnection> getReplications() {return replications;}
+	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
 	
 	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb)
 	{
@@ -73,7 +73,7 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	
 	protected void refreshList()
 	{		
-		//replications = fDb.postgresReplicationInfo();
-		replications = fDb.postgresConnections("jeesl");
+		replications = fDb.postgresReplicationInfo();
+		//replications = fDb.postgresConnections("jeesl");
 	}
 }

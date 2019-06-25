@@ -176,40 +176,48 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		return list;
 	}
 	
+	/**
+	 *	This will only work when a function added as user "postgres" and then grand access to main user in this case "jeesl".
+	 *  
+	 *  CREATE FUNCTION func_stat_replication() RETURNS SETOF pg_stat_replication as $$ select * from pg_stat_replication; 
+	 *	$$ LANGUAGE sql SECURITY DEFINER;
+	 *	REVOKE EXECUTE ON FUNCTION func_stat_replication() FROM public;
+	 *	GRANT EXECUTE ON FUNCTION func_stat_replication() to jeesl;
+	 *
+	 *  after that query with 
+	 *  SELECT * FROM func_stat_replication();
+	 */
 	@Override
 	public List<JsonPostgresReplication> postgresReplicationInfo()
 	{
 		List<String> fileds = new ArrayList<String>();
-		fileds.add("*");
-		fileds.add("state::char(12)");
+		fileds.add("pid");
+		fileds.add("state");
+		fileds.add("cast (client_addr as text)");
 		fileds.add("extract('milliseconds' from write_lag) as wl");
 		fileds.add("extract('milliseconds' from flush_lag) as fl");
 		fileds.add("extract('milliseconds' from replay_lag) as rl");
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT "+StringUtil.join(fileds, ", "));
-		sb.append(" FROM pg_stat_replication");
+		sb.append(" FROM func_stat_replication()");						
 		logger.info(sb.toString());
 		
 		
 		List<JsonPostgresReplication> list = new ArrayList<>();
-		List<Object[]> data = new ArrayList<Object[]>();
 		for(Object o : em.createNativeQuery(sb.toString()).getResultList())
 		{
 			Object[] array = (Object[])o;
-			data.add(array);
 			debugDataTypes(array);
 			
-			JsonPostgresReplication r = new JsonPostgresReplication();
-			r.setId((Integer)array[0]);
-			r.setState(array[1].toString());
-//			r.setClient_addr(array[2].toString());
-//			r.setSync_state(array[3].toString());
-			
-//			if (array[2]!=null) {r.setWrite_lag((Long)array[2]);} else {r.setWrite_lag(0);}
-//			if (array[3]!=null) {r.setFlush_lag((Long)array[3]);} else {r.setFlush_lag(0);}
-//			if (array[4]!=null) {r.setReplay_lag((Long)array[4]);} else {r.setReplay_lag(0);}
-			list.add(r);
+			JsonPostgresReplication json = new JsonPostgresReplication();
+			json.setId(((Integer)array[0]).longValue());
+			json.setState(((String)array[1]).toString());
+			json.setClientAddr(((String)array[2].toString()));
+			if (array[3]!=null) {json.setWriteLag(((BigInteger) array[3]).doubleValue());}  else {json.setWriteLag((double)0);}
+			if (array[4]!=null) {json.setFlushLag(((BigInteger) array[4]).doubleValue());}  else {json.setFlushLag((double)0);}
+			if (array[5]!=null) {json.setReplayLag(((BigInteger) array[5]).doubleValue());} else {json.setReplayLag((double)0);}
+			list.add(json);
 		}
 		
 		return list;

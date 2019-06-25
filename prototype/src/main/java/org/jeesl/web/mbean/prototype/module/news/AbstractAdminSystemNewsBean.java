@@ -24,7 +24,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDescription,
+public class AbstractAdminSystemNewsBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									NEWS extends JeeslSystemNews<L,D,CATEGORY,NEWS,USER>,
 									USER extends EjbWithId>
@@ -52,7 +52,7 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 		efNews = fbNews.news(localeCodes);
 	}
 
-	protected void postConstructNews(JeeslTranslationBean<L,D,?> bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews)
+	protected void postConstructNews(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslSystemNewsFacade<L,D,CATEGORY,NEWS,USER> fNews)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fNews=fNews;
@@ -67,22 +67,23 @@ public class AbstractAdminSystemNewsBean <L extends UtilsLang,D extends UtilsDes
 		list = fNews.allOrdered(fbNews.getClassNews(),JeeslSystemNews.Attributes.validFrom.toString(),false);
 		active.clear();
 		for(NEWS n : list){active.put(n,false);}
-		for(NEWS n : fNews.fActiveNews()){active.put(n,true);}
-		
+		for(NEWS n : fNews.fActiveNews()){active.put(n,true);}	
 	}
 	
 	public void addNews() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.addEntity(fbNews.getClassNews()));}
 		news = efNews.build(null,user);
+		news.setName(efLang.createEmpty(localeCodes));
+		news.setDescription(efDescription.createEmpty(localeCodes));
 	}
 	
 	public void selectNews() throws UtilsNotFoundException
 	{
 		if(debugOnInfo){logger.info(AbstractLogMessage.selectEntity(news));}
 		news = fNews.find(fbNews.getClassNews(),news);
-		news = efLang.persistMissingLangs(fNews,langs,news);
-		news = efDescription.persistMissingLangs(fNews,langs,news);
+		news = efLang.persistMissingLangs(fNews,bTranslation.getLocales(),news);
+		news = efDescription.persistMissingLangs(fNews,bTranslation.getLocales(),news);
 	}
 	
 	public void saveNews() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException

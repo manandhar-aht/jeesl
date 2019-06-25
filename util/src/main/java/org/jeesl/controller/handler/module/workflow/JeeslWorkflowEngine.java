@@ -2,6 +2,7 @@ package org.jeesl.controller.handler.module.workflow;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.jeesl.api.facade.module.JeeslWorkflowFacade;
 import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
@@ -86,7 +88,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowEngine.class);
 	
-	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;}
+	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;if(actionHandler!=null) {actionHandler.setDebugOnInfo(debugOnInfo);}}
 	
 	private final JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fWorkflow;
 	
@@ -107,7 +109,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private final List<WC> communications; public List<WC> getCommunications() {return communications;}
 	
 	private USER user;
-	private JeeslWithWorkflow<AW> entity;
+	private JeeslWithWorkflow<AW> entity; public JeeslWithWorkflow<AW> getEntity() {return entity;}
+
 	protected WP process; public WP getProcess() {return process;} protected void setProcess(WP process) {this.process = process;}
 	private AL link; public AL getLink() {return link;} public void setLink(AL link) {this.link = link;}
 	private AW workflow; public AW getWorkflow() {return workflow;} public void setWorkflow(AW workflow) {this.workflow = workflow;}
@@ -167,6 +170,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 		WT transition = fWorkflow.fTransitionBegin(process);
 		workflow.setCurrentStage(transition.getDestination());
+		if(debugOnInfo) {logger.info("Using transition: "+transition.toString());}
 		
 		WY activity = fbWorkflow.ejbActivity().build(workflow,transition,user);
 		workflow.getActivities().add(activity);
@@ -182,7 +186,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	public <W extends JeeslWithWorkflow<AW>> void saveWorkflow(JeeslWithWorkflow<AW> ejb) throws UtilsConstraintViolationException, UtilsLockingException
 	{
-		entity=ejb;
+		this.entity=ejb;
 		workflow = fWorkflow.save(workflow);
 		link.setWorkflow(workflow);
 		link.setRefId(ejb.getId());
@@ -197,18 +201,19 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		this.user=user;
 		this.entity = ejb;
 		reset(true,true,true,true);
-		if(debugOnInfo) {logger.info("Select: Workflow and Link");}
+		
 		
 		link = fWorkflow.fLink(process,ejb);
 		workflow = link.getWorkflow();
+		if(debugOnInfo) {logger.info("Select: Workflow and Link");}
 		reloadWorkflow(false);
 	}
 	
 	public void reloadWorkflow() {reloadWorkflow(true);}
-	public void reloadWorkflow(boolean reloadEntity)
+	public void reloadWorkflow(boolean reloadWorkflow)
 	{
 		reset(true,true,true,false);
-		if(reloadEntity) {workflow = fWorkflow.find(fbWorkflow.getClassWorkflow(),workflow);}
+		if(reloadWorkflow) {workflow = fWorkflow.find(fbWorkflow.getClassWorkflow(),workflow);}
 		
 		List<WSP> availablePermissions = fWorkflow.allForParent(fbWorkflow.getClassPermission(), workflow.getCurrentStage());
 		if(debugOnInfo) {logger.info("Checking "+availablePermissions.size()+" "+fbWorkflow.getClassPermission().getSimpleName());}
@@ -298,7 +303,9 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		workflow.setCurrentStage(transition.getDestination());
 		workflow = fWorkflow.save(workflow);
 		
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 		actionHandler.perform(entity,actions);
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 		
 		activity = fbWorkflow.ejbActivity().build(workflow,transition,user);
 		activity.setRemark(remark);
@@ -312,6 +319,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		transition=null;
 		activity = null;
 		
-		reloadWorkflow();
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
+		reloadWorkflow(true);
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 	}
 }

@@ -101,7 +101,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 		{
 			try
 			{
-				mails.getMail().addAll(build(activity, entity,communication).getMail());
+				mails.getMail().addAll(build(activity,entity,communication).getMail());
 			}
 			catch (IOException e) {e.printStackTrace();}
 		}

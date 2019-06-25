@@ -85,13 +85,19 @@ public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 	public WT fTransitionBegin(AP process)
 	{
 		logger.warn("Optimisation required here!!");
-		List<AS> stages = this.allForParent(fbApproval.getClassStage(), process);
-		if(!stages.isEmpty())
+		for(AS stage : this.allForParent(fbApproval.getClassStage(), process))
 		{
-			List<WT> transitions = this.allForParent(fbApproval.getClassTransition(), stages.get(0));
-			for(WT t : transitions)
+			if(stage.getType().getCode().equals(JeeslWorkflowStageType.Code.start.toString()))
 			{
-				if(!t.getType().getCode().equals(JeeslApprovalTransitionType.Code.migration.toString())) {return t;}
+				List<WT> transitions = this.allForParent(fbApproval.getClassTransition(), stage);
+				for(WT t : transitions)
+				{
+					if(!t.getType().getCode().equals(JeeslApprovalTransitionType.Code.auto.toString()))
+					{
+						logger.info("Returning: "+t.getType().getCode());
+						return t;
+					}
+				}
 			}
 		}
 		return null;

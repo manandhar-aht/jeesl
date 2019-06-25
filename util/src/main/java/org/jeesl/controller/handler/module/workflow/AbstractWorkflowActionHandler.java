@@ -49,7 +49,9 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		for(AA action : actions)
 		{
 			perform(entity,action);
+			try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 		}
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 		callback.workflowCallbackAfterActionsPerformed();
 	}
 	
@@ -66,6 +68,7 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 	
 	private <W extends JeeslWithWorkflow<AW>> void statusUpdate(JeeslWithWorkflow<AW> entity, AA action)
 	{
+		if(debugOnInfo) {logger.info("statusUpdate "+entity.toString()+" option:"+action.getOption().toString());}
 		try
 		{
 			BeanUtils.setProperty(entity,action.getAttribute().getCode(),action.getOption());
@@ -74,6 +77,7 @@ public class AbstractWorkflowActionHandler <AA extends JeeslWorkflowAction<?,AB,
 		{
 			e.printStackTrace();
 		}
+		try {logger.error("status: "+BeanUtils.getProperty(entity,"status"));} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {e.printStackTrace();}
 	}
 	
 	private <W extends JeeslWithWorkflow<AW>> void appendRandomInt(JeeslWithWorkflow<AW> entity, AA action)

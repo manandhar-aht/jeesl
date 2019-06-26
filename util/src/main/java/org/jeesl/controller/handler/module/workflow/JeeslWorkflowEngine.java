@@ -9,13 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.net.BCodec;
 import org.jeesl.api.facade.module.JeeslWorkflowFacade;
 import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.module.WorkflowFactoryBuilder;
 import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.factory.png.SignatureTranscoder;
-import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
+import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionsHandler;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowMessageHandler;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
@@ -97,7 +98,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private JeeslJsfSecurityHandler<SR,?,?,?,?,USER> security;
 	private final JeeslWorkflowCommunicator<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,MD,SR,RE,RA,AW,WY,USER> communicator;
-	private final JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler;
+	private final JeeslWorkflowActionsHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler;
 	
 	private final Comparator<WY> cpActivity;
 	
@@ -127,7 +128,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 								IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 								JeeslWorkflowFacade<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fWorkflow,
 								JeeslWorkflowMessageHandler<WC,SR,RE,MT,MC,MD,AW,WY,USER> recipientResolver,
-								JeeslWorkflowActionHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler)
+								JeeslWorkflowActionsHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler)
 	{
 		this.fbWorkflow=fbWorkflow;
 		this.fbRevision=fbRevision;
@@ -159,7 +160,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(rTransitions) {transitions.clear();}
 		if(rTransition) {transition = null;}
 		if(rSignature) {screenSignature = null;}
-		if(rWorkflow) {workflow=null;link=null;}
+		if(rWorkflow) {workflow=null;link=null;activities.clear();}
 	}
 	
 	public void addWorkflow(JeeslJsfSecurityHandler<SR,?,?,?,?,USER> security, USER user, JeeslWithWorkflow<AW> ejb)
@@ -189,12 +190,15 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	public <W extends JeeslWithWorkflow<AW>> void saveWorkflow(JeeslWithWorkflow<AW> ejb) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		this.entity=ejb;
-		workflow = fWorkflow.save(workflow);
-		link.setWorkflow(workflow);
-		link.setRefId(ejb.getId());
-		link = fWorkflow.save(link);
-		
-		if(debugOnInfo) {logger.info("Saved: Workflow and Link");}
+		if(workflow!=null)
+		{
+			workflow = fWorkflow.save(workflow);
+			link.setWorkflow(workflow);
+			link.setRefId(ejb.getId());
+			link = fWorkflow.save(link);
+			
+			if(debugOnInfo) {logger.info("Saved: Workflow and Link");}
+		}
 	}
 	
 	public <W extends JeeslWithWorkflow<AW>> void selectEntity(JeeslJsfSecurityHandler<SR,?,?,?,?,USER> security, USER user, W ejb) throws UtilsNotFoundException
@@ -203,7 +207,6 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		this.user=user;
 		this.entity = ejb;
 		reset(true,true,true,true);
-		
 		
 		link = fWorkflow.fLink(process,ejb);
 		workflow = link.getWorkflow();
@@ -215,6 +218,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	public void reloadWorkflow(boolean reloadWorkflow)
 	{
 		reset(true,true,true,false);
+		if(workflow==null) {return;}
 		if(reloadWorkflow) {workflow = fWorkflow.find(fbWorkflow.getClassWorkflow(),workflow);}
 		
 		constraints.clear();
@@ -286,7 +290,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		if(debugOnInfo) {logger.info("reloadWorkflow: "+transitions.size()+" "+fbWorkflow.getClassTransition().getSimpleName());}
 	}
 	
-	public void prepareTransition(WT t, boolean autoPerform) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
+	public void prepareTransition(WT t, boolean autoPerform) throws UtilsConstraintViolationException, UtilsLockingException, UtilsProcessingException, JeeslWorkflowException, UtilsNotFoundException
 	{
 		transition = fWorkflow.find(fbWorkflow.getClassTransition(),t);
 		if(debugOnInfo) {logger.info("prepareTransition for "+transition.toString());}
@@ -297,7 +301,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		actions.clear();actions.addAll(fWorkflow.allForParent(fbWorkflow.getClassAction(),transition));
 		communications.clear();communications.addAll(fWorkflow.allForParent(fbWorkflow.getClassCommunication(),transition));
 		
-		constraints.clear();constraints.addAll(actionHandler.workflowPreconditions(entity,actions));
+		constraints.clear();
+		actionHandler.checkPreconditions(constraints,entity,actions);
 		
 		if(debugOnInfo) {logger.info("Prepared "+fbWorkflow.getClassTransition().getSimpleName()+" to "+transition.toString()+": "+JeeslWorkflowCommunication.class.getSimpleName()+":"+communications.size()+" "+JeeslWorkflowAction.class.getSimpleName()+":"+actions.size());}
 		if(autoPerform && constraints.isEmpty()) {performTransition();}
@@ -307,7 +312,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	{
 		if(debugOnInfo) {logger.info("Perform "+fbWorkflow.getClassTransition().getSimpleName()+" to "+transition.toString());}
 		
-		constraints.clear();constraints.addAll(actionHandler.workflowPreconditions(entity,actions));
+		constraints.clear();
+		actionHandler.checkPreconditions(constraints,entity,actions);
 		if(!constraints.isEmpty())
 		{
 			if(debugOnInfo) {logger.info("PreconditionCheck failed. Aborting.");}

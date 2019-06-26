@@ -55,6 +55,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public class AbstractUtilsFacadeBean implements UtilsFacade
 {
+	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = LoggerFactory.getLogger(AbstractUtilsFacadeBean.class);
 	
 	protected UtilsFacadeBean fUtils;
@@ -76,8 +78,8 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 
 	@Override public <T extends EjbMergeable> T merge(T o) throws UtilsConstraintViolationException, UtilsLockingException{return fUtils.merge(o);}
 	
-	public <T extends EjbSaveable> T save(T o) throws UtilsConstraintViolationException,UtilsLockingException {return fUtils.save(o);}
-	protected <T extends EjbWithId> T saveProtected(T o) throws UtilsConstraintViolationException,UtilsLockingException {return fUtils.saveProtected(o);}
+	@Override public <T extends EjbSaveable> T save(T o) throws UtilsConstraintViolationException,UtilsLockingException {return fUtils.save(o);}
+	public <T extends EjbWithId> T saveProtected(T o) throws UtilsConstraintViolationException,UtilsLockingException {return fUtils.saveProtected(o);}
 	
 	public <T extends Object> T persist(T o) throws UtilsConstraintViolationException {return fUtils.persist(o);}
 	public <T extends Object> T update(T o) throws UtilsConstraintViolationException, UtilsLockingException {return fUtils.update(o);}
@@ -88,7 +90,7 @@ public class AbstractUtilsFacadeBean implements UtilsFacade
 	public <T extends EjbRemoveable> void rm(Set<T> set) throws UtilsConstraintViolationException {fUtils.rm(set);}
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW) public <T extends EjbRemoveable> void rmTransaction(List<T> list) throws UtilsConstraintViolationException {fUtils.rm(list);}
 	public <T extends EjbRemoveable> void rm(List<T> list) throws UtilsConstraintViolationException {fUtils.rm(list);}
-	protected <T extends Object> void rmProtected(T o) throws UtilsConstraintViolationException {fUtils.rmProtected(o);}
+	public <T extends Object> void rmProtected(T o) throws UtilsConstraintViolationException {fUtils.rmProtected(o);}
 	
 	// Finder
 	public <T extends EjbWithId> T find(Class<T> type, T t) {return fUtils.find(type, t);}

@@ -67,6 +67,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public class UtilsFacadeBean implements UtilsFacade 
 {
+	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = LoggerFactory.getLogger(UtilsFacadeBean.class);
 	
 	private static boolean isLoggingEnabled = false; 

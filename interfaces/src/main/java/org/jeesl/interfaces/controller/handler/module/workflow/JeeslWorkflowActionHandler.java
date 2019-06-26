@@ -25,9 +25,7 @@ public interface JeeslWorkflowActionHandler<WA extends JeeslWorkflowAction<?,AB,
 											AW extends JeeslApprovalWorkflow<?,?,?>,
 											WCS extends JeeslConstraint<?,?,?,?,?,?,?,?>>
 {
-	void setDebugOnInfo(boolean debugOnInfo);
-	
-	List<WCS> workflowPreconditions(JeeslWithWorkflow<?> entity, List<WA> actions);
-	<W extends JeeslWithWorkflow<AW>> void abort(JeeslWithWorkflow<AW> entity);
-	<W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<WA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException;
+	void workflowPreconditions(List<WCS> constraints, JeeslWithWorkflow<?> entity, WA action) throws UtilsNotFoundException;
+	JeeslWithWorkflow<AW> statusUpdated(JeeslWithWorkflow<AW> entity) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException;
+	JeeslWithWorkflow<AW> perform(JeeslWithWorkflow<AW> entity, WA action) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException;
 }

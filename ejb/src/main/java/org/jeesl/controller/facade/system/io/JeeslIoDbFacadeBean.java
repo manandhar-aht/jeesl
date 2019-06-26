@@ -177,15 +177,10 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	/**
-	 *	This will only work when a function added as user "postgres" and then grand access to main user in this case "jeesl".
+	 *	This will only work when grand "pg_monitor" access to main user in this case "jeesl".
 	 *  
-	 *  CREATE FUNCTION func_stat_replication() RETURNS SETOF pg_stat_replication as $$ select * from pg_stat_replication; 
-	 *	$$ LANGUAGE sql SECURITY DEFINER;
-	 *	REVOKE EXECUTE ON FUNCTION func_stat_replication() FROM public;
-	 *	GRANT EXECUTE ON FUNCTION func_stat_replication() to jeesl;
-	 *
-	 *  after that query with 
-	 *  SELECT * FROM func_stat_replication();
+	 *  GRANT pg_monitor TO jeesl;"
+
 	 */
 	@Override
 	public List<JsonPostgresReplication> postgresReplicationInfo()
@@ -200,7 +195,7 @@ public class JeeslIoDbFacadeBean <L extends UtilsLang,D extends UtilsDescription
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT "+StringUtil.join(fileds, ", "));
-		sb.append(" FROM func_stat_replication()");						
+		sb.append(" FROM pg_stat_replication");						
 		logger.info(sb.toString());
 		
 		

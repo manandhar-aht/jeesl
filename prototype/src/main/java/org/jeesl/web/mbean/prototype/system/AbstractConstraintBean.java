@@ -103,6 +103,10 @@ public class AbstractConstraintBean <L extends UtilsLang, D extends UtilsDescrip
 		}
 	}
 	
+	@Override public <CID extends Enum<CID>> CONSTRAINT get(Class<?> c, CID cId) throws UtilsNotFoundException
+	{
+		return get(c.getSimpleName(),cId.toString());
+	}
 	@Override public <CID extends Enum<CID>> CONSTRAINT getSilent(Class<?> c, CID cId)
 	{
 		try {return get(c.getSimpleName(),cId.toString());}

@@ -1,4 +1,4 @@
-package org.jeesl.controller.handler.module;
+package org.jeesl.controller.handler.module.survey;
 
 import java.io.IOException;
 import java.io.Serializable;

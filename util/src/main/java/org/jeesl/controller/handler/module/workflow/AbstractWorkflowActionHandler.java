@@ -1,14 +1,15 @@
 package org.jeesl.controller.handler.module.workflow;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionCallback;
-import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionsHandler;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
+import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionsHandler;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
@@ -41,13 +42,14 @@ public abstract class AbstractWorkflowActionHandler <WA extends JeeslWorkflowAct
 	
 	private final JeeslWorkflowActionCallback<WA> callback;
 
-	private final JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> actionHandler;
+	private final List<JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC>> actionHandlers;
 
 	public AbstractWorkflowActionHandler(JeeslWorkflowActionCallback<WA> callback,
 									JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> actionHandler)
 	{
 		this.callback=callback;
-		this.actionHandler=actionHandler;
+		actionHandlers = new ArrayList<>();
+		actionHandlers.add(actionHandler);
 	}
 	
 	@Override public <W extends JeeslWithWorkflow<AW>> JeeslWithWorkflow<AW> perform(JeeslWithWorkflow<AW> entity, List<WA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException
@@ -68,12 +70,18 @@ public abstract class AbstractWorkflowActionHandler <WA extends JeeslWorkflowAct
 		if(action.getBot().getCode().contentEquals("statusUpdate"))
 		{
 			statusUpdate(entity,action);
-			entity = actionHandler.statusUpdated(entity);
+			for(JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> ah : actionHandlers)
+			{
+				entity = ah.statusUpdated(entity);
+			}
+			
 		}
 		else if(action.getBot().getCode().contentEquals("callbackCommand"))
 		{
-			
-			entity = actionHandler.perform(entity,action);
+			for(JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> ah : actionHandlers)
+			{
+				entity = ah.perform(entity,action);
+			}
 		}
 		else if(action.getBot().getCode().contentEquals("appendRandomInt")) {appendRandomInt(entity,action);}
 		else {logger.warn("Unknown Bot");}
@@ -120,17 +128,20 @@ public abstract class AbstractWorkflowActionHandler <WA extends JeeslWorkflowAct
 
 	@Override public void checkPreconditions(List<WC> constraints, JeeslWithWorkflow<?> entity, List<WA> actions)
 	{
-		for(WA action : actions)
+		for(JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> ah : actionHandlers)
 		{
-			try
+			for(WA action : actions)
 			{
-				actionHandler.workflowPreconditions(constraints,entity, action);
-			}
-			catch (UtilsNotFoundException e)
-			{
-				WC c = getConstraintNotFound();
-				c.setContextMessage(e.getMessage());
-				constraints.add(c);
+				try
+				{
+					ah.workflowPreconditions(constraints,entity, action);
+				}
+				catch (UtilsNotFoundException e)
+				{
+					WC c = getConstraintNotFound();
+					c.setContextMessage(e.getMessage());
+					constraints.add(c);
+				}
 			}
 		}
 	}

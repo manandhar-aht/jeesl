@@ -1,7 +1,7 @@
 package org.jeesl.controller.processor.survey.analysis;
 
 import org.jeesl.api.bean.JeeslSurveyBean;
-import org.jeesl.controller.handler.module.SurveyAnalysisCacheHandler;
+import org.jeesl.controller.handler.module.survey.SurveyAnalysisCacheHandler;
 import org.jeesl.factory.ejb.module.survey.EjbSurveyAnalysisToolFactory;
 import org.jeesl.factory.mc.survey.McOptionDataSetFactory;
 import org.jeesl.interfaces.factory.txt.JeeslReportAggregationLevelFactory;

@@ -1,4 +1,4 @@
-package org.jeesl.controller.handler.module;
+package org.jeesl.controller.handler.module.survey;
 
 import java.util.List;
 

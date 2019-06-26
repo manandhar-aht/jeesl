@@ -89,8 +89,14 @@
 								<ui:fragment>
 									<ui:repeat var="a" value="#{cc.attrs.handler.actions}" >
 					                	<h:outputText value="#{a.bot.name[localeCode].lang}"/>
-										<jtp:symbolizer value="#{a.option}" marginLeft="5" marginRight="5"/>
-										<h:outputText value="#{a.option.name[localeCode].lang}"/>  
+					                	<ui:fragment rendered="#{a.bot.code eq 'statusUpdate'}">
+					                		<jtp:symbolizer value="#{a.option}" marginLeft="5" marginRight="5"/>
+												<h:outputText value="#{a.option.name[localeCode].lang}"/>  
+					                	</ui:fragment>
+											<ui:fragment rendered="#{a.bot.code eq 'callbackCommand'}">
+												<h:outputText value="#{a.callbackCommand}"/>
+											</ui:fragment>
+											<br/>
 									</ui:repeat>
 								</ui:fragment>
 								<p:outputLabel value="#{msg.jeeslApprovalCommunications}"/>
@@ -109,7 +115,9 @@
 								<p:signature style="width:360px; height:168px" widgetVar="sig" value="#{cc.attrs.handler.screenSignature}" required="true" guideline="true"/>
 							</p:panelGrid>
 							
-							<p:panelGrid columns="2" columnClasses="jeeslGrid80,jeeslGrid20">
+							<j:constraints value="#{cc.attrs.handler.constraints}"/>
+							
+							<p:panelGrid columns="2" columnClasses="jeeslGrid80,jeeslGrid20" rendered="#{empty cc.attrs.handler.constraints}">
 								<h:outputText value="Note: After confirmation you can not change your entries."/>
 								<p:commandButton value="Confirm" type="button">
 									<p:ajax event="click" listener="#{cc.attrs.handler.performTransition()}" process="@form" update="#{cc.attrs.updateAfterConfirmimation}" oncomplete="PF('wvWorkflow').hide();"/>

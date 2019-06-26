@@ -17,7 +17,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslWorkflowActionHandler<WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
+public interface JeeslWorkflowActionSingleHandler<WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,?,?,?>,
 											AO extends EjbWithId,
 											RE extends JeeslRevisionEntity<?,?,?,?,RA>,
@@ -25,9 +25,6 @@ public interface JeeslWorkflowActionHandler<WA extends JeeslWorkflowAction<?,AB,
 											AW extends JeeslApprovalWorkflow<?,?,?>,
 											WCS extends JeeslConstraint<?,?,?,?,?,?,?,?>>
 {
-	void setDebugOnInfo(boolean debugOnInfo);
-	
-	List<WCS> workflowPreconditions(JeeslWithWorkflow<?> entity, List<WA> actions);
-	<W extends JeeslWithWorkflow<AW>> void abort(JeeslWithWorkflow<AW> entity);
-	<W extends JeeslWithWorkflow<AW>> void perform(JeeslWithWorkflow<AW> entity, List<WA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException;
+	List<WCS> workflowPreconditions(JeeslWithWorkflow<?> entity, WA action);
+	void perform(JeeslWithWorkflow<AW> entity, WA action) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException;
 }

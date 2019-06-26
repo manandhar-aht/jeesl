@@ -24,6 +24,7 @@
 				<p:ajax event="click" listener="#{cc.attrs.handler.prepareTransition(t,cc.attrs.autoPerform)}" process="@this" update="#{cc.attrs.update}" oncomplete="#{cc.attrs.oncomplete}"/>
 			</p:commandButton>
 		</ui:repeat>
+		<j:constraints value="#{cc.attrs.handler.constraints and cc.attrs.handler.autoPerform}"/>
 
 	</composite:implementation>
 </html>

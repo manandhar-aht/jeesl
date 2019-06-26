@@ -23,7 +23,8 @@ public interface JeeslWorkflowAction <T extends JeeslWorkflowTransition<?,?,?,?,
 				EjbWithId,EjbWithPosition,EjbWithParentAttributeResolver
 				
 {
-	public static enum Attributes{transition}
+	public enum Attributes{transition}
+	public enum Constraint{invalidCommand}
 	
 	T getTransition();
 	void setTransition(T transition);
@@ -40,6 +41,6 @@ public interface JeeslWorkflowAction <T extends JeeslWorkflowTransition<?,?,?,?,
 	AO getOption();
 	void setOption(AO option);
 	
-	String getCommand();
-	void setCommand(String command);
+	String getCallbackCommand();
+	void setCallbackCommand(String callbackCommand);
 }

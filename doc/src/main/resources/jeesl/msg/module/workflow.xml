@@ -159,8 +159,14 @@
     		<s:lang key="fr" translation="Action"/>
     	</s:langs>
     </s:translation>
-    
-    <s:translation key="jeeslApprovalBot">
+        <s:translation key="jeeslWorkflowActionCommand">
+    	<s:langs>
+    		<s:lang key="de" translation="Kommando"/>
+    		<s:lang key="en" translation="Command"/>
+    		<s:lang key="fr" translation="Command"/>
+    	</s:langs>
+    </s:translation>
+    <s:translation key="jeeslWorkflowBot">
     	<s:langs>
     		<s:lang key="de" translation="Bot"/>
     		<s:lang key="en" translation="Bot"/>

@@ -19,5 +19,5 @@ public interface JeeslWorkflowBot <S extends UtilsStatus<S,L,D>, L extends Utils
 									JeeslOptionRestDescription,EjbWithCodeGraphic<G>,
 									UtilsStatus<S,L,D>
 {
-
+	public enum Code{callbackCommand}
 }

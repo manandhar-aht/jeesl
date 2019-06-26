@@ -65,7 +65,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
 											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 											AC extends JeeslWorkflowCommunication<AT,MT,MC,SR,RE>,
-											AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
+											WA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,L,D,?>,
 											AO extends EjbWithId,
 											MT extends JeeslIoTemplate<L,D,?,?,?,?>,
@@ -83,10 +83,10 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractWorkflowProcessBean.class);
 
-	private JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
+	private JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
+	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
 	private final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -105,7 +105,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final List<AT> transitions; public List<AT> getTransitions() {return transitions;}
 	private final List<ATT> transitionTypes; public List<ATT> getTransitionTypes() {return transitionTypes;}
 	private final List<AC> communications; public List<AC> getCommunications() {return communications;}
-	private final List<AA> actions; public List<AA> getActions() {return actions;}
+	private final List<WA> actions; public List<WA> getActions() {return actions;}
 	private final List<AB> bots; public List<AB> getBots() {return bots;}
 	protected final List<RE> entities; public List<RE> getEntities() {return entities;}
 	protected final List<RE> scopes; public List<RE> getScopes() {return scopes;}
@@ -117,7 +117,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private ASP permission; public ASP getPermission() {return permission;} public void setPermission(ASP permission) {this.permission = permission;}
 	private AT transition; public AT getTransition() {return transition;} public void setTransition(AT transition) {this.transition = transition;}
 	private AC communication; public AC getCommunication() {return communication;} public void setCommunication(AC communication) {this.communication = communication;}
-	private AA action; public AA getAction() {return action;} public void setAction(AA action) {this.action = action;}
+	private WA action; public WA getAction() {return action;} public void setAction(WA action) {this.action = action;}
 	
 	private Class<EjbWithPosition> cOption;
 	private Long option; public Long getOption() {return option;} public void setOption(Long option) {this.option = option;}
@@ -128,7 +128,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final Comparator<SR> cpRole;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate)
@@ -167,7 +167,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fApproval,
+										JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
@@ -467,12 +467,13 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		reset(WorkflowProcesslResetHandler.build().none().action(true));
 		logger.info(AbstractLogMessage.addEntity(fbWorkflow.getClassAction()));
 		action = fbWorkflow.ejbAction().build(transition,actions);
+		if(!bots.isEmpty()) {action.setBot(bots.get(0));}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void saveAction() throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
-		logger.info(AbstractLogMessage.saveEntity(action));
+		logger.info(AbstractLogMessage.saveEntity(action)+" cmd:"+action.getCallbackCommand());
 		action.setBot(fWorkflow.find(fbWorkflow.getClassBot(), action.getBot()));
 		
 		if(action.getEntity()!=null) {action.setEntity(fWorkflow.find(fbRevision.getClassEntity(),action.getEntity()));}
@@ -504,6 +505,12 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		fWorkflow.rm(action);
 		reset(WorkflowProcesslResetHandler.build().none().action(true));
 		reloadActions();
+	}
+	
+	public void changeBot()
+	{
+		logger.info(AbstractLogMessage.selectOneMenuChange(action.getBot()));
+		action.setBot(fWorkflow.find(fbWorkflow.getClassBot(), action.getBot()));
 	}
 	
 	public void changeEntity()

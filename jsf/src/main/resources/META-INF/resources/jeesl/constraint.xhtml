@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
- 	xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+ 	
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -18,17 +18,26 @@
                     <jtp:symbolizer value="#{cc.attrs.value.level}"/>
                     <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
                     <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-                </jtb:alert>
+				<ui:fragment rendered="#{not empty cc.attrs.value.contextMessage}">
+					<br/><h:outputText value="#{cc.attrs.value.contextMessage}" styleClass="jeeslItalic"/>
+				</ui:fragment>
+				</jtb:alert>
                 <jtb:alert rendered="#{cc.attrs.value.level.code eq 'warn'}" styleClass="alert-warning">
                     <jtp:symbolizer value="#{cc.attrs.value.level}"/>
                     <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
                     <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-                </jtb:alert>
-                <jtb:alert rendered="#{cc.attrs.value.level.code eq 'info'}">
-                    <jtp:symbolizer value="#{cc.attrs.value.level}"/>
+				<ui:fragment rendered="#{not empty cc.attrs.value.contextMessage}">
+					<br/><h:outputText value="#{cc.attrs.value.contextMessage}"  styleClass="jeeslItalic"/>
+				</ui:fragment>
+			</jtb:alert>
+			<jtb:alert rendered="#{cc.attrs.value.level.code eq 'info'}">
+				<jtp:symbolizer value="#{cc.attrs.value.level}"/>
                     <h:outputText class="constTitle" value="#{cc.attrs.value.name[localeCode].lang}"/><br/>
                     <h:outputText value="#{cc.attrs.value.description[localeCode].lang}"/>
-                </jtb:alert>
-    </ui:fragment>
-   </composite:implementation>
+				<ui:fragment rendered="#{not empty cc.attrs.value.contextMessage}">
+					<br/><h:outputText value="#{cc.attrs.value.contextMessage}"  styleClass="jeeslItalic"/>
+				</ui:fragment>
+			</jtb:alert>
+		</ui:fragment>
+	</composite:implementation>
 </html>

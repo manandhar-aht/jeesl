@@ -38,4 +38,7 @@ public interface JeeslConstraint<L extends UtilsLang, D extends UtilsDescription
 	
 	SCOPE getScope();
 	void setScope(SCOPE scope);
+	
+	String getContextMessage();
+	void setContextMessage(String contextMessage);
 }

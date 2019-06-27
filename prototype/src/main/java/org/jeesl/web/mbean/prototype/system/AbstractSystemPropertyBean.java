@@ -1,4 +1,4 @@
-package org.jeesl.web.mbean.prototype.admin.system;
+package org.jeesl.web.mbean.prototype.system;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -9,6 +9,7 @@ import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.system.PropertyFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
+import org.jeesl.interfaces.model.system.locale.JeeslLocale;
 import org.jeesl.interfaces.model.system.util.JeeslProperty;
 import org.jeesl.util.comparator.ejb.system.PropertyComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -23,14 +24,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends UtilsDescription,
-												C extends UtilsStatus<C,L,D>,
-												P extends JeeslProperty<L,D,C,P>>
+public class AbstractSystemPropertyBean <L extends UtilsLang, D extends UtilsDescription, LOC extends JeeslLocale<L,D,LOC,?>,
+											C extends UtilsStatus<C,L,D>,
+											P extends JeeslProperty<L,D,C,P>>
 		extends AbstractAdminBean<L,D>
 		implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(AbstractAdminSystemPropertyBean.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSystemPropertyBean.class);
 	
 	private JeeslSystemPropertyFacade<L,D,C,P> fProperty;
 	private final PropertyFactoryBuilder<L,D,C,P> fbProperty;
@@ -42,7 +43,7 @@ public class AbstractAdminSystemPropertyBean <L extends UtilsLang, D extends Uti
 	
 	protected P prop; public P getProp() {return prop;} public void setProp(P prop) {this.prop = prop;}
 
-	public AbstractAdminSystemPropertyBean(final PropertyFactoryBuilder<L,D,C,P> fbProperty)
+	public AbstractSystemPropertyBean(final PropertyFactoryBuilder<L,D,C,P> fbProperty)
 	{
 		super(fbProperty.getClassL(),fbProperty.getClassD());
 		this.fbProperty = fbProperty;

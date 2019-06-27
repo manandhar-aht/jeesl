@@ -1,6 +1,6 @@
 package org.jeesl.factory.ejb.system.util;
 
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

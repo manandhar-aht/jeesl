@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 
 import net.sf.ahtutils.controller.facade.UtilsFacadeBean;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;

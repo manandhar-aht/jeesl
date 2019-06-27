@@ -2,7 +2,7 @@ package org.jeesl.api.facade.system;
 
 import java.util.Date;
 
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;

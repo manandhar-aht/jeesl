@@ -1,7 +1,7 @@
 package org.jeesl.factory.builder.system;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

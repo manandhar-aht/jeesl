@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.jeesl.api.facade.system.JeeslSystemPropertyFacade;
 import org.jeesl.interfaces.bean.JiraBean;
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 import org.jeesl.model.json.system.jira.Issue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

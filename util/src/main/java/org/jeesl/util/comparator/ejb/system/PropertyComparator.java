@@ -3,7 +3,7 @@ package org.jeesl.util.comparator.ejb.system;
 import java.util.Comparator;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
-import org.jeesl.interfaces.model.system.util.JeeslProperty;
+import org.jeesl.interfaces.model.system.property.JeeslProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

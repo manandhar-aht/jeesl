@@ -1,4 +1,4 @@
-package org.jeesl.interfaces.model.system.util;
+package org.jeesl.interfaces.model.system.property;
 
 import java.io.Serializable;
 

@@ -137,8 +137,10 @@ public class AbstractLogMessage <L extends UtilsLang,D extends UtilsDescription,
 	 public static <T extends EjbWithId> String selectEntity(T t)
 	 {
         StringBuffer sb = new StringBuffer();
-        sb.append("Selecting ").append(t.getClass().getSimpleName());
-        sb.append(": ").append(t.toString());
+        sb.append("Selecting ");
+        if(t!=null) {sb.append(t.getClass().getSimpleName());} else {sb.append("NULL");}
+        sb.append(": ");
+        if(t!=null) {sb.append(t.toString());} else {sb.append("NULL");}
         return sb.toString();
 	 }
 	 public static <A extends EjbWithId,B extends EjbWithId> String selectEntity(A a, B b)

@@ -20,7 +20,7 @@
 
 	<composite:implementation>
 		<ui:repeat value="#{cc.attrs.handler.transitions}" var="t">
-			<p:commandButton value="#{t.name[localeCode].lang}" type="button">
+			<p:commandButton value="#{t.name[localeCode].lang}" type="button" disabled="#{not cc.attrs.handler.allowTransitions}">
 				<p:ajax event="click" listener="#{cc.attrs.handler.prepareTransition(t,cc.attrs.autoPerform)}" process="@this" update="#{cc.attrs.update}" oncomplete="#{cc.attrs.oncomplete}"/>
 			</p:commandButton>
 		</ui:repeat>

@@ -116,6 +116,7 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public <T extends EjbWithId> List<BRIDGE> fBridges(EC ec, List<T> ejbs)
 	{
+		if(ejbs==null || ejbs.isEmpty()) {return new ArrayList<BRIDGE>();}
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<BRIDGE> cQ = cB.createQuery(fbTs.getClassBridge());
 		Root<BRIDGE> from = cQ.from(fbTs.getClassBridge());
@@ -152,6 +153,9 @@ public class JeeslTsFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 	
 	@Override public List<TS> fTimeSeries(List<BRIDGE> bridges, List<SCOPE> scopes)
 	{
+		if(bridges==null || bridges.isEmpty()) {return new ArrayList<TS>();}
+		if(scopes==null || scopes.isEmpty()) {return new ArrayList<TS>();}
+		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder cB = em.getCriteriaBuilder();
 		CriteriaQuery<TS> cQ = cB.createQuery(fbTs.getClassTs());

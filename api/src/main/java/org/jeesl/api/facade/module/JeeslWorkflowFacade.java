@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermis
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -50,8 +51,9 @@ public interface JeeslWorkflowFacade <L extends UtilsLang, D extends UtilsDescri
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 										AL extends JeeslApprovalLink<AW,RE>,
-										AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-										AY extends JeeslApprovalActivity<WT,AW,USER>,
+										AW extends JeeslApprovalWorkflow<AP,AS,WY>,
+										WY extends JeeslApprovalActivity<WT,AW,FRC,USER>,
+										FRC extends JeeslFileContainer<?,?>,
 										USER extends JeeslUser<SR>>
 			extends UtilsFacade
 {	

@@ -27,6 +27,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermis
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -63,19 +64,20 @@ public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescrip
 									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 									AL extends JeeslApprovalLink<AW,RE>,
-									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-									AY extends JeeslApprovalActivity<WT,AW,USER>,
+									AW extends JeeslApprovalWorkflow<AP,AS,WY>,
+									WY extends JeeslApprovalActivity<WT,AW,FRC,USER>,
+									FRC extends JeeslFileContainer<?,?>,
 									USER extends JeeslUser<SR>>
 					extends UtilsFacadeBean
-					implements JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER>
+					implements JeeslWorkflowFacade<L,D,LOC,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER>
 {	
 	private static final long serialVersionUID = 1L;
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslWorkflowFacadeBean.class);
 	
-	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval;
+	private final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbApproval;
 	
-	public JeeslWorkflowFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval)
+	public JeeslWorkflowFacadeBean(EntityManager em, final WorkflowFactoryBuilder<L,D,AX,AP,AS,AST,ASP,APT,WML,WT,ATT,AC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbApproval)
 	{
 		super(em);
 		this.fbApproval=fbApproval;

@@ -14,7 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalWorkflow <WP extends JeeslWorkflowProcess<?,?,?>,
 										WS extends JeeslWorkflowStage<?,?,WP,?>,
-										WY extends JeeslApprovalActivity<?,?,?>
+										WY extends JeeslApprovalActivity<?,?,?,?>
 									
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,

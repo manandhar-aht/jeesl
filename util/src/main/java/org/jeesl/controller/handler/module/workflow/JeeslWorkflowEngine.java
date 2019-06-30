@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.codec.net.BCodec;
 import org.jeesl.api.facade.module.JeeslWorkflowFacade;
 import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
@@ -35,6 +34,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
@@ -79,7 +79,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 							AL extends JeeslApprovalLink<AW,RE>,
 							AW extends JeeslApprovalWorkflow<WP,AS,WY>,
-							WY extends JeeslApprovalActivity<WT,AW,USER>,
+							WY extends JeeslApprovalActivity<WT,AW,FRC,USER>,
+							FRC extends JeeslFileContainer<?,?>,
 							WCS extends JeeslConstraint<L,D,?,?,?,?,?,?>,
 							USER extends JeeslUser<SR>
 							>
@@ -92,13 +93,13 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo){this.debugOnInfo=debugOnInfo;if(actionHandler!=null) {actionHandler.setDebugOnInfo(debugOnInfo);}}
 	private boolean allowTransitions; public boolean isAllowTransitions() {return allowTransitions;} public void setAllowTransitions(boolean allowTransitions) {this.allowTransitions = allowTransitions;}
 	
-	private final JeeslWorkflowFacade<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fWorkflow;
+	private final JeeslWorkflowFacade<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fWorkflow;
 	
-	private final WorkflowFactoryBuilder<L,D,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fbWorkflow;
+	private final WorkflowFactoryBuilder<L,D,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbWorkflow;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	
 	private JeeslJsfSecurityHandler<SR,?,?,?,?,USER> security;
-	private final JeeslWorkflowCommunicator<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,MD,SR,RE,RA,AW,WY,USER> communicator;
+	private final JeeslWorkflowCommunicator<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,MD,SR,RE,RA,AW,WY,FRC,USER> communicator;
 	private final JeeslWorkflowActionsHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler;
 	
 	private final Comparator<WY> cpActivity;
@@ -125,9 +126,9 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	private boolean historyWithSignature; public boolean isHistoryWithSignature() {return historyWithSignature;}
 	private boolean allowEntityModifications; @Override public boolean isAllowEntityModifications() {return allowEntityModifications;}
 	
-	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fbWorkflow,
+	public JeeslWorkflowEngine(WorkflowFactoryBuilder<L,D,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbWorkflow,
 								IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
-								JeeslWorkflowFacade<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,USER> fWorkflow,
+								JeeslWorkflowFacade<L,D,LOC,WX,WP,AS,AST,WSP,WPT,WML,WT,ATT,WC,AA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fWorkflow,
 								JeeslWorkflowMessageHandler<WC,SR,RE,MT,MC,MD,AW,WY,USER> recipientResolver,
 								JeeslWorkflowActionsHandler<AA,AB,AO,RE,RA,AW,WCS> actionHandler)
 	{

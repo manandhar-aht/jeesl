@@ -27,7 +27,7 @@ public interface JeeslWorkflowMessageHandler<WC extends JeeslWorkflowCommunicati
 											MC extends JeeslTemplateChannel<?,?,MC,?>,
 											MD extends JeeslIoTemplateDefinition<?,MC,MT>,
 											WF extends JeeslApprovalWorkflow<?,?,?>,
-											WY extends JeeslApprovalActivity<?,WF,USER>,
+											WY extends JeeslApprovalActivity<?,WF,?,USER>,
 											USER extends JeeslUser<SR>>
 							extends Serializable
 {

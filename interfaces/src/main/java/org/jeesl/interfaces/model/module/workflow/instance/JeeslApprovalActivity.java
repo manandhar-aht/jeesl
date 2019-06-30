@@ -3,6 +3,8 @@ package org.jeesl.interfaces.model.module.workflow.instance;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -14,11 +16,12 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslApprovalActivity <AT extends JeeslWorkflowTransition<?,?,?,?,?>,
 										WF extends JeeslApprovalWorkflow<?,?,?>,
+										FRC extends JeeslFileContainer<?,?>,
 										USER extends JeeslUser<?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithParentAttributeResolver,
-				EjbWithRecord
+				EjbWithRecord,JeeslWithFileRepositoryContainer<FRC>
 {
 	public static enum Attributes{workflow}
 	

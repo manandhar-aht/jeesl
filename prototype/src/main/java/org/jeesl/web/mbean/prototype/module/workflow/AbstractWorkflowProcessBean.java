@@ -32,6 +32,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermis
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -74,8 +75,9 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 											RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 											RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 											AL extends JeeslApprovalLink<AW,RE>,
-											AW extends JeeslApprovalWorkflow<WP,AS,AY>,
-											AY extends JeeslApprovalActivity<AT,AW,USER>,
+											AW extends JeeslApprovalWorkflow<WP,AS,WY>,
+											WY extends JeeslApprovalActivity<AT,AW,FRC,USER>,
+											FRC extends JeeslFileContainer<?,?>,
 											USER extends JeeslUser<SR>>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -83,10 +85,10 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractWorkflowProcessBean.class);
 
-	private JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fWorkflow;
+	private JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fWorkflow;
 	private JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision;
 	
-	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbWorkflow;
+	private final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbWorkflow;
 	private final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
@@ -128,7 +130,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final Comparator<SR> cpRole;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fbApproval,
+	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
 											final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate)
@@ -167,7 +169,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	}
 	
 	protected void postConstructProcess(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
-										JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,AY,USER> fApproval,
+										JeeslWorkflowFacade<L,D,LOC,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fApproval,
 										JeeslIoRevisionFacade<L,D,?,?,?,?,?,RE,?,RA,?,?> fRevision)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);

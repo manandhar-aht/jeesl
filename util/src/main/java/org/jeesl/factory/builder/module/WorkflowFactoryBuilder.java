@@ -25,6 +25,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermis
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
@@ -58,8 +59,9 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 									RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
 									AL extends JeeslApprovalLink<AW,RE>,
-									AW extends JeeslApprovalWorkflow<AP,AS,AY>,
-									AY extends JeeslApprovalActivity<WT,AW,USER>,
+									AW extends JeeslApprovalWorkflow<AP,AS,WY>,
+									WY extends JeeslApprovalActivity<WT,AW,FRC,USER>,
+									FRC extends JeeslFileContainer<?,?>,
 									USER extends JeeslUser<SR>>
 				extends AbstractFactoryBuilder<L,D>
 {
@@ -79,7 +81,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	private final Class<AB> cBot; public Class<AB> getClassBot() {return cBot;}
 	private final Class<AL> cLink; public Class<AL> getClassLink() {return cLink;}
 	private final Class<AW> cWorkflow; public Class<AW> getClassWorkflow() {return cWorkflow;}
-	private final Class<AY> cActivity; public Class<AY> getClassActivity() {return cActivity;}
+	private final Class<WY> cActivity; public Class<WY> getClassActivity() {return cActivity;}
 	
 	public WorkflowFactoryBuilder(final Class<L> cL, final Class<D> cD,
 									final Class<AX> cContext,
@@ -96,7 +98,7 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 									final Class<AB> cBot,
 									final Class<AL> cLink,
 									final Class<AW> cWorkflow,
-									final Class<AY> cActivity)
+									final Class<WY> cActivity)
 	{
 		super(cL,cD);
 		this.cContext=cContext;
@@ -124,5 +126,5 @@ public class WorkflowFactoryBuilder<L extends UtilsLang, D extends UtilsDescript
 	public EjbWorkflowActionFactory<WT,AA,AB,AO,RE,RA> ejbAction() {return new EjbWorkflowActionFactory<>(cAction);}
 	public EjbWorkflowLinkFactory<RE,AL,AW> ejbLink() {return new EjbWorkflowLinkFactory<>(cLink);}
 	public EjbWorkflowFactory<AP,AS,AW> ejbWorkflow() {return new EjbWorkflowFactory<>(cWorkflow);}
-	public EjbWorkflowActivityFactory<WT,AW,AY,USER> ejbActivity() {return new EjbWorkflowActivityFactory<>(cActivity);}
+	public EjbWorkflowActivityFactory<WT,AW,WY,USER> ejbActivity() {return new EjbWorkflowActivityFactory<>(cActivity);}
 }

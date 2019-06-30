@@ -61,6 +61,6 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 	
 	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback, boolean x)
 	{
-		return new DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback,x);
+		return new DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
 	}
 }

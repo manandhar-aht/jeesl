@@ -262,12 +262,34 @@
 			</plugin>
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
-		        <artifactId>versions-maven-plugin</artifactId>
-		        <configuration>
+			        <artifactId>versions-maven-plugin</artifactId>
+				<configuration>
 					<rulesUri>${maven.ignore}</rulesUri>
-		        </configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+        			<executions>
+          			<execution>
+	            			<id>copy-msg-resources</id>
+	            			<phase>prepare-package</phase>
+	            			<goals><goal>copy-resources</goal></goals>
+	            			<configuration>
+		              			<outputDirectory>${project.build.directory}/classes/META-INF/resources/jeeslGfx/ui/control</outputDirectory>
+		              			<resources>          
+		                 			<resource>
+											<directory>${project.basedir}/../doc/src/main/resources/jeesl/svg/icon/ui/control</directory>
+											<filtering>true</filtering>
+		                			</resource>
+		              			</resources>              
+		            		</configuration>
+          			</execution>
+        		</executions>
 			</plugin>
 		</plugins>
+		
+		
+		
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

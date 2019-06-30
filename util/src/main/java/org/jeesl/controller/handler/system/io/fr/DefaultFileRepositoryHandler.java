@@ -27,8 +27,8 @@ public class DefaultFileRepositoryHandler<L extends UtilsLang, D extends UtilsDe
 
 	public DefaultFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
 								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
-								JeeslFileRepositoryCallback callback,boolean x)
+								JeeslFileRepositoryCallback callback)
 	{
-		super(fFr,fbFile,callback,x);
+		super(fFr,fbFile,callback);
 	}
 }

@@ -422,7 +422,7 @@ public abstract class AbstractCmsEditorBean <L extends UtilsLang,D extends Utils
 		{
 			if(hFileRepository!=null)
 			{
-				try {hFileRepository.init(element, false);}
+				try {hFileRepository.init(element);}
 				catch (UtilsConstraintViolationException e) {e.printStackTrace();}
 				catch (UtilsLockingException e) {e.printStackTrace();}
 			}

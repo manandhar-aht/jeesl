@@ -27,8 +27,8 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 	List<META> getMetas();
 	
 	//Default behavior should be transaction=false
-	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
-	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with, boolean withTransaction) throws UtilsConstraintViolationException, UtilsLockingException;
+	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with) throws UtilsConstraintViolationException, UtilsLockingException;
+	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with) throws UtilsConstraintViolationException, UtilsLockingException;
 	
 	InputStream download(META meta) throws UtilsNotFoundException;
 	

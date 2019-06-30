@@ -53,6 +53,7 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 	private JeeslCmsRenderer<L,D,LOC,CAT,CMS,V,S,E,EC,ET,C,MT,FC> ofx;
 	private JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms;
 	
+	private final Map<Long,S> mapId;
 	private final Map<S,Map<String,Section>> mapSection;
 	private boolean debugOnInfo; protected void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
@@ -61,6 +62,7 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 		this.fbCms=fbCms;
 		
 		mapSection = new HashMap<S,Map<String,Section>>();
+		mapId = new HashMap<Long,S>();
 	}
 	
 	protected void postConstructCms(JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC> fCms,
@@ -74,6 +76,17 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 	{
 		logger.info("Invalidation Section "+section.toString());
 		if(mapSection.containsKey(section)) {mapSection.remove(section);}
+	}
+	
+	public Section build(String localeCode, long id) throws UtilsNotFoundException
+	{
+		if(mapId.containsKey(id)) {return build(localeCode,mapId.get(id));}
+		else
+		{
+			S section = fCms.find(fbCms.getClassSection(),id);
+			mapId.put(id,section);
+			return build(localeCode,section);
+		}
 	}
 	
 	public Section build(String localeCode, S section)

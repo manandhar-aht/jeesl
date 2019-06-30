@@ -23,10 +23,11 @@ public class JeeslFileTypeHandler<META extends JeeslFileMeta<?,?,TYPE>,
 	
 	public void updateType(META meta)
 	{
-		logger.info("META "+meta.getFileName());
+		
 		
 		JeeslFileType.Code code = buildType(meta.getFileName().trim().toLowerCase());
 		meta.setType(cache.ejb(code));
+		logger.info("Updated File TYPE for "+meta.getFileName()+": "+meta.getType().getCode());
 	}
 	
 	private static JeeslFileType.Code buildType(String fileName)

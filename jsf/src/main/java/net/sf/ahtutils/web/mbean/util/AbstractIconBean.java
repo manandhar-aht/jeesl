@@ -27,7 +27,9 @@ public class AbstractIconBean implements Serializable
 	
 	protected Map<String,String> svg; public Map<String, String> getSvg() {return svg;}
 	
-	private Map<Integer,Map<String,String>> icon;
+	private Map<Integer,Map<String,String>> icon; public Map<Integer,Map<String,String>> getIcon() {return icon;}
+	public Map<String,String> getIcon12() {return icon.get(12);}
+	public Map<String,String> getIcon16() {return icon.get(16);}
 
 	public void initPath(String imagePath)
     {
@@ -37,7 +39,7 @@ public class AbstractIconBean implements Serializable
 		mapResource = new Hashtable<String,Map<Long,String>>();
 		mapResourceAlternative = new Hashtable<String,Map<Long,String>>();
 		
-		mapStatic = new Hashtable<String,String>();
+		mapStatic = new HashMap<String,String>();
 		svg = new HashMap<String,String>();
 		
 		icon = new Hashtable<Integer,Map<String,String>>();
@@ -164,9 +166,10 @@ public class AbstractIconBean implements Serializable
     	}
     } 
 	
-	public Map<Integer, Map<String, String>> getIcon() {return icon;}
-	public Map<String, String> getIcon12() {return icon.get(12);}
-	public Map<String, String> getIcon16() {return icon.get(16);}
+	protected void add(String key, String resource, String lib, boolean sizeFolder)
+	{
+		
+	}
 	
 	protected void jeesl()
 	{

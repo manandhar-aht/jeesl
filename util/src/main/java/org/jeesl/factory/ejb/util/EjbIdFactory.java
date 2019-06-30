@@ -41,7 +41,7 @@ public class EjbIdFactory
 	{
 		for(EjbWithId ejb : ejbs)
 		{
-			if(ejb==null || ejb.getId()==0){return false;}
+			if(ejb==null || ejb.getId()<=0){return false;}
 		}
 		return true;
 	}

@@ -66,7 +66,7 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 		}
 		try
 		{
-			frh.init(element,false);
+			frh.init(element);
 			List<FM> metas = frh.getMetas();
 			for(FM m : metas)
 			{

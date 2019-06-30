@@ -38,9 +38,15 @@ public interface JeeslWorkflowTransition <L extends UtilsLang, D extends UtilsDe
 	S getDestination();
 	void setDestination(S destination);
 	
+	SR getRole();
+	void setRole(SR role);
+	
 	Boolean getScreenSignature();
 	void setScreenSignature(Boolean screenSignature);
 	
-	SR getRole();
-	void setRole(SR role);
+	Boolean getRemarkMandatory();
+	void setRemarkMandatory(Boolean remarkMandatory);
+	
+	Boolean getFileUpload();
+	void setFileUpload(Boolean fileUpload);
 }

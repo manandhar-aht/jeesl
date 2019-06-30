@@ -115,7 +115,23 @@
     		<s:lang key="fr" translation="Screen Signature"/>
     	</s:langs>
     </s:translation>
-    
+
+	<s:translation key="jeeslWorkflowTrasitionRemarkMandatory">
+    	<s:langs>
+    		<s:lang key="de" translation="Bemerkung Notwendig"/>
+    		<s:lang key="en" translation="Remark Mandatory"/>
+    		<s:lang key="fr" translation="Remark Mandatory"/>
+    	</s:langs>
+    </s:translation>
+	<s:translation key="jeeslWorkflowTrasitionFileUpload">
+    	<s:langs>
+    		<s:lang key="de" translation="Datei Upload"/>
+    		<s:lang key="en" translation="File Upload"/>
+    		<s:lang key="fr" translation="File Upload"/>
+    	</s:langs>
+    </s:translation>
+
+ 
     <s:translation key="jeeslApprovalCommunications">
     	<s:langs>
     		<s:lang key="de" translation="Nachrichten"/>

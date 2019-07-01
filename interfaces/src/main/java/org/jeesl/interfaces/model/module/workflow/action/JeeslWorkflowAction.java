@@ -24,7 +24,7 @@ public interface JeeslWorkflowAction <T extends JeeslWorkflowTransition<?,?,?,?,
 				
 {
 	public enum Attributes{transition}
-	public enum Constraint{invalidCommand,constraintNotFound}
+	public enum Constraint{invalidCommand,constraintNotFound,remarkEmpty}
 	
 	T getTransition();
 	void setTransition(T transition);

@@ -78,8 +78,10 @@
 							</p:panelGrid>
 						</p:panel>
 					</h:form>
-					<h:form id="fConfirmation">
-						<p:panel header="#{cc.attrs.handler.transition.name[localeCode].lang}" styleClass="jeeslPanel" rendered="#{not empty cc.attrs.handler.transition}">
+					<jp:ioFrFiles handler="#{cc.attrs.handler.frh}" allowDelete="false" overlay="false" componentPrefix="#{cc.id}"
+									rendered="#{(not empty cc.attrs.handler.transition) and (cc.attrs.handler.transition.fileUpload)}"/>
+					<h:form id="fConfirmation" rendered="#{not empty cc.attrs.handler.transition}">
+						<p:panel header="#{cc.attrs.handler.transition.name[localeCode].lang}" styleClass="jeeslPanel">
 							<f:facet name="actions">
 								<j:icon type="jeeslClean" listener="#{cc.attrs.handler.clearSignature()}" oncomplete="PF('sig').clear()" rendered="#{cc.attrs.handler.transition.screenSignature}"/>
 							</f:facet>
@@ -116,18 +118,21 @@
 							</p:panelGrid>
 							
 							<j:constraints value="#{cc.attrs.handler.constraints}"/>
-							
+							<h:outputText value="#{empty cc.attrs.handler.constraints}"/>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid80,jeeslGrid20" rendered="#{empty cc.attrs.handler.constraints}">
+								
 								<h:outputText value="Note: After confirmation you can not change your entries."/>
 								<p:commandButton value="Confirm" type="button">
-									<p:ajax event="click" listener="#{cc.attrs.handler.performTransition()}" process="@form" update="#{cc.attrs.updateAfterConfirmimation}" oncomplete="PF('wvWorkflow').hide();"/>
+									<p:ajax event="click"
+										listener="#{cc.attrs.handler.performTransition()}" process="@form" update="@form #{cc.attrs.updateAfterConfirmimation}"
+										oncomplete="if(#{empty cc.attrs.handler.constraints}){PF('wvWorkflow').hide();} else {PF('wvWorkflow').show();}"/>
 								</p:commandButton>
+								
 							</p:panelGrid>
 						</p:panel>
 					</h:form>
 				</j:slot>
 			</j:row>
 		</p:dialog>
-
 	</composite:implementation>
 </html>

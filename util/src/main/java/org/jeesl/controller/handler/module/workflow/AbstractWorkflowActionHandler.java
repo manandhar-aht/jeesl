@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.jeesl.api.bean.msg.JeeslConstraintsBean;
 import org.jeesl.exception.JeeslWorkflowException;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionCallback;
 import org.jeesl.interfaces.controller.handler.module.workflow.JeeslWorkflowActionHandler;
@@ -14,9 +15,11 @@ import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslApprovalWorkflow;
 import org.jeesl.interfaces.model.module.workflow.instance.JeeslWithWorkflow;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionAttribute;
 import org.jeesl.interfaces.model.system.io.revision.JeeslRevisionEntity;
+import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,29 +30,47 @@ import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
-public abstract class AbstractWorkflowActionHandler <WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
+public abstract class AbstractWorkflowActionHandler <WT extends JeeslWorkflowTransition<?,?,?,?,?>,
+										WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,?,?,?>,
 										AO extends EjbWithId,
 										RE extends JeeslRevisionEntity<?,?,?,?,RA>,
 										RA extends JeeslRevisionAttribute<?,?,RE,?,?>,
 										AW extends JeeslApprovalWorkflow<?,?,?>,
 										WC extends JeeslConstraint<?,?,?,?,WC,?,?,?>>
-					implements JeeslWorkflowActionsHandler<WA,AB,AO,RE,RA,AW,WC>
+					implements JeeslWorkflowActionsHandler<WT,WA,AB,AO,RE,RA,AW,WC>
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractWorkflowActionHandler.class);
 	
 	private boolean debugOnInfo; @Override public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 	
+	protected final JeeslConstraintsBean<WC> bConstraint;
 	private final JeeslWorkflowActionCallback<WA> callback;
 
 	private final List<JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC>> actionHandlers;
 
-	public AbstractWorkflowActionHandler(JeeslWorkflowActionCallback<WA> callback,
+	public AbstractWorkflowActionHandler(JeeslConstraintsBean<WC> bConstraint,
+									JeeslWorkflowActionCallback<WA> callback,
 									JeeslWorkflowActionHandler<WA,AB,AO,RE,RA,AW,WC> actionHandler)
 	{
+		this.bConstraint=bConstraint;
 		this.callback=callback;
 		actionHandlers = new ArrayList<>();
 		actionHandlers.add(actionHandler);
+	}
+	
+	@Override public void checkRemark(List<WC> constraints, WT transition, String remark)
+	{
+		if(debugOnInfo) {logger.info("Checking remark for "+transition.getClass().getSimpleName()+" mandatory:"+transition.getRemarkMandatory());}
+		if(BooleanComparator.active(transition.getRemarkMandatory()))
+		{
+			if(remark==null || remark.trim().isEmpty())
+			{
+				if(debugOnInfo) {logger.info("Adding a constraint");}
+				try{constraints.add(bConstraint.get(JeeslWorkflowAction.class, JeeslWorkflowAction.Constraint.remarkEmpty));}
+				catch (UtilsNotFoundException e) {constraints.add(this.getConstraintNotFound());}
+			}
+		}
 	}
 	
 	@Override public <W extends JeeslWithWorkflow<AW>> JeeslWithWorkflow<AW> perform(JeeslWithWorkflow<AW> entity, List<WA> actions) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException, UtilsProcessingException, JeeslWorkflowException

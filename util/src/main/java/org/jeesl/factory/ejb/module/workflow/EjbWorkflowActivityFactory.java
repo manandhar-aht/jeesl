@@ -27,13 +27,18 @@ public class EjbWorkflowActivityFactory<WT extends JeeslWorkflowTransition<?,?,?
 	    
 	public AY build(AW workflow, WT transition, USER user)
 	{
+		return build(workflow,transition,user,new Date());
+	}
+	
+	public AY build(AW workflow, WT transition, USER user, Date date)
+	{
 		AY ejb = null;
 		try
 		{
 			ejb = cActivity.newInstance();
 			ejb.setWorkflow(workflow);
 			ejb.setTransition(transition);
-			ejb.setRecord(new Date());
+			ejb.setRecord(date);
 			ejb.setUser(user);
 		}
 		catch (InstantiationException e) {e.printStackTrace();}

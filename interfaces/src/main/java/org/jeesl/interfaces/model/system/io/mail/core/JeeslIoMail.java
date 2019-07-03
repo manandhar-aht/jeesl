@@ -3,6 +3,8 @@ package org.jeesl.interfaces.model.system.io.mail.core;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
+
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbPersistable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
@@ -14,8 +16,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
-								RETENTION extends UtilsStatus<RETENTION,L,D>
-//								,FRC extends JeeslFileContainer<?,?>
+								RETENTION extends UtilsStatus<RETENTION,L,D>,
+								FRC extends JeeslFileContainer<?,?>
 								>
 		extends Serializable,EjbWithId,
 					EjbRemoveable,EjbPersistable,EjbSaveable

@@ -11,6 +11,7 @@ import org.jeesl.controller.handler.sb.SbDateHandler;
 import org.jeesl.controller.handler.sb.SbMultiHandler;
 import org.jeesl.factory.builder.io.IoMailFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbToggleBean;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -26,16 +27,17 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
+											MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 											STATUS extends UtilsStatus<STATUS,L,D>,
-											RETENTION extends UtilsStatus<RETENTION,L,D>>
+											RETENTION extends UtilsStatus<RETENTION,L,D>,
+											FRC extends JeeslFileContainer<?,?>>
 					extends AbstractAdminBean<L,D>
 					implements Serializable,SbToggleBean,SbDateIntervalSelection
 {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractSettingsIoMailQueueBean.class);
 	
-	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail;
+	protected JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fMail;
 	
 	private Class<MAIL> cMail;
 	private Class<CATEGORY> cCategory;
@@ -50,7 +52,7 @@ public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends Util
 	protected SbMultiHandler<STATUS> sbhStatus; public SbMultiHandler<STATUS> getSbhStatus() {return sbhStatus;}
 	private final SbDateHandler sbhDate; public SbDateHandler getSbhDate() {return sbhDate;}
 
-	public AbstractSettingsIoMailQueueBean(IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
+	public AbstractSettingsIoMailQueueBean(IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fbMail)
 	{
 		super(fbMail.getClassL(),fbMail.getClassD());
 		sbhDate = new SbDateHandler(this);
@@ -60,7 +62,7 @@ public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends Util
 		sbhCategory = new SbMultiHandler<CATEGORY>(cCategory,this);
 	}
 	
-	protected void postConstructMailQueue(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
+	protected void postConstructMailQueue(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fMail, final Class<L> cLang, final Class<D> cDescription, Class<CATEGORY> cCategory, Class<MAIL> cMail, Class<STATUS> cStatus)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fMail=fMail;

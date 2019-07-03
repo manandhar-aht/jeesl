@@ -3,6 +3,7 @@ package org.jeesl.api.facade.io;
 import java.util.Date;
 import java.util.List;
 
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.model.xml.system.io.mail.Mail;
 
@@ -15,9 +16,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
+									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									RETENTION extends UtilsStatus<RETENTION,L,D>>
+									RETENTION extends UtilsStatus<RETENTION,L,D>,
+									FRC extends JeeslFileContainer<?,?>>
 			extends UtilsFacade
 {	
 	Integer cQueue();

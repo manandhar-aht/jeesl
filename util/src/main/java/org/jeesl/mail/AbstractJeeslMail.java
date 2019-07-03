@@ -5,6 +5,7 @@ import org.jeesl.api.facade.io.JeeslIoTemplateFacade;
 import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.controller.JeeslMail;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
@@ -30,15 +31,16 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
 								TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>,
 								MAILCAT extends UtilsStatus<MAILCAT,L,D>,
-								MAIL extends JeeslIoMail<L,D,MAILCAT,STATUS,RETENTION>,
+								MAIL extends JeeslIoMail<L,D,MAILCAT,STATUS,RETENTION,FRC>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
-								RETENTION extends UtilsStatus<RETENTION,L,D>>
+								RETENTION extends UtilsStatus<RETENTION,L,D>,
+								FRC extends JeeslFileContainer<?,?>>
 							implements JeeslMail
 {
 	final static Logger logger = LoggerFactory.getLogger(AbstractJeeslMail.class);
 	
 	protected final JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate;
-	protected final JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail;
+	protected final JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION,FRC> fMail;
 	
 
 	protected TEMPLATE template;
@@ -50,7 +52,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 	protected String subjectPreifx;
 	
 	public AbstractJeeslMail(JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fTemplate,
-							JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION> fMail)
+							JeeslIoMailFacade<L,D,MAILCAT,MAIL,STATUS,RETENTION,FRC> fMail)
 	{
 		this.fTemplate=fTemplate;
 		this.fMail=fMail;

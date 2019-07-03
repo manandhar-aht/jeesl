@@ -2,6 +2,7 @@ package org.jeesl.factory.builder.io;
 
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,10 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoMailFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
+								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
-								RETENTION extends UtilsStatus<RETENTION,L,D>>
+								RETENTION extends UtilsStatus<RETENTION,L,D>,
+								FRC extends JeeslFileContainer<?,?>>
 		extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoMailFactoryBuilder.class);
@@ -33,8 +35,8 @@ public class IoMailFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 		this.cRetention=cRetention;
 	}
 	
-	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> mail()
+	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> mail()
 	{
-		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION>(cMail);
+		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>(cMail);
 	}
 }

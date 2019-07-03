@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import org.jeesl.api.facade.io.JeeslIoMailFacade;
 import org.jeesl.factory.builder.io.IoMailFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.model.xml.system.io.mail.Mail;
@@ -31,23 +32,22 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
+									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
-									RETENTION extends UtilsStatus<RETENTION,L,D>>
+									RETENTION extends UtilsStatus<RETENTION,L,D>,
+									FRC extends JeeslFileContainer<?,?>>
 					extends UtilsFacadeBean
-					implements JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION>
+					implements JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>
 {	
 	private static final long serialVersionUID = 1L;
 
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
-	private final IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail;
+	private final IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fbMail;
 	
-
+	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> efMail;
 	
-	private EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION> efMail;
-	
-	public JeeslIoMailFacadeBean(EntityManager em, IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail)
+	public JeeslIoMailFacadeBean(EntityManager em, IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fbMail)
 	{
 		super(em);
 		this.fbMail = fbMail;

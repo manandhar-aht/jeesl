@@ -30,7 +30,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 								TOKEN extends JeeslIoTemplateToken<L,D,TEMPLATE,TOKENTYPE>,
 								TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>,
 								MAILCAT extends UtilsStatus<MAILCAT,L,D>,
-								MAIL extends JeeslIoMail<L,D,MAILCAT,MAIL,STATUS,RETENTION>,
+								MAIL extends JeeslIoMail<L,D,MAILCAT,STATUS,RETENTION>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>>
 							implements JeeslMail

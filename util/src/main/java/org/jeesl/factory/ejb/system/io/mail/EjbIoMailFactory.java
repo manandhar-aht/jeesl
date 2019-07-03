@@ -14,7 +14,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
 								STATUS extends UtilsStatus<STATUS,L,D>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>>
 {

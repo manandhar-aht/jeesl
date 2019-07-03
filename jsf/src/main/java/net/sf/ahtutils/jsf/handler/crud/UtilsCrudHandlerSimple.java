@@ -16,11 +16,12 @@ public class UtilsCrudHandlerSimple <T extends EjbCrud>
 {	
 	final static Logger logger = LoggerFactory.getLogger(UtilsCrudHandlerSimple.class);
 	
+	private UtilsFacade fUtils;
 	private CrudHandlerBean<T> bean;
 	
-	private UtilsFacade fUtils;
-	
 	private final Class<T> cT;
+	
+	private List<T> list; public List<T> getList() {return list;}
 	
 	public UtilsCrudHandlerSimple(CrudHandlerBean<T> bean, UtilsFacade fUtils, Class<T> cT)
 	{
@@ -33,9 +34,6 @@ public class UtilsCrudHandlerSimple <T extends EjbCrud>
 		this.fUtils=fUtils;
 		this.cT=cT;
 	}
-
-	private List<T> list;
-	public List<T> getList() {return list;}
 
 	public void reloadList()
 	{

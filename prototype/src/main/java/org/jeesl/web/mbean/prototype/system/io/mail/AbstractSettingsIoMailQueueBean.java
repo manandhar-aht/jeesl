@@ -26,7 +26,7 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-											MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+											MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
 											STATUS extends UtilsStatus<STATUS,L,D>,
 											RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends AbstractAdminBean<L,D>

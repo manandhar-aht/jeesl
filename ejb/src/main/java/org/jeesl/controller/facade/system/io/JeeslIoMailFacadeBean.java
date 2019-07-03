@@ -31,12 +31,14 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-									MAIL extends JeeslIoMail<L,D,CATEGORY,MAIL,STATUS,RETENTION>,
+									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION>,
 									STATUS extends UtilsStatus<STATUS,L,D>,
 									RETENTION extends UtilsStatus<RETENTION,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION>
 {	
+	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoMailFacadeBean.class);
 		
 	private final IoMailFactoryBuilder<L,D,CATEGORY,MAIL,STATUS,RETENTION> fbMail;

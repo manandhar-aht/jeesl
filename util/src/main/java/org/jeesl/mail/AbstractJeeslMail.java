@@ -7,6 +7,7 @@ import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.controller.JeeslMail;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
@@ -32,7 +33,7 @@ public class AbstractJeeslMail<L extends UtilsLang,D extends UtilsDescription,
 								TOKENTYPE extends UtilsStatus<TOKENTYPE,L,D>,
 								MAILCAT extends UtilsStatus<MAILCAT,L,D>,
 								MAIL extends JeeslIoMail<L,D,MAILCAT,STATUS,RETENTION,FRC>,
-								STATUS extends UtilsStatus<STATUS,L,D>,
+								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>,
 								FRC extends JeeslFileContainer<?,?>>
 							implements JeeslMail

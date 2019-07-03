@@ -33,7 +33,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescription,
 									CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 									MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
-									STATUS extends UtilsStatus<STATUS,L,D>,
+									STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 									RETENTION extends UtilsStatus<RETENTION,L,D>,
 									FRC extends JeeslFileContainer<?,?>>
 					extends UtilsFacadeBean

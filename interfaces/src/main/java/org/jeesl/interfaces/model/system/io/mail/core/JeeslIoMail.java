@@ -15,7 +15,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslIoMail<L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
-								STATUS extends UtilsStatus<STATUS,L,D>,
+								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>,
 								FRC extends JeeslFileContainer<?,?>
 								>

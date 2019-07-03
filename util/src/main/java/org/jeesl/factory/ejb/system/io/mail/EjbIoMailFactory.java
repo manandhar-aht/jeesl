@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.model.xml.system.io.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 public class EjbIoMailFactory <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
-								STATUS extends UtilsStatus<STATUS,L,D>,
+								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>,
 								FRC extends JeeslFileContainer<?,?>>
 {

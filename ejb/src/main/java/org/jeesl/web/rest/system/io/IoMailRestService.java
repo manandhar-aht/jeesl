@@ -33,7 +33,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
-								STATUS extends UtilsStatus<STATUS,L,D>,
+								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 								RETENTION extends UtilsStatus<RETENTION,L,D>,
 								FRC extends JeeslFileContainer<?,?>>
 					extends AbstractJeeslRestService<L,D>
@@ -61,7 +61,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 	public static <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
-					STATUS extends UtilsStatus<STATUS,L,D>,
+					STATUS extends JeeslMailStatus<L,D,STATUS,?>,
 					RETENTION extends UtilsStatus<RETENTION,L,D>,
 					FRC extends JeeslFileContainer<?,?>>
 		IoMailRestService<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>

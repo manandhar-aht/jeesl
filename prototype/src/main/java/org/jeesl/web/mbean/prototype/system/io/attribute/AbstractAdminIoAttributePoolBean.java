@@ -28,7 +28,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
-public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 												CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 												CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 												TYPE extends UtilsStatus<TYPE,L,D>,
@@ -37,7 +37,7 @@ public abstract class AbstractAdminIoAttributePoolBean <L extends UtilsLang, D e
 												ITEM extends JeeslAttributeItem<CRITERIA,SET>,
 												CONTAINER extends JeeslAttributeContainer<SET,DATA>,
 												DATA extends JeeslAttributeData<CRITERIA,OPTION,CONTAINER>>
-					extends AbstractAdminIoAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
+					extends AbstractAdminIoAttributeBean<L,D,LOC,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 					implements Serializable,SbToggleBean
 {
 	private static final long serialVersionUID = 1L;

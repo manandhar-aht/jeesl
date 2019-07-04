@@ -117,7 +117,7 @@ public class AbstractSettingsIoMailQueueBean <L extends UtilsLang,D extends Util
 	{
 		DateTime dt = new DateTime(sbhDate.getDate2());
 		
-		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),dt.plusDays(1).toDate());
+		mails = fMail.fMails(sbhCategory.getSelected(),sbhStatus.getSelected(),sbhDate.getDate1(),dt.plusDays(1).toDate(),null);
 		if(debugOnInfo){logger.info(AbstractLogMessage.reloaded(cMail,mails));}
 //		Collections.sort(templates, comparatorTemplate);
 	}

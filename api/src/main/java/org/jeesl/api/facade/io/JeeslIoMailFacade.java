@@ -24,7 +24,7 @@ public interface JeeslIoMailFacade <L extends UtilsLang,D extends UtilsDescripti
 			extends UtilsFacade
 {	
 	Integer cQueue();
-	List<MAIL> fMails(List<CATEGORY> categories,List<STATUS> stauts, Date from, Date to);
+	List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> stauts, Date from, Date to, Integer maxResult);
 	List<MAIL> fSpoolMails(int max);
 	
 	void queueMail(CATEGORY category, RETENTION retention, Mail mail) throws UtilsConstraintViolationException, UtilsNotFoundException;

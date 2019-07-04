@@ -29,7 +29,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D extends UtilsDescription,
+public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 													CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 													CRITERIA extends JeeslAttributeCriteria<L,D,CATEGORY,TYPE>,
 													TYPE extends UtilsStatus<TYPE,L,D>,

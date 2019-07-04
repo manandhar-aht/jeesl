@@ -80,7 +80,7 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		}
 	}
 	
-	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status,Date from, Date to)
+	@Override public List<MAIL> fMails(List<CATEGORY> categories, List<STATUS> status,Date from, Date to, Integer maxResult)
 	{
 		if(categories==null || categories.isEmpty()){return new ArrayList<MAIL>();}
 		if(status==null || status.isEmpty()){return new ArrayList<MAIL>();}
@@ -104,6 +104,7 @@ public class JeeslIoMailFacadeBean<L extends UtilsLang,D extends UtilsDescriptio
 		cQ.select(mail);
 
 		TypedQuery<MAIL> tQ = em.createQuery(cQ);
+//		iftQ.setMaxResults(maxResult)
 		return tQ.getResultList();
 	}
 	

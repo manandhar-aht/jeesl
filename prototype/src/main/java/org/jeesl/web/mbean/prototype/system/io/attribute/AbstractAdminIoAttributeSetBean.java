@@ -60,7 +60,7 @@ public abstract class AbstractAdminIoAttributeSetBean <L extends UtilsLang, D ex
 		comparatorSet = new AttributeSetComparator<CATEGORY,SET>().factory(AttributeSetComparator.Type.position);
 	}
 	
-	protected void initAttributeSet(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
+	protected void initAttributeSet(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initAttribute(bTranslation,bMessage,bAttribute,fAttribute);
 		reloadSets();

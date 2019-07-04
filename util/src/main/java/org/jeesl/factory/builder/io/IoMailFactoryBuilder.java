@@ -1,9 +1,12 @@
 package org.jeesl.factory.builder.io;
 
+import org.jeesl.api.facade.io.JeeslIoMailFacade;
+import org.jeesl.controller.processor.system.io.mail.MailSplitter;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.mail.EjbIoMailFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailRetention;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +19,7 @@ public class IoMailFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
-								RETENTION extends UtilsStatus<RETENTION,L,D>,
+								RETENTION extends JeeslMailRetention<L,D,RETENTION,?>,
 								FRC extends JeeslFileContainer<?,?>>
 		extends AbstractFactoryBuilder<L,D>
 {
@@ -39,5 +42,10 @@ public class IoMailFactoryBuilder<L extends UtilsLang,D extends UtilsDescription
 	public EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> mail()
 	{
 		return new EjbIoMailFactory<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>(cMail);
+	}
+	
+	public MailSplitter<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> splitter(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fMail)
+	{
+		return new MailSplitter<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>(this,fMail);
 	}
 }

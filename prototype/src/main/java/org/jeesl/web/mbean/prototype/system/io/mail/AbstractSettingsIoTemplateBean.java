@@ -22,7 +22,6 @@ import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateDefinition;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplateToken;
 import org.jeesl.interfaces.web.JeeslJsfSecurityHandler;
-import org.jeesl.mail.freemarker.FreemarkerIoTemplateEngine;
 import org.jeesl.util.comparator.ejb.system.io.template.IoTemplateComparator;
 import org.jeesl.util.comparator.ejb.system.io.template.IoTemplateDefinitionComparator;
 import org.jeesl.util.comparator.ejb.system.io.template.IoTemplateTokenComparator;
@@ -78,7 +77,6 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 	private EjbIoTemplateTokenFactory<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> efToken;
 	
 	protected final SbMultiHandler<CATEGORY> sbhCategory; public SbMultiHandler<CATEGORY> getSbhCategory() {return sbhCategory;}
-	private FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fmEngine;
 	
 	private Configuration templateConfig;
 	private Template templateHeader,templateBody;
@@ -116,8 +114,6 @@ public abstract class AbstractSettingsIoTemplateBean <L extends UtilsLang,D exte
 		comparatorTemplate = new IoTemplateComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateComparator.Type.position);
 		comparatorToken = new IoTemplateTokenComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>().factory(IoTemplateTokenComparator.Type.position);
 		comparatorDefinition = new IoTemplateDefinitionComparator<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN>().factory(IoTemplateDefinitionComparator.Type.position);
-		
-		fmEngine = new FreemarkerIoTemplateEngine<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>(fbTemplate);
 		
 		types.addAll(fTemplate.allOrderedPositionVisible(fbTemplate.getClassType()));
 		tokenTypes.addAll(fTemplate.allOrderedPositionVisible(fbTemplate.getClassTokenType()));

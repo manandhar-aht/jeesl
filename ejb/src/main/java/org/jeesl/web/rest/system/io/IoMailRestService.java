@@ -13,6 +13,7 @@ import org.jeesl.factory.xml.system.io.mail.XmlMailFactory;
 import org.jeesl.factory.xml.system.io.mail.XmlMailsFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslIoMail;
+import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailRetention;
 import org.jeesl.interfaces.model.system.io.mail.core.JeeslMailStatus;
 import org.jeesl.model.xml.jeesl.Container;
 import org.jeesl.model.xml.system.io.mail.Mail;
@@ -34,7 +35,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 								CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 								MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 								STATUS extends JeeslMailStatus<L,D,STATUS,?>,
-								RETENTION extends UtilsStatus<RETENTION,L,D>,
+								RETENTION extends JeeslMailRetention<L,D,RETENTION,?>,
 								FRC extends JeeslFileContainer<?,?>>
 					extends AbstractJeeslRestService<L,D>
 					implements JeeslIoMailRestInterface,JeeslIoMailRestExport,JeeslIoMailRestImport
@@ -62,7 +63,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 					CATEGORY extends UtilsStatus<CATEGORY,L,D>,
 					MAIL extends JeeslIoMail<L,D,CATEGORY,STATUS,RETENTION,FRC>,
 					STATUS extends JeeslMailStatus<L,D,STATUS,?>,
-					RETENTION extends UtilsStatus<RETENTION,L,D>,
+					RETENTION extends JeeslMailRetention<L,D,RETENTION,?>,
 					FRC extends JeeslFileContainer<?,?>>
 		IoMailRestService<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC>
 		factory(JeeslIoMailFacade<L,D,CATEGORY,MAIL,STATUS,RETENTION,FRC> fMail,final Class<L> cL, final Class<D> cD, Class<CATEGORY> cCategory, final Class<MAIL> cMail, final Class<STATUS> cStatus, final Class<RETENTION> cRetention)
@@ -93,12 +94,12 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 				eMail.setCounter(eMail.getCounter()+1);
 				if(eMail.getCounter()>5)
 				{
-					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.failed));
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Code.failed));
 					eMail = fMail.update(eMail);
 				}
 				else
 				{
-					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.spooling));
+					eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Code.spooling));
 					eMail = fMail.update(eMail);
 					Mail xMail = JaxbUtil.loadJAXB(IOUtils.toInputStream(eMail.getXml(), "UTF-8"), Mail.class);
 					xMail.setId(eMail.getId());
@@ -120,7 +121,7 @@ public class IoMailRestService <L extends UtilsLang,D extends UtilsDescription,
 		try
 		{
 			MAIL eMail = fMail.find(cMail,id);
-			eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Status.sent));
+			eMail.setStatus(fMail.fByCode(cStatus, JeeslMailStatus.Code.sent));
 			eMail.setRecordSent(new Date());
 			eMail = fMail.update(eMail);
 			xMail.setId(eMail.getId());

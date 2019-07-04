@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.interfaces.facade.UtilsFacade;
 
-public class EjbCodeMapCache <T extends EjbWithCode>
+public class EjbCodeCache <T extends EjbWithCode>
 {
-	final static Logger logger = LoggerFactory.getLogger(EjbCodeMapCache.class);
+	final static Logger logger = LoggerFactory.getLogger(EjbCodeCache.class);
 
 	private final UtilsFacade fUtils;
 	private final Class<T> c;
 	
 	private final Map<String,T> map;
 	
-	public EjbCodeMapCache(UtilsFacade fUtils, Class<T> c)
+	public EjbCodeCache(UtilsFacade fUtils, Class<T> c)
 	{
 		this.fUtils=fUtils;
 		this.c=c;

@@ -20,5 +20,5 @@ public interface JeeslMailStatus <L extends UtilsLang, D extends UtilsDescriptio
 								UtilsStatusFixedCode,
 								EjbWithCodeGraphic<G>,UtilsStatus<S,L,D>
 {	
-	public static enum Status{queue,spooling,sent,failed};
+	public enum Code{queue,spooling,sent,failed};
 }

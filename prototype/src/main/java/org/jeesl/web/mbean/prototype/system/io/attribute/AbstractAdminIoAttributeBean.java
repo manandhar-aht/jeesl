@@ -74,7 +74,7 @@ public abstract class AbstractAdminIoAttributeBean <L extends UtilsLang, D exten
 		sbhCategory = new SbMultiHandler<CATEGORY>(fbAttribute.getClassCategory(),this);
 	}
 	
-	protected void initAttribute(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
+	protected void initAttribute(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage, JeeslAttributeBean<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> bAttribute, JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fAttribute)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fAttribute=fAttribute;

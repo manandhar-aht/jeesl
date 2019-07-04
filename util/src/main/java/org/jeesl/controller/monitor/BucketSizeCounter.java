@@ -2,7 +2,7 @@ package org.jeesl.controller.monitor;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class BucketSizeCounter
 	final static Logger logger = LoggerFactory.getLogger(BucketSizeCounter.class);
 	
 	private String category;
-	private Map<String,Long> map;
+	private final Map<String,Long> map;
 	
 	private long loop;
 	
@@ -25,7 +25,13 @@ public class BucketSizeCounter
 	public BucketSizeCounter(String category)
 	{
 		this.category=category;
-		map = new Hashtable<String,Long>();
+		map = new HashMap<String,Long>();
+		clear();
+	}
+	
+	public void clear()
+	{
+		map.clear();
 		loop=0;
 	}
 	
@@ -89,13 +95,17 @@ public class BucketSizeCounter
 		}
 	}
 	
-	public void debugLoop(int modulo)
+	public void debugLoop(int modulo){debugLoop(modulo,null);}
+	public void debugLoop(int modulo, Integer max)
 	{
 		loop++;
 		if(loop%modulo==0)
 		{
-			logger.info(category+": "+loop);
-		}
-		
+			StringBuilder sb = new StringBuilder();
+			sb.append(category).append(": ");
+			sb.append(loop);
+			if(max!=null) {sb.append("/").append(max);}
+			logger.debug(sb.toString());
+		}		
 	}
 }

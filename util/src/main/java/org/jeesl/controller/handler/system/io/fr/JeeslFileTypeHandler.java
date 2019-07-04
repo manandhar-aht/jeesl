@@ -4,7 +4,7 @@ import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
-import org.jeesl.util.db.cache.EjbCodeMapCache;
+import org.jeesl.util.db.cache.EjbCodeCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +13,12 @@ public class JeeslFileTypeHandler<META extends JeeslFileMeta<?,?,TYPE>,
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslFileTypeHandler.class);
 
-	private final EjbCodeMapCache<TYPE> cache;
+	private final EjbCodeCache<TYPE> cache;
 	
 	public JeeslFileTypeHandler(IoFileRepositoryFactoryBuilder<?,?,?,?,?,?,META,TYPE> fbFile,
 								JeeslIoFrFacade<?,?,?,?,?,META,TYPE> fFr)
 	{
-		cache = new EjbCodeMapCache<TYPE>(fFr,fbFile.getClassType());
+		cache = new EjbCodeCache<TYPE>(fFr,fbFile.getClassType());
 	}
 	
 	public void updateType(META meta)

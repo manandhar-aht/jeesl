@@ -307,7 +307,7 @@
 									<p:ajax event="change" listener="#{cc.attrs.bean.changeBot()}" update="@form"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<p:panelGrid id="pgEntity" columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{cc.attrs.bean.action.bot.code eq 'statusUpdate'}">
+							<p:panelGrid id="pgEntity" columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 								<p:outputLabel value="#{msg.jeeslRevisionEntity}"/>
 								<p:selectOneMenu value="#{cc.attrs.bean.action.entity}" effect="fade" autoWidth="false">
 									<f:selectItem itemLabel="--"/>
@@ -326,11 +326,11 @@
 									<f:selectItems value="#{cc.attrs.bean.options}" var="s" itemLabel="#{s.name[localeCode].lang}" itemValue="#{s.id}"/>
 								</p:selectOneMenu>
 							</p:panelGrid>
-							<p:panelGrid id="pgCommand" columns="2" columnClasses="jeeslGrid20,jeeslGrid80" rendered="#{cc.attrs.bean.action.bot.code eq 'callbackCommand'}">
-								
+							<p:panelGrid id="pgCommand" columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
+								<p:outputLabel value="#{msg.jeeslWorkflowActionCommand}"/>
+								<p:inputText value="#{cc.attrs.bean.action.callbackCommand}" autocomplete="off"/>
 							</p:panelGrid>
-							<p:outputLabel value="#{msg.jeeslWorkflowActionCommand}"/>
-							<p:inputText value="#{cc.attrs.bean.action.callbackCommand}" autocomplete="off"/>
+							
 							<p:messages redisplay="false" severity="warn,error" showSummary="false" showDetail="true" closable="true"/>
 						</p:panel>
 					</h:form>

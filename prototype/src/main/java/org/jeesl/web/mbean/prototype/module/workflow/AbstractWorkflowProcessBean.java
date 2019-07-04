@@ -483,7 +483,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		{
 			action.setAttribute(fWorkflow.find(fbRevision.getClassAttribute(),action.getAttribute()));
 			
-			if(debugOnInfo) {logger.info("cOption!=null?"+(cOption!=null));}
+			if(debugOnInfo) {logger.info("cOption!=null?"+(cOption!=null)+" option!=null?"+(option!=null));}
 			
 			logger.info("Saving option:"+option+" for "+cOption.getName());
 			AO id = (AO)fWorkflow.find(cOption,option);

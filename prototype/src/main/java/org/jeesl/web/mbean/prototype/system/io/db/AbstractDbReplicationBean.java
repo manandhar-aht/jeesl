@@ -12,19 +12,17 @@ import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationInfo;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationState;
 import org.jeesl.interfaces.model.system.io.db.JeeslDbReplicationSync;
 import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
-import org.jeesl.model.json.db.tuple.replication.JsonPostgresConnection;
 import org.jeesl.model.json.db.tuple.replication.JsonPostgresReplication;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.metachart.xml.chart.Chart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.openfuxml.content.table.Table;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsDescription;
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
-public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
+public class AbstractDbReplicationBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									SYSTEM extends JeeslIoSsiSystem,
 									RI extends JeeslDbReplicationInfo<L,D,RI,?>,
 									RS extends JeeslDbReplicationState<L,D,RS,?>,
@@ -38,16 +36,13 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 	private JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb;
 	private final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb;
 	
-	private final Map<String,RI> mapInfo;
-	public Map<String, RI> getMapInfo() {
-		return mapInfo;
-	}
-
-	private final Map<String,RS> mapState;
-	private final Map<String,RY> mapSync;
-//	protected Chart chart; public Chart getChart() {return chart;}
-
+	private final Map<String,RI> mapInfo; public Map<String,RI> getMapInfo() {return mapInfo;}
+	private final Map<String,RS> mapState; public Map<String,RS> getMapState() {return mapState;}
+	private final Map<String,RY> mapSync; public Map<String,RY> getMapSync() {return mapSync;}
+	
 	private List<JsonPostgresReplication> replications; public List<JsonPostgresReplication> getReplications() {return replications;}
+	
+	protected Chart chart; public Chart getChart() {return chart;}
 	
 	public AbstractDbReplicationBean(final IoDbFactoryBuilder<L,D,SYSTEM,?,?,?,?,RI,RS,RY> fbDb)
 	{
@@ -57,7 +52,6 @@ public class AbstractDbReplicationBean <L extends UtilsLang,D extends UtilsDescr
 		mapInfo = new HashMap<>();
 		mapState = new HashMap<>();
 		mapSync = new HashMap<>();
-
 	}
 	
 	public void postConstructDbReplication(JeeslIoDbFacade<L,D,SYSTEM,?,?,?,?> fDb)

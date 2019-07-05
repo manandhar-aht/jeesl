@@ -47,7 +47,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-									TYPE extends JeeslFileType<TYPE,L,D,?>>
+									TYPE extends JeeslFileType<L,D,TYPE,?>>
 					implements JeeslFileRepositoryHandler<STORAGE,CONTAINER,META>
 {
 	private static final long serialVersionUID = 1L;
@@ -147,6 +147,11 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}
 	
+	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void initSilent(W with)
+	{
+		try {init(with);}
+		catch (UtilsConstraintViolationException | UtilsLockingException e) {e.printStackTrace();}
+	}
 	@Override public <W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with) throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		boolean reset = true;
@@ -208,7 +213,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		{
 			
 		}
-		logger.info("Reloaded "+fbFile.getClassMeta().getSimpleName()+" "+metas.size());
+		if(debugOnInfo) {logger.info("Reloaded "+fbFile.getClassMeta().getSimpleName()+":"+metas.size()+" for container:"+container.toString());}
 	}
 		
 	public void addFile()

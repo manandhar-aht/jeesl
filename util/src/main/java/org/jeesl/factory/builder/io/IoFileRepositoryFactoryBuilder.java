@@ -23,7 +23,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
 											META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-											TYPE extends JeeslFileType<TYPE,L,D,?>>
+											TYPE extends JeeslFileType<L,D,TYPE,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoFileRepositoryFactoryBuilder.class);

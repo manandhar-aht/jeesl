@@ -17,7 +17,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithRecord;
 
 public interface JeeslFileMeta<D extends UtilsDescription,
 								CONTAINER extends JeeslFileContainer<?,?>,
-								TYPE extends JeeslFileType<TYPE,?,D,?>>
+								TYPE extends JeeslFileType<?,D,TYPE,?>>
 			extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable,
 					EjbWithParentAttributeResolver,
 					EjbWithPosition,

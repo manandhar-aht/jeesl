@@ -62,7 +62,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
 											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
 											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE>,
-											FTYPE extends JeeslFileType<FTYPE,L,D,?>,
+											FTYPE extends JeeslFileType<L,D,FTYPE,?>,
 											
 											DS extends JeeslDomainSet<L,D,?>,
 											

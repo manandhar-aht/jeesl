@@ -17,7 +17,7 @@ public interface JeeslIoFrFacade <L extends UtilsLang, D extends UtilsDescriptio
 								ENGINE extends UtilsStatus<ENGINE,L,D>,
 								CONTAINER extends JeeslFileContainer<STORAGE,META>,
 								META extends JeeslFileMeta<D,CONTAINER,TYPE>,
-								TYPE extends JeeslFileType<TYPE,L,D,?>>
+								TYPE extends JeeslFileType<L,D,TYPE,?>>
 		extends UtilsFacade,JeeslFileRepositoryStore<META>
 {
 	Json2Tuples<STORAGE,TYPE> tpIoFileByStorageType();

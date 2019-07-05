@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JeeslFileTypeHandler<META extends JeeslFileMeta<?,?,TYPE>,
-									TYPE extends JeeslFileType<TYPE,?,?,?>>
+									TYPE extends JeeslFileType<?,?,TYPE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslFileTypeHandler.class);
 

@@ -28,6 +28,7 @@ public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,
 	CONTAINER getContainer();
 	List<META> getMetas();
 	
+	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void initSilent(W with);
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(W with) throws UtilsConstraintViolationException, UtilsLockingException;
 	<W extends JeeslWithFileRepositoryContainer<CONTAINER>> void init(STORAGE storage, W with) throws UtilsConstraintViolationException, UtilsLockingException;
 	

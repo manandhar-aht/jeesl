@@ -95,6 +95,11 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		logger.trace("Removing Meta "+meta.getContainer().getMetas().size());
 		this.rm(meta);
 	}
+	
+	@Override public CONTAINER moveContainer(CONTAINER container, STORAGE destination) throws UtilsConstraintViolationException, UtilsLockingException
+	{
+		return container;
+	}
 
 	@Override
 	public Json2Tuples<STORAGE,TYPE> tpIoFileByStorageType()

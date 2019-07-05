@@ -51,16 +51,16 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 	
 	public EjbIoFrContainerFactory<STORAGE,CONTAINER> ejbContainer()
 	{
-		return new EjbIoFrContainerFactory<STORAGE,CONTAINER>(cContainer);
+		return new EjbIoFrContainerFactory<>(cContainer);
 	}
 	
-	public EjbIoFrMetaFactory<CONTAINER,META> ejbMeta()
+	public EjbIoFrMetaFactory<CONTAINER,META,TYPE> ejbMeta()
 	{
-		return new EjbIoFrMetaFactory<CONTAINER,META>(cMeta);
+		return new EjbIoFrMetaFactory<>(cMeta);
 	}
 	
 	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
 	{
-		return new DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE>(fFr,this,callback);
+		return new DefaultFileRepositoryHandler<>(fFr,this,callback);
 	}
 }

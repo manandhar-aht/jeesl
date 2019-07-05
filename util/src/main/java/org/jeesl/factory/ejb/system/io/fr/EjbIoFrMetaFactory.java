@@ -1,16 +1,19 @@
 package org.jeesl.factory.ejb.system.io.fr;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>,
-								META extends JeeslFileMeta<?,CONTAINER,?>>
+								META extends JeeslFileMeta<?,CONTAINER,TYPE>,
+								TYPE extends JeeslFileType<?,?,TYPE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoFrMetaFactory.class);
 	
@@ -56,5 +59,17 @@ public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>,
 		return last;
 	}
 	
-	
+	public List<META> toImages(List<META> metas)
+	{
+		List<META> images = new ArrayList<>();
+		for(META meta : metas)
+		{
+			if(meta.getType().getCode().equals(JeeslFileType.Code.jpg.toString())
+					|| meta.getType().getCode().equals(JeeslFileType.Code.png.toString()))
+			{
+				images.add(meta);
+			}
+		}
+		return images;
+	}
 }

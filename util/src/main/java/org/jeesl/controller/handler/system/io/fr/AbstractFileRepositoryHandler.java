@@ -67,7 +67,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private final JeeslFileTypeHandler<META,TYPE> fth;
 	protected final EjbDescriptionFactory<D> efDescription;
 	protected final EjbIoFrContainerFactory<STORAGE,CONTAINER> efContainer;
-	protected final EjbIoFrMetaFactory<CONTAINER,META> efMeta;
+	protected final EjbIoFrMetaFactory<CONTAINER,META,TYPE> efMeta;
 	
 	protected final List<META> metas; @Override public List<META> getMetas() {return metas;}
 	protected final Map<META,File> mapDeferred; public Map<META, File> getMapDeferred() {return mapDeferred;}
@@ -387,6 +387,19 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 			fFr.saveToFileRepository(newMeta, fFr.loadFromFileRepository(oldMeta));
 		}
 	}
+	
+	public void moveTo(STORAGE storage) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		
+		for(META m : metas)
+		{
+			byte[] bytes = fFr.loadFromFileRepository(m);
+			
+			fFr.saveToFileRepository(m,bytes);
+		}
+	}
+	
+	
 	
 	public void reorderMetas() throws UtilsConstraintViolationException, UtilsLockingException
 	{

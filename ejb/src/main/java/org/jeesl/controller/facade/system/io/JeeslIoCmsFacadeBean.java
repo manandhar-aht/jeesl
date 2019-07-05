@@ -35,6 +35,7 @@ public class JeeslIoCmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 					extends UtilsFacadeBean
 					implements JeeslIoCmsFacade<L,D,CAT,CMS,V,S,E,EC,ET,C,MT,FC,LOC>
 {	
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoCmsFacadeBean.class);
 	
 	private final Class<S> cSection;

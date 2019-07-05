@@ -37,7 +37,8 @@ public class JeeslIoDmsFacadeBean<L extends UtilsLang,D extends UtilsDescription
 								AC extends JeeslAttributeContainer<?,?>>
 					extends UtilsFacadeBean
 					implements JeeslIoDmsFacade<L,D,LOC,DMS,STORAGE,AS,DS,S,F,VIEW,FC,AC>
-{	
+{
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDmsFacadeBean.class);
 	
 	private final IoDmsFactoryBuilder<L,D,LOC,DMS,STORAGE,S,F,VIEW,LAYER> fbDms;

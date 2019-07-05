@@ -44,6 +44,7 @@ public class JeeslIoAttributeFacadeBean<L extends UtilsLang, D extends UtilsDesc
 					extends UtilsFacadeBean
 					implements JeeslIoAttributeFacade<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA>
 {	
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoAttributeFacadeBean.class);
 	
 	private final IoAttributeFactoryBuilder<L,D,CATEGORY,CRITERIA,TYPE,OPTION,SET,ITEM,CONTAINER,DATA> fbAttribute;

@@ -43,6 +43,7 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 					extends UtilsFacadeBean
 					implements JeeslIoSsiFacade<L,D,SYSTEM,MAPPING,DATA,LINK,ENTITY>
 {	
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoSsiFacadeBean.class);
 		
 	private final IoSsiFactoryBuilder<L,D,SYSTEM,MAPPING,DATA,LINK,ENTITY> fbSsi;

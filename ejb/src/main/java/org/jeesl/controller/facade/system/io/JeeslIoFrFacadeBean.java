@@ -96,8 +96,24 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		this.rm(meta);
 	}
 	
-	@Override public CONTAINER moveContainer(CONTAINER container, STORAGE destination) throws UtilsConstraintViolationException, UtilsLockingException
+	@Override public CONTAINER moveContainer(CONTAINER container, STORAGE destination) throws UtilsConstraintViolationException, UtilsLockingException, UtilsNotFoundException
 	{
+		container = this.find(fbFile.getClassContainer(),container);
+		JeeslFileRepositoryStore<META> sourceRepo = this.build(container.getStorage());
+		JeeslFileRepositoryStore<META> destinationRepo = this.build(destination);
+		
+		for(META meta : container.getMetas())
+		{
+			byte[] bytes = sourceRepo.loadFromFileRepository(meta);
+			destinationRepo.saveToFileRepository(meta, bytes);
+		}
+		container.setStorage(destination);
+		container = this.save(container);
+		for(META meta : container.getMetas())
+		{
+			sourceRepo.delteFileFromRepository(meta);
+		}
+		
 		return container;
 	}
 

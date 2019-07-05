@@ -36,9 +36,9 @@ public class JeeslIoTemplateFacadeBean<L extends UtilsLang,D extends UtilsDescri
 					extends UtilsFacadeBean
 					implements JeeslIoTemplateFacade<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE>
 {	
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoTemplateFacadeBean.class);
 
-	
 	private final IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate;
 	
 	public JeeslIoTemplateFacadeBean(EntityManager em,IoTemplateFactoryBuilder<L,D,CATEGORY,TYPE,TEMPLATE,SCOPE,DEFINITION,TOKEN,TOKENTYPE> fbTemplate)

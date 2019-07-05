@@ -50,6 +50,8 @@ public class JeeslRevisionFacadeBean<L extends UtilsLang,D extends UtilsDescript
 					extends UtilsFacadeBean
 					implements JeeslIoRevisionFacade<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT>
 {
+	private static final long serialVersionUID = 1L;
+	
 	private final IoRevisionFactoryBuilder<L,D,RC,RV,RVM,RS,RST,RE,REM,RA,RER,RAT> fbRevision;
 	
 	private String revisionPrefix;

@@ -30,6 +30,7 @@ public class JeeslIoDomainFacadeBean <L extends UtilsLang, D extends UtilsDescri
 				ITEM extends JeeslDomainItem<QUERY,SET>>
 	extends UtilsFacadeBean implements JeeslIoDomainFacade<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET,ITEM>
 {
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoDomainFacadeBean.class);
 		
 	private final IoDomainFactoryBuilder<L,D,DOMAIN,QUERY,PATH,DENTITY,DATTRIBUTE,SET,ITEM> fbDomain;

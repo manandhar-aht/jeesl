@@ -2,6 +2,9 @@ package org.jeesl.controller.handler.system.io.fr;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +15,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.factory.builder.io.IoFileRepositoryFactoryBuilder;
@@ -214,6 +218,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		showInlineUpload = true;
 	}
 	
+	public void addFile(java.io.File f) throws UtilsNotFoundException, FileNotFoundException, IOException {addFile(f.getName(), IOUtils.toByteArray(new FileInputStream(f)), null);}
 	public void addFile(String name, byte[] bytes) throws UtilsNotFoundException {addFile(name, bytes, null);}
 	public void addFile(String name, byte[] bytes, String category) throws UtilsNotFoundException
 	{

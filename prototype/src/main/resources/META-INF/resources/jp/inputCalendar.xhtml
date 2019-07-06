@@ -1,64 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:composite="http://java.sun.com/jsf/composite">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
     
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="mindate" required="false" />
 		<composite:attribute name="maxdate" required="false" />
 		<composite:attribute name="required" required="false" default="false"/>
-        <composite:attribute name="update" required="false" />
-        <composite:attribute name="withDate" required="false" default="true"/>
-        <composite:attribute name="withTime" required="false" default="false"/>
-        <composite:attribute name="pattern" required="false" default="#{appSettingsBean.patternDate}"/>
-        
-        <composite:attribute name="stepMinute" required="false" default="5"/>
-        
-        
-        <composite:clientBehavior name="change" targets="pCalendar" event="change" />
-        <composite:clientBehavior name="dateSelect" targets="pCalendar" event="dateSelect" />
+		<composite:attribute name="update" required="false" />
+		<composite:attribute name="pattern" required="false" default="#{appSettingsBean.patternDate}"/>
+		<composite:attribute name="stepMinute" required="false" default="5"/>
+		<composite:clientBehavior name="change" targets="pCalendar" event="change" />
+		<composite:clientBehavior name="dateSelect" targets="pCalendar" event="dateSelect" />
 	</composite:interface>
 
 	<composite:implementation>
-		<c:if test="#{(not cc.attrs.withDate) and (not cc.attrs.withTime)}">
-			<p:calendar styleClass="datePickerContainer" id="pCalendar"
-						value="#{cc.attrs.value}"
-						showOn="button"
-						pattern="#{cc.attrs.pattern}"
-						mindate="#{cc.attrs.mindate}"
-						maxdate="#{cc.attrs.maxdate}"
-						required="#{cc.attrs.required}"
-						stepMinute="#{cc.attrs.stepMinute}">
-	               <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
-			</p:calendar>
-		</c:if>
-	
-		<c:if test="#{cc.attrs.withDate}">
-			<p:calendar styleClass="datePickerContainer" id="pCalendar"
+		<p:calendar styleClass="datePickerContainer" id="pCalendar"
 						value="#{cc.attrs.value}"
 						showOn="button"
 						pattern="#{appSettingsBean.calendarFormat}"
 						mindate="#{cc.attrs.mindate}"
 						maxdate="#{cc.attrs.maxdate}"
 						required="#{cc.attrs.required}">
-	               <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
+	      <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
 			</p:calendar>
-		</c:if>
-		<c:if test="#{cc.attrs.withTime}">
-			<p:calendar styleClass="datePickerContainer" id="pCalendar"
-						value="#{cc.attrs.value}"
-						showOn="button"
-						pattern="#{appSettingsBean.timeFormat}"
-						mindate="#{cc.attrs.mindate}"
-						maxdate="#{cc.attrs.maxdate}"
-						required="#{cc.attrs.required}">
-	               <p:ajax event="dateSelect" update="#{cc.attrs.update}"/>
-			</p:calendar>
-		</c:if>
 	</composite:implementation>
 </html>

@@ -105,7 +105,7 @@
 						</f:facet>
 						<p:column rendered="true" headerText="#{msg.aupDate}">  
 							<h:outputText value="#{d.record}">
-		                	<f:converter converterId="net.sf.ahtutils.jsf.converter.XmlGregorianCalendarConverter" />
+		                	<f:converter converterId="org.jeesl.jsf.converter.XmlGregorianCalendarConverter" />
 		                	<f:attribute name="pattern" value="dd.MM.yy HH:mm" />
 		                </h:outputText>
 			            </p:column>

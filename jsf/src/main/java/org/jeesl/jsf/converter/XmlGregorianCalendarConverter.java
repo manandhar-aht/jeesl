@@ -1,4 +1,4 @@
-package net.sf.ahtutils.jsf.converter;
+package org.jeesl.jsf.converter;
 
 import java.util.Date;
 import java.util.Locale;
@@ -12,7 +12,7 @@ import javax.faces.convert.DateTimeConverter;
 import javax.faces.convert.FacesConverter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-@FacesConverter("net.sf.ahtutils.jsf.converter.XmlGregorianCalendarConverter")
+@FacesConverter("org.jeesl.jsf.converter.XmlGregorianCalendarConverter")
 public class XmlGregorianCalendarConverter extends DateTimeConverter implements Converter
 {
 	 private String dateStyle = "default";
@@ -39,25 +39,20 @@ public class XmlGregorianCalendarConverter extends DateTimeConverter implements 
 	     if(attributes.containsKey("locale")){locale = (Locale) attributes.get("locale");}
 	     setLocale(locale);
 	     
-	     if(attributes.containsKey("timeZone")){
-	         timeZone = (TimeZone) attributes.get("timeZone");
-	     }
+	     if(attributes.containsKey("timeZone")){timeZone = (TimeZone) attributes.get("timeZone");}
 	     setTimeZone(timeZone);
-	     if(attributes.containsKey("dateStyle")){
-	         dateStyle = (String) attributes.get("dateStyle");
-	     }
+	     
+	     if(attributes.containsKey("dateStyle")){dateStyle = (String) attributes.get("dateStyle");}
 	     setDateStyle(dateStyle);
-	     if(attributes.containsKey("timeStyle")){
-	         timeStyle = (String) attributes.get("timeStyle");
-	     }
+	     
+	     if(attributes.containsKey("timeStyle")){timeStyle = (String) attributes.get("timeStyle");}
 	     setTimeStyle(timeStyle);
-	     if(attributes.containsKey("type")){
-	         type = (String) attributes.get("type");
-	     }
+	     
+	     if(attributes.containsKey("type")){type = (String) attributes.get("type");}
 	     setType(type);
 
 	     XMLGregorianCalendar xmlGregCal = (XMLGregorianCalendar) value;
 	     Date date = xmlGregCal.toGregorianCalendar().getTime();
-	     return super.getAsString(context, component, date);
+	     return super.getAsString(context,component,date);
 	 }
 }

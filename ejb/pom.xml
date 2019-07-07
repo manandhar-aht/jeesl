@@ -158,7 +158,7 @@ Failed to collect dependencies at com.sun.xml.ws:policy:jar:2.2 -> woodstox:wstx
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -169,7 +169,7 @@ Failed to collect dependencies at com.sun.xml.ws:policy:jar:2.2 -> woodstox:wstx
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-codec</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

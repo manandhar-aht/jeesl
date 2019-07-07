@@ -20,7 +20,7 @@
 		<p:calendar styleClass="datePickerContainer" id="pCalendar"
 						value="#{cc.attrs.value}"
 						showOn="button"
-						pattern="#{appSettingsBean.calendarFormat}"
+						pattern="#{cc.attrs.pattern}"
 						mindate="#{cc.attrs.mindate}"
 						maxdate="#{cc.attrs.maxdate}"
 						required="#{cc.attrs.required}">

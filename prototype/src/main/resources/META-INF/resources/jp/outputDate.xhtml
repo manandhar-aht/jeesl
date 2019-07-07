@@ -9,16 +9,16 @@
     
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
-        <composite:attribute name="styleClass" required="false" />
+		<composite:attribute name="styleClass" required="false" />
 		<composite:attribute name="withTime" required="false" default="false"/>
 		<composite:attribute name="bean" required="false" default="#{appSettingsBean}"/>
 	</composite:interface>
 
 	<composite:implementation>
-        <h:outputText value="#{cc.attrs.value}">
-            <c:if test="#{not empty cc.attrs.styleClass}"><f:attribute name="styleClass" value="#{cc.attrs.styleClass}"/></c:if>
+		<h:outputText value="#{cc.attrs.value}">
+			<c:if test="#{not empty cc.attrs.styleClass}"><f:attribute name="styleClass" value="#{cc.attrs.styleClass}"/></c:if>
 			<c:if test="#{not cc.attrs.withTime}"><f:convertDateTime pattern="#{cc.attrs.bean.datePattern}"/></c:if>
 			<c:if test="#{cc.attrs.withTime}"><f:convertDateTime pattern="#{cc.attrs.bean.dateTimePattern}" /></c:if>
-        </h:outputText>
+		</h:outputText>
 	</composite:implementation>
 </html>

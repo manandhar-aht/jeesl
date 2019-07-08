@@ -8,8 +8,8 @@ import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransi
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbWorkflowTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
-											WT extends JeeslWorkflowTransition<?,?,AS,?,?>
+public class EjbWorkflowTransitionFactory<WS extends JeeslWorkflowStage<?,?,?,?,?>,
+										  WT extends JeeslWorkflowTransition<?,?,WS,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowTransitionFactory.class);
@@ -21,7 +21,7 @@ public class EjbWorkflowTransitionFactory<AS extends JeeslWorkflowStage<?,?,?,?>
         this.cTransition = cTransition;
 	}
 	    
-	public WT build(AS source, List<WT> list)
+	public WT build(WS source, List<WT> list)
 	{
 		WT ejb = null;
 		try

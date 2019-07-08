@@ -61,7 +61,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 							WX extends JeeslWorkflowContext<WX,L,D,?>,
 							WP extends JeeslWorkflowProcess<L,D,WX>,
-							AS extends JeeslWorkflowStage<L,D,WP,AST>,
+							AS extends JeeslWorkflowStage<L,D,WP,AST,?>,
 							AST extends JeeslWorkflowStageType<AST,?,?,?>,
 							WSP extends JeeslWorkflowStagePermission<AS,WPT,WML,SR>,
 							WPT extends JeeslWorkflowPermissionType<WPT,L,D,?>,

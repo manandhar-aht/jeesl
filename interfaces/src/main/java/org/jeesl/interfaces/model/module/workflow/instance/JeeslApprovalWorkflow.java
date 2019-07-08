@@ -13,7 +13,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public interface JeeslApprovalWorkflow <WP extends JeeslWorkflowProcess<?,?,?>,
-										WS extends JeeslWorkflowStage<?,?,WP,?>,
+										WS extends JeeslWorkflowStage<?,?,WP,?,?>,
 										WY extends JeeslApprovalActivity<?,?,?,?>
 									
 									>

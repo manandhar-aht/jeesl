@@ -10,7 +10,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbWorkflowPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?>,
+public class EjbWorkflowPermissionFactory<AS extends JeeslWorkflowStage<?,?,?,?,?>,
 											WSP extends JeeslWorkflowStagePermission<AS,?,WML,SR>,
 											WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 											SR extends JeeslSecurityRole<?,?,?,?,?,?,?>

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbWorkflowStageFactory<P extends JeeslWorkflowProcess<?,?,?>,
-									AS extends JeeslWorkflowStage<?,?,P,?>
+									AS extends JeeslWorkflowStage<?,?,P,?,?>
 >
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbWorkflowStageFactory.class);

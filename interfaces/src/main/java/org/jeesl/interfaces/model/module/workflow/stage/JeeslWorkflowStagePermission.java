@@ -11,7 +11,7 @@ import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolv
 import net.sf.ahtutils.interfaces.model.with.position.EjbWithPosition;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?,?,?>,
+public interface JeeslWorkflowStagePermission <AS extends JeeslWorkflowStage<?,?,?,?,?>,
 									APT extends JeeslWorkflowPermissionType<APT,?,?,?>,
 									WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
 									SR extends JeeslSecurityRole<?,?,?,?,?,?,?>

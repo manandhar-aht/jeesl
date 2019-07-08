@@ -54,12 +54,12 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 										WX extends JeeslWorkflowContext<WX,L,D,?>,
 										WP extends JeeslWorkflowProcess<L,D,WX>,
-										AS extends JeeslWorkflowStage<L,D,WP,AST>,
+										WS extends JeeslWorkflowStage<L,D,WP,AST,?>,
 										AST extends JeeslWorkflowStageType<AST,?,?,?>,
-										ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
+										ASP extends JeeslWorkflowStagePermission<WS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-										WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
+										WT extends JeeslWorkflowTransition<L,D,WS,ATT,SR>,
 										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
 										WC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
@@ -71,7 +71,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										SR extends JeeslSecurityRole<L,D,?,?,?,?,USER>,
 										RE extends JeeslRevisionEntity<L,D,?,?,RA>,
 										RA extends JeeslRevisionAttribute<L,D,RE,?,?>,
-										WF extends JeeslApprovalWorkflow<WP,AS,WY>,
+										WF extends JeeslApprovalWorkflow<WP,WS,WY>,
 										WY extends JeeslApprovalActivity<WT,WF,FRC,USER>,
 										FRC extends JeeslFileContainer<?,?>,
 										USER extends JeeslUser<SR>
@@ -82,7 +82,7 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 	private boolean debugOnInfo; public void setDebugOnInfo(boolean debugOnInfo) {this.debugOnInfo = debugOnInfo;}
 
 	private final JeeslWorkflowMessageHandler<WC,SR,RE,MT,MC,MD,WF,WY,USER> messageHandler;
-	private final FtlWorkflowModelFactory<L,D,WP,AS,WT,WF,WY,USER> fmFactory;
+	private final FtlWorkflowModelFactory<L,D,WP,WS,WT,WF,WY,USER> fmFactory;
 	
 	private Configuration templateConfig;
 	

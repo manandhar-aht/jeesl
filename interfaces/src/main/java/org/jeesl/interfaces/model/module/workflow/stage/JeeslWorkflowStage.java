@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.module.workflow.stage;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -18,7 +19,8 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslWorkflowStage <L extends UtilsLang, D extends UtilsDescription,
 									WP extends JeeslWorkflowProcess<L,D,?>,
-									AST extends JeeslWorkflowStageType<AST,?,?,?>
+									AST extends JeeslWorkflowStageType<AST,?,?,?>,
+									G extends JeeslGraphic<L,D,?,?,?>
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithCode,EjbWithPosition,EjbWithParentAttributeResolver,

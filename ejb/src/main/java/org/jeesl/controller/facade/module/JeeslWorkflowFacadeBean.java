@@ -47,7 +47,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 public class JeeslWorkflowFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 									AX extends JeeslWorkflowContext<AX,L,D,?>,
 									AP extends JeeslWorkflowProcess<L,D,AX>,
-									AS extends JeeslWorkflowStage<L,D,AP,AST>,
+									AS extends JeeslWorkflowStage<L,D,AP,AST,?>,
 									AST extends JeeslWorkflowStageType<AST,?,?,?>,
 									ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 									APT extends JeeslWorkflowPermissionType<APT,L,D,?>,

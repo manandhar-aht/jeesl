@@ -42,4 +42,14 @@ public class JsonSurveyOptionFactory<OPTION extends JeeslSurveyOption<?,?>>
 		json.setId(id);
 		return json;
 	}
+	public static Option id(String code, String lable, String description)
+	{
+		Option json = build();
+		json.setCode(code);
+		json.setLabel(lable);
+		json.setDescription(description);
+				
+		return json;
+	}
+	
 }

@@ -24,7 +24,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public class JeeslGraphicFacadeBean<L extends UtilsLang, D extends UtilsDescription,
 									S extends EjbWithId,
-									G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+									G extends JeeslGraphic<L,D,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 									F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>>
 					extends UtilsFacadeBean
 					implements JeeslGraphicFacade<L,D,S,G,GT,F,FS>

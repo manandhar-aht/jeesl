@@ -18,7 +18,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.xml.status.Status;
 import net.sf.exlp.util.io.StringUtil;
 
-public class JeeslGraphicDbUpdater <G extends JeeslGraphic<?,?,G,GT,?,?>, GT extends UtilsStatus<GT,?,?>>
+public class JeeslGraphicDbUpdater <G extends JeeslGraphic<?,?,GT,?,?>, GT extends UtilsStatus<GT,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslGraphicDbUpdater.class);
 

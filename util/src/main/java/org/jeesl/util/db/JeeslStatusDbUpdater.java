@@ -31,7 +31,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class JeeslStatusDbUpdater <L extends UtilsLang, D extends UtilsDescription,
 									S extends UtilsStatus<S,L,D>,
-									G extends JeeslGraphic<L,D,G,?,?,?>>
+									G extends JeeslGraphic<L,D,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslStatusDbUpdater.class);
 	

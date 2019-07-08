@@ -15,7 +15,7 @@ import net.sf.ahtutils.model.qualifier.EjbErNode;
 
 @EjbErNode(name="Graphic",category="symbol",subset="symbol")
 public class Graphic implements EjbRemoveable,Serializable,EjbPersistable,
-								JeeslGraphic<Lang,Description,Graphic,GraphicType,GraphicFigure,GraphicStyle>
+								JeeslGraphic<Lang,Description,GraphicType,GraphicFigure,GraphicStyle>
 {
 	public static final long serialVersionUID=1;
 

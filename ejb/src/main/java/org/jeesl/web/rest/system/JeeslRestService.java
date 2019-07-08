@@ -28,7 +28,7 @@ import net.sf.ahtutils.xml.status.Status;
 
 public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 								S extends EjbWithId,
-								G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+								G extends JeeslGraphic<L,D,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 								F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>,
 								RC extends UtilsStatus<RC,L,D>,
 								RE extends JeeslRevisionEntity<L,D,RC,?,RA>,
@@ -61,7 +61,7 @@ public class JeeslRestService <L extends UtilsLang,D extends UtilsDescription,
 	
 	public static <L extends UtilsLang,D extends UtilsDescription,
 						S extends EjbWithId,
-						G extends JeeslGraphic<L,D,G,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
+						G extends JeeslGraphic<L,D,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
 						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>,
 						RC extends UtilsStatus<RC,L,D>,
 						RE extends JeeslRevisionEntity<L,D,RC,?,RA>,

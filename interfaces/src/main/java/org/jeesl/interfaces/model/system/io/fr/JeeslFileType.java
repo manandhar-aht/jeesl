@@ -15,7 +15,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
 public interface JeeslFileType <L extends UtilsLang, D extends UtilsDescription,
 								S extends UtilsStatus<S,L,D>,
-								G extends JeeslGraphic<L,D,G,?,?,?>>
+								G extends JeeslGraphic<L,D,?,?,?>>
 							extends Serializable,EjbPersistable,
 									EjbWithCode,UtilsStatusFixedCode,
 									JeeslOptionRestDownload,

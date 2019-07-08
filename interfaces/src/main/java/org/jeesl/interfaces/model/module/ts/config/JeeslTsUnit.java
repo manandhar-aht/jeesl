@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 import net.sf.ahtutils.interfaces.model.status.UtilsWithSymbol;
 
-public interface JeeslTsUnit <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslTsUnit <S extends UtilsStatus<S,L,D>, L extends UtilsLang, D extends UtilsDescription,G extends JeeslGraphic<L,D,?,?,?>>
 					extends Serializable,EjbPersistable,
 								EjbWithCode,UtilsStatusFixedCode,UtilsWithSymbol,
 //								JeeslOptionRestDownload,EjbWithCodeGraphic<G>,

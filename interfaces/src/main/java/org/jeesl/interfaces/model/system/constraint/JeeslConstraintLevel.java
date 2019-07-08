@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslConstraintLevel <S extends UtilsStatus<S,L,D>,L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslConstraintLevel <S extends UtilsStatus<S,L,D>,L extends UtilsLang,D extends UtilsDescription,G extends JeeslGraphic<L,D,?,?,?>>
 										extends Serializable,EjbPersistable,UtilsStatusFixedCode,JeeslOptionRestDownload,EjbWithCodeGraphic<G>
 {
 	public static String xmlResourceContainer = "jeesl/db/system/constraint/level.xml";

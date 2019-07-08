@@ -12,7 +12,7 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatusFixedCode;
 
-public interface JeeslMailRetention <L extends UtilsLang, D extends UtilsDescription,S extends UtilsStatus<S,L,D>, G extends JeeslGraphic<L,D,G,?,?,?>>
+public interface JeeslMailRetention <L extends UtilsLang, D extends UtilsDescription,S extends UtilsStatus<S,L,D>, G extends JeeslGraphic<L,D,?,?,?>>
 					extends Serializable,EjbPersistable,
 								JeeslOptionRestDownload,
 								UtilsStatusFixedCode,

@@ -13,7 +13,7 @@ import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.Files;
 
 public class XmlFilesFactory<CONTAINER extends JeeslFileContainer<?,META>,
-							META extends JeeslFileMeta<?,CONTAINER,?>>
+							META extends JeeslFileMeta<?,CONTAINER,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFilesFactory.class);
 	

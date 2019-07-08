@@ -61,7 +61,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang, D extends UtilsD
 											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
 											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
-											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE>,
+											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE,?>,
 											FTYPE extends JeeslFileType<L,D,FTYPE,?>,
 											
 											DS extends JeeslDomainSet<L,D,?>,
@@ -109,7 +109,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang, D extends UtilsD
 		sbhDms = new SbSingleHandler<DMS>(fbDms.getClassDms(),this);
 	}
 	
-	protected void postConstructDmsView(JeeslTranslationBean bTranslation, JeeslFacesMessageBean bMessage,
+	protected void postConstructDmsView(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
 								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,DS,S,FILE,VIEW,FCONTAINER,ACONTAINER> fDms,
 								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,

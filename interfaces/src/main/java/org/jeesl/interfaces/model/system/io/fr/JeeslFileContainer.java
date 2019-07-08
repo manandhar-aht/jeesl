@@ -5,10 +5,13 @@ import java.util.List;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
 import net.sf.ahtutils.interfaces.model.crud.EjbRemoveable;
+import net.sf.ahtutils.interfaces.model.with.parent.EjbWithParentAttributeResolver;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslFileContainer<STORAGE extends JeeslFileStorage<?,?,?>, META extends JeeslFileMeta<?,?,?>>
-		extends Serializable,EjbWithId,EjbSaveable,EjbRemoveable
+public interface JeeslFileContainer<STORAGE extends JeeslFileStorage<?,?,?>, META extends JeeslFileMeta<?,?,?,?>>
+		extends Serializable,EjbWithId,
+					EjbSaveable,EjbRemoveable,
+					EjbWithParentAttributeResolver
 {
 	public enum Attributes{storage}
 	

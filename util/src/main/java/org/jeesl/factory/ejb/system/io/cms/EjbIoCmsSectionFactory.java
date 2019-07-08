@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 
-public class EjbIoCmsSectionFactory <L extends UtilsLang, S extends JeeslIoCmsSection<L,S>, META extends JeeslFileMeta<?,?,?>>
+public class EjbIoCmsSectionFactory <L extends UtilsLang,
+										S extends JeeslIoCmsSection<L,S>, 
+										META extends JeeslFileMeta<?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoCmsSectionFactory.class);
 	

@@ -32,7 +32,7 @@ public class IoCmsFactoryBuilder<L extends UtilsLang,D extends UtilsDescription,
 								C extends JeeslIoCmsContent<V,E,MT>,
 								MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 								FC extends JeeslFileContainer<?,FM>,
-								FM extends JeeslFileMeta<D,FC,?>
+								FM extends JeeslFileMeta<D,FC,?,?>
 								>
 				extends AbstractFactoryBuilder<L,D>
 {

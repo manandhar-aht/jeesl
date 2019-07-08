@@ -12,7 +12,7 @@ public class EjbFileMetaQuery
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbFileMetaQuery.class);
 	
-	public static <META extends JeeslFileMeta<?,?,?>> List<META> filterImages(List<META> metas)
+	public static <META extends JeeslFileMeta<?,?,?,?>> List<META> filterImages(List<META> metas)
 	{	
 		List<META> images = new ArrayList<META>();
 				

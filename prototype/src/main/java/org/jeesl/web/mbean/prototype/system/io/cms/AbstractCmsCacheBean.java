@@ -42,7 +42,7 @@ public abstract class AbstractCmsCacheBean <L extends UtilsLang,D extends UtilsD
 										C extends JeeslIoCmsContent<V,E,MT>,
 										MT extends JeeslIoCmsMarkupType<L,D,MT,?>,
 										FC extends JeeslFileContainer<?,FM>,
-										FM extends JeeslFileMeta<D,FC,?>
+										FM extends JeeslFileMeta<D,FC,?,?>
 										>
 					implements Serializable,JeeslCmsCacheBean<S>
 {

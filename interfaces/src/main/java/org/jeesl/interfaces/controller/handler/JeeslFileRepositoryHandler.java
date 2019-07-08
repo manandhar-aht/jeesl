@@ -15,7 +15,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
 public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,?,?>,
 											CONTAINER extends JeeslFileContainer<STORAGE,?>,
-											META extends JeeslFileMeta<?,CONTAINER,?>>
+											META extends JeeslFileMeta<?,CONTAINER,?,?>>
 		extends Serializable
 {
 	void setDebugOnInfo(boolean debugOnInfo);

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.exlp.factory.xml.io.XmlDataFactory;
 
-public class XmlFileFactory<META extends JeeslFileMeta<?,?,?>>
+public class XmlFileFactory<META extends JeeslFileMeta<?,?,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(XmlFileFactory.class);
 	

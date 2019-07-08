@@ -33,7 +33,7 @@ public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 								C extends JeeslIoCmsContent<?,E,?>,
 								FS extends JeeslFileStorage<?,?,?>,
 								FC extends JeeslFileContainer<FS,?>,
-								FM extends JeeslFileMeta<?,FC,?>>
+								FM extends JeeslFileMeta<?,FC,?,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslCmsImageFactory.class);
 	

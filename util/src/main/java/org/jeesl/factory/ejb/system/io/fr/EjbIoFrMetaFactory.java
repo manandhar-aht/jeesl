@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EjbIoFrMetaFactory<CONTAINER extends JeeslFileContainer<?,META>,
-								META extends JeeslFileMeta<?,CONTAINER,TYPE>,
+								META extends JeeslFileMeta<?,CONTAINER,TYPE,?>,
 								TYPE extends JeeslFileType<?,?,TYPE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoFrMetaFactory.class);

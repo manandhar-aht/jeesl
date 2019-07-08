@@ -22,7 +22,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 											STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
-											META extends JeeslFileMeta<D,CONTAINER,TYPE>,
+											META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
 											TYPE extends JeeslFileType<L,D,TYPE,?>>
 				extends AbstractFactoryBuilder<L,D>
 {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jeesl.interfaces.model.module.workflow.process.JeeslWorkflowProcess;
 import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
+import org.jeesl.interfaces.model.system.with.EjbWithGraphic;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -24,7 +25,7 @@ public interface JeeslWorkflowStage <L extends UtilsLang, D extends UtilsDescrip
 									>
 		extends Serializable,EjbPersistable,EjbRemoveable,EjbSaveable,
 				EjbWithId,EjbWithCode,EjbWithPosition,EjbWithParentAttributeResolver,
-				EjbWithLang<L>,EjbWithDescription<D>
+				EjbWithLang<L>,EjbWithDescription<D>,EjbWithGraphic<G>
 {
 	public static enum Attributes{process}
 	

@@ -12,7 +12,7 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbWorkflowCommunicationFactory<WT extends JeeslWorkflowTransition<?,?,?,?,SR>,
+public class EjbWorkflowCommunicationFactory<WT extends JeeslWorkflowTransition<?,?,?,?,SR,?>,
 											WC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 											MT extends JeeslIoTemplate<?,?,?,?,?,?>,
 											MC extends JeeslTemplateChannel<?,?,MC,?>,

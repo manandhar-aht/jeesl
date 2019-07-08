@@ -30,7 +30,7 @@ import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithName;
 
-public abstract class AbstractWorkflowActionHandler <WT extends JeeslWorkflowTransition<?,?,?,?,?>,
+public abstract class AbstractWorkflowActionHandler <WT extends JeeslWorkflowTransition<?,?,?,?,?,?>,
 										WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,?,?,?>,
 										AO extends EjbWithId,

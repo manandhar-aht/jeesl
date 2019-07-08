@@ -28,7 +28,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionT
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -60,8 +60,8 @@ public abstract class AbstractWorkflowDashboardBean <L extends UtilsLang, D exte
 											ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 											APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 											WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
-											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR,?>,
+											ATT extends JeeslWorkflowTransitionType<ATT,L,D,?>,
 											AC extends JeeslWorkflowCommunication<AT,MT,MC,SR,RE>,
 											AA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,L,D,?>,

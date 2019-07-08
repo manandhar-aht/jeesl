@@ -308,8 +308,8 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 			if(((EjbWithGraphic<G>)status).getGraphic()==null)
 			{
 				logger.info("Need to create a graphic entity for this status");
-				GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol.toString());
-				FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle.toString());
+				GT type = fUtils.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.symbol);
+				FS style = fUtils.fByCode(fbSvg.getClassFigureStyle(), JeeslGraphicStyle.Code.circle);
 				graphic = fUtils.persist(efGraphic.buildSymbol(type, style));
 				((EjbWithGraphic<G>)status).setGraphic(graphic);
 				status = fUtils.update(status);

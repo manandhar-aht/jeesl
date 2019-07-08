@@ -24,7 +24,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionT
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
@@ -59,8 +59,8 @@ public class JeeslWorkflowCommunicator <L extends UtilsLang, D extends UtilsDesc
 										ASP extends JeeslWorkflowStagePermission<WS,APT,WML,SR>,
 										APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 										WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-										WT extends JeeslWorkflowTransition<L,D,WS,ATT,SR>,
-										ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+										WT extends JeeslWorkflowTransition<L,D,WS,ATT,SR,?>,
+										ATT extends JeeslWorkflowTransitionType<ATT,L,D,?>,
 										WC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 										AA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 										AB extends JeeslWorkflowBot<AB,L,D,?>,

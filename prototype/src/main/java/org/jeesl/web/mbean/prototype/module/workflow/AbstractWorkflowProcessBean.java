@@ -16,6 +16,7 @@ import org.jeesl.factory.builder.io.IoRevisionFactoryBuilder;
 import org.jeesl.factory.builder.io.IoTemplateFactoryBuilder;
 import org.jeesl.factory.builder.module.WorkflowFactoryBuilder;
 import org.jeesl.factory.builder.system.SecurityFactoryBuilder;
+import org.jeesl.factory.builder.system.SvgFactoryBuilder;
 import org.jeesl.interfaces.bean.sb.SbSingleBean;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowAction;
 import org.jeesl.interfaces.model.module.workflow.action.JeeslWorkflowBot;
@@ -30,8 +31,10 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionT
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphic;
+import org.jeesl.interfaces.model.system.graphic.core.JeeslGraphicType;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslIoTemplate;
 import org.jeesl.interfaces.model.system.io.mail.template.JeeslTemplateChannel;
@@ -41,6 +44,8 @@ import org.jeesl.interfaces.model.system.security.framework.JeeslSecurityRole;
 import org.jeesl.interfaces.model.system.security.user.JeeslUser;
 import org.jeesl.util.comparator.ejb.system.security.SecurityRoleComparator;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,13 +63,13 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
 											AX extends JeeslWorkflowContext<AX,L,D,?>,
 											WP extends JeeslWorkflowProcess<L,D,AX>,
-											AS extends JeeslWorkflowStage<L,D,WP,AST,?>,
+											AS extends JeeslWorkflowStage<L,D,WP,AST,G>,
 											AST extends JeeslWorkflowStageType<AST,?,?,?>,
 											ASP extends JeeslWorkflowStagePermission<AS,APT,WML,SR>,
 											APT extends JeeslWorkflowPermissionType<APT,L,D,?>,
 											WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
-											ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+											AT extends JeeslWorkflowTransition<L,D,AS,ATT,SR,G>,
+											ATT extends JeeslWorkflowTransitionType<ATT,L,D,?>,
 											AC extends JeeslWorkflowCommunication<AT,MT,MC,SR,RE>,
 											WA extends JeeslWorkflowAction<AT,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,L,D,?>,
@@ -78,6 +83,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 											AW extends JeeslApprovalWorkflow<WP,AS,WY>,
 											WY extends JeeslApprovalActivity<AT,AW,FRC,USER>,
 											FRC extends JeeslFileContainer<?,?>,
+											G extends JeeslGraphic<L,D,GT,?,?>, GT extends UtilsStatus<GT,L,D>,
 											USER extends JeeslUser<SR>>
 				extends AbstractAdminBean<L,D>
 					implements Serializable,SbSingleBean
@@ -92,6 +98,7 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	private final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate;
 	private final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision;
 	private final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity;
+	private final SvgFactoryBuilder<L,D,G,GT,?,?> fbSvg;
 	
 	private final SbSingleHandler<AX> sbhContext; public SbSingleHandler<AX> getSbhContext() {return sbhContext;}
 	private final SbSingleHandler<WP> sbhProcess; public SbSingleHandler<WP> getSbhProcess() {return sbhProcess;}
@@ -133,13 +140,15 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 	public AbstractWorkflowProcessBean(final WorkflowFactoryBuilder<L,D,AX,WP,AS,AST,ASP,APT,WML,AT,ATT,AC,WA,AB,AO,MT,MC,SR,RE,RA,AL,AW,WY,FRC,USER> fbApproval,
 											final IoRevisionFactoryBuilder<L,D,?,?,?,?,?,RE,?,RA,?,?> fbRevision,
 											final SecurityFactoryBuilder<L,D,?,SR,?,?,?,?,?,?,?> fbSecurity,
-											final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate)
+											final IoTemplateFactoryBuilder<L,D,?,MC,MT,?,?,?,?> fbTemplate,
+											final SvgFactoryBuilder<L,D,G,GT,?,?> fbSvg)
 	{
 		super(fbApproval.getClassL(),fbApproval.getClassD());
 		this.fbWorkflow=fbApproval;
 		this.fbRevision=fbRevision;
 		this.fbSecurity=fbSecurity;
 		this.fbTemplate=fbTemplate;
+		this.fbSvg=fbSvg;
 		
 		sbhContext = new SbSingleHandler<AX>(fbApproval.getClassContext(),this);
 		sbhProcess = new SbSingleHandler<WP>(fbApproval.getClassProcess(),this);
@@ -305,6 +314,24 @@ public abstract class AbstractWorkflowProcessBean <L extends UtilsLang, D extend
 		reloadStageSelectOne();
 		stage = fWorkflow.save(stage);
 		reloadStages();
+	}
+	
+	public void handleFileUpload(FileUploadEvent event) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
+	{
+		UploadedFile file = event.getFile();
+		logger.info("Received file with a size of " +file.getSize());
+		
+		if(stage.getGraphic()==null)
+		{
+			GT type = fWorkflow.fByCode(fbSvg.getClassGraphicType(), JeeslGraphicType.Code.svg);
+			G graphic = fWorkflow.persist(fbSvg.efGraphic().build(type));
+			stage.setGraphic(graphic);
+			stage = fWorkflow.save(stage);
+		}
+		
+		G graphic = stage.getGraphic();
+		graphic.setData(file.getContents());
+		graphic = fWorkflow.save(graphic);
 	}
 	
 	private void reloadStageSelectOne()

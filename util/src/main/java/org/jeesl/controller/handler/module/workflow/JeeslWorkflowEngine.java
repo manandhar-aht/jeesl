@@ -32,7 +32,7 @@ import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowPermissionT
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStage;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStagePermission;
 import org.jeesl.interfaces.model.module.workflow.stage.JeeslWorkflowStageType;
-import org.jeesl.interfaces.model.module.workflow.transition.JeeslApprovalTransitionType;
+import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransitionType;
 import org.jeesl.interfaces.model.module.workflow.transition.JeeslWorkflowTransition;
 import org.jeesl.interfaces.model.system.constraint.JeeslConstraint;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
@@ -66,8 +66,8 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 							WSP extends JeeslWorkflowStagePermission<AS,WPT,WML,SR>,
 							WPT extends JeeslWorkflowPermissionType<WPT,L,D,?>,
 							WML extends JeeslWorkflowModificationLevel<WML,?,?,?>,
-							WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR>,
-							ATT extends JeeslApprovalTransitionType<ATT,L,D,?>,
+							WT extends JeeslWorkflowTransition<L,D,AS,ATT,SR,?>,
+							ATT extends JeeslWorkflowTransitionType<ATT,L,D,?>,
 							WC extends JeeslWorkflowCommunication<WT,MT,MC,SR,RE>,
 							WA extends JeeslWorkflowAction<WT,AB,AO,RE,RA>,
 							AB extends JeeslWorkflowBot<AB,L,D,?>,
@@ -106,6 +106,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 	
 	private final Comparator<WY> cpActivity;
 	
+	private final Map<JeeslWithWorkflow<AW>,AW> mapWorkflow; public Map<JeeslWithWorkflow<AW>, AW> getMapWorkflow() {return mapWorkflow;}
 	private final Map<WY,byte[]> mapSignature; public Map<WY, byte[]> getMapSignature() {return mapSignature;}
 	
 	private final List<WY> activities; public List<WY> getActivities() {return activities;}
@@ -146,6 +147,7 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		
 		cpActivity = new RecordComparator<WY>();
 		
+		mapWorkflow = new HashMap<>();
 		mapSignature = new HashMap<>();
 		
 		transitions = new ArrayList<>();
@@ -223,6 +225,20 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		reloadWorkflow(false);
 	}
 	
+	public <W extends JeeslWithWorkflow<AW>> void loadWorkflows(List<W> ejbs)
+	{
+		mapWorkflow.clear();
+		for(W  w : ejbs)
+		{
+			try
+			{
+				AL link = fWorkflow.fLink(process,w);
+				mapWorkflow.put(w,link.getWorkflow());
+			}
+			catch (UtilsNotFoundException e) {}
+		}
+	}
+	
 	public void reloadWorkflow() {reloadWorkflow(true);}
 	public void reloadWorkflow(boolean ejbLoadWorkflow)
 	{
@@ -238,11 +254,13 @@ public class JeeslWorkflowEngine <L extends UtilsLang, D extends UtilsDescriptio
 		allowEntityModifications  = false;
 		for(WSP wsp : availablePermissions)
 		{
+			
 			boolean wspIsResponsible = wsp.getType().getCode().contentEquals(JeeslWorkflowPermissionType.Code.responsible.toString());
 			boolean userHasRole = security.hasRole(wsp.getRole());
 			boolean wspIsFullAllow = wsp.getModificationLevel().getCode().contentEquals(JeeslWorkflowModificationLevel.Code.full.toString());
-			hasResponsibleRole = wspIsResponsible && userHasRole;
-			allowEntityModifications = wspIsFullAllow && userHasRole;
+			
+			if(wspIsResponsible && userHasRole) {hasResponsibleRole=true;}
+			if(wspIsFullAllow && userHasRole) {allowEntityModifications=true;}
 			if(debugOnInfo) {logger.info("\t"+wsp.getPosition()+" "+wsp.getRole().getCode()+":"+userHasRole+" "+JeeslWorkflowPermissionType.Code.responsible+":"+wspIsResponsible+" "+JeeslWorkflowModificationLevel.Code.full+":"+wspIsFullAllow);}
 		}
 		

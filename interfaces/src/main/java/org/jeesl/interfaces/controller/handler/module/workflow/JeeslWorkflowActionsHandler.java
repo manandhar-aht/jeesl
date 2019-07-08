@@ -18,7 +18,7 @@ import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 import net.sf.ahtutils.exception.processing.UtilsProcessingException;
 import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
-public interface JeeslWorkflowActionsHandler<WT extends JeeslWorkflowTransition<?,?,?,?,?>,
+public interface JeeslWorkflowActionsHandler<WT extends JeeslWorkflowTransition<?,?,?,?,?,?>,
 											WA extends JeeslWorkflowAction<?,AB,AO,RE,RA>,
 											AB extends JeeslWorkflowBot<AB,?,?,?>,
 											AO extends EjbWithId,

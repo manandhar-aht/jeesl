@@ -3,6 +3,7 @@ package org.jeesl.interfaces.model.system.io.fr;
 import java.io.Serializable;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
+import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
 import org.jeesl.interfaces.model.with.status.JeeslWithType;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -25,7 +26,7 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 					EjbWithPosition,
 					EjbWithCode,
 //					EjbWithName,
-					JeeslWithType<TYPE>,
+					JeeslWithType<TYPE>,JeeslWithStatus<STATUS>,
 					EjbWithSize,EjbWithRecord,
 					EjbWithDescription<D>
 {

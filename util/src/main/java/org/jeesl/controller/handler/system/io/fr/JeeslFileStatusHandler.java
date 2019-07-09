@@ -35,10 +35,11 @@ public class JeeslFileStatusHandler<META extends JeeslFileMeta<?,?,?,STATUS>,
 		}
 		catch (UtilsNotFoundException e)
 		{
-			logger.info("missing "+meta.toString());
+			
+			logger.error(e.getMessage());
 			meta.setStatus(cache.ejb(JeeslFileStatus.Code.missing));
 		}
 		
-		logger.info("Updated File TYPE for "+meta.getFileName()+": "+meta.getType().getCode());
+//		logger.info("Updated File TYPE for "+meta.getFileName()+": "+meta.getType().getCode());
 	}
 }

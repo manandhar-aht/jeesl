@@ -26,6 +26,7 @@ public class FileRepositoryFileStorage<STORAGE extends JeeslFileStorage<?,?,?>,
 	public FileRepositoryFileStorage(STORAGE storage)
 	{
 		baseDir = new File(storage.getJson());
+		logger.info("Storage created for "+baseDir.getAbsolutePath());
 	}
 	
 	@Override public META saveToFileRepository(META meta, byte[] bytes) throws UtilsConstraintViolationException, UtilsLockingException

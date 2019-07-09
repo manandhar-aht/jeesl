@@ -18,6 +18,7 @@
 		<composite:attribute name="componentPrefix" required="false" default=""/>
 		<composite:attribute name="allowUpload" required="false" default="true"/>
 		<composite:attribute name="allowDelete" required="false" default="false"/>
+		<composite:attribute name="allowTypes" required="false" default=""/>
 		
 		<composite:attribute name="withPosition" required="false" default="false"/>
 		<composite:attribute name="withCategory" required="false" default="false"/>
@@ -115,7 +116,8 @@
 			<p:fileUpload id="pfUploadOverlay" rendered="#{cc.attrs.handler.showInlineUpload}"
 				fileUploadListener="#{cc.attrs.handler.handleFileUpload}" mode="advanced" auto="true"
 				dragDropSupport="false" update="#{cc.attrs.componentPrefix}:#{cc.id}:fConfirmInline #{cc.attrs.componentPrefix}:#{cc.id}:fUploadInline" multiple="false"
-				sizeLimit="#{cc.attrs.handler.storage.fileSizeLimit}" fileLimit="100" />
+				sizeLimit="#{cc.attrs.handler.storage.fileSizeLimit}" fileLimit="100"
+				allowTypes="#{cc.attrs.allowTypes}"/>
 		</h:form>
 		<h:form id="fConfirmInline" >
 			<p:panel header="#{msg.jeeslIoFileUpload}" rendered="#{not empty cc.attrs.handler.meta}" styleClass="jeeslPanel" >
@@ -154,7 +156,8 @@
 				<h:form id="fUploadOverlay">
 					<p:fileUpload id="pfUploadOverlay" fileUploadListener="#{cc.attrs.handler.handleFileUpload}" mode="advanced" auto="true"
 						dragDropSupport="false" update="#{cc.attrs.componentPrefix}:#{cc.id}:fConfirm" multiple="false"
-						sizeLimit="#{cc.attrs.handler.storage.fileSizeLimit}" fileLimit="100" />
+						sizeLimit="#{cc.attrs.handler.storage.fileSizeLimit}" fileLimit="100"
+						allowTypes="#{cc.attrs.allowTypes}"/>
 				</h:form>
 				<h:form id="fConfirm" >
 					<p:panel header="#{msg.jeeslIoFileUpload}" rendered="#{not empty cc.attrs.handler.meta}" styleClass="jeeslPanel" >

@@ -136,7 +136,6 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 		cQ.groupBy(pStorage.get("id"),pType.get("id"));
 		cQ.multiselect(pStorage.get("id"),pType.get("id"),eCount);
 
-//		cQ.where(cB.and(ErpPredicateBuilder.srsImplementation(cB, query, item)));
 		TypedQuery<Tuple> tQ = em.createQuery(cQ);
         return jtf.buildCount(tQ.getResultList());
 	}

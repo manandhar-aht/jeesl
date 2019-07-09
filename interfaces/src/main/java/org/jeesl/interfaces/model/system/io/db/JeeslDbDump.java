@@ -18,6 +18,8 @@ public interface JeeslDbDump<SYSTEM extends JeeslIoSsiSystem,
 {
 	public static enum Attributes{record};
 	
+	public static String backupTag = "dbRestoreTag";
+	
 	SYSTEM getSystem();
 	void setSystem(SYSTEM system);
 	

@@ -71,11 +71,9 @@
 							</f:facet>
 							<p:ajax event="rowReorder" listener="#{cc.attrs.bean.reorderStages()}" update="@form"/>
 							<p:ajax event="rowSelect" update=":#{cc.id}:sStage" listener="#{cc.attrs.bean.selectStage()}"/>
-							
 							<p:column rendered="true">
-								<jtp:symbolizer value="#{s.type}" margiRight="5"/>
+								<jtp:symbolizer value="#{s.type}" marginRight="5"/>
 								<h:outputText value="#{s.position}"/>
-								
 							</p:column>
 							<p:column rendered="true" headerText="#{msg.jeeslName}">
 								<jtp:symbolizer value="#{s}" rendered="#{not empty s.graphic}" marginRight="5"/>

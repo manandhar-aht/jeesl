@@ -122,12 +122,12 @@
 							<p:panelGrid columns="2" columnClasses="jeeslGrid80,jeeslGrid20" rendered="#{empty cc.attrs.handler.constraints}">
 								
 								<h:outputText value="Note: After confirmation you can not change your entries."/>
-								<p:commandButton value="Confirm" type="button">
+								<p:commandButton id="buttonConfirm" value="Confirm" type="button">
 									<p:ajax event="click"
 										listener="#{cc.attrs.handler.performTransition()}" process="@form" update="@form #{cc.attrs.updateAfterConfirmimation}"
 										oncomplete="if(#{empty cc.attrs.handler.constraints}){PF('wvWorkflow').hide();} else {PF('wvWorkflow').show();}"/>
 								</p:commandButton>
-								
+								<p:blockUI block=":grid" trigger="buttonConfirm"/>
 							</p:panelGrid>
 						</p:panel>
 					</h:form>

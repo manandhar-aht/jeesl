@@ -54,18 +54,13 @@
 				</p:column>
 				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileSize}"/></f:facet>
-					<p:graphicImage style="margin-right: 5px;" name="ui/control/upload.svg" library="jeeslGfx" height="12" rendered="#{not empty cc.attrs.handler.mapDeferred[meta]}"/>
+					<jtp:symbolizer value="#{meta.type}" marginRight="5"/>
 					<h:outputText value="#{j:humanFileSize(meta.size)}"/>
+					<p:graphicImage style="margin-left: 5px;" name="ui/control/upload.svg" library="jeeslGfx" height="12" rendered="#{not empty cc.attrs.handler.mapDeferred[meta]}"/>
 				</p:column>
-				<p:column rendered="#{not cc.attrs.withDescription}">
+				<p:column>
 					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileName}"/></f:facet>
-					<jtp:symbolizer value="#{meta.type}" marginRight="5"/>
 					<h:outputText value="#{meta.fileName}"/>
-				</p:column>
-				<p:column rendered="#{cc.attrs.withDescription}">
-					<f:facet name="header"><h:outputText value="#{msg.jeeslIoFileDescription}"/></f:facet>
-					<jtp:symbolizer value="#{meta.type}" marginRight="5"/>
-					<h:outputText value="#{meta.description[cc.attrs.handler.locale.code].lang}"/>
 				</p:column>
 				<p:column rendered="#{cc.attrs.withCategory}">
 					<f:facet name="header"><h:outputText value="#{cc.attrs.labelCategory}"/></f:facet>

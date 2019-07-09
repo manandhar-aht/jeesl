@@ -401,8 +401,6 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		}
 	}
 	
-	
-	
 	public void reorderMetas() throws UtilsConstraintViolationException, UtilsLockingException
 	{
 		logger.warn("NYI until META implements position");

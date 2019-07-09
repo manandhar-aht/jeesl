@@ -13,6 +13,7 @@ import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
 import org.jeesl.interfaces.controller.report.JeeslComparatorProvider;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
@@ -33,7 +34,8 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
-									TYPE extends JeeslFileType<L,D,TYPE,?>>
+									TYPE extends JeeslFileType<L,D,TYPE,?>,
+									STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 						extends AbstractAdminBean<L,D>
 						implements Serializable
 {
@@ -41,7 +43,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	final static Logger logger = LoggerFactory.getLogger(AbstractFrStorageBean.class);
 	
 	private JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr;
+	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr;
 	
 	private final JsonTuple2Handler<STORAGE,TYPE> thCount; public JsonTuple2Handler<STORAGE, TYPE> getThCount() {return thCount;}
 	private final EjbIoFrStorageFactory<STORAGE> efStorage;
@@ -53,7 +55,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
 	private TYPE typeUnknown;public TYPE getTypeUnknown() {return typeUnknown;}
 
-	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFr, JeeslComparatorProvider<TYPE> jcpB)
+	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr, JeeslComparatorProvider<TYPE> jcpB)
 	{
 		super(fbFr.getClassL(),fbFr.getClassD());
 		this.fbFr=fbFr;

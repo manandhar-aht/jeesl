@@ -9,6 +9,7 @@ import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrStorageFactory;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
 											META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
-											TYPE extends JeeslFileType<L,D,TYPE,?>>
+											TYPE extends JeeslFileType<L,D,TYPE,?>,
+											STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 				extends AbstractFactoryBuilder<L,D>
 {
 	final static Logger logger = LoggerFactory.getLogger(IoFileRepositoryFactoryBuilder.class);
@@ -33,8 +35,12 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 	private final Class<CONTAINER> cContainer; public Class<CONTAINER> getClassContainer() {return cContainer;}
 	private final Class<META> cMeta; public Class<META> getClassMeta() {return cMeta;}
 	private final Class<TYPE> cType; public Class<TYPE> getClassType() {return cType;}
+	private final Class<STATUS> cStatus; public Class<STATUS> getClassStatus() {return cStatus;}
 	
-	public IoFileRepositoryFactoryBuilder(final Class<L> cL, final Class<D> cD, final Class<STORAGE> cStorage, final Class<ENGINE> cEngine, final Class<CONTAINER> cContainer, final Class<META> cMeta, final Class<TYPE> cType)
+	public IoFileRepositoryFactoryBuilder(final Class<L> cL, final Class<D> cD,
+								final Class<STORAGE> cStorage, final Class<ENGINE> cEngine,
+								final Class<CONTAINER> cContainer, final Class<META> cMeta,
+								final Class<TYPE> cType, final Class<STATUS> cStatus)
 	{
 		super(cL,cD);
 		this.cStorage=cStorage;
@@ -42,6 +48,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		this.cContainer=cContainer;
 		this.cMeta=cMeta;
 		this.cType=cType;
+		this.cStatus=cStatus;
 	}
 	
 	public EjbIoFrStorageFactory<STORAGE> ejbStorage()
@@ -59,7 +66,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		return new EjbIoFrMetaFactory<>(cMeta);
 	}
 	
-	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
+	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
 	{
 		return new DefaultFileRepositoryHandler<>(fFr,this,callback);
 	}

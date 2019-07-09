@@ -26,6 +26,7 @@ import org.jeesl.factory.ejb.util.EjbIdFactory;
 import org.jeesl.interfaces.controller.handler.JeeslFileRepositoryHandler;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
+import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
@@ -47,7 +48,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
-									TYPE extends JeeslFileType<L,D,TYPE,?>>
+									TYPE extends JeeslFileType<L,D,TYPE,?>,
+									STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 					implements JeeslFileRepositoryHandler<STORAGE,CONTAINER,META>
 {
 	private static final long serialVersionUID = 1L;
@@ -61,7 +63,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private Mode mode; public void setMode(Mode mode) {this.mode = mode;}
 	private ContainerInit containerInit; public void setContainerInit(ContainerInit containerInit) {this.containerInit = containerInit;}
 	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile;
+	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile;
 	protected final JeeslFileRepositoryCallback callback;
 	
 	private final JeeslFileTypeHandler<META,TYPE> fth;
@@ -93,7 +95,7 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private boolean allowChangeDescription; public boolean isAllowChangeDescription() {return allowChangeDescription;}
 	
 	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
-								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE> fbFile,
+								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile,
 								JeeslFileRepositoryCallback callback
 								)
 	{

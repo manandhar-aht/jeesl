@@ -101,7 +101,7 @@ public abstract class AbstractDmsViewBean <L extends UtilsLang, D extends UtilsD
 
 	public AbstractDmsViewBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW,LAYER> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
-								final IoFileRepositoryFactoryBuilder<L,D,LOC,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr)
+								final IoFileRepositoryFactoryBuilder<L,D,LOC,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE,?> fbFr)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;

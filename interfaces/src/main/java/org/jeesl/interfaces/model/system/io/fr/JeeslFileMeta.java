@@ -1,6 +1,7 @@
 package org.jeesl.interfaces.model.system.io.fr;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 import org.jeesl.interfaces.model.with.status.JeeslWithStatus;
@@ -40,6 +41,9 @@ public interface JeeslFileMeta<D extends UtilsDescription,
 	
 	String getFileName();
 	void setFileName(String fileName);
+	
+	Date getStatusCheck();
+	void setStatusCheck(Date statusCheck);
 	
 	String getCategory();
 	void setCategory(String category);

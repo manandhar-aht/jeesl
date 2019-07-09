@@ -41,7 +41,7 @@ public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription
 									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
-									META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
+									META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
 									TYPE extends JeeslFileType<L,D,TYPE,?>,
 									STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 					extends UtilsFacadeBean

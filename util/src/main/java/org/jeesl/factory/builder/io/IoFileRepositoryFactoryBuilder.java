@@ -3,6 +3,7 @@ package org.jeesl.factory.builder.io;
 import org.jeesl.api.bean.callback.JeeslFileRepositoryCallback;
 import org.jeesl.api.facade.io.JeeslIoFrFacade;
 import org.jeesl.controller.handler.system.io.fr.DefaultFileRepositoryHandler;
+import org.jeesl.controller.handler.system.io.fr.JeeslFileStatusHandler;
 import org.jeesl.factory.builder.AbstractFactoryBuilder;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrContainerFactory;
 import org.jeesl.factory.ejb.system.io.fr.EjbIoFrMetaFactory;
@@ -23,7 +24,7 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 											STORAGE extends JeeslFileStorage<L,D,ENGINE>,
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
-											META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,
+											META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
 											TYPE extends JeeslFileType<L,D,TYPE,?>,
 											STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 				extends AbstractFactoryBuilder<L,D>
@@ -70,4 +71,6 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 	{
 		return new DefaultFileRepositoryHandler<>(fFr,this,callback);
 	}
+	
+	public JeeslFileStatusHandler<META,STATUS> handlerStatus(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr){return new JeeslFileStatusHandler<META,STATUS>(fFr,this);}
 }

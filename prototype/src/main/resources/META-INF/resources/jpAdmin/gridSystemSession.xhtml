@@ -30,7 +30,8 @@
 				<j:slot id="sCategories" width="12">
 					<h:form id="fList">
 						<p:dataTable var="u" value="#{cc.attrs.bean.users}" draggableRows="true"
-							selection="#{cc.attrs.bean.user}" selectionMode="single" rowKey="#{u.id}">
+										selection="#{cc.attrs.bean.user}" selectionMode="single" rowKey="#{u.id}"
+										rows="5" rowsPerPageTemplate="#{appSettingsBean.rowsPerPageTemplate}" paginator="true" paginatorPosition="bottom" paginatorTemplate="#{appSettingsBean.paginatorTemplate}">
 							<f:facet name="header">
 								<j:dtHeader title="#{msg.jeeslSystemNews}">
 									

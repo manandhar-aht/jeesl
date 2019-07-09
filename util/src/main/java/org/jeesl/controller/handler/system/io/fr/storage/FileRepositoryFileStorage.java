@@ -14,7 +14,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
-public class FileRepositoryFileStorage<STORAGE extends JeeslFileStorage<?,?,?>,
+public class FileRepositoryFileStorage<STORAGE extends JeeslFileStorage<?,?,?,?>,
 									META extends JeeslFileMeta<?,?,?,?>>
 	implements JeeslFileRepositoryStore<META>
 {

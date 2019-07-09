@@ -23,6 +23,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 import org.jeesl.util.comparator.pojo.BooleanComparator;
 import org.slf4j.Logger;
@@ -38,22 +39,23 @@ import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 import net.sf.exlp.util.io.HashUtil;
 
 public class JeeslIoFrFacadeBean<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+									SYSTEM extends JeeslIoSsiSystem,
+									STORAGE extends JeeslFileStorage<L,D,SYSTEM,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
 									TYPE extends JeeslFileType<L,D,TYPE,?>,
 									STATUS extends JeeslFileStatus<L,D,STATUS,?>>
 					extends UtilsFacadeBean
-					implements JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE>
+					implements JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE>
 {	
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslIoFrFacadeBean.class);
 
-	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile;
+	private final IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile;
 	private final Map<STORAGE,JeeslFileRepositoryStore<META>> mapStorages;
 	
-	public JeeslIoFrFacadeBean(EntityManager em, IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile)
+	public JeeslIoFrFacadeBean(EntityManager em, IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile)
 	{
 		super(em);
 		this.fbFile=fbFile;

@@ -30,6 +30,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
 import org.jeesl.interfaces.model.system.io.fr.JeeslWithFileRepositoryContainer;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,8 @@ import net.sf.exlp.factory.xml.io.XmlFileFactory;
 import net.sf.exlp.xml.io.File;
 
 public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+									SYSTEM extends JeeslIoSsiSystem,
+									STORAGE extends JeeslFileStorage<L,D,SYSTEM,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
@@ -62,8 +64,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	private Mode mode; public void setMode(Mode mode) {this.mode = mode;}
 	private ContainerInit containerInit; public void setContainerInit(ContainerInit containerInit) {this.containerInit = containerInit;}
-	protected final JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile;
+	protected final JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
+	protected final IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile;
 	protected final JeeslFileRepositoryCallback callback;
 	
 	private final JeeslFileTypeHandler<META,TYPE> fth;
@@ -94,8 +96,8 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	private boolean allowChangeName; public boolean isAllowChangeName() {return allowChangeName;}
 	private boolean allowChangeDescription; public boolean isAllowChangeDescription() {return allowChangeDescription;}
 	
-	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
-								IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile,
+	public AbstractFileRepositoryHandler(JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
+								IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFile,
 								JeeslFileRepositoryCallback callback
 								)
 	{

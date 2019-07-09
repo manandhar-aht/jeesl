@@ -16,6 +16,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.web.mbean.prototype.admin.AbstractAdminBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,8 @@ import net.sf.ahtutils.jsf.util.PositionListReorderer;
 import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-									STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+									SYSTEM extends JeeslIoSsiSystem,
+									STORAGE extends JeeslFileStorage<L,D,SYSTEM,ENGINE>,
 									ENGINE extends UtilsStatus<ENGINE,L,D>,
 									CONTAINER extends JeeslFileContainer<STORAGE,META>,
 									META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
@@ -42,11 +44,11 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(AbstractFrStorageBean.class);
 	
-	private JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
-	private final IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr;
+	private JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr;
+	private final IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr;
 	
 	private final JsonTuple2Handler<STORAGE,TYPE> thCount; public JsonTuple2Handler<STORAGE, TYPE> getThCount() {return thCount;}
-	private final EjbIoFrStorageFactory<STORAGE> efStorage;
+	private final EjbIoFrStorageFactory<SYSTEM,STORAGE> efStorage;
 	private JeeslFileTypeHandler<META,TYPE> fth;
 	
 	private List<STORAGE> storages; public List<STORAGE> getStorages() {return storages;}
@@ -55,7 +57,7 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 	private STORAGE storage; public STORAGE getStorage() {return storage;} public void setStorage(STORAGE storage) {this.storage = storage;}
 	private TYPE typeUnknown;public TYPE getTypeUnknown() {return typeUnknown;}
 
-	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr, JeeslComparatorProvider<TYPE> jcpB)
+	protected AbstractFrStorageBean(IoFileRepositoryFactoryBuilder<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> fbFr, JeeslComparatorProvider<TYPE> jcpB)
 	{
 		super(fbFr.getClassL(),fbFr.getClassD());
 		this.fbFr=fbFr;
@@ -64,7 +66,8 @@ public class AbstractFrStorageBean <L extends UtilsLang, D extends UtilsDescript
 		thCount.setComparatorProviderB(jcpB);
 	}
 	
-	protected void initStorage(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage)
+	protected void initStorage(JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr,
+									JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage)
 	{
 		super.initJeeslAdmin(bTranslation,bMessage);
 		this.fFr=fFr;

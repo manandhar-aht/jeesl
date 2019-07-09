@@ -34,7 +34,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 
 public abstract class AbstractDmsBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 													DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,SECTION>,
-													STORAGE extends JeeslFileStorage<L,D,?>,
+													STORAGE extends JeeslFileStorage<L,D,?,?>,
 													AS extends JeeslAttributeSet<L,D,?,?>,
 													DS extends JeeslDomainSet<L,D,?>,
 													SECTION extends JeeslIoDmsSection<L,D,SECTION>,

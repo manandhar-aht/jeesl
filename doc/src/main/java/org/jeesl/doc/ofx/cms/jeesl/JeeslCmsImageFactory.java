@@ -31,7 +31,7 @@ import net.sf.exlp.util.xml.JaxbUtil;
 
 public class JeeslCmsImageFactory<E extends JeeslIoCmsElement<?,?,?,?,C,FC>,
 								C extends JeeslIoCmsContent<?,E,?>,
-								FS extends JeeslFileStorage<?,?,?>,
+								FS extends JeeslFileStorage<?,?,?,?>,
 								FC extends JeeslFileContainer<FS,?>,
 								FM extends JeeslFileMeta<?,FC,?,?>>
 {

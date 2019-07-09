@@ -39,7 +39,7 @@ import net.sf.ahtutils.web.mbean.util.AbstractLogMessage;
 
 public abstract class AbstractAdminDmsTreeBean <L extends UtilsLang,D extends UtilsDescription,LOC extends UtilsStatus<LOC,L,D>,
 											DMS extends JeeslIoDms<L,D,STORAGE,AS,DS,S>,
-											STORAGE extends JeeslFileStorage<L,D,?>,
+											STORAGE extends JeeslFileStorage<L,D,?,?>,
 											AS extends JeeslAttributeSet<L,D,?,?>,
 											DS extends JeeslDomainSet<L,D,?>,
 											S extends JeeslIoDmsSection<L,D,S>,

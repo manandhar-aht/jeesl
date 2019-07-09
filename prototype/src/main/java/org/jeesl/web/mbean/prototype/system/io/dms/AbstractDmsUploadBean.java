@@ -58,7 +58,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 											VIEW extends JeeslIoDmsView<L,D,DMS>,
 											LAYER extends JeeslIoDmsLayer<VIEW,AITEM>,
 											
-											FSTORAGE extends JeeslFileStorage<L,D,FENGINE>,
+											FSTORAGE extends JeeslFileStorage<L,D,?,FENGINE>,
 											FENGINE extends UtilsStatus<FENGINE,L,D>,
 											FCONTAINER extends JeeslFileContainer<FSTORAGE,FMETA>,
 											FMETA extends JeeslFileMeta<D,FCONTAINER,FTYPE,?>,
@@ -82,7 +82,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	final static Logger logger = LoggerFactory.getLogger(AbstractDmsUploadBean.class);	
 
 	private JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute; 
-	private JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr;
+	private JeeslIoFrFacade<L,D,?,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr;
 	
 	private final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute;
 //	private final IoFileRepositoryFactoryBuilder<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fbFr;
@@ -101,7 +101,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 
 	public AbstractDmsUploadBean(final IoDmsFactoryBuilder<L,D,LOC,DMS,FSTORAGE,S,FILE,VIEW,LAYER> fbDms,
 								final IoAttributeFactoryBuilder<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fbAttribute,
-								final IoFileRepositoryFactoryBuilder<L,D,LOC,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE,?> fbFr)
+								final IoFileRepositoryFactoryBuilder<L,D,LOC,?,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE,?> fbFr)
 	{
 		super(fbDms);
 		this.fbAttribute=fbAttribute;
@@ -111,7 +111,7 @@ public abstract class AbstractDmsUploadBean <L extends UtilsLang,D extends Utils
 	
 	protected void postConstructDmsUpload(JeeslTranslationBean<L,D,LOC> bTranslation, JeeslFacesMessageBean bMessage,
 								JeeslIoDmsFacade<L,D,LOC,DMS,FSTORAGE,ASET,DS,S,FILE,VIEW,FCONTAINER,ACONTAINER> fDms,
-								JeeslIoFrFacade<L,D,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
+								JeeslIoFrFacade<L,D,?,FSTORAGE,FENGINE,FCONTAINER,FMETA,FTYPE> fFr,
 								JeeslIoAttributeFacade<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> fAttribute,
 								JeeslAttributeBean<L,D,ACATEGORY,ACRITERIA,ATYPE,AOPTION,ASET,AITEM,ACONTAINER,ADATA> bAttribute,
 								JeeslFileRepositoryHandler<FSTORAGE,FCONTAINER,FMETA> fileHandler

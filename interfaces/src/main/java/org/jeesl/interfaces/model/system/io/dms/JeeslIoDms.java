@@ -14,7 +14,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslIoDms<L extends UtilsLang, D extends UtilsDescription,
-							STORAGE extends JeeslFileStorage<L,D,?>,
+							STORAGE extends JeeslFileStorage<L,D,?,?>,
 							AS extends JeeslAttributeSet<L,D,?,?>,
 							DS extends JeeslDomainSet<L,D,?>,
 							S extends JeeslIoDmsSection<L,D,S>

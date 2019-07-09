@@ -13,7 +13,7 @@ import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
 import net.sf.ahtutils.exception.ejb.UtilsLockingException;
 import net.sf.ahtutils.exception.ejb.UtilsNotFoundException;
 
-public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,?,?>,
+public interface JeeslFileRepositoryHandler <STORAGE extends JeeslFileStorage<?,?,?,?>,
 											CONTAINER extends JeeslFileContainer<STORAGE,?>,
 											META extends JeeslFileMeta<?,CONTAINER,?,?>>
 		extends Serializable

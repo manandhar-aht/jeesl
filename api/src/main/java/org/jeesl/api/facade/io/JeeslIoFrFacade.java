@@ -5,6 +5,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileContainer;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.model.json.db.tuple.two.Json2Tuples;
 
 import net.sf.ahtutils.exception.ejb.UtilsConstraintViolationException;
@@ -16,7 +17,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public interface JeeslIoFrFacade <L extends UtilsLang, D extends UtilsDescription,
-								STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+								SYSTEM extends JeeslIoSsiSystem,
+								STORAGE extends JeeslFileStorage<L,D,SYSTEM,ENGINE>,
 								ENGINE extends UtilsStatus<ENGINE,L,D>,
 								CONTAINER extends JeeslFileContainer<STORAGE,META>,
 								META extends JeeslFileMeta<D,CONTAINER,TYPE,?>,

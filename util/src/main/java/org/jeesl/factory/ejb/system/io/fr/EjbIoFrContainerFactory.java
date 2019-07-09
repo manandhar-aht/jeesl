@@ -5,7 +5,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EjbIoFrContainerFactory<STORAGE extends JeeslFileStorage<?,?,?>, CONTAINER extends JeeslFileContainer<STORAGE,?>>
+public class EjbIoFrContainerFactory<STORAGE extends JeeslFileStorage<?,?,?,?>, CONTAINER extends JeeslFileContainer<STORAGE,?>>
 {
 	final static Logger logger = LoggerFactory.getLogger(EjbIoFrContainerFactory.class);
 	

@@ -13,6 +13,7 @@ import org.jeesl.interfaces.model.system.io.fr.JeeslFileMeta;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStatus;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileStorage;
 import org.jeesl.interfaces.model.system.io.fr.JeeslFileType;
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,8 @@ import net.sf.ahtutils.interfaces.model.status.UtilsLang;
 import net.sf.ahtutils.interfaces.model.status.UtilsStatus;
 
 public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends UtilsDescription, LOC extends UtilsStatus<LOC,L,D>,
-											STORAGE extends JeeslFileStorage<L,D,ENGINE>,
+											SYSTEM extends JeeslIoSsiSystem,
+											STORAGE extends JeeslFileStorage<L,D,SYSTEM,ENGINE>,
 											ENGINE extends UtilsStatus<ENGINE,L,D>,
 											CONTAINER extends JeeslFileContainer<STORAGE,META>,
 											META extends JeeslFileMeta<D,CONTAINER,TYPE,STATUS>,
@@ -52,25 +54,14 @@ public class IoFileRepositoryFactoryBuilder<L extends UtilsLang, D extends Utils
 		this.cStatus=cStatus;
 	}
 	
-	public EjbIoFrStorageFactory<STORAGE> ejbStorage()
-	{
-		return new EjbIoFrStorageFactory<STORAGE>(cStorage);
-	}
+	public EjbIoFrStorageFactory<SYSTEM,STORAGE> ejbStorage() {return new EjbIoFrStorageFactory<SYSTEM,STORAGE>(cStorage);}
+	public EjbIoFrContainerFactory<STORAGE,CONTAINER> ejbContainer() {return new EjbIoFrContainerFactory<>(cContainer);}
+	public EjbIoFrMetaFactory<CONTAINER,META,TYPE> ejbMeta() {return new EjbIoFrMetaFactory<>(cMeta);}
 	
-	public EjbIoFrContainerFactory<STORAGE,CONTAINER> ejbContainer()
-	{
-		return new EjbIoFrContainerFactory<>(cContainer);
-	}
-	
-	public EjbIoFrMetaFactory<CONTAINER,META,TYPE> ejbMeta()
-	{
-		return new EjbIoFrMetaFactory<>(cMeta);
-	}
-	
-	public DefaultFileRepositoryHandler<L,D,LOC,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> handler(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
+	public DefaultFileRepositoryHandler<L,D,LOC,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE,STATUS> handler(JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr, JeeslFileRepositoryCallback callback)
 	{
 		return new DefaultFileRepositoryHandler<>(fFr,this,callback);
 	}
 	
-	public JeeslFileStatusHandler<META,STATUS> handlerStatus(JeeslIoFrFacade<L,D,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr){return new JeeslFileStatusHandler<META,STATUS>(fFr,this);}
+	public JeeslFileStatusHandler<META,STATUS> handlerStatus(JeeslIoFrFacade<L,D,SYSTEM,STORAGE,ENGINE,CONTAINER,META,TYPE> fFr){return new JeeslFileStatusHandler<META,STATUS>(fFr,this);}
 }

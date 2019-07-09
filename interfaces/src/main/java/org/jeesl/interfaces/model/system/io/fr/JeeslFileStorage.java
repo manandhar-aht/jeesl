@@ -2,6 +2,7 @@ package org.jeesl.interfaces.model.system.io.fr;
 
 import java.io.Serializable;
 
+import org.jeesl.interfaces.model.system.io.ssi.JeeslIoSsiSystem;
 import org.jeesl.interfaces.model.system.with.code.EjbWithCode;
 
 import net.sf.ahtutils.interfaces.model.behaviour.EjbSaveable;
@@ -15,6 +16,7 @@ import net.sf.ahtutils.model.interfaces.with.EjbWithId;
 import net.sf.ahtutils.model.interfaces.with.EjbWithLang;
 
 public interface JeeslFileStorage<L extends UtilsLang,D extends UtilsDescription,
+									SYSTEM extends JeeslIoSsiSystem,
 									ENGINE extends UtilsStatus<ENGINE,L,D>>
 		extends Serializable,EjbWithId,
 			EjbSaveable,EjbRemoveable,

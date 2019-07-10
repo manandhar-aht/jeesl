@@ -87,13 +87,16 @@
 							</f:facet>
 							<p:panelGrid columns="2" columnClasses="jeeslGrid20,jeeslGrid80">
 							
+								<p:outputLabel value="#{msg.jeeslDescription}" rendered="#{not empty cc.attrs.handler.transition.description[localeCode].lang}"/>
+								<h:outputText value="#{cc.attrs.handler.transition.description[localeCode].lang}" rendered="#{not empty cc.attrs.handler.transition.description[localeCode].lang}"/>
+							
 								<p:outputLabel value="#{msg.jeeslApprovalActions}"/>
 								<ui:fragment>
 									<ui:repeat var="a" value="#{cc.attrs.handler.actions}" >
-					                	<h:outputText value="#{a.bot.name[localeCode].lang}"/>
+					                	<h:outputText value="#{a.bot.name[localeCode].lang} "/>
 					                	<ui:fragment rendered="#{a.bot.code eq 'statusUpdate'}">
-					                		<jtp:symbolizer value="#{a.option}" marginLeft="5" marginRight="5"/>
-												<h:outputText value="#{a.option.name[localeCode].lang}"/>  
+					                		<jtp:symbolizer value="#{a.option}" marginRight="5"/>
+											<h:outputText value="#{a.option.name[localeCode].lang}"/>  
 					                	</ui:fragment>
 											<ui:fragment rendered="#{a.bot.code eq 'callbackCommand'}">
 												<h:outputText value="#{a.callbackCommand}"/>
@@ -104,10 +107,11 @@
 								<p:outputLabel value="#{msg.jeeslApprovalCommunications}"/>
 								<ui:fragment>
 									<ui:repeat var="c" value="#{cc.attrs.handler.communications}" >
-					                	<h:outputText value="#{c.role.category.name[localeCode].lang}"/>
+					                	<h:outputText value="#{c.role.category.name[localeCode].lang} - "/>
 										<h:outputText value="#{c.role.name[localeCode].lang}"/>
 										<h:outputText value=": "/>
-										<h:outputText value="#{c.template.name[localeCode].lang}"/> 
+										<h:outputText value="#{c.template.name[localeCode].lang}"/>
+										<br/>
 									</ui:repeat>
 								</ui:fragment>
 								<p:outputLabel value="#{msg.jeeslRemark}"/>

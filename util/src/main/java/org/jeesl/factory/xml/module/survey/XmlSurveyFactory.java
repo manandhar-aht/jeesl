@@ -74,7 +74,7 @@ public class XmlSurveyFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public Survey build(SURVEY ejb)
 	{
-		if(fSurvey!=null){ejb = fSurvey.load(cSurvey,ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		
 		Survey xml = new Survey();
 		if(q.isSetId()){xml.setId(ejb.getId());}

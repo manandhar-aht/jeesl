@@ -293,7 +293,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 	{
 		figures = null; figure=null;
 		status = fUtils.find(cl,(EjbWithId)status);
-		status = fUtils.load(cl,(EjbWithId)status);
+		status = fUtils.loadGraphic(cl,(EjbWithId)status);
 		logger.debug("selectStatus");
 		status = efLang.persistMissingLangs(fUtils,localeCodes,(EjbWithLang)status);
 		status = efDescription.persistMissingLangs(fUtils,localeCodes,(EjbWithDescription)status);
@@ -359,7 +359,7 @@ public class AbstractOptionTableBean <L extends UtilsLang, D extends UtilsDescri
 
         	if(debugSave){logger.info("Saving "+status.getClass().getSimpleName()+" "+status.toString());}
 			status = fUtils.save((EjbSaveable)status);
-			status = fUtils.load(cl,(EjbWithId)status);
+			status = fUtils.loadGraphic(cl,(EjbWithId)status);
 			if(supportsGraphic)
 			{
 				graphic = ((EjbWithGraphic<G>)status).getGraphic();

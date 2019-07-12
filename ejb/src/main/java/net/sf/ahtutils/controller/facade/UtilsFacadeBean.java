@@ -87,7 +87,7 @@ public class UtilsFacadeBean implements UtilsFacade
 	@Override public <L extends UtilsLang, D extends UtilsDescription,
 						S extends EjbWithId,
 						G extends JeeslGraphic<L,D,GT,F,FS>, GT extends UtilsStatus<GT,L,D>,
-						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>> S load(Class<S> cS, S status)
+						F extends JeeslGraphicFigure<L,D,G,GT,F,FS>, FS extends UtilsStatus<FS,L,D>> S loadGraphic(Class<S> cS, S status)
 	{
 		status = em.find(cS, status.getId());
 		if(EjbWithGraphic.class.isAssignableFrom(cS))

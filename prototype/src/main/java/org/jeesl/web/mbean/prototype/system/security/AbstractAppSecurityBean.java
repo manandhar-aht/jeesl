@@ -84,7 +84,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		cpRole = (new SecurityRoleComparator<C,R>()).factory(SecurityRoleComparator.Type.position);
 	}
 	
-	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
+	public void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{
 		this.fSecurity=fSecurity;
 		reload();

@@ -152,10 +152,10 @@ public class AbstractAdminSecurityRoleBean <L extends UtilsLang, D extends Utils
 	public void selectRole()
 	{
 		logger.trace(AbstractLogMessage.selectEntity(role));
-		role = fSecurity.load(fbSecurity.getClassRole(),role);
+		role = fSecurity.find(fbSecurity.getClassRole(),role);
 		role = efLang.persistMissingLangs(fSecurity,localeCodes,role);
 		role = efDescription.persistMissingLangs(fSecurity,localeCodes,role);		
-		role = fSecurity.load(fbSecurity.getClassRole(),role);
+		role = fSecurity.load(role,false);
 		reloadActions();
 		
 		views = role.getViews();

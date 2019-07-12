@@ -122,7 +122,7 @@ public class SecurityRoleUpdater <L extends UtilsLang,D extends UtilsDescription
 			ejb.setCategory(category);
 			ejb = fSecurity.update(ejb);
 
-			ejb = fSecurity.load(fbSecurity.getClassRole(), ejb);
+			ejb = fSecurity.load(ejb,false);
 			ejb = iuListViewsSecurity(ejb, role.getViews());
 			ejb = iuListActions(ejb, role.getActions());
 			ejb = iuUsecasesForRole(ejb, role.getUsecases());

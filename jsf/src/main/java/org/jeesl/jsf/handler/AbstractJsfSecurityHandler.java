@@ -207,7 +207,7 @@ public abstract class AbstractJsfSecurityHandler <L extends UtilsLang, D extends
 			List<A> lA1 = new ArrayList<>();
 			if(bSecurity==null)
 			{
-				r = fSecurity.load(fbSecurity.getClassRole(), r);
+				r = fSecurity.load(r,false);
 				lA1.addAll(r.getActions());
 			}
 			else {lA1.addAll(bSecurity.fActions(r));}

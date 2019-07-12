@@ -65,11 +65,11 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		this.fbSecurity=fbSecurity;
 	}
 
-	@Override public R load(Class<R> cRole, R role)
+	@Override public R load(R role, boolean withUsers)
 	{
-		role = em.find(cRole, role.getId());
+		role = em.find(fbSecurity.getClassRole(), role.getId());
 		role.getCategory().getId();
-		if(role.getUsers()!=null){role.getUsers().size();}
+		if(withUsers && role.getUsers()!=null){role.getUsers().size();}
 		if(role.getActions()!=null){role.getActions().size();}
 		if(role.getViews()!=null){role.getViews().size();}
 		if(role.getUsecases()!=null){role.getUsecases().size();}

@@ -236,7 +236,7 @@ public class SecurityRestService <L extends UtilsLang,D extends UtilsDescription
 					xCat.setRoles(XmlRolesFactory.build());
 					for(R role : fSecurity.allForCategory(fbSecurity.getClassRole(), fbSecurity.getClassCategory(), category.getCode()))
 					{
-						role = fSecurity.load(fbSecurity.getClassRole(),role);
+						role = fSecurity.load(role,false);
 						Collections.sort(role.getUsecases(),comparatorUsecase);
 						Role xRole = xfRole.build(role);
 						xCat.getRoles().getRole().add(xRole);

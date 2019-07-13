@@ -21,7 +21,8 @@ public class ProcessingTimeTracker implements ProgressTimeTracker
 	private long stop;
 	private long previousEvent;
 	private int counter;
-	
+	private int delayOnTick; public void setDelayOnTick(int delayOnTick) {this.delayOnTick = delayOnTick;}
+
 	private final TxtPeriodFactory tfPeriod;
 	
 	private Map<String,Long> buckets;
@@ -34,6 +35,8 @@ public class ProcessingTimeTracker implements ProgressTimeTracker
 		start=0;
 		previousEvent=0;
 		stop=0;
+		delayOnTick=0;
+		
 		tfPeriod = new TxtPeriodFactory();
 		tfPeriod.setUnits(TxtPeriodFactory.UNITS.minuteSecondMilli);
 		
@@ -115,6 +118,12 @@ public class ProcessingTimeTracker implements ProgressTimeTracker
 	{
 		ticksTime.add(System.currentTimeMillis());
 		ticksMarker.add(s);
+		if(delayOnTick>0)
+		{
+			logger.info(s);
+			try {Thread.sleep(delayOnTick*1000);}
+			catch (InterruptedException e) {e.printStackTrace();}
+		}
 	}
 	
 	public void debugTicker()

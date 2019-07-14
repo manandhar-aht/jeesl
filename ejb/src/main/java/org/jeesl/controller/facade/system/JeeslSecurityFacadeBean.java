@@ -55,6 +55,7 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 							extends UtilsFacadeBean
 							implements JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER>
 {	
+	private static final long serialVersionUID = 1L;
 	final static Logger logger = LoggerFactory.getLogger(JeeslSecurityFacadeBean.class);
 	
 	private final SecurityFactoryBuilder<L,D,C,R,V,U,A,AT,?,AR,USER> fbSecurity;
@@ -73,7 +74,6 @@ public class JeeslSecurityFacadeBean<L extends UtilsLang,
 		if(role.getActions()!=null){role.getActions().size();}
 		if(role.getViews()!=null){role.getViews().size();}
 		if(role.getUsecases()!=null){role.getUsecases().size();}
-//		role.getTemplates().size();
 		return role;
 	}
 	

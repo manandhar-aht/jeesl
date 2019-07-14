@@ -84,7 +84,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 		cpRole = (new SecurityRoleComparator<C,R>()).factory(SecurityRoleComparator.Type.position);
 	}
 	
-	protected void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
+	public void init(JeeslSecurityFacade<L,D,C,R,V,U,A,AT,M,USER> fSecurity)
 	{
 		this.fSecurity=fSecurity;
 		reload();
@@ -116,7 +116,7 @@ public class AbstractAppSecurityBean <L extends UtilsLang,D extends UtilsDescrip
 	public void update(R role)
 	{
 		if(debugOnInfo) {logger.info("Updating "+JeeslSecurityRole.class.getSimpleName()+" "+role.getCode());}
-		role = fSecurity.load(fbSecurity.getClassRole(), role);
+		role = fSecurity.load(role,false);
 		mapViewsByRole.put(role,role.getViews());
 		mapUsecasesByRole.put(role,role.getUsecases());
 		mapActionsByRole.put(role,role.getActions());

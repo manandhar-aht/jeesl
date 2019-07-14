@@ -32,7 +32,7 @@ public interface JeeslSecurityFacade <L extends UtilsLang, D extends UtilsDescri
 	extends UtilsFacade
 {	
 	
-	R load(Class<R> cRole, R role);
+	R load(R role, boolean withUsers);
 	V load(Class<V> cView, V view);
 	U load(Class<U> cUsecase, U usecase);
 	

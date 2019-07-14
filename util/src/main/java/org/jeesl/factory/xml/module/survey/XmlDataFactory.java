@@ -76,7 +76,7 @@ public class XmlDataFactory<L extends UtilsLang,D extends UtilsDescription,
 	
 	public Data build(DATA ejb)
 	{		
-		if(fSurvey!=null){ejb = fSurvey.load(cData,ejb);}
+		if(fSurvey!=null){ejb = fSurvey.load(ejb);}
 		
 		Data xml = build();
 		if(q.isSetId()){xml.setId(ejb.getId());}

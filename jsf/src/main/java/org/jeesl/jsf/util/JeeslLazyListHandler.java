@@ -11,6 +11,8 @@ public class JeeslLazyListHandler <T extends EjbWithId>
 {
 	final static Logger logger = LoggerFactory.getLogger(JeeslLazyListHandler.class);
 	
+	public enum Mode{list,db}
+	
 	public JeeslLazyListHandler()
 	{
 		

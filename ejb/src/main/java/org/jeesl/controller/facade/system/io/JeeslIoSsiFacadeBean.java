@@ -64,6 +64,7 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	}
 
 	@Override public List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links){return fIoSsiData(mapping,links,null,null);}
+	@Override public <A extends EjbWithId> List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links, A a){return fIoSsiData(mapping,links,a,null);}
 	@Override public <A extends EjbWithId, B extends EjbWithId> List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links, A a, B b)
 	{
 		if(links!=null && links.isEmpty()) {return new ArrayList<DATA>();}
@@ -145,6 +146,7 @@ public class JeeslIoSsiFacadeBean<L extends UtilsLang,D extends UtilsDescription
 	}
 	
 	@Override public Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping){return tpIoSsiLinkForMapping(mapping,null,null);}
+	@Override public <A extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a){return tpIoSsiLinkForMapping(mapping,a,null);}
 	@Override public <A extends EjbWithId, B extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a, B b)
 	{
 		Json1TuplesFactory<LINK> jtf = new Json1TuplesFactory<LINK>(this,fbSsi.getClassLink());

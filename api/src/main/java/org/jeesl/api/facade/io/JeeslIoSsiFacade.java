@@ -26,12 +26,15 @@ public interface JeeslIoSsiFacade <L extends UtilsLang,D extends UtilsDescriptio
 {	
 	MAPPING fMapping(Class<?> json, Class<?> ejb) throws UtilsNotFoundException;
 	DATA fIoSsiData(MAPPING mapping, String code) throws UtilsNotFoundException;
+	
 	<T extends EjbWithId> DATA fIoSsiData(MAPPING mapping, T ejb) throws UtilsNotFoundException;
 	List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links);
+	<A extends EjbWithId> List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links, A a);
 	<A extends EjbWithId, B extends EjbWithId> List<DATA> fIoSsiData(MAPPING mapping, List<LINK> links, A a, B b);
 	
 	Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping);
-	<A extends EjbWithId, B extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a, B b) ;
+	<A extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a);
+	<A extends EjbWithId, B extends EjbWithId> Json1Tuples<LINK> tpIoSsiLinkForMapping(MAPPING mapping, A a, B b);
 	
 	Json1Tuples<MAPPING> tpMapping();
 }

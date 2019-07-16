@@ -147,6 +147,13 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		{
 			if(fFr==null) {throw new UtilsNotFoundException("Facade is null");}
 			setStorage(fFr.fByCode(fbFile.getClassStorage(), code));
+			if(debugOnInfo)
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.append("Storage: "+storage.getCode());
+				sb.append(" FileSizeLimit: "+storage.getFileSizeLimit());
+				logger.info(sb.toString());
+			}
 		}
 		catch (UtilsNotFoundException e) {logger.error(e.getMessage());}
 	}

@@ -220,11 +220,24 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 		if(debugOnInfo) {logger.info("Reloaded "+fbFile.getClassMeta().getSimpleName()+":"+metas.size()+" for container:"+container.toString());}
 	}
 		
-	public void addFile()
+	public void addFileOverlay()
+	{
+		if(debugOnInfo) {logger.info("Adding File Overlay");}
+		addFile();
+		showInlineUpload = false;
+	}
+	
+	public void addFileInline()
+	{
+		if(debugOnInfo) {logger.info("Adding File Inline");}
+		addFile();
+		showInlineUpload = true;
+	}
+	
+	private void addFile()
 	{
 		if(debugOnInfo) {logger.info("Adding File");}
 		xmlFile = XmlFileFactory.build("");
-		showInlineUpload = true;
 	}
 	
 	public void addFile(java.io.File f) throws UtilsNotFoundException, FileNotFoundException, IOException {addFile(f.getName(), IOUtils.toByteArray(new FileInputStream(f)), null);}
@@ -394,7 +407,6 @@ public abstract class AbstractFileRepositoryHandler<L extends UtilsLang, D exten
 	
 	public void moveTo(STORAGE storage) throws UtilsNotFoundException, UtilsConstraintViolationException, UtilsLockingException
 	{
-		
 		for(META m : metas)
 		{
 			byte[] bytes = fFr.loadFromFileRepository(m);
